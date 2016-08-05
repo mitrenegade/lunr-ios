@@ -12,9 +12,13 @@
 		8E6418D31D55585A00CC4928 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D11D55585A00CC4928 /* Main.storyboard */; };
 		8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D41D55585A00CC4928 /* Assets.xcassets */; };
 		8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */; };
+		E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
+		438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
+		7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lunr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E6418CF1D55585A00CC4928 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +33,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A903D67657AAF02684865C1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8E6418C11D55585900CC4928 = {
 			isa = PBXGroup;
 			children = (
 				8E6418CC1D55585A00CC4928 /* Lunr */,
 				8E6418CB1D55585A00CC4928 /* Products */,
+				97D60F08BBADAB517D96159C /* Pods */,
+				3A903D67657AAF02684865C1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +79,15 @@
 			path = Lunr;
 			sourceTree = "<group>";
 		};
+		97D60F08BBADAB517D96159C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */,
+				438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E6418DC1D55585A00CC4928 /* Build configuration list for PBXNativeTarget "Lunr" */;
 			buildPhases = (
+				AE744D1592AF43D8FB1B7259 /* [CP] Check Pods Manifest.lock */,
 				8E6418C61D55585A00CC4928 /* Sources */,
 				8E6418C71D55585A00CC4928 /* Frameworks */,
 				8E6418C81D55585A00CC4928 /* Resources */,
+				377C4CBFA0D48DE18BCAA486 /* [CP] Embed Pods Frameworks */,
+				BE777C20A5A947303BEE3501 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -129,6 +156,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		377C4CBFA0D48DE18BCAA486 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lunr/Pods-Lunr-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE744D1592AF43D8FB1B7259 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BE777C20A5A947303BEE3501 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lunr/Pods-Lunr-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8E6418C61D55585A00CC4928 /* Sources */ = {
@@ -247,22 +322,24 @@
 		};
 		8E6418DD1D55585A00CC4928 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Lunr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jcsolutions.Lunr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chemblink.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		8E6418DE1D55585A00CC4928 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Lunr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jcsolutions.Lunr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chemblink.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -286,6 +363,7 @@
 				8E6418DE1D55585A00CC4928 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
