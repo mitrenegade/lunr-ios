@@ -16,6 +16,8 @@
 		8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E21D56791700CC4928 /* FacebookViewController.swift */; };
 		8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E41D567FDE00CC4928 /* EmailViewController.swift */; };
 		8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */; };
+		8E6418EB1D56914E00CC4928 /* Bobby.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418EA1D56914E00CC4928 /* Bobby.storyboard */; };
+		8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EC1D56921F00CC4928 /* SplashViewController.swift */; };
 		E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +36,8 @@
 		8E6418E21D56791700CC4928 /* FacebookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookViewController.swift; sourceTree = "<group>"; };
 		8E6418E41D567FDE00CC4928 /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
+		8E6418EA1D56914E00CC4928 /* Bobby.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bobby.storyboard; sourceTree = "<group>"; };
+		8E6418EC1D56921F00CC4928 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,11 +83,11 @@
 			isa = PBXGroup;
 			children = (
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
+				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 				8E6418CF1D55585A00CC4928 /* ViewController.swift */,
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
 				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
-				8E6418D11D55585A00CC4928 /* Main.storyboard */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
 				8E6418D91D55585A00CC4928 /* Info.plist */,
@@ -94,7 +98,9 @@
 		8E6418DF1D5677E300CC4928 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				8E6418D11D55585A00CC4928 /* Main.storyboard */,
 				8E6418E01D56780100CC4928 /* Login.storyboard */,
+				8E6418EA1D56914E00CC4928 /* Bobby.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -169,6 +175,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E6418EB1D56914E00CC4928 /* Bobby.storyboard in Resources */,
 				8E6418E11D56780100CC4928 /* Login.storyboard in Resources */,
 				8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */,
 				8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */,
@@ -234,6 +241,7 @@
 				8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */,
 				8E6418D01D55585A00CC4928 /* ViewController.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
+				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */,
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
 			);
@@ -248,6 +256,7 @@
 				8E6418D21D55585A00CC4928 /* Base */,
 			);
 			name = Main.storyboard;
+			path = Lunr;
 			sourceTree = "<group>";
 		};
 		8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */ = {

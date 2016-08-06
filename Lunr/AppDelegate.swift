@@ -34,15 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initializeWithConfiguration(configuration)
 
-        // Firebase
-        if let user = PFUser.currentUser() {
-            // user is logged in
-            self.goToMenu()
-        }
-        else {
-            self.goToSignupLogin()
-        }
-
         return true
     }
 
@@ -69,9 +60,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Navigation
+    func startup() {
+        // Login
+        if let _ = PFUser.currentUser() {
+            // user is logged in
+            self.goToMenu()
+        }
+        else {
+            self.goToSignupLogin()
+        }
+    }
+    
     func goToSignupLogin() {
-        let nav = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("FacebookViewController") as! FacebookViewController
-        self.window?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
+        let controller = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("FacebookViewController") as! FacebookViewController
+        self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
         self.listenFor("login:success", action: #selector(didLogin), object: nil)
     }
     
@@ -87,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func goToMenu() {
-        guard let controller = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() else {
+        guard let controller: ViewController = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("ViewController") as? ViewController else {
             return
         }
         
