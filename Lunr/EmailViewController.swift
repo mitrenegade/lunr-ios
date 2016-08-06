@@ -20,12 +20,6 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        if !isSignup {
-            self.buttonSignup.setTitle("Login with Email", forState: .Normal)
-            self.inputConfirmation.hidden = true
-        }
         
         let button: UIButton = UIButton(type: .Custom)
         button.frame = CGRectMake(0, 0, 80, 30)
@@ -33,6 +27,12 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         button.setTitleColor(UIColor.blackColor(), forState: .Normal)
         button.addTarget(self, action: #selector(didClickCancel), forControlEvents: .TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        
+        if !isSignup {
+            self.buttonSignup.setTitle("Login with Email", forState: .Normal)
+            self.inputConfirmation.hidden = true
+            self.buttonSignup.addTarget(self, action: #selector(loginUser), forControlEvents: .TouchUpInside)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +74,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         }
         
         let user: PFUser = PFUser()
+        user.username = email
         user.email = email
         user.password = password
         user.signUpInBackgroundWithBlock { (success, error) in
@@ -83,7 +84,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 print("results: \(user)")
-                self.loginUser()
+                self.notify("login:success", object: nil, userInfo: nil)
             }
         }
     }
@@ -101,11 +102,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             print("Invalid password")
             return
         }
-        
-        let user: PFUser = PFUser()
-        user.email = email
-        user.password = password
-        user.signUpInBackgroundWithBlock { (success, error) in
+
+        PFUser.logInWithUsernameInBackground(email, password: password) { (user, error) in
             if (error != nil) {
                 print("Error: \(error)")
                 self.simpleAlert("Could not log in", defaultMessage: nil, error: error)

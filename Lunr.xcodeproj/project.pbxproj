@@ -63,7 +63,6 @@
 		8E6418C11D55585900CC4928 = {
 			isa = PBXGroup;
 			children = (
-				8E6418DF1D5677E300CC4928 /* Storyboards */,
 				8E6418CC1D55585A00CC4928 /* Lunr */,
 				8E6418CB1D55585A00CC4928 /* Products */,
 				97D60F08BBADAB517D96159C /* Pods */,
@@ -82,11 +81,9 @@
 		8E6418CC1D55585A00CC4928 /* Lunr */ = {
 			isa = PBXGroup;
 			children = (
+				8E6418EE1D56981700CC4928 /* Controllers */,
+				8E6418DF1D5677E300CC4928 /* Storyboards */,
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
-				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
-				8E6418CF1D55585A00CC4928 /* ViewController.swift */,
-				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
-				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
@@ -103,6 +100,18 @@
 				8E6418EA1D56914E00CC4928 /* Bobby.storyboard */,
 			);
 			name = Storyboards;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		8E6418EE1D56981700CC4928 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
+				8E6418CF1D55585A00CC4928 /* ViewController.swift */,
+				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
+				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		97D60F08BBADAB517D96159C /* Pods */ = {
