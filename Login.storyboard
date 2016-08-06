@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="vXB-ws-rYb">
+            <objects>
+                <viewController id="l52-pt-Tkl" customClass="LoginViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="s2X-aD-ez1"/>
+                        <viewControllerLayoutGuide type="bottom" id="KWU-iA-mSJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xDe-H0-TOO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ynp-eN-J36">
+                                <rect key="frame" x="60" y="56" width="480" height="200"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="lunar" translatesAutoresizingMaskIntoConstraints="NO" id="pCn-3d-sWB">
+                                        <rect key="frame" x="288" y="0.0" width="184" height="200"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LUNR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-l5-yzd">
+                                        <rect key="frame" x="0.0" y="-0.5" width="480" height="200"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="50"/>
+                                        <color key="textColor" red="0.1803921568627451" green="0.2196078431372549" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="z7s-l5-yzd" firstAttribute="centerX" secondItem="ynp-eN-J36" secondAttribute="centerX" id="5m4-LN-Dm6"/>
+                                    <constraint firstItem="z7s-l5-yzd" firstAttribute="centerY" secondItem="ynp-eN-J36" secondAttribute="centerY" id="HPV-F8-z7z"/>
+                                    <constraint firstItem="z7s-l5-yzd" firstAttribute="height" secondItem="ynp-eN-J36" secondAttribute="height" id="IEL-kC-IBI"/>
+                                    <constraint firstItem="z7s-l5-yzd" firstAttribute="width" secondItem="ynp-eN-J36" secondAttribute="width" id="to4-B7-ZS5"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ByR-sJ-sb0">
+                                <rect key="frame" x="190" y="492" width="220" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="Gum-fY-ZSI"/>
+                                    <constraint firstAttribute="height" constant="40" id="Oe1-GA-UvL"/>
+                                </constraints>
+                                <state key="normal" image="facebook_login_button"/>
+                                <connections>
+                                    <action selector="loginWithFacebook:" destination="l52-pt-Tkl" eventType="touchUpInside" id="nDE-aI-p5Y"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwI-sg-OdA">
+                                <rect key="frame" x="190" y="540" width="220" height="40"/>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="7aW-yL-AqY"/>
+                                    <constraint firstAttribute="height" constant="40" id="YLE-HT-xxq"/>
+                                </constraints>
+                                <state key="normal" title="Login with Email"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="frame.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="loginWithEmail:" destination="l52-pt-Tkl" eventType="touchUpInside" id="47R-Dn-AHK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ByR-sJ-sb0" firstAttribute="centerX" secondItem="xDe-H0-TOO" secondAttribute="centerX" id="7Ey-61-YBm"/>
+                            <constraint firstItem="KWU-iA-mSJ" firstAttribute="top" secondItem="ZwI-sg-OdA" secondAttribute="bottom" constant="20" id="9G0-g5-dP0"/>
+                            <constraint firstItem="ynp-eN-J36" firstAttribute="height" secondItem="xDe-H0-TOO" secondAttribute="height" multiplier="1:3" id="Lsy-nN-6Qr"/>
+                            <constraint firstItem="ZwI-sg-OdA" firstAttribute="centerX" secondItem="xDe-H0-TOO" secondAttribute="centerX" id="c3o-QC-8N8"/>
+                            <constraint firstItem="ynp-eN-J36" firstAttribute="centerX" secondItem="xDe-H0-TOO" secondAttribute="centerX" id="m6Q-99-vQv"/>
+                            <constraint firstItem="ynp-eN-J36" firstAttribute="width" secondItem="xDe-H0-TOO" secondAttribute="width" multiplier="4:5" id="ofv-i3-fH2"/>
+                            <constraint firstItem="ZwI-sg-OdA" firstAttribute="top" secondItem="ByR-sJ-sb0" secondAttribute="bottom" constant="8" id="ojR-5U-xcE"/>
+                            <constraint firstItem="ynp-eN-J36" firstAttribute="top" secondItem="s2X-aD-ez1" secondAttribute="bottom" constant="36" id="p43-MW-D3H"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c0R-fY-QHA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="387" y="-195"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="facebook_login_button" width="440" height="80"/>
+        <image name="lunar" width="184" height="200"/>
+    </resources>
+</document>
