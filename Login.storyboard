@@ -224,9 +224,7 @@
                             <constraint firstAttribute="trailing" secondItem="2DO-N1-hbc" secondAttribute="trailing" constant="20" id="wei-0Y-7T2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="vtg-a8-0Ej" customClass="I">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="gll-of-Y5V"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="vtg-a8-0Ej"/>
                     <connections>
                         <outlet property="buttonSignup" destination="s21-Gh-PbQ" id="iqT-ja-DiO"/>
                         <outlet property="inputConfirmation" destination="1kW-6G-bvW" id="SWP-s1-WbP"/>

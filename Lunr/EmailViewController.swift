@@ -26,11 +26,22 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             self.buttonSignup.setTitle("Login with Email", forState: .Normal)
             self.inputConfirmation.hidden = true
         }
+        
+        let button: UIButton = UIButton(type: .Custom)
+        button.frame = CGRectMake(0, 0, 80, 30)
+        button.setTitle("Cancel", forState: .Normal)
+        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        button.addTarget(self, action: #selector(didClickCancel), forControlEvents: .TouchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func didClickCancel() {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func didClickButton(button: UIButton) {
