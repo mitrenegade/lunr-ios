@@ -13,7 +13,9 @@
 		8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D41D55585A00CC4928 /* Assets.xcassets */; };
 		8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */; };
 		8E6418E11D56780100CC4928 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418E01D56780100CC4928 /* Login.storyboard */; };
-		8E6418E31D56791700CC4928 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E21D56791700CC4928 /* LoginViewController.swift */; };
+		8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E21D56791700CC4928 /* FacebookViewController.swift */; };
+		8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E41D567FDE00CC4928 /* EmailViewController.swift */; };
+		8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */; };
 		E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +31,9 @@
 		8E6418D71D55585A00CC4928 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E6418D91D55585A00CC4928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E6418E01D56780100CC4928 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
-		8E6418E21D56791700CC4928 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8E6418E21D56791700CC4928 /* FacebookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookViewController.swift; sourceTree = "<group>"; };
+		8E6418E41D567FDE00CC4928 /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +80,9 @@
 			children = (
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
 				8E6418CF1D55585A00CC4928 /* ViewController.swift */,
-				8E6418E21D56791700CC4928 /* LoginViewController.swift */,
+				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
+				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
+				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
 				8E6418D11D55585A00CC4928 /* Main.storyboard */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
@@ -225,9 +231,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E6418E31D56791700CC4928 /* LoginViewController.swift in Sources */,
+				8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */,
 				8E6418D01D55585A00CC4928 /* ViewController.swift in Sources */,
+				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
 				8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */,
+				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

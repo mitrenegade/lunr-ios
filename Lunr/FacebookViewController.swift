@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  FacebookViewController.swift
 //  Lunr
 //
 //  Created by Bobby Ren on 8/6/16.
@@ -10,7 +10,7 @@ import UIKit
 import ParseFacebookUtilsV4
 import Parse
 
-class LoginViewController: UIViewController {
+class FacebookViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,13 @@ class LoginViewController: UIViewController {
         })
     }
 
-    @IBAction func loginWithEmail(sender: UIButton) {
-        print("Login with email")
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let controller = segue.destinationViewController as? EmailViewController else { return }
+        if segue.identifier == "GoToSignup" {
+            controller.isSignup = true
+        }
+        else if segue.identifier == "GoToLogin" {
+            controller.isSignup = false
+        }
     }
 }
