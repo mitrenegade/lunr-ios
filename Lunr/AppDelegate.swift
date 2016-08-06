@@ -7,6 +7,15 @@
 //
 
 import UIKit
+import Parse
+import ParseFacebookUtilsV4
+
+let LOCAL_TEST = true
+
+let PARSE_APP_ID: String = "KAu5pzPvmjrFNdIeaB5zYb2la2Fs2zRi2JyuQZnA"
+let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
+let PARSE_SERVER_URL = "https://lunr-server.herokuapp.com/parse"
+let PARSE_CLIENT_KEY = "unused"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        // Parse
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = PARSE_APP_ID
+            $0.clientKey = PARSE_CLIENT_KEY
+            $0.server = LOCAL_TEST ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
+        }
+        Parse.initializeWithConfiguration(configuration)
+
         return true
     }
 
