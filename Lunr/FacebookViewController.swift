@@ -34,6 +34,7 @@ class FacebookViewController: UIViewController {
                 } else {
                     print("User logged in through Facebook!")
                 }
+                self.notify("login:success", object: nil, userInfo: nil)
             } else {
                 print("Uh oh. The user cancelled the Facebook login.")
             }
