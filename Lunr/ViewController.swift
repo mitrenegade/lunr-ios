@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ViewController: UIViewController {
 
@@ -20,6 +21,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func didClickLogout(sender: UIButton) {
+        PFUser.logOutInBackgroundWithBlock { (error) in
+            self.appDelegate().didLogout()
+        }
+    }
+    
 }
 

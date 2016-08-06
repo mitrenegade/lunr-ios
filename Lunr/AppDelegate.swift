@@ -34,6 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initializeWithConfiguration(configuration)
 
+        // Firebase
+        if let user = PFUser.currentUser() {
+            // user is logged in
+            self.goToMenu()
+        }
+        else {
+            self.goToSignupLogin()
+        }
+
         return true
     }
 
@@ -59,6 +68,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: - Navigation
+    func goToSignupLogin() {
+        let nav = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("FacebookViewController") as! FacebookViewController
+        self.window?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
+        self.listenFor("login:success", action: #selector(didLogin), object: nil)
+    }
+    
+    func didLogin() {
+        print("logged in")
+        self.stopListeningFor("login:success")
+        
+        // first dismiss login/signup flow
+        self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+            // load main flow
+            self.goToMenu()
+        })
+    }
+    
+    func goToMenu() {
+        guard let controller = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() else {
+            return
+        }
+        
+        self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
+        self.listenFor("logout:success", action: #selector(didLogout), object: nil)
+    }
+    
+    func didLogout() {
+        print("logged out")
+        self.stopListeningFor("logout:Success")
+        
+        // first dismiss main app
+        self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+            // load main flow
+            self.goToSignupLogin()
+        })
+    }
 
 }
 

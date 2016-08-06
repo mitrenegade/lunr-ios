@@ -10,7 +10,7 @@
         <!--Facebook View Controller-->
         <scene sceneID="vXB-ws-rYb">
             <objects>
-                <viewController id="l52-pt-Tkl" customClass="FacebookViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FacebookViewController" id="l52-pt-Tkl" customClass="FacebookViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s2X-aD-ez1"/>
                         <viewControllerLayoutGuide type="bottom" id="KWU-iA-mSJ"/>
