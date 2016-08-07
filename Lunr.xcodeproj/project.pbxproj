@@ -18,6 +18,7 @@
 		8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */; };
 		8E6418EB1D56914E00CC4928 /* Bobby.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418EA1D56914E00CC4928 /* Bobby.storyboard */; };
 		8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EC1D56921F00CC4928 /* SplashViewController.swift */; };
+		8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EF1D56E8FA00CC4928 /* Constants.swift */; };
 		E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		8E6418EA1D56914E00CC4928 /* Bobby.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bobby.storyboard; sourceTree = "<group>"; };
 		8E6418EC1D56921F00CC4928 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		8E6418EF1D56E8FA00CC4928 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				8E6418EE1D56981700CC4928 /* Controllers */,
 				8E6418DF1D5677E300CC4928 /* Storyboards */,
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
+				8E6418EF1D56E8FA00CC4928 /* Constants.swift */,
 				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
@@ -251,6 +254,7 @@
 				8E6418D01D55585A00CC4928 /* ViewController.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
+				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */,
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
 			);

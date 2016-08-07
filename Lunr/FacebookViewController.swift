@@ -58,10 +58,10 @@ class FacebookViewController: UIViewController {
         guard let nav = segue.destinationViewController as? UINavigationController else { return }
         guard let controller = nav.viewControllers[0] as? EmailViewController else { return }
 
-        if segue.identifier == "GoToSignup" {
+        if segue.identifier == LoginSegue.GoToSignup.rawValue {
             controller.isSignup = true
         }
-        else if segue.identifier == "GoToLogin" {
+        else if segue.identifier == LoginSegue.GoToLogin.rawValue {
             controller.isSignup = false
         }
     }
