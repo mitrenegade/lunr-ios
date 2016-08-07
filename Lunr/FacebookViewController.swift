@@ -56,7 +56,7 @@ class FacebookViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         guard let nav = segue.destinationViewController as? UINavigationController else { return }
-        guard let controller: EmailViewController = nav.viewControllers[0] as? EmailViewController else { return }
+        guard let controller = nav.viewControllers[0] as? EmailViewController else { return }
 
         if segue.identifier == "GoToSignup" {
             controller.isSignup = true

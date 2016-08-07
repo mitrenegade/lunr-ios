@@ -68,7 +68,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        if confirmation.characters.count == 0 {
+        if confirmation != password {
             print("Password and confirmation do not match")
             return
         }
