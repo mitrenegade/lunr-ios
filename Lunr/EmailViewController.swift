@@ -58,7 +58,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         let password = self.inputPassword.text!
         let confirmation = self.inputConfirmation.text!
         
-        if email.characters.count == 0 {
+        if self.isValidEmail(email) {
             print("Invalid email")
             return
         }
@@ -93,7 +93,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         let email = self.inputEmail.text!
         let password = self.inputPassword.text!
         
-        if email.characters.count == 0 {
+        if self.isValidEmail(email) {
             print("Invalid email")
             return
         }
@@ -114,4 +114,14 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    // MARK: - Utils
+    private func isValidEmail(testStr:String) -> Bool {
+        // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr)
+    }
+
 }
