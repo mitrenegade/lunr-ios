@@ -58,7 +58,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         let password = self.inputPassword.text!
         let confirmation = self.inputConfirmation.text!
         
-        if self.isValidEmail(email) {
+        if !self.isValidEmail(email) {
             print("Invalid email")
             return
         }
@@ -93,7 +93,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         let email = self.inputEmail.text!
         let password = self.inputPassword.text!
         
-        if self.isValidEmail(email) {
+        if !self.isValidEmail(email) {
             print("Invalid email")
             return
         }
