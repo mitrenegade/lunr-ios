@@ -9,8 +9,9 @@
 import UIKit
 import Parse
 import ParseFacebookUtilsV4
+import FBSDKCoreKit
 
-let LOCAL_TEST = true
+let LOCAL_TEST = false
 
 let PARSE_APP_ID: String = "KAu5pzPvmjrFNdIeaB5zYb2la2Fs2zRi2JyuQZnA"
 let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
@@ -34,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initializeWithConfiguration(configuration)
 
+        // Facebook
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
+        
         return true
     }
 
@@ -53,12 +58,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+
+    // MARK: - Navigation
+    func startup() {
+        // Login
+        if let _ = PFUser.currentUser() {
+            // user is logged in
+            self.goToMenu()
+        }
+        else {
+            self.goToSignupLogin()
+        }
+    }
+    
+    func goToSignupLogin() {
+        let controller = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("FacebookViewController") as! FacebookViewController
+        self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
+        self.listenFor("login:success", action: #selector(didLogin), object: nil)
+    }
+    
+    func didLogin() {
+        print("logged in")
+        self.stopListeningFor("login:success")
+        
+        // first dismiss login/signup flow
+        self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+            // load main flow
+            self.goToMenu()
+        })
+    }
+    
+    func goToMenu() {
+        guard let controller: ViewController = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("ViewController") as? ViewController else {
+            return
+        }
+        
+        self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
+        self.listenFor("logout:success", action: #selector(didLogout), object: nil)
+    }
+    
+    func didLogout() {
+        print("logged out")
+        self.stopListeningFor("logout:Success")
+        
+        // first dismiss main app
+        self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+            // load main flow
+            self.goToSignupLogin()
+        })
+    }
 
 }
 
