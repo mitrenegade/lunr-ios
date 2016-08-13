@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import Quickblox
 
 class EmailViewController: UIViewController, UITextFieldDelegate {
 
@@ -122,6 +123,37 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(testStr)
+    }
+
+    // MARK: QuickBlox
+    func createQBUser(email: String, password: String) {
+        let user = QBUUser()
+        user.password = password
+        user.email = email
+        QBRequest.signUp(user, successBlock: { (response, user) in
+            print("results: \(user)")
+            self.loginUser()
+        }) { (errorResponse) in
+            print("Error: \(errorResponse)")
+            self.simpleAlert("Could not sign up", defaultMessage: nil, error: nil)
+        }
+    }
+    
+    func loginQBUser(email: String, password: String) {
+        QBRequest.logInWithUserEmail(email, password: password, successBlock: { (response, user) in
+            print("results: \(user)")
+            QBChat.instance().connectWithUser(user!) { (error) in
+                if error != nil {
+                    print("error: \(error)")
+                }
+                else {
+                    self.notify("login:success", object: nil, userInfo: nil)
+                }
+            }
+        }) { (errorResponse) in
+            print("Error: \(errorResponse)")
+            self.simpleAlert("Could not log in", defaultMessage: nil,  error: nil)
+        }
     }
 
 }

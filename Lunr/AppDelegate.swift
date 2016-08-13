@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func goToMenu() {
-        guard let controller: ViewController = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("ViewController") as? ViewController else {
+        guard let controller: BobbyTestViewController = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("BobbyTestViewController") as? BobbyTestViewController else {
             return
         }
         
