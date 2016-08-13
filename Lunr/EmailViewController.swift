@@ -123,7 +123,6 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
             else if let user = user {
                 print("results: \(user)")
-                self.notify("login:success", object: nil, userInfo: nil)
                 
                 if let userId = user.objectId {
                     self.loginQBUser(userId)

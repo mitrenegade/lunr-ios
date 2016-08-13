@@ -29,7 +29,7 @@ enum CallState {
 
 class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate {
 
-    var targetUser: QBUUser?
+    var targetUser: QBUUser? // TODO: this should be PFUser
     var incomingUser: QBUUser?
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
