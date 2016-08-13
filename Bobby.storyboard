@@ -8,7 +8,7 @@
         <!--Bobby Test View Controller-->
         <scene sceneID="8Gf-8k-ssa">
             <objects>
-                <viewController storyboardIdentifier="BobbyTestViewController" id="m3d-mR-6BA" customClass="BobbyTestViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BobbyTestViewController" id="m3d-mR-6BA" customClass="BobbyTestViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f03-kA-AC6"/>
                         <viewControllerLayoutGuide type="bottom" id="DAc-aH-QaY"/>
@@ -28,7 +28,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="didClickLogout:" destination="m3d-mR-6BA" eventType="touchUpInside" id="uz6-He-y4q"/>
+                                    <action selector="didClickButton:" destination="m3d-mR-6BA" eventType="touchUpInside" id="vii-ay-khe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gb1-Po-7Kl">
@@ -42,8 +42,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="didClickLogout:" destination="m3d-mR-6BA" eventType="touchUpInside" id="t9H-Nf-FhC"/>
-                                    <segue destination="C23-Ga-fTy" kind="show" identifier="GoToCallUser" id="gHg-Xu-mgR"/>
+                                    <action selector="didClickButton:" destination="m3d-mR-6BA" eventType="touchUpInside" id="Lvf-Ag-PnZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -55,6 +54,11 @@
                             <constraint firstItem="gb1-Po-7Kl" firstAttribute="centerX" secondItem="epR-Yr-POu" secondAttribute="centerX" id="jTb-Z0-Z8N"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="buttonCall" destination="gb1-Po-7Kl" id="5kC-cn-7um"/>
+                        <outlet property="buttonLogout" destination="ac1-B9-pPF" id="UZT-1J-XQq"/>
+                        <segue destination="C23-Ga-fTy" kind="show" identifier="GoToCallUser" id="pvo-Xw-EoU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sME-vg-EHM" sceneMemberID="firstResponder"/>
             </objects>

@@ -5,6 +5,9 @@
 //  Created by Bobby Ren on 5/8/16.
 //  Copyright © 2016 Bobby Ren. All rights reserved.
 //
+// Login credentials are email and password for the user
+// Parse: username and email are both email, password is whatever the user enters
+// QBUser: username and password are parse ID. User should not know about QBUser
 
 import UIKit
 import Parse
@@ -19,6 +22,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     
     var isSignup: Bool = false
     
+    var count = 0;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +37,11 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         if !isSignup {
             self.buttonSignup.setTitle("Login with Email", forState: .Normal)
             self.inputConfirmation.hidden = true
-            self.buttonSignup.addTarget(self, action: #selector(loginUser), forControlEvents: .TouchUpInside)
+        }
+        
+        if TEST {
+            self.inputEmail.text = "bobbyren@gmail.com"
+            self.inputPassword.text = "test"
         }
     }
 
@@ -104,14 +113,27 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             return
         }
 
+        print("Login attempt \(self.count)")
+        self.count=self.count+1
+
         PFUser.logInWithUsernameInBackground(email, password: password) { (user, error) in
             if (error != nil) {
                 print("Error: \(error)")
                 self.simpleAlert("Could not log in", defaultMessage: nil, error: error)
             }
-            else {
+            else if let user = user {
                 print("results: \(user)")
                 self.notify("login:success", object: nil, userInfo: nil)
+                
+                if let userId = user.objectId {
+                    self.loginQBUser(userId)
+                }
+                else {
+                    self.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil)
+                }
+            }
+            else {
+                self.simpleAlert("Could not log in", defaultMessage: "Invalid user", error: nil)
             }
         }
     }
@@ -126,25 +148,27 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
 
     // MARK: QuickBlox
-    func createQBUser(email: String, password: String) {
+    func createQBUser(parseUserId: String) {
         let user = QBUUser()
-        user.password = password
-        user.email = email
+        user.login = parseUserId
+        user.password = parseUserId
         QBRequest.signUp(user, successBlock: { (response, user) in
             print("results: \(user)")
-            self.loginUser()
+            self.loginQBUser(parseUserId)
         }) { (errorResponse) in
             print("Error: \(errorResponse)")
-            self.simpleAlert("Could not sign up", defaultMessage: nil, error: nil)
+            self.simpleAlert("Could not sign up", defaultMessage: "There was a problem setting up your chat account.", error: nil)
         }
     }
     
-    func loginQBUser(email: String, password: String) {
-        QBRequest.logInWithUserEmail(email, password: password, successBlock: { (response, user) in
+    func loginQBUser(parseUserId: String) {
+        QBRequest.logInWithUserLogin(parseUserId, password: parseUserId, successBlock: { (response, user) in
             print("results: \(user)")
+            user?.password = parseUserId // must set it again to connect to QBChat
             QBChat.instance().connectWithUser(user!) { (error) in
                 if error != nil {
                     print("error: \(error)")
+                    self.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: nil)
                 }
                 else {
                     self.notify("login:success", object: nil, userInfo: nil)
@@ -152,8 +176,19 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
         }) { (errorResponse) in
             print("Error: \(errorResponse)")
-            self.simpleAlert("Could not log in", defaultMessage: nil,  error: nil)
+            
+            if errorResponse.status.rawValue == 401 {
+                self.createQBUser(parseUserId)
+            }
+            else {
+                self.simpleAlert("Could not log in", defaultMessage: "There was a problem logging into your chat account.",  error: nil)
+            }
         }
     }
 
+    // MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
 }
