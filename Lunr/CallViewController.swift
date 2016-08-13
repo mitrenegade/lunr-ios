@@ -64,12 +64,11 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
             for user in users {
                 if let _ = user.login where user.login == target.objectId! {
                     self.callingUser = user
-                    return
                 }
             }
             
             if let _ = self.callingUser {
-                self.simpleAlert("Calling enabled", message: "You are about to call \(target.displayString)", completion: {
+                self.simpleAlert("Calling enabled", message: "Click to call \(target.displayString)", completion: {
                 })
             }
             else {
