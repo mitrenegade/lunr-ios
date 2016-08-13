@@ -16,9 +16,14 @@ class BobbyTestViewController: UIViewController {
     @IBOutlet weak var buttonLogout: UIButton!
     @IBOutlet weak var buttonCall: UIButton!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    var targetUser: PFUser?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.loadUsers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +39,28 @@ class BobbyTestViewController: UIViewController {
             self.initiateCall()
         }
     }
+    
+    func loadUsers() {
+        self.activityIndicator.startAnimating()
+        self.buttonCall.setTitle(nil, forState: .Normal)
+        self.buttonCall.enabled = false
+        let query = PFUser.query()
+        query?.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            self.activityIndicator.stopAnimating()
+            if let users = result as? [PFUser] {
+                for user in users {
+                    if user.isProvider() {
+                        self.targetUser = user
+                        self.buttonCall.enabled = true
+                        self.buttonCall.setTitle("Call \(user.displayString)", forState: .Normal)
+                    }
+                }
+                if self.targetUser == nil {
+                    self.buttonCall.setTitle("No calls available", forState: .Normal)
+                }
+            }
+        }
+    }
 
     func logout() {
         PFUser.logOutInBackgroundWithBlock { (error) in
@@ -42,13 +69,13 @@ class BobbyTestViewController: UIViewController {
     }
     
     func initiateCall() {
-        self.performSegueWithIdentifier("GoToCallUser", sender: nil)
+        self.performSegueWithIdentifier("GoToCallUser", sender: self.targetUser)
     }
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GoToCallUser" {
-            if let user: QBUUser = sender as? QBUUser {
+            if let user: PFUser = sender as? PFUser {
                 let controller: CallViewController = segue.destinationViewController as! CallViewController
                 controller.targetUser = user
             }

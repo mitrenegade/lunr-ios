@@ -35,26 +35,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ac1-B9-pPF">
-                                <rect key="frame" x="215" y="93" width="171" height="97"/>
-                                <color key="backgroundColor" red="0.18039215689999999" green="0.73725490199999999" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="97" id="LDl-lL-T71"/>
-                                    <constraint firstAttribute="width" constant="171" id="kvh-bn-bol"/>
-                                </constraints>
-                                <state key="normal" title="Logout">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didClickButton:" destination="m3d-mR-6BA" eventType="touchUpInside" id="vii-ay-khe"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gb1-Po-7Kl">
-                                <rect key="frame" x="215" y="235" width="171" height="97"/>
+                                <rect key="frame" x="60" y="235" width="480" height="97"/>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.73725490199999999" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="97" id="VMe-LH-pTK"/>
-                                    <constraint firstAttribute="width" constant="171" id="w2V-SS-Wxd"/>
                                 </constraints>
                                 <state key="normal" title="Call Provider">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -63,17 +48,38 @@
                                     <action selector="didClickButton:" destination="m3d-mR-6BA" eventType="touchUpInside" id="Lvf-Ag-PnZ"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="XP5-w2-KYH">
+                                <rect key="frame" x="282" y="265" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ac1-B9-pPF">
+                                <rect key="frame" x="60" y="93" width="480" height="97"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="97" id="LDl-lL-T71"/>
+                                </constraints>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didClickButton:" destination="m3d-mR-6BA" eventType="touchUpInside" id="vii-ay-khe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ac1-B9-pPF" firstAttribute="width" secondItem="epR-Yr-POu" secondAttribute="width" multiplier="4:5" id="72E-aH-O8l"/>
                             <constraint firstItem="gb1-Po-7Kl" firstAttribute="top" secondItem="ac1-B9-pPF" secondAttribute="bottom" constant="45" id="JNf-MD-W7I"/>
                             <constraint firstItem="ac1-B9-pPF" firstAttribute="centerX" secondItem="epR-Yr-POu" secondAttribute="centerX" id="O7l-Eu-Ka5"/>
                             <constraint firstItem="ac1-B9-pPF" firstAttribute="top" secondItem="f03-kA-AC6" secondAttribute="bottom" constant="29" id="OQa-ty-02n"/>
+                            <constraint firstItem="XP5-w2-KYH" firstAttribute="centerY" secondItem="gb1-Po-7Kl" secondAttribute="centerY" id="QZx-wr-Kg7"/>
+                            <constraint firstItem="ac1-B9-pPF" firstAttribute="width" secondItem="gb1-Po-7Kl" secondAttribute="width" id="bY1-yq-Vb1"/>
+                            <constraint firstItem="XP5-w2-KYH" firstAttribute="centerX" secondItem="gb1-Po-7Kl" secondAttribute="centerX" id="hwa-5S-OBY"/>
                             <constraint firstItem="gb1-Po-7Kl" firstAttribute="centerX" secondItem="epR-Yr-POu" secondAttribute="centerX" id="jTb-Z0-Z8N"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="uDl-Ot-yNc"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="XP5-w2-KYH" id="61B-3x-7SN"/>
                         <outlet property="buttonCall" destination="gb1-Po-7Kl" id="5kC-cn-7um"/>
                         <outlet property="buttonLogout" destination="ac1-B9-pPF" id="UZT-1J-XQq"/>
                         <segue destination="C23-Ga-fTy" kind="show" identifier="GoToCallUser" id="pvo-Xw-EoU"/>

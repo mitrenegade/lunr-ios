@@ -29,8 +29,9 @@ enum CallState {
 
 class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate {
 
-    var targetUser: QBUUser? // TODO: this should be PFUser
-    var incomingUser: QBUUser?
+    var targetUser: PFUser?
+
+    var callingUser: QBUUser?
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
     
@@ -48,10 +49,35 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
     // call controls
     @IBOutlet weak var buttonCall: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        guard let target = targetUser else {
+            return // this error will be handled on viewDidAppear
+        }
+        
+        UserService.loadUsersWithCompletion { (results) in
+            guard let users = results else {
+                return
+            }
+            
+            for user in users {
+                if let _ = user.login where user.login == target.objectId! {
+                    self.callingUser = user
+                    return
+                }
+            }
+            
+            if let _ = self.callingUser {
+                self.simpleAlert("Calling enabled", message: "You are about to call \(target.displayString)", completion: {
+                })
+            }
+            else {
+                self.simpleAlert("Calling disabled", message: "Could not find QBUUser with id \(target.objectId)", completion: {
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -210,11 +236,17 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
     
     // MARK: - User actions
     func startCall() {
+        guard let user = self.callingUser else {
+            self.simpleAlert("Calling disabled", message: "Could not find QBUUser to call", completion: {
+            })
+            return
+        }
+        
         // load video view
         self.loadVideoView()
         
         // create and start session
-        let id = self.targetUser!.ID
+        let id = user.ID
         let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([id], withConferenceType: QBRTCConferenceType.Video)
         self.session = newSession
         self.session!.startCall(nil)
@@ -235,9 +267,8 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
         if self.incomingSession != nil {
             self.session = self.incomingSession
             self.incomingSession = nil
-            
-            self.targetUser = self.incomingUser
-            self.incomingUser = nil
+
+            // TODO
         }
         
         self.session?.acceptCall(nil)
@@ -276,11 +307,11 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
 
         let userId = self.incomingSession!.initiatorID as UInt
         QBRequest.userWithID(userId, successBlock: { (response, user) in
-            if userId == self.targetUser!.ID {
+            if userId == self.callingUser!.ID {
                 self.updateState(.IncomingCallSameUser)
             }
             else {
-                self.incomingUser = user
+                self.callingUser = user
                 self.updateState(.IncomingCallDifferentUser)
             }
         }) { (response) in
