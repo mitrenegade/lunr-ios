@@ -8,7 +8,7 @@
 
 import UIKit
 import Quickblox
-import SSKeychain
+import Parse
 
 // Selector Syntatic sugar: https://medium.com/swift-programming/swift-selector-syntax-sugar-81c8a8b10df3#.a6ml91o38
 private extension Selector {
@@ -52,9 +52,16 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        if self.targetUser == nil {
-            print("no user selected")
-            self.navigationController!.popViewControllerAnimated(false)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        guard self.targetUser != nil else {
+            print("no user selected. handle this error!")
+            self.simpleAlert("No user selected", message: "You cannot make a call without selecting a recipient.", completion: {
+                self.navigationController?.popViewControllerAnimated(true)
+            })
             return
         }
         
@@ -62,11 +69,26 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
             QBRTCClient.initializeRTC()
             QBRTCClient.instance().addDelegate(self)
             
-            let user = QBSession.currentSession().currentUser
-            let password = SSKeychain.passwordForService("kRenderAppsLoginServiceKey", account: user?.email!)
-            user!.password = password
+            // these should not happen!
+            guard let qbUser = QBSession.currentSession().currentUser else {
+                print("No qbUser, handle this error!")
+                self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
+                return
+            }
+            
+            guard let pfUser = PFUser.currentUser() else {
+                self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
+                return
+            }
+            
+            qbUser.password = pfUser.objectId!
+            
             QBChat.instance().addDelegate(self)
-            QBChat.instance().connectWithUser(user!) { (error) in
+            QBChat.instance().connectWithUser(qbUser) { (error) in
                 if error != nil {
                     print("error: \(error)")
                 }

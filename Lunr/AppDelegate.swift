@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
 
@@ -122,11 +121,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func goToMenu() {
-        guard let controller: BobbyTestViewController = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("BobbyTestViewController") as? BobbyTestViewController else {
+        guard let nav: UINavigationController = UIStoryboard(name: "Bobby", bundle: nil).instantiateInitialViewController() as? UINavigationController else {
             return
         }
         
-        self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
+        self.window?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
         self.listenFor("logout:success", action: #selector(didLogout), object: nil)
     }
     
