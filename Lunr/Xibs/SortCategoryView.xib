@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SortCategoryView" customModule="Lunr" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="tyM-qx-mEW"/>
+                <outlet property="sortAlphabeticallyButton" destination="djP-nf-BMu" id="A76-mI-FQE"/>
+                <outlet property="sortByFavoritesButton" destination="jhP-W9-eOI" id="ZBj-Vw-2gE"/>
+                <outlet property="sortByPriceButton" destination="YNL-p0-d7V" id="zHd-qf-Nfw"/>
+                <outlet property="sortByRatingButton" destination="anv-Qf-Ob3" id="dhd-hL-08F"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djP-nf-BMu" userLabel="atoz">
+                    <rect key="frame" x="0.0" y="0.0" width="80" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="M4B-ZH-qMP"/>
+                    </constraints>
+                    <state key="normal" image="atoz"/>
+                    <connections>
+                        <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="Npc-PF-K6j"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anv-Qf-Ob3" userLabel="star">
+                    <rect key="frame" x="80" y="0.0" width="81" height="50"/>
+                    <state key="normal" image="star"/>
+                    <connections>
+                        <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="OkE-ZA-lBB"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNL-p0-d7V" userLabel="dollarsign">
+                    <rect key="frame" x="161" y="0.0" width="80" height="50"/>
+                    <state key="normal" image="dollarsign"/>
+                    <connections>
+                        <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="8wg-b9-E5b"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhP-W9-eOI" userLabel="heart">
+                    <rect key="frame" x="241" y="0.0" width="80" height="50"/>
+                    <state key="normal" image="heart"/>
+                    <connections>
+                        <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="ZnY-Py-oNu"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="YNL-p0-d7V" firstAttribute="top" secondItem="anv-Qf-Ob3" secondAttribute="top" id="3yn-RU-yhF"/>
+                <constraint firstItem="YNL-p0-d7V" firstAttribute="width" secondItem="anv-Qf-Ob3" secondAttribute="width" id="4EV-oF-Vdb"/>
+                <constraint firstItem="YNL-p0-d7V" firstAttribute="height" secondItem="anv-Qf-Ob3" secondAttribute="height" id="6Co-Tb-VhR"/>
+                <constraint firstItem="djP-nf-BMu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9Qe-gc-e2v"/>
+                <constraint firstAttribute="trailing" secondItem="jhP-W9-eOI" secondAttribute="trailing" id="C2Y-uk-0WD"/>
+                <constraint firstItem="anv-Qf-Ob3" firstAttribute="width" secondItem="djP-nf-BMu" secondAttribute="width" id="FFB-2j-hdO"/>
+                <constraint firstItem="jhP-W9-eOI" firstAttribute="top" secondItem="YNL-p0-d7V" secondAttribute="top" id="Rak-RM-51k"/>
+                <constraint firstItem="jhP-W9-eOI" firstAttribute="leading" secondItem="YNL-p0-d7V" secondAttribute="trailing" id="a9d-6i-sY8"/>
+                <constraint firstItem="jhP-W9-eOI" firstAttribute="height" secondItem="YNL-p0-d7V" secondAttribute="height" id="aZ5-8c-AED"/>
+                <constraint firstItem="anv-Qf-Ob3" firstAttribute="top" secondItem="djP-nf-BMu" secondAttribute="top" id="lBo-wr-89u"/>
+                <constraint firstItem="anv-Qf-Ob3" firstAttribute="leading" secondItem="djP-nf-BMu" secondAttribute="trailing" id="lMW-JQ-5wS"/>
+                <constraint firstItem="jhP-W9-eOI" firstAttribute="width" secondItem="YNL-p0-d7V" secondAttribute="width" id="on2-Dg-aDA"/>
+                <constraint firstAttribute="bottom" secondItem="djP-nf-BMu" secondAttribute="bottom" id="r4d-Lh-UWp"/>
+                <constraint firstItem="YNL-p0-d7V" firstAttribute="leading" secondItem="anv-Qf-Ob3" secondAttribute="trailing" id="roQ-qZ-whG"/>
+                <constraint firstItem="anv-Qf-Ob3" firstAttribute="height" secondItem="djP-nf-BMu" secondAttribute="height" id="u4Q-BR-Isr"/>
+                <constraint firstItem="djP-nf-BMu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uqm-t2-XIb"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="142.5" y="-24"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="atoz" width="8" height="21"/>
+        <image name="dollarsign" width="11" height="20"/>
+        <image name="heart" width="21" height="17"/>
+        <image name="star" width="20" height="20"/>
+    </resources>
+</document>

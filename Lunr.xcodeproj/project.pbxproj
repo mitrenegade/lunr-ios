@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B13F1F3906A1F82AC89AAD5 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */; };
 		44986F1E1D6A372800C6D0A7 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */; };
 		44986F1F1D6A372800C6D0A7 /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */; };
 		44986F201D6A372800C6D0A7 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F181D6A372800C6D0A7 /* Provider.swift */; };
 		44986F211D6A372800C6D0A7 /* ProviderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */; };
-		44986F221D6A372800C6D0A7 /* ProviderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */; };
 		44986F231D6A372800C6D0A7 /* Randall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44986F1B1D6A372800C6D0A7 /* Randall.storyboard */; };
 		44986F241D6A372800C6D0A7 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */; };
 		44986F251D6A372800C6D0A7 /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */; };
+		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
+		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
 		8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */; };
-		8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CD1D55585A00CC4928 /* AppDelegate.swift */; };
 		8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */; };
-		8E6418D31D55585A00CC4928 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D11D55585A00CC4928 /* Main.storyboard */; };
+		8E6418D31D55585A00CC4928 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D41D55585A00CC4928 /* Assets.xcassets */; };
 		8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */; };
 		8E6418E11D56780100CC4928 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418E01D56780100CC4928 /* Login.storyboard */; };
@@ -30,26 +31,37 @@
 		8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EF1D56E8FA00CC4928 /* Constants.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
 		8EF7D51D1D5FC5FF007B76DE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7D51C1D5FC5FF007B76DE /* UserService.swift */; };
-		E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */; };
+		E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164431D5678B700926692 /* ProviderTableViewCell.swift */; };
+		E56164461D56818500926692 /* ProviderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164451D56818500926692 /* ProviderInfoView.swift */; };
+		E56164481D5689A900926692 /* ProviderInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56164471D5689A900926692 /* ProviderInfoView.xib */; };
+		E561644C1D57A2D300926692 /* ProviderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E561644B1D57A2D300926692 /* ProviderListViewController.swift */; };
+		E56164511D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E561644F1D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift */; };
+		E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164531D5F78BB00926692 /* SortCategoryView.swift */; };
+		E56164561D5F78D500926692 /* SortCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56164551D5F78D500926692 /* SortCategoryView.xib */; };
+		E561645B1D5F972700926692 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CD1D55585A00CC4928 /* AppDelegate.swift */; };
+		E561645D1D5F99F800926692 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E561645C1D5F99F800926692 /* ViewController.swift */; };
+		E56164601D5F9AB200926692 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E561645E1D5F9AB200926692 /* Main.storyboard */; };
+		E56164631D61260700926692 /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164621D61260700926692 /* UIView+Utils.swift */; };
+		E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164641D689FFC00926692 /* UIColor+LunrColors.swift */; };
+		E56164671D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */; };
+		E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
-		438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
 		44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
-		44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
+		44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailTableViewCell.xib; path = Xibs/DetailTableViewCell.xib; sourceTree = "<group>"; };
 		44986F181D6A372800C6D0A7 /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderDetailViewController.swift; sourceTree = "<group>"; };
-		44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInfoView.swift; sourceTree = "<group>"; };
 		44986F1B1D6A372800C6D0A7 /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Randall.storyboard; sourceTree = "<group>"; };
 		44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
-		44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
-		7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lunr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewTableViewCell.xib; path = Xibs/ReviewTableViewCell.xib; sourceTree = "<group>"; };
+		5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
+		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
+		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
 		8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Utils.swift"; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobbyTestViewController.swift; sourceTree = "<group>"; };
-		8E6418D21D55585A00CC4928 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E6418D41D55585A00CC4928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E6418D71D55585A00CC4928 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E6418D91D55585A00CC4928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,6 +90,21 @@
 		8E9BB7621D5ECA18001FD26B /* CallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lunr-Bridging-Header.h"; sourceTree = "<group>"; };
 		8EF7D51C1D5FC5FF007B76DE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
+		E56164431D5678B700926692 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderTableViewCell.swift; sourceTree = "<group>"; };
+		E56164451D56818500926692 /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInfoView.swift; sourceTree = "<group>"; };
+		E56164471D5689A900926692 /* ProviderInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProviderInfoView.xib; path = Xibs/ProviderInfoView.xib; sourceTree = "<group>"; };
+		E561644B1D57A2D300926692 /* ProviderListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderListViewController.swift; sourceTree = "<group>"; };
+		E561644F1D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderSkillTagCollectionViewCell.swift; sourceTree = "<group>"; };
+		E56164531D5F78BB00926692 /* SortCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortCategoryView.swift; sourceTree = "<group>"; };
+		E56164551D5F78D500926692 /* SortCategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SortCategoryView.xib; path = Xibs/SortCategoryView.xib; sourceTree = "<group>"; };
+		E561645C1D5F99F800926692 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E561645F1D5F9AB200926692 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E56164621D61260700926692 /* UIView+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
+		E56164641D689FFC00926692 /* UIColor+LunrColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+LunrColors.swift"; sourceTree = "<group>"; };
+		E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProviderSkillTagCollectionViewCell.xib; path = Xibs/ProviderSkillTagCollectionViewCell.xib; sourceTree = "<group>"; };
+		E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+LunrFonts.swift"; sourceTree = "<group>"; };
+		FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lunr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,14 +112,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */,
+				1B13F1F3906A1F82AC89AAD5 /* Pods_Lunr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A903D67657AAF02684865C1 /* Frameworks */ = {
+		18844B50C98276A61627ABDB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1B1E6AD3D6E76069ECF744BF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				8E9BB75C1D5EC423001FD26B /* libc++.tbd */,
@@ -110,18 +145,10 @@
 				8E9BB7441D5EC3D3001FD26B /* CoreGraphics.framework */,
 				8E9BB7421D5EC3CA001FD26B /* OpenGLES.framework */,
 				8E9BB7401D5EC3C0001FD26B /* QuartzCore.framework */,
-				7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */,
+				5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */,
+				E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */,
 			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8E4DE0BB1D62B7460013C06C /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				8EF7D51C1D5FC5FF007B76DE /* UserService.swift */,
-				8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */,
-			);
-			name = Services;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		8E6418C11D55585900CC4928 = {
@@ -129,8 +156,8 @@
 			children = (
 				8E6418CC1D55585A00CC4928 /* Lunr */,
 				8E6418CB1D55585A00CC4928 /* Products */,
-				97D60F08BBADAB517D96159C /* Pods */,
-				3A903D67657AAF02684865C1 /* Frameworks */,
+				1B1E6AD3D6E76069ECF744BF /* Pods */,
+				18844B50C98276A61627ABDB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -145,24 +172,17 @@
 		8E6418CC1D55585A00CC4928 /* Lunr */ = {
 			isa = PBXGroup;
 			children = (
+				E561646C1D6A458C00926692 /* Models */,
+				E56164611D6125F100926692 /* Categories */,
 				8E6418EE1D56981700CC4928 /* Controllers */,
 				8E6418DF1D5677E300CC4928 /* Storyboards */,
-				8EF7D51B1D5FBF44007B76DE /* Utils */,
-				44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */,
-				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
-				44986F181D6A372800C6D0A7 /* Provider.swift */,
-				44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */,
-				44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */,
-				44986F1B1D6A372800C6D0A7 /* Randall.storyboard */,
-				44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */,
-				44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */,
+				8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */,
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
 				8E6418EF1D56E8FA00CC4928 /* Constants.swift */,
-				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
-				8E4DE0BB1D62B7460013C06C /* Services */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
-				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
 				8E6418D91D55585A00CC4928 /* Info.plist */,
+				E561643F1D56781700926692 /* Views */,
+				E56164571D5F7BC000926692 /* Xibs */,
 			);
 			path = Lunr;
 			sourceTree = "<group>";
@@ -170,41 +190,76 @@
 		8E6418DF1D5677E300CC4928 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				8E6418D11D55585A00CC4928 /* Main.storyboard */,
-				8E6418E01D56780100CC4928 /* Login.storyboard */,
 				8E6418EA1D56914E00CC4928 /* Bobby.storyboard */,
+				8E6418E01D56780100CC4928 /* Login.storyboard */,
+				8E4DE0B71D62AFA10013C06C /* Provider.storyboard */,
+				44986F1B1D6A372800C6D0A7 /* Randall.storyboard */,
+				E561645E1D5F9AB200926692 /* Main.storyboard */,
+				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
 			);
-			name = Storyboards;
-			path = ..;
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		8E6418EE1D56981700CC4928 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
-				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
-				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
+				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
+				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
+				44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */,
+				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
+				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
+				E561645C1D5F99F800926692 /* ViewController.swift */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		8EF7D51B1D5FBF44007B76DE /* Utils */ = {
+		E561643F1D56781700926692 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */,
+				44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */,
+				8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */,
+				E56164451D56818500926692 /* ProviderInfoView.swift */,
+				E561644F1D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift */,
+				E56164431D5678B700926692 /* ProviderTableViewCell.swift */,
+				44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */,
+				E56164531D5F78BB00926692 /* SortCategoryView.swift */,
 			);
-			name = Utils;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		97D60F08BBADAB517D96159C /* Pods */ = {
+		E56164571D5F7BC000926692 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */,
-				438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */,
+				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
+				E56164471D5689A900926692 /* ProviderInfoView.xib */,
+				E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */,
+				44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */,
+				E56164551D5F78D500926692 /* SortCategoryView.xib */,
 			);
-			name = Pods;
+			name = Xibs;
+			sourceTree = "<group>";
+		};
+		E56164611D6125F100926692 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */,
+				E56164641D689FFC00926692 /* UIColor+LunrColors.swift */,
+				E56164621D61260700926692 /* UIView+Utils.swift */,
+				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
+				E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		E561646C1D6A458C00926692 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				44986F181D6A372800C6D0A7 /* Provider.swift */,
+				8EF7D51C1D5FC5FF007B76DE /* UserService.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +275,6 @@
 				8E6418C81D55585A00CC4928 /* Resources */,
 				377C4CBFA0D48DE18BCAA486 /* [CP] Embed Pods Frameworks */,
 				BE777C20A5A947303BEE3501 /* [CP] Copy Pods Resources */,
-				0D104EB357B90EF55702A0AB /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -271,34 +325,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				44986F231D6A372800C6D0A7 /* Randall.storyboard in Resources */,
+				8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */,
 				8E6418EB1D56914E00CC4928 /* Bobby.storyboard in Resources */,
+				E56164601D5F9AB200926692 /* Main.storyboard in Resources */,
 				8E6418E11D56780100CC4928 /* Login.storyboard in Resources */,
+				E56164671D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib in Resources */,
+				E56164561D5F78D500926692 /* SortCategoryView.xib in Resources */,
 				8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */,
 				8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */,
 				44986F251D6A372800C6D0A7 /* ReviewTableViewCell.xib in Resources */,
 				44986F1F1D6A372800C6D0A7 /* DetailTableViewCell.xib in Resources */,
-				8E6418D31D55585A00CC4928 /* Main.storyboard in Resources */,
+				8E6418D31D55585A00CC4928 /* (null) in Resources */,
+				E56164481D5689A900926692 /* ProviderInfoView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0D104EB357B90EF55702A0AB /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lunr/Pods-Lunr-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		377C4CBFA0D48DE18BCAA486 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -351,42 +395,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E561645B1D5F972700926692 /* AppDelegate.swift in Sources */,
 				8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */,
 				8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */,
+				8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */,
+				E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				44986F201D6A372800C6D0A7 /* Provider.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				44986F211D6A372800C6D0A7 /* ProviderDetailViewController.swift in Sources */,
 				44986F241D6A372800C6D0A7 /* ReviewTableViewCell.swift in Sources */,
-				44986F221D6A372800C6D0A7 /* ProviderInfoView.swift in Sources */,
 				8EF7D51D1D5FC5FF007B76DE /* UserService.swift in Sources */,
-				8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */,
 				8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */,
+				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,
 				8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */,
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
 				44986F1E1D6A372800C6D0A7 /* DetailTableViewCell.swift in Sources */,
+				E561644C1D57A2D300926692 /* ProviderListViewController.swift in Sources */,
+				E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */,
+				E56164631D61260700926692 /* UIView+Utils.swift in Sources */,
+				E561645D1D5F99F800926692 /* ViewController.swift in Sources */,
+				E56164511D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift in Sources */,
+				E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */,
+				E56164461D56818500926692 /* ProviderInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8E6418D11D55585A00CC4928 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8E6418D21D55585A00CC4928 /* Base */,
-			);
-			name = Main.storyboard;
-			path = Lunr;
-			sourceTree = "<group>";
-		};
 		8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				8E6418D71D55585A00CC4928 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		E561645E1D5F9AB200926692 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E561645F1D5F9AB200926692 /* Base */,
+			);
+			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -477,7 +531,7 @@
 		};
 		8E6418DD1D55585A00CC4928 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */;
+			baseConfigurationReference = 5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -494,7 +548,7 @@
 		};
 		8E6418DE1D55585A00CC4928 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */;
+			baseConfigurationReference = E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

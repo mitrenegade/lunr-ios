@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Lunr
-//
-//  Created by Bobby Ren on 8/5/16.
-//  Copyright © 2016 Bobby Ren. All rights reserved.
-//
-
 import UIKit
 import Parse
 import ParseFacebookUtilsV4
@@ -26,25 +18,25 @@ let QB_ACCOUNT_KEY = ""
 let QB_AUTH_SECRET = "DptKZexBTDjhNt3"
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
 
-        // Parse
         let configuration = ParseClientConfiguration {
             $0.applicationId = PARSE_APP_ID
             $0.clientKey = PARSE_CLIENT_KEY
             $0.server = LOCAL_TEST ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
         }
+
         Parse.initializeWithConfiguration(configuration)
 
         // Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
-        
+
         // QuickBlox
         QBSettings.setApplicationID(QB_APP_ID)
         QBSettings.setAuthKey(QB_AUTH_KEY)
@@ -60,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }) { (error) in
             print("Error \(error)")
         }
-        
+
         return true
     }
 
@@ -74,13 +66,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
+    }
+
+    func applicationWillEnterForeground(application: UIApplication) {
+        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -96,43 +88,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Login
         if let _ = PFUser.currentUser() {
             // user is logged in
-            self.goToMenu()
+//            self.goToMenu()
+            self.goToProviderList()
         }
         else {
             self.goToSignupLogin()
         }
     }
-    
+
     func goToSignupLogin() {
         let controller = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("FacebookViewController") as! FacebookViewController
         self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
         self.listenFor("login:success", action: #selector(didLogin), object: nil)
     }
-    
+
     func didLogin() {
         print("logged in")
         self.stopListeningFor("login:success")
-        
+
         // first dismiss login/signup flow
         self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
             // load main flow
-            self.goToMenu()
+            //self.goToMenu()
+            self.goToProviderList()
         })
     }
-    
+
     func goToMenu() {
-        guard let nav: UINavigationController = UIStoryboard(name: "Bobby", bundle: nil).instantiateInitialViewController() as? UINavigationController else {
-            return
-        }
-        
+        guard let nav = UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController() as? UINavigationController else { return }
+
         self.window?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
         self.listenFor("logout:success", action: #selector(didLogout), object: nil)
     }
-    
+
+    func goToProviderList() {
+        guard let nav = UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController() as? UINavigationController else { return }
+
+        self.window?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
+    }
+
     func didLogout() {
         print("logged out")
         self.stopListeningFor("logout:Success")
-        
+
         // first dismiss main app
         self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
             // load main flow
@@ -141,4 +139,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
