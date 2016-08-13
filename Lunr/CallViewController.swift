@@ -51,6 +51,10 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // for now, no calling
+        self.buttonCall.enabled = false
+        
         // Do any additional setup after loading the view, typically from a nib.
         guard let target = targetUser else {
             return // this error will be handled on viewDidAppear

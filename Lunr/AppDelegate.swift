@@ -13,7 +13,7 @@ import FBSDKCoreKit
 import Quickblox
 
 let LOCAL_TEST = false
-let TEST = true
+let TEST = false
 
 let PARSE_APP_ID: String = "KAu5pzPvmjrFNdIeaB5zYb2la2Fs2zRi2JyuQZnA"
 let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
