@@ -38,19 +38,17 @@ extension PFUser {
     }
 
     class func queryProviders(completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
-        // MARK: - load from web - should be ultimate truth
-        func queryUsers() {
-            let query = PFUser.query()
-            query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
-            query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-                if let error = error {
-                    errorHandler(error: error)
-                    return
-                }
-                
-                let users = results as? [PFUser]
-                completionHandler(providers: users)
+        let query = PFUser.query()
+        query?.whereKeyExists("type")
+        query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
+        query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if let error = error {
+                errorHandler(error: error)
+                return
             }
+            
+            let users = results as? [PFUser]
+            completionHandler(providers: users)
         }
     }
 
