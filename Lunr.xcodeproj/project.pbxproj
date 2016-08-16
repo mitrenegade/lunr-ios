@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */; };
 		8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CD1D55585A00CC4928 /* AppDelegate.swift */; };
 		8E6418D01D55585A00CC4928 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CF1D55585A00CC4928 /* ViewController.swift */; };
 		8E6418D31D55585A00CC4928 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D11D55585A00CC4928 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 		2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
 		438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
 		7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lunr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Utils.swift"; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E6418CF1D55585A00CC4928 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8E4DE0BB1D62B7460013C06C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		8E6418C11D55585900CC4928 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +98,7 @@
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
 				8E6418EF1D56E8FA00CC4928 /* Constants.swift */,
 				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
+				8E4DE0BB1D62B7460013C06C /* Services */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
 				8E6418D91D55585A00CC4928 /* Info.plist */,
@@ -256,6 +267,7 @@
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */,
+				8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */,
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
