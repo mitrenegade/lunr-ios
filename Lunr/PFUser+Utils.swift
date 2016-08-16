@@ -60,6 +60,9 @@ extension PFUser {
     }
     
     // Client only
+    var payment: PFObject? {
+        return nil // TODO: relationship for another PFObject class
+    }
     
     // Provider only
     var rating: Double {
