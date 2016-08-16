@@ -54,6 +54,36 @@ extension PFUser {
         }
     }
 
-    // Client specific calls
+    // Convenience accessors
+    var name: String? {
+        return self.username
+    }
+    
+    // Client only
+    
+    // Provider only
+    var rating: Double {
+        return self.objectForKey("rating") as? Double ?? 0 // TODO: calculate rating based on all ratings?
+    }
+    
+    var reviews: [PFObject] {
+        return [] // todo: relationship with another PFObject class
+    }
+    
+    var ratePerMin: Double {
+        return self.objectForKey("ratePerMin") as? Double ?? 0
+    }
+    
+    var available: Bool {
+        return self.objectForKey("available") as? Bool ?? false
+    }
+    
+    var skills: [String] {
+        return []
+    }
+    
+    var info: String {
+        return self.objectForKey("info") as? String ?? ""
+    }
 }
 
