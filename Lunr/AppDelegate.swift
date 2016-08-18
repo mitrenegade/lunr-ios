@@ -39,6 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
         
+        // This call demonstrates the way to use services
+        PFUser.queryProviders({ (providers) in
+            print("Providers received: \(providers)")
+        }) { (error) in
+            print("Error \(error)")
+        }
+        
         return true
     }
 
