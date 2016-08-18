@@ -15,28 +15,28 @@ enum UserType: String {
     // todo: Plumber, Electrician, Mechanic, etc?
 }
 
-extension PFUser {
-    var displayString: String {
-        if let name = self.username {
-            return name
-        }
-        else if let email = self.email {
-            return email
-        }
-        
-        if self.isProvider() {
-            return "a provider"
-        }
-        return "a customer"
-    }
-    
-    func isProvider() -> Bool {
-        if let type = self.objectForKey("type") as? String {
-            return type.lowercaseString != UserType.Client.rawValue.lowercaseString
-        }
-        return false // users created without a provider type are clients
-    }
+protocol User {
+    var name: String? { get }
+    var displayString: String { get }
+    var type: UserType { get }
+}
 
+protocol Provider {
+    var rating: Double? { get }
+    var info: String? { get }
+    var ratePerMin: Double? { get }
+    var available: Bool { get }
+    
+    var reviews: [PFObject]? { get }
+    var skills: [String]? { get }
+}
+
+protocol Client {
+    var payment: PFObject? { get }
+}
+
+// MARK: Query/web APIs
+extension PFUser {
     class func queryProviders(completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()
         query?.whereKeyExists("type")
@@ -51,40 +51,78 @@ extension PFUser {
             completionHandler(providers: users)
         }
     }
+}
 
-    // Convenience accessors
+extension PFUser: User {
     var name: String? {
         return self.username
     }
+
+    var displayString: String {
+        get {
+            if let name = self.username {
+                return name
+            }
+            else if let email = self.email {
+                return email
+            }
+            
+            if self.type == .Provider {
+                return "a provider"
+            }
+            
+            return "a client"
+        }
+    }
     
+    var type: UserType {
+        get {
+            let types: [UserType] = [.Provider, .Client]
+            for type in types {
+                if type.rawValue == self.objectForKey("type") as? String {
+                    return type
+                }
+            }
+            
+            return .Client
+        }
+    }
+}
+
+extension PFUser: Client {
     // Client only
     var payment: PFObject? {
         return nil // TODO: relationship for another PFObject class
     }
     
+}
+
+extension PFUser: Provider {
+
     // Provider only
-    var rating: Double {
-        return self.objectForKey("rating") as? Double ?? 0 // TODO: calculate rating based on all ratings?
+    var rating: Double? {
+        return self.objectForKey("rating") as? Double // TODO: calculate rating based on all ratings?
     }
     
-    var reviews: [PFObject] {
-        return [] // todo: relationship with another PFObject class
+    var info: String? {
+        return self.objectForKey("info") as? String
     }
     
-    var ratePerMin: Double {
-        return self.objectForKey("ratePerMin") as? Double ?? 0
+    var ratePerMin: Double? {
+        return self.objectForKey("ratePerMin") as? Double
     }
     
     var available: Bool {
         return self.objectForKey("available") as? Bool ?? false
     }
     
-    var skills: [String] {
+    var reviews: [PFObject]? {
+        return [] // todo: relationship with another PFObject class
+    }
+    
+    var skills: [String]? {
         return []
     }
     
-    var info: String {
-        return self.objectForKey("info") as? String ?? ""
-    }
 }
 
