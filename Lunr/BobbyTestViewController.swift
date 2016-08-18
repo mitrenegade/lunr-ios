@@ -49,7 +49,7 @@ class BobbyTestViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             if let users = result as? [PFUser] {
                 for user in users {
-                    if user.isProvider() {
+                    if user.type == .Provider {
                         self.targetUser = user
                         self.buttonCall.enabled = true
                         self.buttonCall.setTitle("Call \(user.displayString)", forState: .Normal)
@@ -69,12 +69,12 @@ class BobbyTestViewController: UIViewController {
     }
     
     func initiateCall() {
-        self.performSegueWithIdentifier("GoToCallUser", sender: self.targetUser)
+        self.performSegueWithIdentifier(Segue.Call.GoToCallUser.rawValue, sender: self.targetUser)
     }
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GoToCallUser" {
+        if segue.identifier == Segue.Call.GoToCallUser.rawValue {
             if let user: PFUser = sender as? PFUser {
                 let controller: CallViewController = segue.destinationViewController as! CallViewController
                 controller.targetUser = user

@@ -21,7 +21,6 @@
 		8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EC1D56921F00CC4928 /* SplashViewController.swift */; };
 		8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EF1D56E8FA00CC4928 /* Constants.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
-		8EF7D51A1D5FBF37007B76DE /* PFUser+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7D5191D5FBF37007B76DE /* PFUser+Utils.swift */; };
 		8EF7D51D1D5FC5FF007B76DE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7D51C1D5FC5FF007B76DE /* UserService.swift */; };
 		E1C39C731C72929F935E4358 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */; };
 /* End PBXBuildFile section */
@@ -62,7 +61,6 @@
 		8E9BB75C1D5EC423001FD26B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		8E9BB7621D5ECA18001FD26B /* CallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lunr-Bridging-Header.h"; sourceTree = "<group>"; };
-		8EF7D5191D5FBF37007B76DE /* PFUser+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Utils.swift"; sourceTree = "<group>"; };
 		8EF7D51C1D5FC5FF007B76DE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +102,7 @@
 		8E4DE0BB1D62B7460013C06C /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8EF7D51C1D5FC5FF007B76DE /* UserService.swift */,
 				8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */,
 			);
 			name = Services;
@@ -130,7 +129,6 @@
 		8E6418CC1D55585A00CC4928 /* Lunr */ = {
 			isa = PBXGroup;
 			children = (
-				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
 				8E6418EE1D56981700CC4928 /* Controllers */,
 				8E6418DF1D5677E300CC4928 /* Storyboards */,
 				8EF7D51B1D5FBF44007B76DE /* Utils */,
@@ -171,10 +169,6 @@
 		8EF7D51B1D5FBF44007B76DE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				8EF7D51C1D5FC5FF007B76DE /* UserService.swift */,
-				8E6418EF1D56E8FA00CC4928 /* Constants.swift */,
-				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
-				8EF7D5191D5FBF37007B76DE /* PFUser+Utils.swift */,
 				8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */,
 			);
 			name = Utils;
@@ -318,7 +312,6 @@
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
-				8EF7D51A1D5FBF37007B76DE /* PFUser+Utils.swift in Sources */,
 				8EF7D51D1D5FC5FF007B76DE /* UserService.swift in Sources */,
 				8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */,
 				8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */,
