@@ -20,23 +20,31 @@ private extension Selector {
 }
 
 enum CallState {
-    case None
-    case IncomingCallSameUser
-    case IncomingCallDifferentUser
-    case OutgoingCall
-    case CurrentCall
+    case NoSession // session token to QuickBlox does not exist or expired
+    case Disconnected // no chatroom/webrtc joined
+    case Joining // currently joining the chatroom
+    case Waiting // in the chat but no one else is; sending call signal
+    case Connected // both people are in
 }
 
-class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate {
+class CallViewController: UIViewController {
 
-    var targetUser: PFUser?
-
-    var callingUser: QBUUser?
+    var targetPFUser: PFUser? {
+        didSet {
+            self.loadUser()
+        }
+    }
+    var targetQBUUser: QBUUser? {
+        didSet {
+            self.refreshState()
+        }
+    }
+    
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
     
     var videoCapture: QBRTCCameraCapture?
-    var state: CallState = .None
+    var state: CallState = .Disconnected
     
     // remote video
     @IBOutlet weak var remoteVideoView: QBRTCRemoteVideoView!
@@ -54,78 +62,15 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
         
         // for now, no calling
         self.buttonCall.enabled = false
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        guard let target = targetUser else {
-            return // this error will be handled on viewDidAppear
-        }
-        
-        UserService.loadUsersWithCompletion { (results) in
-            guard let users = results else {
-                return
-            }
-            
-            for user in users {
-                if let _ = user.login where user.login == target.objectId! {
-                    self.callingUser = user
-                }
-            }
-            
-            if let _ = self.callingUser {
-                self.simpleAlert("Calling enabled", message: "Click to call \(target.displayString)", completion: {
-                })
-            }
-            else {
-                self.simpleAlert("Calling disabled", message: "Could not find QBUUser with id \(target.objectId)", completion: {
-                    self.navigationController?.popViewControllerAnimated(true)
-                })
-            }
-        }
+        QBRTCClient.initializeRTC()
+        QBRTCClient.instance().addDelegate(self)
+
+        QBChat.instance().addDelegate(self)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard self.targetUser != nil else {
-            print("no user selected. handle this error!")
-            self.simpleAlert("No user selected", message: "You cannot make a call without selecting a recipient.", completion: {
-                self.navigationController?.popViewControllerAnimated(true)
-            })
-            return
-        }
-        
-        if !QBChat.instance().isConnected {
-            QBRTCClient.initializeRTC()
-            QBRTCClient.instance().addDelegate(self)
-            
-            // these should not happen!
-            guard let qbUser = QBSession.currentSession().currentUser else {
-                print("No qbUser, handle this error!")
-                self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
-                    self.navigationController?.popViewControllerAnimated(true)
-                })
-                return
-            }
-            
-            guard let pfUser = PFUser.currentUser() else {
-                self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
-                    self.navigationController?.popViewControllerAnimated(true)
-                })
-                return
-            }
-            
-            qbUser.password = pfUser.objectId!
-            
-            QBChat.instance().addDelegate(self)
-            QBChat.instance().connectWithUser(qbUser) { (error) in
-                if error != nil {
-                    print("error: \(error)")
-                }
-                else {
-                    print("login to chat succeeded")
-                }
-            }
-        }
         self.refreshState()
     }
 
@@ -134,81 +79,71 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - QBChatDelegate - initial connection
-    func chatDidNotConnectWithError(error: NSError?) {
-        print("error: \(error)")
-    }
-    
-    func chatDidConnect() {
-        print("didconnect")
+    func refreshSession() {
+        // if for some reason we are not connected to QBChat
+        
+        guard let qbUser = QBSession.currentSession().currentUser else {
+            print("No qbUser, handle this error!")
+            self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
+                self.navigationController?.popViewControllerAnimated(true)
+            })
+            return
+        }
+        
+        guard let pfUser = PFUser.currentUser() else {
+            self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
+                self.navigationController?.popViewControllerAnimated(true)
+            })
+            return
+        }
+        
+        qbUser.password = pfUser.objectId!
+        
+        QBChat.instance().connectWithUser(qbUser) { (error) in
+            if error != nil {
+                print("error: \(error)")
+                self.simpleAlert("Failed user session", message: "Please log in again.", completion: {
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
+            }
+            else {
+                print("login to chat succeeded")
+                self.refreshState()
+            }
+        }
     }
 
-    // MARK: - Call state
-    func updateState(newState: CallState) {
-        self.state = newState
-        self.refreshState()
-    }
-    
+    // UI states
     func refreshState() {
-        if self.state == .None {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: .didClickBack)
-
-            self.buttonCall.setTitle("Call", forState: .Normal)
-            
-//            self.labelRemote.text = "Initiate call with \(self.targetUser!.displayString)"
+        if !QBChat.instance().isConnected {
+            self.refreshSession() // in case chat user is not connected
+            self.state = .NoSession
+            return
         }
-        else if self.state == .OutgoingCall {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: .didClickBack)
-
-            self.buttonCall.setTitle("Cancel", forState: .Normal)
-
-//            self.labelRemote.text = "Waiting for \(self.targetUser!.displayString)"
+        
+        if self.targetQBUUser == nil {
+            self.state = .Disconnected
+            self.buttonCall.enabled = false
+            self.loadUser()
+            return
         }
-        else if self.state == .IncomingCallSameUser {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Decline", style: .Done, target: self, action: #selector(CallViewController.didClickBack))
-
-            self.buttonCall.setTitle("Answer", forState: .Normal)
-
-//            self.labelRemote.text = "Call from \(self.targetUser!.displayString). Answer?"
-        }
-        else if self.state == .IncomingCallDifferentUser {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Decline", style: .Done, target: self, action: .didClickBack)
-
-            self.buttonCall.setTitle("Answer", forState: .Normal)
-
-//            self.labelRemote.text = "Call from \(self.targetUser!.displayString). Answer?"
-            
-            // uses incomingUser and switches current user views
-            // TODO: different label than labelRemote?
-        }
-        else if self.state == .CurrentCall {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Decline", style: .Done, target: self, action: .didClickBack)
-
-//            self.labelRemote.text = "In call with \(self.targetUser!.displayString)"
-
-            self.buttonCall.setTitle("Hang up", forState: .Normal)
-        }
-        else {
-            print("invalid state")
+        
+        self.state = .Disconnected
+        self.buttonCall.enabled = true
+    }
+    
+    func loadUser() {
+        if let pfUser = targetPFUser {
+            UserService.getQBUUserFor(pfUser, completion: { (result) in
+                self.targetQBUUser = result
+            })
         }
     }
     
     // Back button action on navigation item
     func didClickBack() {
-        if self.state == .None {
+        if self.state == .Disconnected {
             self.navigationController?.popViewControllerAnimated(true)
-        }
-        else if self.state == .OutgoingCall {
-            self.endCall()
-        }
-        else if self.state == .IncomingCallSameUser {
-            self.rejectCall()
-        }
-        else if self.state == .IncomingCallDifferentUser {
-            self.rejectCall()
-        }
-        else if self.state == .CurrentCall {
-            self.endCall()
         }
         else {
             print("invalid state")
@@ -217,29 +152,19 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
     
     // Main action button
     @IBAction func didClickButton(button: UIButton) {
-        if self.state == .None {
+        if self.state == .Disconnected {
             self.startCall()
-        }
-        else if self.state == .OutgoingCall {
-            self.endCall()
-        }
-        else if self.state == .IncomingCallSameUser {
-            self.acceptCall()
-        }
-        else if self.state == .IncomingCallDifferentUser {
-            self.acceptCall()
-        }
-        else if self.state == .CurrentCall {
-            self.endCall()
         }
         else {
             print("invalid state")
         }
     }
-    
-    // MARK: - User actions
+}
+
+// MARK: - Call actions
+extension CallViewController {
     func startCall() {
-        guard let user = self.callingUser else {
+        guard let user = self.targetQBUUser else {
             self.simpleAlert("Calling disabled", message: "Could not find QBUUser to call", completion: {
             })
             return
@@ -259,64 +184,51 @@ class CallViewController: UIViewController, QBRTCClientDelegate, QBChatDelegate 
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: #selector(CallViewController.endCall))
     }
-
+    
     func endCall() {
         self.session?.hangUp(nil)
         
         // TODO: end video stream
     }
-    
-    func acceptCall() {
-        if self.incomingSession != nil {
-            self.session = self.incomingSession
-            self.incomingSession = nil
+}
 
-            // TODO
-        }
-        
-        self.session?.acceptCall(nil)
-        self.loadVideoView()
-        
-        self.updateState(.CurrentCall)
+extension CallViewController: QBChatDelegate{
+    // MARK: - QBChatDelegate - initial connection
+    func chatDidNotConnectWithError(error: NSError?) {
+        print("error: \(error)")
     }
     
-    func rejectCall() {
-        // reject incoming call
-        self.incomingSession?.rejectCall(nil)
+    func chatDidConnect() {
+        print("didconnect")
     }
-    
+}
+
+extension CallViewController: QBRTCClientDelegate {
     // MARK: - QBRTCClientDelegate
     //
     // MARK: Outbound connections
     func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
         print("call accepted")
         
-        self.updateState(.CurrentCall)
     }
     
     func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
         print("call rejected")
+
         self.endCall()
     }
     
-    // MARK: Inbound connections
+    // MARK: Inbound connections - only for provider?
     func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
         self.incomingSession = session
         if (self.session != nil) {
             // automatically reject call if a session exists
-            self.rejectCall()
             return
         }
 
         let userId = self.incomingSession!.initiatorID as UInt
         QBRequest.userWithID(userId, successBlock: { (response, user) in
-            if userId == self.callingUser!.ID {
-                self.updateState(.IncomingCallSameUser)
-            }
-            else {
-                self.callingUser = user
-                self.updateState(.IncomingCallDifferentUser)
-            }
+            print("Incoming call from a known user with id \(user?.ID)")
         }) { (response) in
             print("UserID could not be loaded")
         }

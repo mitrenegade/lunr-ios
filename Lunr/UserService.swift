@@ -13,13 +13,34 @@ import Quickblox
 
 class UserService: NSObject {
 
-    // TODO: load QBUUser for given user based on pfObjectId
+    // load a QBUUser based on a PFUser
     class func getQBUUserFor(user: PFUser, completion: ((result: QBUUser?)->Void)) {
-        completion(result: nil)
+        guard let objectId = user.objectId else {
+            completion(result: nil)
+            return
+        }
+
+        QBRequest.userWithLogin(objectId, successBlock: { (response, user) in
+                completion(result: user)
+            }) { (response) in
+                completion(result: nil)
+        }
+
+        /*
+        self.loadUsersWithCompletion { (results) in
+            guard let users = results, objectId = user.objectId else {
+                completion(result: nil)
+                return
+            }
+
+            let matches = users.filter { $0.login == objectId };
+            completion(result: matches.first)
+        }
+        */
     }
     
-    // Loads all users from quickblox for now
-    class func loadUsersWithCompletion(completion: ((results: [QBUUser]?)->Void)) {
+    // Loads all users from quickblox (paged)
+    private class func loadUsersWithCompletion(completion: ((results: [QBUUser]?)->Void)) {
         let responsePage: QBGeneralResponsePage = QBGeneralResponsePage(currentPage: 0, perPage: 100)
         QBRequest.usersForPage(responsePage, successBlock: { (response, responsePage, users) in
             print("users received: \(users)")
