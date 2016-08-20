@@ -13,8 +13,9 @@ import Quickblox
 
 class UserService: NSObject {
     static let sharedInstance: UserService = UserService()
+    var isRefreshingSession: Bool = false
     
-    // MARK: QuickBlox
+    // MARK: Create User
     func createQBUser(parseUserId: String, completion: ((user: QBUUser?)->Void)) {
         let user = QBUUser()
         user.login = parseUserId
@@ -28,6 +29,7 @@ class UserService: NSObject {
         }
     }
     
+    // Mark: Login user
     func loginQBUser(parseUserId: String, completion: ((success: Bool, error: NSError?)->Void)) {
         QBRequest.logInWithUserLogin(parseUserId, password: parseUserId, successBlock: { (response, user) in
             print("results: \(user)")
@@ -57,6 +59,38 @@ class UserService: NSObject {
             }
             else {
                 completion(success: false, error: nil)
+            }
+        }
+    }
+    
+    // MARK: Refresh user session
+    func refreshSession(completion: ((success: Bool) -> Void)?) {
+        // if not connected to QBChat. For example at startup
+        // TODO: make this part of the Session service
+        guard !isRefreshingSession else { return }
+        isRefreshingSession = true
+        
+        guard let qbUser = QBSession.currentSession().currentUser else {
+            print("No qbUser, handle this error!")
+            completion?(success: false)
+            return
+        }
+        
+        guard let pfUser = PFUser.currentUser() else {
+            completion?(success: false)
+            return
+        }
+        
+        qbUser.password = pfUser.objectId!
+        QBChat.instance().connectWithUser(qbUser) { (error) in
+            self.isRefreshingSession = false
+            if error != nil {
+                print("error: \(error)")
+                completion?(success: false)
+            }
+            else {
+                print("login to chat succeeded")
+                completion?(success: true)
             }
         }
     }

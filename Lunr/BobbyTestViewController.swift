@@ -41,6 +41,7 @@ class BobbyTestViewController: UIViewController {
     }
     
     func loadUsers() {
+        // TODO: this method will be used to populate a tableview of providers
         self.activityIndicator.startAnimating()
         self.buttonCall.setTitle(nil, forState: .Normal)
         self.buttonCall.enabled = false
@@ -77,7 +78,7 @@ class BobbyTestViewController: UIViewController {
         if segue.identifier == Segue.Call.GoToCallUser.rawValue {
             if let user: PFUser = sender as? PFUser {
                 let controller: CallViewController = segue.destinationViewController as! CallViewController
-                controller.targetUser = user
+                controller.targetPFUser = user
             }
         }
     }

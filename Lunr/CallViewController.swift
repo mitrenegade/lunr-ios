@@ -28,7 +28,6 @@ enum CallState {
 }
 
 class CallViewController: UIViewController {
-
     var targetPFUser: PFUser? {
         didSet {
             self.loadUser()
@@ -64,8 +63,25 @@ class CallViewController: UIViewController {
         self.buttonCall.enabled = false
         QBRTCClient.initializeRTC()
         QBRTCClient.instance().addDelegate(self)
+        self.state = .Disconnected
 
         QBChat.instance().addDelegate(self)
+        if !QBChat.instance().isConnected {
+            self.state = .NoSession // on startup, button is disabled
+            
+            UserService.sharedInstance.refreshSession({ (success) in
+                if !success {
+                    self.simpleAlert("Failed user session", message: "Please log in again.", completion: {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    })
+                }
+                else {
+                    self.state = .Disconnected
+                    self.refreshState()
+                }
+            })
+        }
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -79,57 +95,22 @@ class CallViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func refreshSession() {
-        // if for some reason we are not connected to QBChat
-        
-        guard let qbUser = QBSession.currentSession().currentUser else {
-            print("No qbUser, handle this error!")
-            self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
-                self.navigationController?.popViewControllerAnimated(true)
-            })
-            return
-        }
-        
-        guard let pfUser = PFUser.currentUser() else {
-            self.simpleAlert("Invalid user session", message: "Please log in again.", completion: {
-                self.navigationController?.popViewControllerAnimated(true)
-            })
-            return
-        }
-        
-        qbUser.password = pfUser.objectId!
-        
-        QBChat.instance().connectWithUser(qbUser) { (error) in
-            if error != nil {
-                print("error: \(error)")
-                self.simpleAlert("Failed user session", message: "Please log in again.", completion: {
-                    self.navigationController?.popViewControllerAnimated(true)
-                })
-            }
-            else {
-                print("login to chat succeeded")
-                self.refreshState()
-            }
-        }
-    }
-
     // UI states
     func refreshState() {
-        if !QBChat.instance().isConnected {
-            self.refreshSession() // in case chat user is not connected
-            self.state = .NoSession
-            return
-        }
         
-        if self.targetQBUUser == nil {
-            self.state = .Disconnected
+        switch state {
+        case .NoSession:
             self.buttonCall.enabled = false
-            self.loadUser()
-            return
+            self.buttonCall.alpha = 0.5
+        case .Disconnected:
+            self.buttonCall.enabled = true
+            self.buttonCall.alpha = 1
+        case .Joining:
+            self.buttonCall.setTitle("Calling...", forState: .Normal)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: #selector(CallViewController.endCall))
+        default:
+            break
         }
-        
-        self.state = .Disconnected
-        self.buttonCall.enabled = true
     }
     
     func loadUser() {
@@ -179,10 +160,8 @@ extension CallViewController {
         self.session = newSession
         self.session!.startCall(nil)
         
-        self.buttonCall.setTitle("Calling...", forState: .Normal)
-        self.buttonCall.enabled = false
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: #selector(CallViewController.endCall))
+        self.state = .Joining
+        self.refreshState()
     }
     
     func endCall() {
