@@ -94,7 +94,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 print("results: \(user)")
-                self.notify("login:success", object: nil, userInfo: nil)
+//                self.notify("login:success", object: nil, userInfo: nil)
+                self.loginUser()
             }
         }
     }
@@ -117,23 +118,25 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         self.count=self.count+1
 
         PFUser.logInWithUsernameInBackground(email, password: password) { (user, error) in
-            if (error != nil) {
+            guard error == nil else {
                 print("Error: \(error)")
                 self.simpleAlert("Could not log in", defaultMessage: nil, error: error)
+                return
             }
-            else if let user = user {
-                print("results: \(user)")
-                
-                if let userId = user.objectId {
-                    self.loginQBUser(userId)
+            guard let user = user, userId = user.objectId else {
+                self.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil)
+                return
+            }
+            print("PFUser loaded: \(user)")
+            
+            UserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
+                if success {
+                    self.notify("login:success", object: nil, userInfo: nil)
                 }
                 else {
-                    self.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil)
+                    self.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error)
                 }
-            }
-            else {
-                self.simpleAlert("Could not log in", defaultMessage: "Invalid user", error: nil)
-            }
+            })
         }
     }
     
@@ -144,45 +147,6 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(testStr)
-    }
-
-    // MARK: QuickBlox
-    func createQBUser(parseUserId: String) {
-        let user = QBUUser()
-        user.login = parseUserId
-        user.password = parseUserId
-        QBRequest.signUp(user, successBlock: { (response, user) in
-            print("results: \(user)")
-            self.loginQBUser(parseUserId)
-        }) { (errorResponse) in
-            print("Error: \(errorResponse)")
-            self.simpleAlert("Could not sign up", defaultMessage: "There was a problem setting up your chat account.", error: nil)
-        }
-    }
-    
-    func loginQBUser(parseUserId: String) {
-        QBRequest.logInWithUserLogin(parseUserId, password: parseUserId, successBlock: { (response, user) in
-            print("results: \(user)")
-            user?.password = parseUserId // must set it again to connect to QBChat
-            QBChat.instance().connectWithUser(user!) { (error) in
-                if error != nil {
-                    print("error: \(error)")
-                    self.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: nil)
-                }
-                else {
-                    self.notify("login:success", object: nil, userInfo: nil)
-                }
-            }
-        }) { (errorResponse) in
-            print("Error: \(errorResponse)")
-            
-            if errorResponse.status.rawValue == 401 {
-                self.createQBUser(parseUserId)
-            }
-            else {
-                self.simpleAlert("Could not log in", defaultMessage: "There was a problem logging into your chat account.",  error: nil)
-            }
-        }
     }
 
     // MARK: - UITextFieldDelegate

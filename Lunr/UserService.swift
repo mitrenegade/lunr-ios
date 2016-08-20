@@ -12,6 +12,54 @@ import Parse
 import Quickblox
 
 class UserService: NSObject {
+    static let sharedInstance: UserService = UserService()
+    
+    // MARK: QuickBlox
+    func createQBUser(parseUserId: String, completion: ((user: QBUUser?)->Void)) {
+        let user = QBUUser()
+        user.login = parseUserId
+        user.password = parseUserId
+        QBRequest.signUp(user, successBlock: { (response, user) in
+            print("results: \(user)")
+            completion(user: user)
+        }) { (errorResponse) in
+            print("Error: \(errorResponse)")
+            completion(user: nil)
+        }
+    }
+    
+    func loginQBUser(parseUserId: String, completion: ((success: Bool, error: NSError?)->Void)) {
+        QBRequest.logInWithUserLogin(parseUserId, password: parseUserId, successBlock: { (response, user) in
+            print("results: \(user)")
+            user?.password = parseUserId // must set it again to connect to QBChat
+            QBChat.instance().connectWithUser(user!) { (error) in
+                if error != nil {
+                    print("error: \(error)")
+                    completion(success: false, error: error)
+                }
+                else {
+                    completion(success: true, error: nil)
+                }
+            }
+        }) { (errorResponse) in
+            print("Error: \(errorResponse)")
+            
+            if errorResponse.status.rawValue == 401 {
+                // try creating, then logging in again
+                self.createQBUser(parseUserId, completion: { (user) in
+                    if let _ = user {
+                        self.loginQBUser(parseUserId, completion: completion)
+                    }
+                    else {
+                        completion(success: false, error: nil)
+                    }
+                })
+            }
+            else {
+                completion(success: false, error: nil)
+            }
+        }
+    }
 
     // load a QBUUser based on a PFUser
     class func getQBUUserFor(user: PFUser, completion: ((result: QBUUser?)->Void)) {
