@@ -81,6 +81,10 @@ class CallViewController: UIViewController {
                 }
             })
         }
+        else {
+            // load video view
+            self.loadVideoView()
+        }
 
     }
     
@@ -100,15 +104,22 @@ class CallViewController: UIViewController {
         
         switch state {
         case .NoSession:
+            self.labelRemote.text = "No call in session"
             self.buttonCall.enabled = false
             self.buttonCall.alpha = 0.5
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: #selector(didClickBack))
         case .Disconnected:
+            self.labelRemote.text = "Click to start call"
             self.buttonCall.enabled = true
             self.buttonCall.alpha = 1
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: #selector(didClickBack))
         case .Joining:
-            self.buttonCall.setTitle("Calling...", forState: .Normal)
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: #selector(CallViewController.endCall))
+            self.labelRemote.text = "Calling..."
+            self.buttonCall.enabled = false
+            self.buttonCall.alpha = 0.5
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: #selector(didClickBack))
         default:
+            self.labelRemote.text = "Current state: \(state)"
             break
         }
     }
@@ -121,13 +132,17 @@ class CallViewController: UIViewController {
         }
     }
     
+    func close() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     // Back button action on navigation item
     func didClickBack() {
-        if self.state == .Disconnected {
-            self.navigationController?.popViewControllerAnimated(true)
-        }
-        else {
-            print("invalid state")
+        switch state {
+        case .Joining:
+            endCall()
+        default:
+            self.close()
         }
     }
     
@@ -150,9 +165,6 @@ extension CallViewController {
             })
             return
         }
-        
-        // load video view
-        self.loadVideoView()
         
         // create and start session
         let id = user.ID
@@ -223,6 +235,9 @@ extension CallViewController: QBRTCClientDelegate {
         print("Session closed")
         // notified when all remotes are inactive
         self.session = nil
+        
+        self.state = .Disconnected
+        self.refreshState()
     }
     
     // MARK: - Video
