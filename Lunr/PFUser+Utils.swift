@@ -79,7 +79,7 @@ extension PFUser: User {
         get {
             let types: [UserType] = [.Provider, .Client]
             for type in types {
-                if type.rawValue == self.objectForKey("type") as? String {
+                if type.rawValue.lowercaseString == (self.objectForKey("type") as? String)?.lowercaseString {
                     return type
                 }
             }

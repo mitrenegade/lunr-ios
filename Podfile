@@ -11,5 +11,6 @@ pod 'Parse'
 pod 'ParseFacebookUtilsV4'
 pod 'Fabric'
 pod 'Crashlytics'
-
+       pod 'QuickBlox'
+       pod 'Quickblox-WebRTC'
 end
