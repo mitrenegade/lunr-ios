@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44986F1E1D6A372800C6D0A7 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */; };
+		44986F1F1D6A372800C6D0A7 /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */; };
+		44986F201D6A372800C6D0A7 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F181D6A372800C6D0A7 /* Provider.swift */; };
+		44986F211D6A372800C6D0A7 /* ProviderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */; };
+		44986F221D6A372800C6D0A7 /* ProviderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */; };
+		44986F231D6A372800C6D0A7 /* Randall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44986F1B1D6A372800C6D0A7 /* Randall.storyboard */; };
+		44986F241D6A372800C6D0A7 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */; };
+		44986F251D6A372800C6D0A7 /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */; };
 		8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */; };
 		8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CD1D55585A00CC4928 /* AppDelegate.swift */; };
 		8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */; };
@@ -28,6 +36,14 @@
 /* Begin PBXFileReference section */
 		2DABA2EAF4903FAF10101E43 /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
 		438D61AA2D36DB7B873583D4 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
+		44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
+		44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
+		44986F181D6A372800C6D0A7 /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderDetailViewController.swift; sourceTree = "<group>"; };
+		44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInfoView.swift; sourceTree = "<group>"; };
+		44986F1B1D6A372800C6D0A7 /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Randall.storyboard; sourceTree = "<group>"; };
+		44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
 		7280BF70468FB0B74D044B63 /* Pods_Lunr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lunr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Utils.swift"; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +148,14 @@
 				8E6418EE1D56981700CC4928 /* Controllers */,
 				8E6418DF1D5677E300CC4928 /* Storyboards */,
 				8EF7D51B1D5FBF44007B76DE /* Utils */,
+				44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */,
+				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
+				44986F181D6A372800C6D0A7 /* Provider.swift */,
+				44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */,
+				44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */,
+				44986F1B1D6A372800C6D0A7 /* Randall.storyboard */,
+				44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */,
+				44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */,
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
 				8E6418EF1D56E8FA00CC4928 /* Constants.swift */,
 				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
@@ -196,6 +220,7 @@
 				8E6418C81D55585A00CC4928 /* Resources */,
 				377C4CBFA0D48DE18BCAA486 /* [CP] Embed Pods Frameworks */,
 				BE777C20A5A947303BEE3501 /* [CP] Copy Pods Resources */,
+				0D104EB357B90EF55702A0AB /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -245,10 +270,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44986F231D6A372800C6D0A7 /* Randall.storyboard in Resources */,
 				8E6418EB1D56914E00CC4928 /* Bobby.storyboard in Resources */,
 				8E6418E11D56780100CC4928 /* Login.storyboard in Resources */,
 				8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */,
 				8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */,
+				44986F251D6A372800C6D0A7 /* ReviewTableViewCell.xib in Resources */,
+				44986F1F1D6A372800C6D0A7 /* DetailTableViewCell.xib in Resources */,
 				8E6418D31D55585A00CC4928 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +284,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0D104EB357B90EF55702A0AB /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lunr/Pods-Lunr-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		377C4CBFA0D48DE18BCAA486 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -312,12 +355,17 @@
 				8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
+				44986F201D6A372800C6D0A7 /* Provider.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
+				44986F211D6A372800C6D0A7 /* ProviderDetailViewController.swift in Sources */,
+				44986F241D6A372800C6D0A7 /* ReviewTableViewCell.swift in Sources */,
+				44986F221D6A372800C6D0A7 /* ProviderInfoView.swift in Sources */,
 				8EF7D51D1D5FC5FF007B76DE /* UserService.swift in Sources */,
 				8E6418CE1D55585A00CC4928 /* AppDelegate.swift in Sources */,
 				8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */,
 				8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */,
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
+				44986F1E1D6A372800C6D0A7 /* DetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
