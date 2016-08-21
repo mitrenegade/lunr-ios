@@ -8,7 +8,12 @@
 
 import UIKit
 
-enum LoginSegue: String {
-    case GoToLogin = "GoToLogin"
-    case GoToSignup = "GoToSignup"
+enum Segue {
+    enum Login: String {
+        case GoToLogin
+        case GoToSignup
+    }
+    enum Call: String {
+        case GoToCallUser
+    }
 }

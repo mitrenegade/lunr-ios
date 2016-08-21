@@ -5,9 +5,13 @@
 //  Created by Bobby Ren on 5/8/16.
 //  Copyright © 2016 Bobby Ren. All rights reserved.
 //
+// Login credentials are email and password for the user
+// Parse: username and email are both email, password is whatever the user enters
+// QBUser: username and password are parse ID. User should not know about QBUser
 
 import UIKit
 import Parse
+import Quickblox
 
 class EmailViewController: UIViewController, UITextFieldDelegate {
 
@@ -17,6 +21,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var buttonSignup: UIButton!
     
     var isSignup: Bool = false
+    
+    var count = 0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +37,11 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         if !isSignup {
             self.buttonSignup.setTitle("Login with Email", forState: .Normal)
             self.inputConfirmation.hidden = true
-            self.buttonSignup.addTarget(self, action: #selector(loginUser), forControlEvents: .TouchUpInside)
+        }
+        
+        if TEST {
+            self.inputEmail.text = "bobbyren@gmail.com"
+            self.inputPassword.text = "test"
         }
     }
 
@@ -84,7 +94,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 print("results: \(user)")
-                self.notify("login:success", object: nil, userInfo: nil)
+//                self.notify("login:success", object: nil, userInfo: nil)
+                self.loginUser()
             }
         }
     }
@@ -103,15 +114,29 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             return
         }
 
+        print("Login attempt \(self.count)")
+        self.count=self.count+1
+
         PFUser.logInWithUsernameInBackground(email, password: password) { (user, error) in
-            if (error != nil) {
+            guard error == nil else {
                 print("Error: \(error)")
                 self.simpleAlert("Could not log in", defaultMessage: nil, error: error)
+                return
             }
-            else {
-                print("results: \(user)")
-                self.notify("login:success", object: nil, userInfo: nil)
+            guard let user = user, userId = user.objectId else {
+                self.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil)
+                return
             }
+            print("PFUser loaded: \(user)")
+            
+            UserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
+                if success {
+                    self.notify("login:success", object: nil, userInfo: nil)
+                }
+                else {
+                    self.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error)
+                }
+            })
         }
     }
     
@@ -124,4 +149,9 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         return emailTest.evaluateWithObject(testStr)
     }
 
+    // MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
 }
