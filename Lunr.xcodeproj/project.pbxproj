@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B13F1F3906A1F82AC89AAD5 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */; };
+		0C532FE54AC029DB51E4988F /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 572307A68C67BD75B6B20306 /* Pods_Lunr.framework */; };
+		446144FB1D722DB4003B89F8 /* UIColor+LunrColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446144FA1D722DB4003B89F8 /* UIColor+LunrColors.swift */; };
+		446144FD1D723DF3003B89F8 /* CallHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */; };
 		44986F1E1D6A372800C6D0A7 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */; };
 		44986F1F1D6A372800C6D0A7 /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */; };
 		44986F201D6A372800C6D0A7 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F181D6A372800C6D0A7 /* Provider.swift */; };
@@ -17,6 +19,9 @@
 		44986F251D6A372800C6D0A7 /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
 		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
+		44986F271D6A3AC900C6D0A7 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */; };
+		44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */; };
+		44BA7F371D7383A5006B347D /* EditAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */; };
 		8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */; };
 		8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */; };
 		8E6418D31D55585A00CC4928 /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -48,16 +53,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		091410032AD343506F602037 /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
+		125EFF38C99EF2DD17B6E16F /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
+		446144FA1D722DB4003B89F8 /* UIColor+LunrColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+LunrColors.swift"; sourceTree = "<group>"; };
+		446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryCell.swift; sourceTree = "<group>"; };
 		44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailTableViewCell.xib; path = Xibs/DetailTableViewCell.xib; sourceTree = "<group>"; };
 		44986F181D6A372800C6D0A7 /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderDetailViewController.swift; sourceTree = "<group>"; };
-		44986F1B1D6A372800C6D0A7 /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Randall.storyboard; sourceTree = "<group>"; };
+		44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInfoView.swift; sourceTree = "<group>"; };
+		44986F1B1D6A372800C6D0A7 /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Randall.storyboard; path = Lunr/Randall.storyboard; sourceTree = "<group>"; };
 		44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewTableViewCell.xib; path = Xibs/ReviewTableViewCell.xib; sourceTree = "<group>"; };
 		5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
+		44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
+		44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
+		44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoCell.swift; sourceTree = "<group>"; };
+		44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountSettingsViewController.swift; sourceTree = "<group>"; };
+		572307A68C67BD75B6B20306 /* Pods_Lunr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lunr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4DE0BC1D62B9030013C06C /* PFUser+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFUser+Utils.swift"; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B13F1F3906A1F82AC89AAD5 /* Pods_Lunr.framework in Frameworks */,
+				0C532FE54AC029DB51E4988F /* Pods_Lunr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +162,7 @@
 				8E9BB7401D5EC3C0001FD26B /* QuartzCore.framework */,
 				5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */,
 				E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */,
+				572307A68C67BD75B6B20306 /* Pods_Lunr.framework */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -156,8 +172,8 @@
 			children = (
 				8E6418CC1D55585A00CC4928 /* Lunr */,
 				8E6418CB1D55585A00CC4928 /* Products */,
-				1B1E6AD3D6E76069ECF744BF /* Pods */,
-				18844B50C98276A61627ABDB /* Frameworks */,
+				3A903D67657AAF02684865C1 /* Frameworks */,
+				F69CF72E8B42D24D287E4CC5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,6 +193,19 @@
 				8E6418EE1D56981700CC4928 /* Controllers */,
 				8E6418DF1D5677E300CC4928 /* Storyboards */,
 				8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */,
+				8EF7D51B1D5FBF44007B76DE /* Utils */,
+				446144FA1D722DB4003B89F8 /* UIColor+LunrColors.swift */,
+				446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */,
+				44986F161D6A372800C6D0A7 /* DetailTableViewCell.swift */,
+				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
+				44986F181D6A372800C6D0A7 /* Provider.swift */,
+				44986F191D6A372800C6D0A7 /* ProviderDetailViewController.swift */,
+				44986F1A1D6A372800C6D0A7 /* ProviderInfoView.swift */,
+				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
+				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
+				44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */,
+				44986F1C1D6A372800C6D0A7 /* ReviewTableViewCell.swift */,
+				44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */,
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
 				8E6418EF1D56E8FA00CC4928 /* Constants.swift */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
@@ -196,6 +225,7 @@
 				44986F1B1D6A372800C6D0A7 /* Randall.storyboard */,
 				E561645E1D5F9AB200926692 /* Main.storyboard */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
+				44986F1B1D6A372800C6D0A7 /* Randall.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -237,6 +267,11 @@
 				E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */,
 				44986F1D1D6A372800C6D0A7 /* ReviewTableViewCell.xib */,
 				E56164551D5F78D500926692 /* SortCategoryView.xib */,
+		F69CF72E8B42D24D287E4CC5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				091410032AD343506F602037 /* Pods-Lunr.debug.xcconfig */,
+				125EFF38C99EF2DD17B6E16F /* Pods-Lunr.release.xcconfig */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -400,17 +435,23 @@
 				8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */,
 				8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */,
 				E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */,
+				44986F2B1D6BF32D00C6D0A7 /* EditAccountSettings.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
+				44BA7F371D7383A5006B347D /* EditAccountSettingsViewController.swift in Sources */,
+				44986F271D6A3AC900C6D0A7 /* AccountSettingsViewController.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				44986F201D6A372800C6D0A7 /* Provider.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				44986F211D6A372800C6D0A7 /* ProviderDetailViewController.swift in Sources */,
+				446144FB1D722DB4003B89F8 /* UIColor+LunrColors.swift in Sources */,
+				44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */,
 				44986F241D6A372800C6D0A7 /* ReviewTableViewCell.swift in Sources */,
 				8EF7D51D1D5FC5FF007B76DE /* UserService.swift in Sources */,
 				8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */,
 				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,
 				8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */,
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
+				446144FD1D723DF3003B89F8 /* CallHistoryCell.swift in Sources */,
 				44986F1E1D6A372800C6D0A7 /* DetailTableViewCell.swift in Sources */,
 				E561644C1D57A2D300926692 /* ProviderListViewController.swift in Sources */,
 				E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */,

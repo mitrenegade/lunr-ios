@@ -88,8 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Login
         if let _ = PFUser.currentUser() {
             // user is logged in
-//            self.goToMenu()
-            self.goToProviderList()
+            self.goToMenu()
         }
         else {
             self.goToSignupLogin()
