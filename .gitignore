@@ -25,3 +25,9 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+
+# Pods
+Pods/
+Lunr.xcworkspace/xcuserdata/
+Lunr.xcodeproj/project.xcworkspace/xcuserdata/
+Lunr.xcodeproj/xcuserdata/
