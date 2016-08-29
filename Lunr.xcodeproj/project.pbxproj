@@ -7,19 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		446144FB1D722DB4003B89F8 /* UIColor+LunrColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446144FA1D722DB4003B89F8 /* UIColor+LunrColors.swift */; };
 		446144FD1D723DF3003B89F8 /* CallHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */; };
 		44986F1F1D6A372800C6D0A7 /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */; };
-		44986F231D6A372800C6D0A7 /* Randall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44986F1B1D6A372800C6D0A7 /* Randall.storyboard */; };
 		44986F271D6A3AC900C6D0A7 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */; };
 		44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */; };
 		44BA7F371D7383A5006B347D /* EditAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */; };
 		44BA7F391D73C822006B347D /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F381D73C822006B347D /* DetailTableViewCell.swift */; };
 		44BA7F3B1D73C9BA006B347D /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F3A1D73C9BA006B347D /* Provider.swift */; };
 		44BA7F3D1D73C9CF006B347D /* ProviderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */; };
-		44BA7F3F1D73C9E6006B347D /* ProviderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F3E1D73C9E6006B347D /* ProviderInfoView.swift */; };
 		44BA7F411D73C9F5006B347D /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */; };
 		44BA7F431D73CA04006B347D /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */; };
+		44BA7F451D73CB47006B347D /* Randall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F441D73CB47006B347D /* Randall.storyboard */; };
 		6441927D0CD7E83D78420929 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
 		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
@@ -54,19 +52,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		446144FA1D722DB4003B89F8 /* UIColor+LunrColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+LunrColors.swift"; sourceTree = "<group>"; };
 		446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryCell.swift; sourceTree = "<group>"; };
 		44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailTableViewCell.xib; path = Xibs/DetailTableViewCell.xib; sourceTree = "<group>"; };
-		44986F1B1D6A372800C6D0A7 /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Randall.storyboard; path = Lunr/Randall.storyboard; sourceTree = "<group>"; };
 		44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoCell.swift; sourceTree = "<group>"; };
 		44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		44BA7F381D73C822006B347D /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailTableViewCell.swift; path = Views/DetailTableViewCell.swift; sourceTree = "<group>"; };
 		44BA7F3A1D73C9BA006B347D /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Provider.swift; path = Models/Provider.swift; sourceTree = "<group>"; };
 		44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderDetailViewController.swift; path = Controllers/ProviderDetailViewController.swift; sourceTree = "<group>"; };
-		44BA7F3E1D73C9E6006B347D /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderInfoView.swift; path = Views/ProviderInfoView.swift; sourceTree = "<group>"; };
 		44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewTableViewCell.swift; path = Views/ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewTableViewCell.xib; path = Xibs/ReviewTableViewCell.xib; sourceTree = "<group>"; };
+		44BA7F441D73CB47006B347D /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Randall.storyboard; sourceTree = "<group>"; };
 		5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
@@ -189,13 +185,11 @@
 				8E6418EE1D56981700CC4928 /* Controllers */,
 				8E6418DF1D5677E300CC4928 /* Storyboards */,
 				8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */,
-				446144FA1D722DB4003B89F8 /* UIColor+LunrColors.swift */,
 				446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */,
 				44BA7F381D73C822006B347D /* DetailTableViewCell.swift */,
 				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
 				44BA7F3A1D73C9BA006B347D /* Provider.swift */,
 				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
-				44BA7F3E1D73C9E6006B347D /* ProviderInfoView.swift */,
 				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
 				44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */,
@@ -219,7 +213,7 @@
 				8E4DE0B71D62AFA10013C06C /* Provider.storyboard */,
 				E561645E1D5F9AB200926692 /* Main.storyboard */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
-				44986F1B1D6A372800C6D0A7 /* Randall.storyboard */,
+				44BA7F441D73CB47006B347D /* Randall.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -342,13 +336,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44986F231D6A372800C6D0A7 /* Randall.storyboard in Resources */,
 				8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */,
 				8E6418EB1D56914E00CC4928 /* Bobby.storyboard in Resources */,
 				44BA7F431D73CA04006B347D /* ReviewTableViewCell.xib in Resources */,
 				E56164601D5F9AB200926692 /* Main.storyboard in Resources */,
 				8E6418E11D56780100CC4928 /* Login.storyboard in Resources */,
 				E56164671D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib in Resources */,
+				44BA7F451D73CB47006B347D /* Randall.storyboard in Resources */,
 				E56164561D5F78D500926692 /* SortCategoryView.xib in Resources */,
 				8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */,
 				8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */,
@@ -416,7 +410,6 @@
 				E561645B1D5F972700926692 /* AppDelegate.swift in Sources */,
 				8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */,
 				44BA7F3D1D73C9CF006B347D /* ProviderDetailViewController.swift in Sources */,
-				44BA7F3F1D73C9E6006B347D /* ProviderInfoView.swift in Sources */,
 				8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */,
 				8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */,
 				E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */,
@@ -425,7 +418,6 @@
 				44986F271D6A3AC900C6D0A7 /* AccountSettingsViewController.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
-				446144FB1D722DB4003B89F8 /* UIColor+LunrColors.swift in Sources */,
 				44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */,
 				8EF7D51D1D5FC5FF007B76DE /* UserService.swift in Sources */,
 				8E4DE0BD1D62B9030013C06C /* PFUser+Utils.swift in Sources */,

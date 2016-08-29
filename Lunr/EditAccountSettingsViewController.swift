@@ -60,7 +60,7 @@ class EditAccountSettingsViewController: UIViewController {
             guard view is UITextField else  {
                 continue
             }
-            view.layer.borderColor = UIColor.lunr_lightBlue().CGColor
+            view.layer.borderColor = UIColor.lunr_iceBlue().CGColor
             view.layer.borderWidth = 2.0
             view.layer.cornerRadius = 8.0
         }
