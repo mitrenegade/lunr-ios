@@ -51,6 +51,9 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
 
     @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
         // TODO: show the settings
+        print("showSettings")
+        let controller = UIStoryboard(name: "Randall", bundle: nil).instantiateViewControllerWithIdentifier("AccountSettingsViewController") as! AccountSettingsViewController
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 
     // MARK: SortCategoryProtocol Methods

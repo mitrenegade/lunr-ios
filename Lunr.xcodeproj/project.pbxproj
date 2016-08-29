@@ -54,12 +54,12 @@
 /* Begin PBXFileReference section */
 		446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryCell.swift; sourceTree = "<group>"; };
 		44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailTableViewCell.xib; path = Xibs/DetailTableViewCell.xib; sourceTree = "<group>"; };
-		44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
+		44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountSettingsViewController.swift; path = ../AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoCell.swift; sourceTree = "<group>"; };
-		44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountSettingsViewController.swift; sourceTree = "<group>"; };
+		44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAccountSettingsViewController.swift; path = ../EditAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		44BA7F381D73C822006B347D /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailTableViewCell.swift; path = Views/DetailTableViewCell.swift; sourceTree = "<group>"; };
 		44BA7F3A1D73C9BA006B347D /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Provider.swift; path = Models/Provider.swift; sourceTree = "<group>"; };
-		44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderDetailViewController.swift; path = Controllers/ProviderDetailViewController.swift; sourceTree = "<group>"; };
+		44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderDetailViewController.swift; sourceTree = "<group>"; };
 		44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewTableViewCell.swift; path = Views/ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewTableViewCell.xib; path = Xibs/ReviewTableViewCell.xib; sourceTree = "<group>"; };
 		44BA7F441D73CB47006B347D /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Randall.storyboard; sourceTree = "<group>"; };
@@ -189,9 +189,6 @@
 				44BA7F381D73C822006B347D /* DetailTableViewCell.swift */,
 				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
 				44BA7F3A1D73C9BA006B347D /* Provider.swift */,
-				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
-				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
-				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
 				44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */,
 				44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */,
 				44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */,
@@ -221,10 +218,13 @@
 		8E6418EE1D56981700CC4928 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
 				8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
+				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
 				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
+				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
 				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
 				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 				E561645C1D5F99F800926692 /* ViewController.swift */,
