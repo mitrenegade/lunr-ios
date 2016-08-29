@@ -55,6 +55,8 @@ class AccountSettingsViewController: UIViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 140
 
+        self.tableView.separatorStyle = .None
+
     }
 
     override func didReceiveMemoryWarning() {
