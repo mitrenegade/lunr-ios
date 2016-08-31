@@ -52,8 +52,8 @@ class BobbyTestViewController: UIViewController {
     }
 
     func logout() {
-        PFUser.logOutInBackgroundWithBlock { (error) in
-            self.appDelegate().didLogout()
+        PFUser.logOutInBackgroundWithBlock { [weak self] (error) in
+            self?.notify(.LogoutSuccess)
         }
     }
     

@@ -3,11 +3,9 @@ import UIKit
 extension UIViewController {
     
     func simpleAlert(title: String, defaultMessage: String?, error: NSError?) {
-        if error != nil {
-            if let msg = error!.userInfo["error"] as? String {
-                self.simpleAlert(title, message: msg)
-                return
-            }
+        if let msg = error?.userInfo["error"] as? String {
+            self.simpleAlert(title, message: msg)
+            return
         }
         self.simpleAlert(title, message: defaultMessage)
     }
@@ -29,13 +27,30 @@ extension UIViewController {
 
 extension NSObject {
     
+    enum NotificationType: String {
+        case LogoutSuccess = "logout:success"
+        case LoginSuccess = "login:success"
+    }
+    
     // MARK: - Notifications
+    func listenFor(notification: NotificationType, action: Selector, object: AnyObject?) {
+        listenFor(notification.rawValue, action: action, object: object)
+    }
+    
     func listenFor(notificationName: String, action: Selector, object: AnyObject?) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: action, name: notificationName, object: object)
     }
     
+    func stopListeningFor(notification: NotificationType) {
+        stopListeningFor(notification.rawValue)
+    }
+    
     func stopListeningFor(notificationName: String) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationName, object: nil)
+    }
+    
+    func notify(notification: NotificationType, object: AnyObject? = nil, userInfo: [NSObject: AnyObject]? = nil) {
+        notify(notification.rawValue, object: object, userInfo: userInfo)
     }
     
     func notify(notificationName: String, object: AnyObject?, userInfo: [NSObject: AnyObject]?) {

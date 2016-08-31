@@ -25,4 +25,8 @@ extension UIColor {
     class func lunr_separatorGray() -> UIColor {
         return UIColor(red: 208/255, green: 211/255, blue: 210/255, alpha: 0.8)
     }
+    
+    class func lunr_blueText() -> UIColor {
+        return UIColor(red:0.780,  green:0.827,  blue:0.929, alpha:1)
+    }
 }
