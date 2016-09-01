@@ -72,7 +72,7 @@ class EditAccountSettingsViewController: UIViewController {
     }
 
     func dismiss() {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }
 
