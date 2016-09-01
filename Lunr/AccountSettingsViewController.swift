@@ -68,7 +68,7 @@ class AccountSettingsViewController: UIViewController {
     }
 
     func showAccountInfo() {
-        let controller = UIStoryboard(name: "Randall", bundle: nil).instantiateViewControllerWithIdentifier("EditAccountSettingsViewController") as! EditAccountSettingsViewController
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("EditAccountSettingsViewController") as! EditAccountSettingsViewController
         let navigationController = UINavigationController(rootViewController: controller)
         self.navigationController?.presentViewController(navigationController, animated: true, completion: nil)
     }
