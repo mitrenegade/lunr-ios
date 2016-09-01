@@ -13,4 +13,5 @@ class CallHistoryCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
     @IBOutlet var cardLabel: UILabel!
+    @IBOutlet var separatorView: UIView!
 }

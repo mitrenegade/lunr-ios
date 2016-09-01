@@ -7,9 +7,9 @@
 //
 
 private let NumberOfSectionsInTableView = 3
-private let SectionTitles = ["Account", "Payment Information", "Call History"]
+private let SectionTitles = ["Account Information", "Payment Information", "Call History"]
 private let AccountInfoSectionTitles = ["Email:", "Name:", "Password:"]
-private let PaymentInfoSectionTitles = ["Default"]
+private let PaymentInfoSectionTitles = ["Default:"]
 
 
 // MARK: Dummy Data
@@ -28,8 +28,8 @@ struct TestUser {
     var card: String
 }
 
-private let dummyCalls: [TestCall] = [TestCall(date: NSDate(), nameOfCaller: "John Snow", cost: 24.50, card: "VISA")]
-private let dummyUser: TestUser = TestUser(email: "JSnow@uknownothing.com", name: "John Snow", pass: "ucantseethis", card: "VISA")
+private let dummyCalls: [TestCall] = [TestCall(date: NSDate(), nameOfCaller: "John Snow", cost: 24.50, card: "VISA - 1234")]
+private let dummyUser: TestUser = TestUser(email: "JSnow@uknownothing.com", name: "John Snow", pass: "ucantseethis", card: "VISA **** **** **** 1234")
 
 class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -48,6 +48,7 @@ class AccountSettingsViewController: UIViewController {
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.navigationBar.backgroundColor = .whiteColor()
         self.navigationController?.navigationBar.tintColor = .lunr_darkBlue()
+        self.navigationController?.navigationBar.addShadow()
         // Do any additional setup after loading the view, typically from a nib.
         self.title = "Account Settings"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .Plain, target: self, action: #selector(dismiss))
@@ -57,11 +58,9 @@ class AccountSettingsViewController: UIViewController {
 
         self.tableView.separatorStyle = .None
 
-    }
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func dismiss() {
@@ -69,14 +68,13 @@ class AccountSettingsViewController: UIViewController {
     }
 
     func showAccountInfo() {
-        print("Show Account Info VC")
         let controller = UIStoryboard(name: "Randall", bundle: nil).instantiateViewControllerWithIdentifier("EditAccountSettingsViewController") as! EditAccountSettingsViewController
         let navigationController = UINavigationController(rootViewController: controller)
         self.navigationController?.presentViewController(navigationController, animated: true, completion: nil)
     }
 
     func showPaymentInfo() {
-        print("Show Payment Info VC")
+        // Placeholder
     }
 
 
@@ -94,12 +92,15 @@ extension AccountSettingsViewController: UITableViewDataSource {
                 case 0:
                 cell.textField.text = user.email
                 cell.textField.secureTextEntry = false
+                cell.textField.placeholder = "add your email"
             case 1:
                 cell.textField.text = user.name
                 cell.textField.secureTextEntry = false
+                cell.textField.placeholder = "add your name"
             case 2:
                 cell.textField.text = user.pass
                 cell.textField.secureTextEntry = true
+                cell.textField.placeholder = "enter your password"
             default:
                 return UITableViewCell()
             }
@@ -116,6 +117,7 @@ extension AccountSettingsViewController: UITableViewDataSource {
             cell.nameLabel.text = call.nameOfCaller
             cell.priceLabel.text = String(call.cost)
             cell.cardLabel.text = call.card
+            cell.separatorView.backgroundColor = UIColor.lunr_separatorGray()
             return cell
         default:
             return UITableViewCell()
@@ -142,13 +144,25 @@ extension AccountSettingsViewController: UITableViewDataSource {
 
 extension AccountSettingsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("selected Row \(indexPath.row)")
+        // Placeholder
+    }
+
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let section = indexPath.section
+        if section == 2 {
+            return 100
+        }
+        return 35
+    }
+
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
 
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 80))
-        let label = UILabel(frame: CGRectMake(16, 0, tableView.bounds.size.width, 30))
-        let attributes = [NSFontAttributeName : UIFont(name: "Futura-Medium", size: 18)!]
+        let headerView = UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 50))
+        let label = UILabel(frame: CGRectMake(16, 20, tableView.bounds.size.width, 20))
+        let attributes = [NSFontAttributeName : UIFont(name: "Futura-Medium", size: 16)!]
         let attributedText = NSAttributedString(string: SectionTitles[section], attributes: attributes)
         label.attributedText = attributedText
         headerView.backgroundColor = .whiteColor()
@@ -177,14 +191,5 @@ extension AccountSettingsViewController: UITableViewDelegate {
         }
         footerView.addSubview(button)
         return footerView
-    }
-}
-
-extension NSCoder {
-    class func empty() -> NSCoder {
-        let data = NSMutableData()
-        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
-        archiver.finishEncoding()
-        return NSKeyedUnarchiver(forReadingWithData: data)
     }
 }

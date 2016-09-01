@@ -187,11 +187,9 @@
 				8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */,
 				446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */,
 				44BA7F381D73C822006B347D /* DetailTableViewCell.swift */,
-				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
 				44BA7F3A1D73C9BA006B347D /* Provider.swift */,
 				44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */,
 				44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */,
-				44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */,
 				8E6418CD1D55585A00CC4928 /* AppDelegate.swift */,
 				8E6418EF1D56E8FA00CC4928 /* Constants.swift */,
 				8E6418D41D55585A00CC4928 /* Assets.xcassets */,
@@ -247,9 +245,11 @@
 		E56164571D5F7BC000926692 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */,
 				E56164471D5689A900926692 /* ProviderInfoView.xib */,
 				E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */,
 				E56164551D5F78D500926692 /* SortCategoryView.xib */,
+				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";

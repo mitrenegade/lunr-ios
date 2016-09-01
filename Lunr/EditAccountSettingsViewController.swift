@@ -30,7 +30,6 @@ class EditAccountSettingsViewController: UIViewController {
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .Plain, target: self, action: #selector(dismiss))
 
-        print("Showing Edit Account")
         configureTextFields()
         saveButton.backgroundColor = .lunr_darkBlue()
         registerForKeyboardNotifications()
@@ -46,8 +45,6 @@ class EditAccountSettingsViewController: UIViewController {
         if let size = info?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() {
             saveButtonToBottomConstraint.constant = size.height
         }
-
-        print(info?[UIKeyboardFrameEndUserInfoKey])
     }
 
     func keyboardWillBeHidden(aNotification: NSNotification) {
@@ -56,18 +53,22 @@ class EditAccountSettingsViewController: UIViewController {
 
     func configureTextFields() {
         for view in self.view.subviews {
-            print("subview: \(view)")
             guard view is UITextField else  {
                 continue
             }
-            view.layer.borderColor = UIColor.lunr_lightBlue().CGColor
-            view.layer.borderWidth = 2.0
-            view.layer.cornerRadius = 8.0
+            if let textField = view as? UITextField {
+                textField.layer.borderColor = UIColor.lunr_lightBlue().CGColor
+                textField.layer.borderWidth = 2.0
+                textField.layer.cornerRadius = 8.0
+                let spacerView = UIView(frame:CGRect(x:0, y:0, width:10, height:10))
+                textField.leftViewMode = .Always
+                textField.leftView = spacerView
+            }
         }
     }
 
     @IBAction func saveButtonTapped(sender: UIButton) {
-        print("Save button Tapped")
+        // Placeholder
     }
 
     func dismiss() {
