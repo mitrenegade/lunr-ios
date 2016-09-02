@@ -14,7 +14,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             reviews: [],
             ratePerMin: 4.3,
             skills: ["Raiding", "Leadership"],
-            info: "John Snow is the son of Rhaegar and Lyanna. Oops that was a spoiler! Well, that's your fault cause you should be caught up on the show..."),
+            info: "John Snow is the son of Rhaegar and Lyanna. Oops that was a spoiler! Well, that's your fault cause you should be caught up on the show...",
+            available: true),
          User(
             firstName: "John",
             lastName: "Snow",
@@ -26,7 +27,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             ],
             ratePerMin: 4.3,
             skills: ["Raiding", "Leadership"],
-            info: "oh hello")]
+            info: "oh hello",
+            available: false)]
 
     override func viewDidLoad() {
         super.viewDidLoad()

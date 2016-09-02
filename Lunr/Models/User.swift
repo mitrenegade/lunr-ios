@@ -39,7 +39,7 @@ class User: PFUser {
     }
     
     // This shouldn't be used - only for testing
-    init(firstName: String, lastName: String, rating: Double, reviews: [Review], ratePerMin : Double, skills: [String], info: String) {
+    init(firstName: String, lastName: String, rating: Double, reviews: [Review], ratePerMin : Double, skills: [String], info: String, available: Bool) {
         super.init()
         
         self.firstName = firstName
@@ -49,6 +49,7 @@ class User: PFUser {
         self.ratePerMin = ratePerMin
         self.skills = skills
         self.info = info
+        self.available = available
     }
 
 }
@@ -56,6 +57,9 @@ class User: PFUser {
 // MARK: Extension for user convenience methods
 extension User {
     var name: String? {
+        if let first = self.firstName, last = self.lastName {
+            return "\(first) \(last)"
+        }
         return self.firstName ?? self.lastName ?? self.username
     }
     
