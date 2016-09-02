@@ -29,10 +29,9 @@ class SplashViewController: UIViewController {
         switch PFUser.currentUser() {
         case .None:
             return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
-        case .Some(let user):
-            if user.userType == .Provider {
-                return UIStoryboard(name: "ProviderFlow", bundle: nil).instantiateInitialViewController()
-            }
+        case .Some( _ as Provider):
+            return UIStoryboard(name: "ProviderFlow", bundle: nil).instantiateInitialViewController()
+        default:
             return UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController()
         }
     }

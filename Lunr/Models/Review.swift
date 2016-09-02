@@ -10,8 +10,8 @@ import UIKit
 import Parse
 
 class Review: PFObject {
-    let text : String
-    let rating : Double
+    @NSManaged var text : String
+    @NSManaged var rating : Double
     
     init(rating: Double, text: String) {
         super.init()

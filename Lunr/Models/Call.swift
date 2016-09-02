@@ -20,7 +20,7 @@ class Call: PFObject {
     
     //var paymentMethod: Card
 
-    init(date: NSDate, duration: Int, rating: Int, cost: Double, client: PFUser?, provider: PFUser?) {
+    init(date: NSDate, duration: Double, rating: Double, cost: Double, client: PFUser?, provider: PFUser?) {
         super.init()
 
         self.date = date
@@ -46,10 +46,10 @@ class CallService: NSObject {
     func createTestCallInParse() {
         Call.registerSubclass()
         
-        guard let user = PFUser.currentUser() else { return }
+        guard let user = PFUser.currentUser() as? User else { return }
         
-        let client: PFUser? = user.type == .Provider ? nil : user
-        let provider: PFUser? = user.type == .Provider ? user : nil
+        let client: User? = user.userType == .Provider ? nil : user
+        let provider: User? = user.userType == .Provider ? user : nil
         let call = Call(date: NSDate(), duration: 10*60, rating: 4, cost: 35.25, client: client, provider: provider)
         
         call.saveInBackgroundWithBlock { (success, error) in
