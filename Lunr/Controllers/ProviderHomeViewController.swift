@@ -22,13 +22,17 @@ class ProviderHomeViewController: UIViewController {
     }
     
     @IBAction func toggleOnDuty(sender: AnyObject) {
-        if let user = PFUser.currentUser() {
+        if let user = PFUser.currentUser() as? User {
             onDutyToggleButton.busy = true
             user.available = !user.available
             user.saveInBackgroundWithBlock { [weak self] (success, error) in
                 self?.onDutyToggleButton.busy = false
                 if success {
                     self?.updateUI()
+                    
+                    if user.available.boolValue {
+                        CallService.sharedInstance.createTestCallInParse()
+                    }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error)
                 }
@@ -37,7 +41,7 @@ class ProviderHomeViewController: UIViewController {
     }
     
     private func updateUI() {
-        if let user = PFUser.currentUser() {
+        if let user = PFUser.currentUser() as? User {
             let onDutyTitle = user.available ? "Go Offline" : "Go Online"
             onDutyToggleButton.setTitle(onDutyTitle, forState: .Normal)
         }

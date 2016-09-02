@@ -9,7 +9,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var priceRateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var skillCollectionView: UICollectionView!
-    var skills: [String] = []
+    var skills: [String]?
 
     override var nibName: String {
         get {
@@ -34,7 +34,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         }
     }
 
-    func configureForProvider(provider: Provider) {
+    func configureForProvider(provider: User) {
         self.nameLabel.text = provider.name
         self.ratingLabel.text = "\(provider.rating)"
         self.priceRateLabel.text = "$\(provider.ratePerMin)/min"
@@ -63,12 +63,17 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProviderSkillTagCollectionViewCell", forIndexPath: indexPath) as! ProviderSkillTagCollectionViewCell
-        cell.configureForSkill(skills[indexPath.row])
+        if let skills = self.skills {
+            cell.configureForSkill(skills[indexPath.row])
+        }
         return cell
 
     }
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.skills.count
+        if let skills = self.skills {
+            return skills.count
+        }
+        return 0
     }
 }

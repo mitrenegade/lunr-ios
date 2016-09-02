@@ -36,9 +36,9 @@ class BobbyTestViewController: UIViewController {
         let query = PFUser.query()
         query?.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             self.activityIndicator.stopAnimating()
-            if let users = result as? [PFUser] {
+            if let users = result as? [User] {
                 for user in users {
-                    if user.type == .Provider {
+                    if user.userType == .Provider {
                         self.targetUser = user
                         self.buttonCall.enabled = true
                         self.buttonCall.setTitle("Call \(user.displayString)", forState: .Normal)

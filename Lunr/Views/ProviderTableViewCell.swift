@@ -16,7 +16,7 @@ class ProviderTableViewCell: UITableViewCell {
         self.contentView.clipsToBounds = false
     }
 
-    func configureForProvider(provider: Provider) {
+    func configureForProvider(provider: User) {
         self.providerInfoView.configureForProvider(provider)
     }
 }
