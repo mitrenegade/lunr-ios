@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
 
         // This call demonstrates the way to use services
-        ProviderService.queryProviders({ (providers) in
+        User.queryProviders({ (providers) in
             print("Providers received: \(providers)")
         }) { (error) in
             print("Error \(error)")

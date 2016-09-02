@@ -6,7 +6,7 @@ class ProviderDetailViewController : UIViewController {
     @IBOutlet weak var callButtonView: UIView!
     @IBOutlet weak var tableView: UITableView!
 
-    var provider : Provider?
+    var provider : User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class ProviderDetailViewController : UIViewController {
         self.navigationController?.navigationBar.backgroundColor = UIColor.lunr_iceBlue()
     }
 
-    func configureForProvider(provider: Provider) {
+    func configureForProvider(provider: User) {
         self.provider = provider
         self.title = provider.name
     }

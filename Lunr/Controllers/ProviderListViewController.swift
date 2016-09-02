@@ -6,8 +6,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var sortCategoryView: SortCategoryView!
-    var providers: [Provider] = //TODO: remove these dummy providers
-        [Provider(
+    var providers: [User] = //TODO: remove these dummy providers
+        [User(
             firstName: "John",
             lastName: "Snow",
             rating: 5.0,
@@ -15,7 +15,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             ratePerMin: 4.3,
             skills: ["Raiding", "Leadership"],
             info: "John Snow is the son of Rhaegar and Lyanna. Oops that was a spoiler! Well, that's your fault cause you should be caught up on the show..."),
-         Provider(
+         User(
             firstName: "John",
             lastName: "Snow",
             rating: 5.0,

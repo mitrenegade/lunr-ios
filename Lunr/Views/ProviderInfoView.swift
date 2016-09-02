@@ -34,7 +34,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         }
     }
 
-    func configureForProvider(provider: Provider) {
+    func configureForProvider(provider: User) {
         self.nameLabel.text = provider.name
         self.ratingLabel.text = "\(provider.rating)"
         self.priceRateLabel.text = "$\(provider.ratePerMin)/min"

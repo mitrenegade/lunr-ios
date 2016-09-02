@@ -15,7 +15,7 @@ class DetailTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
-    func configureForProvider(provider: Provider) {
+    func configureForProvider(provider: User) {
         self.providerInfoView.configureForProvider(provider)
         self.textView.text = provider.info
         self.textView.font = UIFont.futuraMediumWithSize(14)

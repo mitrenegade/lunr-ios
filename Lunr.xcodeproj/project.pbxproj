@@ -13,7 +13,6 @@
 		44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */; };
 		44BA7F371D7383A5006B347D /* EditAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */; };
 		44BA7F391D73C822006B347D /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F381D73C822006B347D /* DetailTableViewCell.swift */; };
-		44BA7F3B1D73C9BA006B347D /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F3A1D73C9BA006B347D /* Provider.swift */; };
 		44BA7F3D1D73C9CF006B347D /* ProviderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */; };
 		44BA7F411D73C9F5006B347D /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */; };
 		44BA7F431D73CA04006B347D /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */; };
@@ -41,7 +40,6 @@
 		8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */; };
 		8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4581D793EB500DB8C49 /* Review.swift */; };
 		8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D45A1D793EEC00DB8C49 /* User.swift */; };
-		8EE9D45D1D793F2700DB8C49 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D45C1D793F2700DB8C49 /* Client.swift */; };
 		8EF7D51D1D5FC5FF007B76DE /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7D51C1D5FC5FF007B76DE /* QBUserService.swift */; };
 		E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164431D5678B700926692 /* ProviderTableViewCell.swift */; };
 		E56164461D56818500926692 /* ProviderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164451D56818500926692 /* ProviderInfoView.swift */; };
@@ -66,7 +64,6 @@
 		44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountInfoCell.swift; path = ../AccountInfoCell.swift; sourceTree = "<group>"; };
 		44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAccountSettingsViewController.swift; path = ../EditAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		44BA7F381D73C822006B347D /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
-		44BA7F3A1D73C9BA006B347D /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderDetailViewController.swift; sourceTree = "<group>"; };
 		44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewTableViewCell.xib; path = Xibs/ReviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -112,7 +109,6 @@
 		8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
 		8EE9D4581D793EB500DB8C49 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		8EE9D45A1D793EEC00DB8C49 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		8EE9D45C1D793F2700DB8C49 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		8EF7D51C1D5FC5FF007B76DE /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
 		E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
 		E56164431D5678B700926692 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderTableViewCell.swift; sourceTree = "<group>"; };
@@ -300,8 +296,6 @@
 				8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */,
 				8EE9D4581D793EB500DB8C49 /* Review.swift */,
 				8EE9D45A1D793EEC00DB8C49 /* User.swift */,
-				8EE9D45C1D793F2700DB8C49 /* Client.swift */,
-				44BA7F3A1D73C9BA006B347D /* Provider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -449,7 +443,6 @@
 				847133261D75C14400DD2045 /* LunrButton.swift in Sources */,
 				E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
-				8EE9D45D1D793F2700DB8C49 /* Client.swift in Sources */,
 				44BA7F371D7383A5006B347D /* EditAccountSettingsViewController.swift in Sources */,
 				44986F271D6A3AC900C6D0A7 /* AccountSettingsViewController.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
@@ -472,7 +465,6 @@
 				E56164511D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift in Sources */,
 				44BA7F411D73C9F5006B347D /* ReviewTableViewCell.swift in Sources */,
 				E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */,
-				44BA7F3B1D73C9BA006B347D /* Provider.swift in Sources */,
 				E56164461D56818500926692 /* ProviderInfoView.swift in Sources */,
 				8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */,
 			);
