@@ -15,6 +15,14 @@ extension UIColor {
     }
 
     class func lunr_iceBlue() -> UIColor {
-        return UIColor(red: 249/255, green: 255/255, blue: 254/255, alpha: 1.0);
+        return UIColor(red: 249/255, green: 255/255, blue: 254/255, alpha: 1.0)
+    }
+
+    class func lunr_lightBlue() -> UIColor {
+        return UIColor(red: 199/255, green: 211/255, blue: 236/255, alpha: 1.0)
+    }
+
+    class func lunr_separatorGray() -> UIColor {
+        return UIColor(red: 208/255, green: 211/255, blue: 210/255, alpha: 0.8)
     }
 }

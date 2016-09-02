@@ -11,6 +11,20 @@ protocol User {
     var name: String? { get }
     var displayString: String { get }
     var type: UserType { get }
+    var callHistory: [Call] { get }
+}
+
+struct Card {
+    // Placeholder for Card that needs to be associated with payments and calls
+    var type: String
+    var last4: String
+}
+
+struct Call {
+    var date: NSDate
+    var caller: PFUser
+    var cost: Double
+    var paymentMethod: Card
 }
 
 protocol PFProvider {
@@ -77,6 +91,14 @@ extension PFUser: User {
             }
             
             return .Client
+        }
+    }
+
+    var callHistory: [Call] {
+        get {
+            // TODO: Pull call history from network
+            let dummyCall = Call(date: NSDate(), caller: self, cost: 18.50, paymentMethod: Card(type: "VISA", last4: "1112"))
+            return [dummyCall]
         }
     }
 }
