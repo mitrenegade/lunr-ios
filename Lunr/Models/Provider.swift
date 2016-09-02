@@ -1,30 +1,46 @@
-import Foundation
+import UIKit
+import Parse
 
-struct Review {
-    let text : String
-    let rating : Double
+class Provider : User {
+    @NSManaged var rating : Double
+    @NSManaged var reviews : [Review]?
+    @NSManaged var ratePerMin : Double
+    @NSManaged var available : Bool
+    @NSManaged var skills : [String]?
+    @NSManaged var info : String
 
-    init(rating: Double, text: String) {
-        self.rating = rating
-        self.text = text
-    }
-}
-
-class Provider : NSObject {
-    let name : String
-    let rating : Double
-    let reviews : [Review]
-    let ratePerMin : Double
-    var available : Bool = true
-    let skills : [String]
-    let info : String
-
-    init(name: String, rating: Double, reviews: [Review], ratePerMin : Double, skills: [String], info: String) {
-        self.name = name
+    init(firstName: String, lastName: String, rating: Double, reviews: [Review], ratePerMin : Double, skills: [String], info: String) {
+        super.init()
+        
+        self.firstName = firstName
+        self.lastName = lastName
         self.rating = rating
         self.reviews = reviews
         self.ratePerMin = ratePerMin
         self.skills = skills
         self.info = info
+    }
+}
+
+extension Provider {
+    override static func parseClassName() -> String {
+        return "Provider"
+    }
+}
+
+class ProviderService {
+    class func queryProviders(completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+        let query = PFUser.query()
+        query?.whereKeyExists("type")
+        query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
+        query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if let error = error {
+                errorHandler(error: error)
+                return
+            }
+            
+            let users = results as? [PFUser]
+            completionHandler(providers: users)
+        }
     }
 }

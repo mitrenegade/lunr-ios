@@ -9,16 +9,7 @@
 import Parse
 import Foundation
 
-/*
-struct Call {
-    var date: NSDate
-    var caller: PFUser
-    var cost: Double
-    var paymentMethod: Card
-}
-*/
-
-class Call: PFObject, PFSubclassing {
+class Call: PFObject {
     // PFSubclassing and NSManaged is required so that PFObject.init() can be used, and PFObject's getters and setters correctly set key-value pairs that save to Parse
     @NSManaged var date: NSDate?
     @NSManaged var duration: NSNumber?
@@ -27,6 +18,8 @@ class Call: PFObject, PFSubclassing {
     @NSManaged var client: PFUser?
     @NSManaged var provider: PFUser?
     
+    //var paymentMethod: Card
+
     init(date: NSDate, duration: Int, rating: Int, cost: Double, client: PFUser?, provider: PFUser?) {
         super.init()
 
@@ -41,7 +34,7 @@ class Call: PFObject, PFSubclassing {
     }
 }
 
-extension Call {
+extension Call: PFSubclassing {
     static func parseClassName() -> String {
         return "Call"
     }
