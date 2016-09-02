@@ -20,13 +20,6 @@ struct Card {
     var last4: String
 }
 
-struct Call {
-    var date: NSDate
-    var caller: PFUser
-    var cost: Double
-    var paymentMethod: Card
-}
-
 protocol PFProvider {
     var rating: Double? { get }
     var info: String { get set }
@@ -97,7 +90,8 @@ extension PFUser: User {
     var callHistory: [Call] {
         get {
             // TODO: Pull call history from network
-            let dummyCall = Call(date: NSDate(), caller: self, cost: 18.50, paymentMethod: Card(type: "VISA", last4: "1112"))
+            let dummyCall = Call(date: NSDate(), duration: 15, rating: 4, cost: 30, client: nil, provider: nil)
+            //let dummyCall = Call(date: NSDate(), caller: self, cost: 18.50, paymentMethod: Card(type: "VISA", last4: "1112"))
             return [dummyCall]
         }
     }

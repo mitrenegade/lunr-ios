@@ -31,7 +31,7 @@ class ProviderHomeViewController: UIViewController {
                     self?.updateUI()
                     
                     if user.available.boolValue {
-                        CallService.sharedInstance.createCall()
+                        CallService.sharedInstance.createTestCallInParse()
                     }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error)
