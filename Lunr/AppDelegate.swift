@@ -3,6 +3,8 @@ import Parse
 import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import Quickblox
+import Fabric
+import Crashlytics
 
 let LOCAL_TEST = false
 let TEST = false
@@ -55,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // App wide appearance protocols
         setGlobalAppearanceAttributes()
+        
+        Fabric.with([Crashlytics.self])
 
         return true
     }
