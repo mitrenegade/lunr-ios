@@ -52,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }) { (error) in
             print("Error \(error)")
         }
+        
+        // App wide appearance protocols
+        setGlobalAppearanceAttributes()
 
         return true
     }
@@ -82,59 +85,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-
-    // MARK: - Navigation
-    func startup() {
-        // Login
-        if let _ = PFUser.currentUser() {
-            // user is logged in
-            self.goToMenu()
-        }
-        else {
-            self.goToSignupLogin()
-        }
+    
+    // MARK: Appearance
+    private func setGlobalAppearanceAttributes() {
+        // UITabBar
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.barTintColor = UIColor.lunr_darkBlue()
+        tabBarAppearance.tintColor = UIColor.whiteColor()
+        
+        // UITabBarItem
+        let tabBarItemAppearance = UITabBarItem.appearance()
+        
+        var normalTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributesForState(.Normal) ?? [String:AnyObject]()
+        normalTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor.whiteColor()
+        normalTabBarItemTextAttr[NSFontAttributeName] = UIFont.futuraMediumWithSize(17)
+        tabBarItemAppearance.setTitleTextAttributes(normalTabBarItemTextAttr, forState: .Selected)
+        
+        var selectedTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributesForState(.Selected) ?? [String:AnyObject]()
+        selectedTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor.lunr_blueText()
+        tabBarItemAppearance.setTitleTextAttributes(selectedTabBarItemTextAttr, forState: .Selected)
     }
-
-    func goToSignupLogin() {
-        let controller = UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("FacebookViewController") as! FacebookViewController
-        self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
-        self.listenFor("login:success", action: #selector(didLogin), object: nil)
-    }
-
-    func didLogin() {
-        print("logged in")
-        self.stopListeningFor("login:success")
-
-        // first dismiss login/signup flow
-        self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
-            // load main flow
-            //self.goToMenu()
-            self.goToProviderList()
-        })
-    }
-
-    func goToMenu() {
-        guard let nav = UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController() as? UINavigationController else { return }
-
-        self.window?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
-        self.listenFor("logout:success", action: #selector(didLogout), object: nil)
-    }
-
-    func goToProviderList() {
-        guard let nav = UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController() as? UINavigationController else { return }
-
-        self.window?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
-    }
-
-    func didLogout() {
-        print("logged out")
-        self.stopListeningFor("logout:Success")
-
-        // first dismiss main app
-        self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
-            // load main flow
-            self.goToSignupLogin()
-        })
-    }
-
 }

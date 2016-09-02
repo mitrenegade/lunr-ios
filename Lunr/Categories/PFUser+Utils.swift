@@ -29,9 +29,9 @@ struct Call {
 
 protocol PFProvider {
     var rating: Double? { get }
-    var info: String? { get }
-    var ratePerMin: Double? { get }
-    var available: Bool { get }
+    var info: String { get set }
+    var ratePerMin: Double { get set }
+    var available: Bool { get set }
     
     var reviews: [PFObject]? { get }
     var skills: [String]? { get }
@@ -118,16 +118,19 @@ extension PFUser: PFProvider {
         return self.objectForKey("rating") as? Double // TODO: calculate rating based on all ratings?
     }
     
-    var info: String? {
-        return self.objectForKey("info") as? String
+    var info: String {
+        get { return objectForKey("info") as? String ?? "" }
+        set { setObject(newValue, forKey: "info") }
     }
     
-    var ratePerMin: Double? {
-        return self.objectForKey("ratePerMin") as? Double
+    var ratePerMin: Double {
+        get { return objectForKey("ratePerMin") as? Double ?? 0 }
+        set { setObject(newValue, forKey: "ratePerMin") }
     }
     
     var available: Bool {
-        return self.objectForKey("available") as? Bool ?? false
+        get { return objectForKey("available") as? Bool ?? false }
+        set { setObject(newValue, forKey: "available") }
     }
     
     var reviews: [PFObject]? {

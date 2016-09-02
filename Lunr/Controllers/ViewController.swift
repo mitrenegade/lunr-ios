@@ -12,8 +12,8 @@ import Parse
 class ViewController: UIViewController {
 
     @IBAction func didClickLogout(sender: UIButton) {
-        PFUser.logOutInBackgroundWithBlock { (error) in
-            self.appDelegate().didLogout()
+        PFUser.logOutInBackgroundWithBlock { [weak self] (error) in
+            self?.notify(.LogoutSuccess)
         }
     }
 }

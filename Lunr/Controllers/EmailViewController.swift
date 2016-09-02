@@ -82,7 +82,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 print("results: \(user)")
-//                self.notify("login:success", object: nil, userInfo: nil)
+//                self.notify(.LoginSuccess)
                 self.loginUser()
             }
         }
@@ -119,7 +119,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             
             UserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
                 if success {
-                    self.notify("login:success", object: nil, userInfo: nil)
+                    self.notify(.LoginSuccess)
                 }
                 else {
                     self.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error)

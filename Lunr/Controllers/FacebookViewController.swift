@@ -15,7 +15,7 @@ class FacebookViewController: UIViewController {
           } else {
             print("User logged in through Facebook!")
           }
-          self.notify("login:success", object: nil, userInfo: nil)
+          self.notify(.LoginSuccess)
         } else {
           print("Uh oh. The user cancelled the Facebook login.")
         }
@@ -28,6 +28,7 @@ class FacebookViewController: UIViewController {
             if error == nil {
                 user["name"] = result?["name"] as? String
                 user.email = result?["email"] as? String
+                // TODO: This is throwing error, "Account already exists for this email address." when logging in via facebook with an account that was created w/ email.
                 user.saveInBackground()
             } else {
                 print(error)
