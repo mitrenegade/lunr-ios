@@ -29,10 +29,6 @@ class ProviderHomeViewController: UIViewController {
                 self?.onDutyToggleButton.busy = false
                 if success {
                     self?.updateUI()
-                    
-                    if user.available.boolValue {
-                        CallService.sharedInstance.createTestCallInParse()
-                    }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error)
                 }
