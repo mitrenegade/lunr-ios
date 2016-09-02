@@ -63,8 +63,9 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProviderSkillTagCollectionViewCell", forIndexPath: indexPath) as! ProviderSkillTagCollectionViewCell
-        guard let skills = self.skills else { return }
-        cell.configureForSkill(skills[indexPath.row])
+        if let skills = self.skills {
+            cell.configureForSkill(skills[indexPath.row])
+        }
         return cell
 
     }

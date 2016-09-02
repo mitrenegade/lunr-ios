@@ -67,7 +67,12 @@ class ProviderDetailViewController : UIViewController {
 
 extension ProviderDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : self.provider!.reviews.count
+        guard let provider = self.provider else { return 0 }
+        if section == 0 {
+            return 1
+        }
+        guard let reviews = provider.reviews else { return 0 }
+        return reviews.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -77,7 +82,9 @@ extension ProviderDetailViewController: UITableViewDataSource, UITableViewDelega
             return cell
         }
         let cell: ReviewTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReviewTableViewCell", forIndexPath: indexPath) as! ReviewTableViewCell
-        cell.configureForReview(self.provider!.reviews[indexPath.row])
+        if let reviews = self.provider?.reviews {
+            cell.configureForReview(reviews[indexPath.row])
+        }
         return cell
     }
 
