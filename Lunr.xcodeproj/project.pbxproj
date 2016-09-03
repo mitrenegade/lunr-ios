@@ -35,12 +35,14 @@
 		8E6418EB1D56914E00CC4928 /* Bobby.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418EA1D56914E00CC4928 /* Bobby.storyboard */; };
 		8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EC1D56921F00CC4928 /* SplashViewController.swift */; };
 		8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EF1D56E8FA00CC4928 /* Constants.swift */; };
+		8E6B6FC11D7B038D007C3C86 /* CallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC01D7B038D007C3C86 /* CallService.swift */; };
+		8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC21D7B03D8007C3C86 /* UserService.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
 		8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4501D7684F500DB8C49 /* Call.swift */; };
 		8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */; };
 		8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4581D793EB500DB8C49 /* Review.swift */; };
 		8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D45A1D793EEC00DB8C49 /* User.swift */; };
-		8EF7D51D1D5FC5FF007B76DE /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7D51C1D5FC5FF007B76DE /* QBUserService.swift */; };
+		8EF7D51D1D5FC5FF007B76DE /* Services in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7D51C1D5FC5FF007B76DE /* Services */; };
 		E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164431D5678B700926692 /* ProviderTableViewCell.swift */; };
 		E56164461D56818500926692 /* ProviderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164451D56818500926692 /* ProviderInfoView.swift */; };
 		E56164481D5689A900926692 /* ProviderInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56164471D5689A900926692 /* ProviderInfoView.xib */; };
@@ -88,6 +90,8 @@
 		8E6418EA1D56914E00CC4928 /* Bobby.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bobby.storyboard; sourceTree = "<group>"; };
 		8E6418EC1D56921F00CC4928 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8E6418EF1D56E8FA00CC4928 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8E6B6FC01D7B038D007C3C86 /* CallService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallService.swift; path = Services/CallService.swift; sourceTree = "<group>"; };
+		8E6B6FC21D7B03D8007C3C86 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8E9BB7401D5EC3C0001FD26B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E9BB7421D5EC3CA001FD26B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		8E9BB7441D5EC3D3001FD26B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -109,7 +113,7 @@
 		8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
 		8EE9D4581D793EB500DB8C49 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		8EE9D45A1D793EEC00DB8C49 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		8EF7D51C1D5FC5FF007B76DE /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
+		8EF7D51C1D5FC5FF007B76DE /* Services */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = Services; sourceTree = "<group>"; };
 		E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
 		E56164431D5678B700926692 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderTableViewCell.swift; sourceTree = "<group>"; };
 		E56164451D56818500926692 /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInfoView.swift; sourceTree = "<group>"; };
@@ -171,11 +175,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		847133271D7649BC00DD2045 /* Managers */ = {
+		847133271D7649BC00DD2045 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8EF7D51C1D5FC5FF007B76DE /* Services */,
+				8E6B6FC01D7B038D007C3C86 /* CallService.swift */,
+				8E6B6FC21D7B03D8007C3C86 /* UserService.swift */,
 			);
-			name = Managers;
+			name = Services;
 			sourceTree = "<group>";
 		};
 		8E6418C11D55585900CC4928 = {
@@ -199,7 +206,7 @@
 		8E6418CC1D55585A00CC4928 /* Lunr */ = {
 			isa = PBXGroup;
 			children = (
-				847133271D7649BC00DD2045 /* Managers */,
+				847133271D7649BC00DD2045 /* Services */,
 				E561646C1D6A458C00926692 /* Models */,
 				E56164611D6125F100926692 /* Categories */,
 				8E6418EE1D56981700CC4928 /* Controllers */,
@@ -291,7 +298,6 @@
 		E561646C1D6A458C00926692 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8EF7D51C1D5FC5FF007B76DE /* QBUserService.swift */,
 				8EE9D4501D7684F500DB8C49 /* Call.swift */,
 				8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */,
 				8EE9D4581D793EB500DB8C49 /* Review.swift */,
@@ -455,6 +461,7 @@
 				8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */,
 				8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */,
 				847133261D75C14400DD2045 /* LunrButton.swift in Sources */,
+				8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */,
 				E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
 				44BA7F371D7383A5006B347D /* EditAccountSettingsViewController.swift in Sources */,
@@ -463,7 +470,7 @@
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */,
 				8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */,
-				8EF7D51D1D5FC5FF007B76DE /* QBUserService.swift in Sources */,
+				8EF7D51D1D5FC5FF007B76DE /* Services in Sources */,
 				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,
 				8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */,
 				44BA7F391D73C822006B347D /* DetailTableViewCell.swift in Sources */,
@@ -481,6 +488,7 @@
 				E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */,
 				E56164461D56818500926692 /* ProviderInfoView.swift in Sources */,
 				8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */,
+				8E6B6FC11D7B038D007C3C86 /* CallService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,7 +611,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.renderapps.lunr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6acd37c7-5b27-486a-8e13-228ebc8c9eec";
+				PROVISIONING_PROFILE = "a15c759a-ad21-4061-9391-09c2b34a68bf";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lunr/Lunr-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -621,7 +629,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.renderapps.lunr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6acd37c7-5b27-486a-8e13-228ebc8c9eec";
+				PROVISIONING_PROFILE = "a15c759a-ad21-4061-9391-09c2b34a68bf";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lunr/Lunr-Bridging-Header.h";
 			};
 			name = Release;

@@ -82,20 +82,3 @@ extension User {
         }
     }
 }
-
-extension User {
-    class func queryProviders(completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
-        let query = PFUser.query()
-        query?.whereKeyExists("type")
-        query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
-        query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            if let error = error {
-                errorHandler(error: error)
-                return
-            }
-            
-            let users = results as? [PFUser]
-            completionHandler(providers: users)
-        }
-    }
-}
