@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtk-xT-Ndv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtk-xT-Ndv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -119,11 +119,78 @@
                         <outlet property="settingsButton" destination="lrR-kz-8I3" id="ccB-ET-IMG"/>
                         <outlet property="sortCategoryView" destination="J2o-Nt-d2P" id="40P-kE-JhY"/>
                         <outlet property="tableView" destination="rco-c8-gIO" id="BRL-Yy-gVO"/>
+                        <segue destination="QWN-3G-ho0" kind="show" identifier="GoToProviderDetail" id="X4I-1m-grx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V15-Zm-UIT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1085" y="-95"/>
+        </scene>
+        <!--Provider Detail View Controller-->
+        <scene sceneID="cFN-r2-SN4">
+            <objects>
+                <viewController storyboardIdentifier="ProviderDetailViewController" id="QWN-3G-ho0" customClass="ProviderDetailViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5tD-Fn-xv5"/>
+                        <viewControllerLayoutGuide type="bottom" id="gHS-Ut-RT1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="elG-V2-Gfj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5p-Bg-33A" userLabel="Call Button View">
+                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="200" horizontalCompressionResistancePriority="200" verticalCompressionResistancePriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ8-mh-TV0" userLabel="Call Now Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="callButtonTapped:" destination="QWN-3G-ho0" eventType="touchUpInside" id="88p-Ry-U8C"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="centerY" secondItem="U5p-Bg-33A" secondAttribute="centerY" id="QVX-zh-73E"/>
+                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="height" secondItem="U5p-Bg-33A" secondAttribute="height" id="Qav-P9-RDl"/>
+                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="width" secondItem="U5p-Bg-33A" secondAttribute="width" id="cwe-Yi-mci"/>
+                                    <constraint firstAttribute="height" constant="50" id="giO-7V-nko"/>
+                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="centerX" secondItem="U5p-Bg-33A" secondAttribute="centerX" id="hh5-il-wcL"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bKT-gx-TR4">
+                                <rect key="frame" x="0.0" y="64" width="600" height="486"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="QWN-3G-ho0" id="tIf-Aw-j6a"/>
+                                    <outlet property="delegate" destination="QWN-3G-ho0" id="qfZ-nY-V6a"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bKT-gx-TR4" firstAttribute="leading" secondItem="elG-V2-Gfj" secondAttribute="leading" id="44E-oD-kra"/>
+                            <constraint firstItem="gHS-Ut-RT1" firstAttribute="top" secondItem="U5p-Bg-33A" secondAttribute="bottom" id="5g7-RW-Z3V"/>
+                            <constraint firstItem="U5p-Bg-33A" firstAttribute="top" secondItem="bKT-gx-TR4" secondAttribute="bottom" id="KTL-Ze-XXG"/>
+                            <constraint firstItem="bKT-gx-TR4" firstAttribute="top" secondItem="5tD-Fn-xv5" secondAttribute="bottom" id="Qn3-K8-IVU"/>
+                            <constraint firstItem="U5p-Bg-33A" firstAttribute="leading" secondItem="elG-V2-Gfj" secondAttribute="leading" id="RMe-JF-1hz"/>
+                            <constraint firstItem="U5p-Bg-33A" firstAttribute="centerX" secondItem="elG-V2-Gfj" secondAttribute="centerX" id="XV4-hT-gWY"/>
+                            <constraint firstAttribute="trailing" secondItem="bKT-gx-TR4" secondAttribute="trailing" id="jZi-9j-VID"/>
+                            <constraint firstAttribute="trailing" secondItem="U5p-Bg-33A" secondAttribute="trailing" id="oeZ-vA-eUT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4cV-9S-KML"/>
+                    <connections>
+                        <outlet property="callButton" destination="TJ8-mh-TV0" id="R8n-qn-QIs"/>
+                        <outlet property="callButtonView" destination="U5p-Bg-33A" id="cD9-xn-KHd"/>
+                        <outlet property="tableView" destination="bKT-gx-TR4" id="qaI-Or-s1t"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sqw-zE-ZEv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1841" y="-84"/>
         </scene>
     </scenes>
     <resources>
