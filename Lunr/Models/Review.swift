@@ -13,6 +13,12 @@ class Review: PFObject {
     @NSManaged var text : String
     @NSManaged var rating : Double
     
+    @NSManaged var provider: User
+    
+    override init () {
+        super.init()
+    }
+
     init(rating: Double, text: String) {
         super.init()
         self.rating = rating

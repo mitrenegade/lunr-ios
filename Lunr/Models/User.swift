@@ -35,19 +35,16 @@ class User: PFUser {
     
     override init () {
         super.init()
-        
-        // todo
     }
     
     // This shouldn't be used - only for testing
-    init(firstName: String, lastName: String, type: UserType, rating: Double, reviews: [Review], ratePerMin : Double, skills: [String], info: String, available: Bool) {
+    init(firstName: String, lastName: String, type: UserType, rating: Double, ratePerMin : Double, skills: [String], info: String, available: Bool) {
         super.init()
         
         self.firstName = firstName
         self.lastName = lastName
         self.type = type.rawValue.lowercaseString
         self.rating = rating
-        self.reviews = reviews
         self.ratePerMin = ratePerMin
         self.skills = skills
         self.info = info

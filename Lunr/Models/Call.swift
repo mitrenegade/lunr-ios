@@ -20,6 +20,10 @@ class Call: PFObject {
     
     //var paymentMethod: Card
 
+    override init () {
+        super.init()
+    }
+
     init(date: NSDate, duration: Double, rating: Double, cost: Double, client: PFUser?, provider: PFUser?) {
         super.init()
 

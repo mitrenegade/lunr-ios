@@ -14,6 +14,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         setUpTableView()
         self.searchBar.setImage(UIImage(imageLiteral: "search"), forSearchBarIcon: .Search, state: .Normal)
         self.sortCategoryView.delegate = self
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -47,8 +48,11 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     // MARK: UITableViewDelegate Methods
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        guard let providers = self.providers else { return }
+        
         if let providerDetails = UIStoryboard(name: "Randall", bundle: nil).instantiateViewControllerWithIdentifier("ProviderDetailViewController") as? ProviderDetailViewController {
-            providerDetails.configureForProvider(self.providers[indexPath.row])
+            providerDetails.configureForProvider(providers[indexPath.row])
             self.navigationController?.pushViewController(providerDetails, animated: true)
         }
     }
@@ -56,12 +60,15 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     // MARK: UITableViewDataSource Methods
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let providers = self.providers else { return 0 }
         return providers.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ProviderTableViewCell") as! ProviderTableViewCell
-        cell.configureForProvider(providers[indexPath.row])
+        if let providers = self.providers {
+            cell.configureForProvider(providers[indexPath.row])
+        }
         return cell
     }
 }
