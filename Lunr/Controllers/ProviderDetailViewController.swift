@@ -14,6 +14,18 @@ class ProviderDetailViewController : UIViewController {
         setUpTableView()
         setupCallButton()
         setUpNavigationBar()
+        
+        if let user = provider where user.reviews == nil {
+            // only load reviews if none exist
+            
+            UserService.sharedInstance.queryReviewsForProvider(user, completionHandler: { (reviews) in
+                user.reviews = reviews
+                self.tableView.reloadData()
+                
+                }, errorHandler: { (error) in
+                    self.simpleAlert("Could not load reviews", defaultMessage: "There was an error loading reviews for this provider", error: error, completion: nil)
+            })
+        }
     }
 
     override func viewWillAppear(animated: Bool) {

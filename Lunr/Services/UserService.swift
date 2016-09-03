@@ -31,6 +31,21 @@ class UserService {
         }
     }
     
+    func queryReviewsForProvider(provider: User, completionHandler: ((reviews:[Review]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+        Review.registerSubclass()
+        let query = Review.query()
+        query?.whereKey("provider", equalTo: provider)
+        query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            if let error = error {
+                errorHandler(error: error)
+                return
+            }
+            
+            let reviews = results as? [Review]
+            completionHandler(reviews: reviews)
+        }
+    }
+    
     // MARK: Test function to generate providers and reviews in Parse. To run this again, existing users must be deleted
     func generateProviders() {
         var reviews = [
