@@ -15,6 +15,13 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.searchBar.setImage(UIImage(imageLiteral: "search"), forSearchBarIcon: .Search, state: .Normal)
         self.sortCategoryView.delegate = self
         
+        UserService.sharedInstance.queryProviders(false, completionHandler: { (providers) in
+            self.providers = providers as? [User]
+            self.tableView.reloadData()
+            }) { (error) in
+                print("Error loading providers: \(error)")
+                self.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error)
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
