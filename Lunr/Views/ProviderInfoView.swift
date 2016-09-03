@@ -40,6 +40,8 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         self.priceRateLabel.text = "$\(provider.ratePerMin)/min"
         self.configureAvailability(provider.available)
         self.skills = provider.skills
+        
+        self.skillCollectionView.reloadData()
     }
 
     func configureAvailability(isAvailable: Bool) {
