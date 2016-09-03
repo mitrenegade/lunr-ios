@@ -26,7 +26,7 @@ class ProviderDetailViewController : UIViewController {
 
     func configureForProvider(provider: User) {
         self.provider = provider
-        self.title = provider.name
+        self.title = provider.displayString
     }
 
     func setUpTableView() {
@@ -57,7 +57,7 @@ class ProviderDetailViewController : UIViewController {
     // MARK: Event Methods
 
     @IBAction func callButtonTapped(sender: AnyObject) {
-        print("Let's call \(self.provider?.name)")
+        print("Let's call \(self.provider?.displayString)")
     }
 
     func backWasPressed() {

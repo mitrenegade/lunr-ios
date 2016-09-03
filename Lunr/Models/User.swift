@@ -55,16 +55,12 @@ class User: PFUser {
 
 // MARK: Extension for user convenience methods
 extension User {
-    var name: String? {
-        if let first = self.firstName, last = self.lastName {
-            return "\(first) \(last)"
-        }
-        return self.firstName ?? self.lastName ?? self.username
-    }
-    
     var displayString: String {
         get {
-            return self.name ?? self.email ?? (self.isProvider ? "a provider" : "a client")
+            if let first = self.firstName, last = self.lastName {
+                return "\(first) \(last)"
+            }
+            return self.firstName ?? self.lastName ?? self.email ?? (self.isProvider ? "a provider" : "a client")
         }
     }
     

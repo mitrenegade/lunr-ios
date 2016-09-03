@@ -23,15 +23,34 @@ class FacebookViewController: UIViewController {
   }
 
     func updateUserProfile(user: PFUser) {
-        let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, email"])
+        let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "first_name, last_name, name, email"])
         request.startWithCompletionHandler({ (connection, result, error) -> Void in
             if error == nil {
-                user["name"] = result?["name"] as? String
+                if let firstName = result?["first_name"] as? String {
+                    user["firstName"] = firstName
+                }
+                if let lastName = result?["last_name"] as? String {
+                    user["lastName"] = lastName
+                }
                 user.email = result?["email"] as? String
-                // TODO: This is throwing error, "Account already exists for this email address." when logging in via facebook with an account that was created w/ email.
-                user.saveInBackground()
+                user.saveInBackgroundWithBlock({ (success, error) in
+                    if let error = error {
+                        print("error")
+                        self.simpleAlert("Error logging in", defaultMessage: "We had an issue logging you in", error: error)
+                        if error.code == PFErrorCode.ErrorUsernameTaken.rawValue || error.code == PFErrorCode.ErrorUserEmailTaken.rawValue {
+                            // For error "Account already exists for this email address." when logging in via facebook with an account that was created w/ email.
+                            PFUser.logOutInBackgroundWithBlock { [weak self] (error) in
+                                self?.notify(.LogoutSuccess)
+                            }
+                        }
+                    }
+                })
             } else {
                 print(error)
+                self.simpleAlert("Error logging in", defaultMessage: "We had an issue logging you in", error: error)
+                PFUser.logOutInBackgroundWithBlock { [weak self] (error) in
+                    self?.notify(.LogoutSuccess)
+                }
             }
         })
     }
