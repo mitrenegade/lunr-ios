@@ -6,29 +6,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var sortCategoryView: SortCategoryView!
-    var providers: [User] = //TODO: remove these dummy providers
-        [User(
-            firstName: "John",
-            lastName: "Snow",
-            rating: 5.0,
-            reviews: [],
-            ratePerMin: 4.3,
-            skills: ["Raiding", "Leadership"],
-            info: "John Snow is the son of Rhaegar and Lyanna. Oops that was a spoiler! Well, that's your fault cause you should be caught up on the show...",
-            available: true),
-         User(
-            firstName: "John",
-            lastName: "Snow",
-            rating: 5.0,
-            reviews:
-            [
-                Review(rating: 4.0, text: "this guy is good"),
-                Review(rating: 3.3, text: "John Snow is the son of Rhaegar and Lyanna. Oops that was a spoiler! Well, that's your fault cause you should be caught up on the show...")
-            ],
-            ratePerMin: 4.3,
-            skills: ["Raiding", "Leadership"],
-            info: "oh hello",
-            available: false)]
+    var providers: [User]?
 
     override func viewDidLoad() {
         super.viewDidLoad()

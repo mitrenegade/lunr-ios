@@ -38,7 +38,7 @@ class BobbyTestViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             if let users = result as? [User] {
                 for user in users {
-                    if user.userType == .Provider {
+                    if user.isProvider {
                         self.targetUser = user
                         self.buttonCall.enabled = true
                         self.buttonCall.setTitle("Call \(user.displayString)", forState: .Normal)

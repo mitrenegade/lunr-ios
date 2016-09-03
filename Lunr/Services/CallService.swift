@@ -17,8 +17,8 @@ class CallService: NSObject {
         
         guard let user = PFUser.currentUser() as? User else { return }
         
-        let client: User? = user.userType == .Provider ? nil : user
-        let provider: User? = user.userType == .Provider ? user : nil
+        let client: User? = user.isProvider ? nil : user
+        let provider: User? = user.isProvider ? user : nil
         let call = Call(date: NSDate(), duration: 10*60, rating: 4, cost: 35.25, client: client, provider: provider)
         
         call.saveInBackgroundWithBlock { (success, error) in

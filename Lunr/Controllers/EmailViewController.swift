@@ -117,7 +117,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             }
             print("PFUser loaded: \(user)")
             
-            UserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
+            QBUserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
                 if success {
                     self.notify(.LoginSuccess)
                 }

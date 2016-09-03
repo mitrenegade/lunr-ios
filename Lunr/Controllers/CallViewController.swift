@@ -113,7 +113,7 @@ class CallViewController: UIViewController {
     
     func loadUser() {
         if let pfUser = targetPFUser {
-            UserService.getQBUUserFor(pfUser, completion: { (result) in
+            QBUserService.getQBUUserFor(pfUser, completion: { (result) in
                 self.targetQBUUser = result
             })
         }
