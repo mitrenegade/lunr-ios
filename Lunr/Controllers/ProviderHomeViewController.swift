@@ -30,7 +30,7 @@ class ProviderHomeViewController: UIViewController {
                 if success {
                     self?.updateUI()
                 } else if let error = error {
-                    self?.simpleAlert("There was an error", defaultMessage: nil, error: error)
+                    self?.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
                 }
             }
         }

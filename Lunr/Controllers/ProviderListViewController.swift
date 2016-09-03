@@ -20,7 +20,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             self.tableView.reloadData()
             }) { (error) in
                 print("Error loading providers: \(error)")
-                self.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error)
+                self.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error, completion: nil)
         }
     }
 

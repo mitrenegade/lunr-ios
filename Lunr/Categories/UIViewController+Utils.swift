@@ -2,12 +2,12 @@ import UIKit
 
 extension UIViewController {
     
-    func simpleAlert(title: String, defaultMessage: String?, error: NSError?) {
+    func simpleAlert(title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)?) {
         if let msg = error?.userInfo["error"] as? String {
             self.simpleAlert(title, message: msg)
             return
         }
-        self.simpleAlert(title, message: defaultMessage)
+        self.simpleAlert(title, message: defaultMessage, completion: completion)
     }
     
     func simpleAlert(title: String, message: String?) {
