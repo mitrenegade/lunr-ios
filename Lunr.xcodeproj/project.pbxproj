@@ -44,6 +44,8 @@
 		8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */; };
 		8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4581D793EB500DB8C49 /* Review.swift */; };
 		8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D45A1D793EEC00DB8C49 /* User.swift */; };
+		8EF7D51D1D5FC5FF007B76DE /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7D51C1D5FC5FF007B76DE /* QBUserService.swift */; };
+		E50615801D7CB4AA001AC445 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */; };
 		E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164431D5678B700926692 /* ProviderTableViewCell.swift */; };
 		E56164461D56818500926692 /* ProviderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164451D56818500926692 /* ProviderInfoView.swift */; };
 		E56164481D5689A900926692 /* ProviderInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56164471D5689A900926692 /* ProviderInfoView.xib */; };
@@ -116,6 +118,7 @@
 		8EE9D4581D793EB500DB8C49 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		8EE9D45A1D793EEC00DB8C49 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
+		E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		E56164431D5678B700926692 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderTableViewCell.swift; sourceTree = "<group>"; };
 		E56164451D56818500926692 /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInfoView.swift; sourceTree = "<group>"; };
 		E56164471D5689A900926692 /* ProviderInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProviderInfoView.xib; path = Xibs/ProviderInfoView.xib; sourceTree = "<group>"; };
@@ -229,13 +232,13 @@
 			isa = PBXGroup;
 			children = (
 				8E6418EA1D56914E00CC4928 /* Bobby.storyboard */,
-				8E6418E01D56780100CC4928 /* Login.storyboard */,
-				8E4DE0B71D62AFA10013C06C /* Provider.storyboard */,
-				E561645E1D5F9AB200926692 /* Main.storyboard */,
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
-				44BA7F441D73CB47006B347D /* Settings.storyboard */,
-				44BA7F461D77C198006B347D /* Randall.storyboard */,
+				8E6418E01D56780100CC4928 /* Login.storyboard */,
+				E561645E1D5F9AB200926692 /* Main.storyboard */,
+				8E4DE0B71D62AFA10013C06C /* Provider.storyboard */,
 				842984A51D74E3B20063F1B5 /* ProviderFlow.storyboard */,
+				44BA7F461D77C198006B347D /* Randall.storyboard */,
+				44BA7F441D73CB47006B347D /* Settings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -257,6 +260,12 @@
 			isa = PBXGroup;
 			children = (
 				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
+				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
+				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
+				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
+				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
+				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
+				E561645C1D5F99F800926692 /* ViewController.swift */,
 			);
 			name = "Provider Flow Controllers";
 			path = Controllers;
@@ -278,15 +287,15 @@
 			isa = PBXGroup;
 			children = (
 				44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */,
-				44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */,
 				446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */,
 				44BA7F381D73C822006B347D /* DetailTableViewCell.swift */,
+				847133251D75C14400DD2045 /* LunrButton.swift */,
 				8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */,
 				E56164451D56818500926692 /* ProviderInfoView.swift */,
 				E561644F1D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift */,
 				E56164431D5678B700926692 /* ProviderTableViewCell.swift */,
+				44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */,
 				E56164531D5F78BB00926692 /* SortCategoryView.swift */,
-				847133251D75C14400DD2045 /* LunrButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,9 +316,9 @@
 			isa = PBXGroup;
 			children = (
 				E56164641D689FFC00926692 /* UIColor+LunrColors.swift */,
+				E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */,
 				E56164621D61260700926692 /* UIView+Utils.swift */,
 				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
-				E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -319,6 +328,7 @@
 			children = (
 				8EE9D4501D7684F500DB8C49 /* Call.swift */,
 				8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */,
+				8EF7D51C1D5FC5FF007B76DE /* QBUserService.swift */,
 				8EE9D4581D793EB500DB8C49 /* Review.swift */,
 				8EE9D45A1D793EEC00DB8C49 /* User.swift */,
 			);
@@ -502,6 +512,7 @@
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */,
+				E50615801D7CB4AA001AC445 /* FeedbackViewController.swift in Sources */,
 				8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */,
 				8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */,
 				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,

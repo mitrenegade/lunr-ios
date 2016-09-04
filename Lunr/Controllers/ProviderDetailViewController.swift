@@ -14,14 +14,14 @@ class ProviderDetailViewController : UIViewController {
         setUpTableView()
         setupCallButton()
         setUpNavigationBar()
-        
+
         if let user = provider where user.reviews == nil {
             // only load reviews if none exist
-            
+
             UserService.sharedInstance.queryReviewsForProvider(user, completionHandler: {[weak self]  (reviews) in
                 user.reviews = reviews
                 self?.tableView.reloadData()
-                
+
                 }, errorHandler: {[weak self]  (error) in
                     self?.simpleAlert("Could not load reviews", defaultMessage: "There was an error loading reviews for this provider", error: error, completion: nil)
             })
@@ -69,12 +69,9 @@ class ProviderDetailViewController : UIViewController {
     // MARK: Event Methods
 
     @IBAction func callButtonTapped(sender: AnyObject) {
-        print("Let's call \(self.provider?.displayString)")
-        
-        if let controller = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("BobbyTestViewController") as? BobbyTestViewController {
-            controller.targetUser = self.provider
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
+        print("Let's call \(self.provider?.name)")
+
+        // TODO: feedback after end call
     }
 
     func backWasPressed() {

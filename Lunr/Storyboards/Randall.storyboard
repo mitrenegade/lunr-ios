@@ -1,10 +1,221 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
+        <!--Provider Detail View Controller-->
+        <scene sceneID="Vs5-kD-XCH">
+            <objects>
+                <viewController storyboardIdentifier="ProviderDetailViewController" id="Tco-4n-5Qk" customClass="ProviderDetailViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bw2-0N-FMM"/>
+                        <viewControllerLayoutGuide type="bottom" id="V6h-dc-bHg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ETx-0d-O8l">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ff7-DQ-Oep" userLabel="Call Button View">
+                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="200" horizontalCompressionResistancePriority="200" verticalCompressionResistancePriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vk0-Vh-9zZ" userLabel="Call Now Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="callButtonTapped:" destination="Tco-4n-5Qk" eventType="touchUpInside" id="KAy-O5-eBE"/>
+                                            <segue destination="k3D-jK-qTj" kind="presentation" id="aEs-Pe-zwN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Vk0-Vh-9zZ" firstAttribute="centerY" secondItem="Ff7-DQ-Oep" secondAttribute="centerY" id="7BC-OE-Fjg"/>
+                                    <constraint firstItem="Vk0-Vh-9zZ" firstAttribute="width" secondItem="Ff7-DQ-Oep" secondAttribute="width" id="XEj-4R-S7e"/>
+                                    <constraint firstAttribute="height" constant="50" id="aa5-5D-zN9"/>
+                                    <constraint firstItem="Vk0-Vh-9zZ" firstAttribute="height" secondItem="Ff7-DQ-Oep" secondAttribute="height" id="edB-5g-FCV"/>
+                                    <constraint firstItem="Vk0-Vh-9zZ" firstAttribute="centerX" secondItem="Ff7-DQ-Oep" secondAttribute="centerX" id="v6s-do-N4w"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dPY-fi-q5Q">
+                                <rect key="frame" x="0.0" y="64" width="600" height="486"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Tco-4n-5Qk" id="D7g-2B-jzY"/>
+                                    <outlet property="delegate" destination="Tco-4n-5Qk" id="8pb-nr-p7C"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ff7-DQ-Oep" firstAttribute="leading" secondItem="ETx-0d-O8l" secondAttribute="leading" id="BGu-rL-qTM"/>
+                            <constraint firstItem="dPY-fi-q5Q" firstAttribute="top" secondItem="bw2-0N-FMM" secondAttribute="bottom" id="Izh-cV-BZq"/>
+                            <constraint firstItem="Ff7-DQ-Oep" firstAttribute="top" secondItem="dPY-fi-q5Q" secondAttribute="bottom" id="M7h-YP-YBn"/>
+                            <constraint firstItem="dPY-fi-q5Q" firstAttribute="leading" secondItem="ETx-0d-O8l" secondAttribute="leading" id="UYZ-pi-Awb"/>
+                            <constraint firstAttribute="trailing" secondItem="dPY-fi-q5Q" secondAttribute="trailing" id="cU1-XY-3HI"/>
+                            <constraint firstItem="Ff7-DQ-Oep" firstAttribute="centerX" secondItem="ETx-0d-O8l" secondAttribute="centerX" id="ch2-um-f6c"/>
+                            <constraint firstAttribute="trailing" secondItem="Ff7-DQ-Oep" secondAttribute="trailing" id="gyl-jn-8a4"/>
+                            <constraint firstItem="V6h-dc-bHg" firstAttribute="top" secondItem="Ff7-DQ-Oep" secondAttribute="bottom" id="yht-cQ-Aah"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ZTV-wb-UBM"/>
+                    <connections>
+                        <outlet property="callButton" destination="Vk0-Vh-9zZ" id="aCS-Y3-2n8"/>
+                        <outlet property="callButtonView" destination="Ff7-DQ-Oep" id="GfA-qr-OOk"/>
+                        <outlet property="tableView" destination="dPY-fi-q5Q" id="nUL-tD-7Kn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fej-1e-VUT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218" y="337"/>
+        </scene>
+        <!--Feedback View Controller-->
+        <scene sceneID="g8Z-tg-fIt">
+            <objects>
+                <tableViewController id="YZf-lf-C2B" customClass="FeedbackViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="16" sectionFooterHeight="18" id="j9b-V3-8ID">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="sectionIndexColor" red="0.13725490200000001" green="0.16078431369999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Call Summary:" id="AvG-fy-0N4">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="9hT-Gu-bTN" rowHeight="35" style="IBUITableViewCellStyleDefault" id="xfz-n4-Gya">
+                                        <rect key="frame" x="0.0" y="114" width="600" height="35"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xfz-n4-Gya" id="xw6-3c-rFf">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="35"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="durationLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9hT-Gu-bTN">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                    <color key="textColor" red="0.22352941176470589" green="0.22352941176470589" blue="0.22352941176470589" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="FQa-gJ-j6S" rowHeight="35" style="IBUITableViewCellStyleDefault" id="Uqc-hH-D0d">
+                                        <rect key="frame" x="0.0" y="149" width="600" height="35"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uqc-hH-D0d" id="e12-1O-aqQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="35"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="costLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FQa-gJ-j6S">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                    <color key="textColor" red="0.22352941176470589" green="0.22352941176470589" blue="0.22352941176470589" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Rate Experience:" id="Ywd-Tb-Ihv">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="35" id="kpN-bW-YBV">
+                                        <rect key="frame" x="0.0" y="235" width="600" height="35"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kpN-bW-YBV" id="MJW-NX-P9C">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="35"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Feedback:" id="fRc-wl-cKW">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="280" id="RFv-Qb-ifD">
+                                        <rect key="frame" x="0.0" y="321" width="600" height="280"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RFv-Qb-ifD" id="O6L-Wr-oCp">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="280"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hjP-CD-dJj">
+                                                    <rect key="frame" x="16" y="16" width="568" height="200"/>
+                                                    <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803926" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="200" id="XaW-Eo-zse"/>
+                                                    </constraints>
+                                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                    <color key="textColor" red="0.25098039215686274" green="0.25098039215686274" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="hjP-CD-dJj" secondAttribute="bottom" constant="10" id="5zc-ji-ACf"/>
+                                                <constraint firstItem="hjP-CD-dJj" firstAttribute="leading" secondItem="O6L-Wr-oCp" secondAttribute="leading" constant="16" id="85A-p5-4OM"/>
+                                                <constraint firstAttribute="trailing" secondItem="hjP-CD-dJj" secondAttribute="trailing" constant="16" id="Eke-kU-PhL"/>
+                                                <constraint firstItem="hjP-CD-dJj" firstAttribute="top" secondItem="O6L-Wr-oCp" secondAttribute="top" constant="16" id="eSa-as-7iz"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="5zc-ji-ACf"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="YZf-lf-C2B" id="J9g-x3-16a"/>
+                            <outlet property="delegate" destination="YZf-lf-C2B" id="cci-Vk-I4q"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="voV-4U-0jd">
+                        <barButtonItem key="leftBarButtonItem" image="close" id="Bvj-zV-KTX">
+                            <connections>
+                                <action selector="closedButtonPressed:" destination="YZf-lf-C2B" id="eDS-hW-Yj3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="closeButton" destination="Bvj-zV-KTX" id="bjP-wu-FVQ"/>
+                        <outlet property="costLabel" destination="FQa-gJ-j6S" id="vTh-Ql-J6z"/>
+                        <outlet property="durationLabel" destination="9hT-Gu-bTN" id="SXU-A5-Qak"/>
+                        <outlet property="feedbackTextView" destination="hjP-CD-dJj" id="igI-yN-EsR"/>
+                        <outlet property="feedbackToolbar" destination="La6-wM-K4J" id="LiR-T1-Zb2"/>
+                        <outlet property="leaveFeedbackBarButtonItem" destination="ufh-jl-JCq" id="WcY-Rs-EDf"/>
+                        <outlet property="view" destination="j9b-V3-8ID" id="tDU-aA-zOm"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fjE-X7-Mbt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="La6-wM-K4J">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" red="0.13725490196078433" green="0.16078431372549021" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Zcu-ae-9oa"/>
+                        <barButtonItem title="Leave Feedback" id="ufh-jl-JCq">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3pp-J6-6eU"/>
+                    </items>
+                </toolbar>
+            </objects>
+            <point key="canvasLocation" x="2783" y="431"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="IVw-KH-jYB">
             <objects>
@@ -20,5 +231,26 @@
             </objects>
             <point key="canvasLocation" x="406" y="337"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GmJ-Fl-yyI">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="k3D-jK-qTj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QQw-tj-x7b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YZf-lf-C2B" kind="relationship" relationship="rootViewController" id="d9t-SV-53H"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u0K-Fu-LUp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1971" y="431"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="close" width="22" height="24"/>
+    </resources>
 </document>
