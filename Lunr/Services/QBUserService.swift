@@ -94,6 +94,14 @@ class QBUserService: NSObject {
             }
         }
     }
+    
+    func logoutQBUser() {
+        if QBChat.instance().isConnected {
+            QBChat.instance().disconnectWithCompletionBlock({ (error) in
+                print("error: \(error)")
+            })
+        }
+    }
 
     // load a QBUUser based on a PFUser
     class func getQBUUserFor(user: PFUser, completion: ((result: QBUUser?)->Void)) {

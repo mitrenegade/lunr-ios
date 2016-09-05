@@ -12,6 +12,13 @@ import Parse
 class UserService {
     static let sharedInstance: UserService = UserService()
     
+    class func logout() {
+        PFUser.logOut()
+        QBUserService.sharedInstance.logoutQBUser()
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.LogoutSuccess.rawValue, object: nil)
+    }
+    
+    func queryProviders(availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
     let pageSize = 10
     func queryProvidersAtPage(page: Int = 0, filterOption: FilteredBy = .Alphabetical, ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()

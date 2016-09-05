@@ -18,6 +18,13 @@ enum Segue {
     }
 }
 
+enum NotificationType: String {
+    case LogoutSuccess = "logout:success"
+    case LoginSuccess = "login:success"
+}
+
+}
+
 enum FilteredBy: String {
     case Alphabetical
     case Rating

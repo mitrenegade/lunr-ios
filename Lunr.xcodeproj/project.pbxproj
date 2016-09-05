@@ -336,6 +336,7 @@
 				377C4CBFA0D48DE18BCAA486 /* [CP] Embed Pods Frameworks */,
 				BE777C20A5A947303BEE3501 /* [CP] Copy Pods Resources */,
 				8E507A1C1D794E4B00E12415 /* ShellScript */,
+				8E4D012E1D7C5ED5003A11DA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -420,6 +421,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lunr/Pods-Lunr-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8E4D012E1D7C5ED5003A11DA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quickblox.framework/strip-framework.sh\"\n";
 		};
 		8E507A1C1D794E4B00E12415 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

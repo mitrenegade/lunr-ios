@@ -23,11 +23,6 @@ extension UIViewController {
 
 extension NSObject {
     
-    enum NotificationType: String {
-        case LogoutSuccess = "logout:success"
-        case LoginSuccess = "login:success"
-    }
-    
     // MARK: - Notifications
     func listenFor(notification: NotificationType, action: Selector, object: AnyObject?) {
         listenFor(notification.rawValue, action: action, object: object)
