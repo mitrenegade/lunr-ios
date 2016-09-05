@@ -11,10 +11,9 @@ import Foundation
 
 class Call: PFObject {
     // PFSubclassing and NSManaged is required so that PFObject.init() can be used, and PFObject's getters and setters correctly set key-value pairs that save to Parse
-    @NSManaged var date: NSDate?
     @NSManaged var duration: NSNumber?
-    @NSManaged var rating: NSNumber?
     @NSManaged var totalCost: NSNumber?
+
     @NSManaged var client: User?
     @NSManaged var provider: User?
     
@@ -24,13 +23,11 @@ class Call: PFObject {
         super.init()
     }
 
-    init(date: NSDate, duration: Double, rating: Double, cost: Double, client: User?, provider: User?) {
+    init(duration: Double, totalCost: Double, client: User?, provider: User?) {
         super.init()
 
-        self.date = date
         self.duration = duration
-        self.rating = rating
-        self.totalCost = cost
+        self.totalCost = totalCost
         
         // TODO: client and provider must exist
         self.client = client

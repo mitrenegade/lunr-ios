@@ -23,8 +23,6 @@ enum NotificationType: String {
     case LoginSuccess = "login:success"
 }
 
-}
-
 enum FilteredBy: String {
     case Alphabetical
     case Rating

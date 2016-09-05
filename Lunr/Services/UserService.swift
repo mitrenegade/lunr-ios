@@ -18,7 +18,6 @@ class UserService: NSObject {
         sharedInstance.notify(.LogoutSuccess)
     }
     
-    func queryProviders(availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
     let pageSize = 10
     func queryProvidersAtPage(page: Int = 0, filterOption: FilteredBy = .Alphabetical, ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()
@@ -29,7 +28,7 @@ class UserService: NSObject {
         if availableOnly {
             query?.whereKey("available", equalTo: true)
         }
-
+        
         var filterKey = "lastName"
         switch filterOption {
         case .Cost:
@@ -82,6 +81,7 @@ class UserService: NSObject {
     
     // MARK: Test function to generate providers and reviews in Parse. To run this again, existing users must be deleted
     func generateProviders() {
+        /*
         var reviews = [
             Review(rating: 4.5, text: "Prompt, friendly, respectful, competent, knowledgable, experienced, prepared, professional service. Listened to my concerns and provided reassurance, answered questions. Scheduled conveniently. Two plumbers worked well together to accomplish all of the work in one day. Neat and clean, left the work area the same way that it was found."),
             Review(rating: 4.0, text: "It was an excellent experience from start to finish. I called Duke's in the morning, and Duke answered the phone. He came early that evening to assess the job. It was agreed that he would send two plumbers the next morning, including his 'drain man', at 8:30. The two men arrived and worked for 4 + hours getting all the jobs completed. They were congenial and professional, and fixed and explained everything to my satisfaction. It is a great relief to have these jobs completed."),
@@ -213,5 +213,6 @@ class UserService: NSObject {
                 review.saveInBackground()
             })
         }
+         */
     }
 }
