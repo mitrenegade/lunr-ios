@@ -24,6 +24,7 @@ class User: PFUser {
     
     // Client
     @NSManaged var payment: PaymentMethod?
+    @NSManaged var favorites: [String]
 
     // Provider
     @NSManaged var rating : Double
