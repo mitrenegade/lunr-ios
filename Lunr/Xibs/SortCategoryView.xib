@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -29,25 +29,25 @@
                         <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="Npc-PF-K6j"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anv-Qf-Ob3" userLabel="star">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anv-Qf-Ob3" userLabel="star">
                     <rect key="frame" x="80" y="0.0" width="81" height="50"/>
                     <state key="normal" image="star"/>
                     <connections>
                         <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="OkE-ZA-lBB"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNL-p0-d7V" userLabel="dollarsign">
-                    <rect key="frame" x="161" y="0.0" width="80" height="50"/>
-                    <state key="normal" image="dollarsign"/>
-                    <connections>
-                        <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="8wg-b9-E5b"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhP-W9-eOI" userLabel="heart">
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhP-W9-eOI" userLabel="heart">
                     <rect key="frame" x="241" y="0.0" width="80" height="50"/>
                     <state key="normal" image="heart"/>
                     <connections>
                         <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="ZnY-Py-oNu"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNL-p0-d7V" userLabel="dollarsign">
+                    <rect key="frame" x="161" y="0.0" width="80" height="50"/>
+                    <state key="normal" image="dollarsign"/>
+                    <connections>
+                        <action selector="sortButtonWasPressed:" destination="-1" eventType="touchUpInside" id="8wg-b9-E5b"/>
                     </connections>
                 </button>
             </subviews>

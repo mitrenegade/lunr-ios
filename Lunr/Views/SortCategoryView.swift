@@ -22,11 +22,6 @@ class SortCategoryView: NibLoadableView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.sortAlphabeticallyButton.tag = 0
-        self.sortByRatingButton.tag = 1
-        self.sortByPriceButton.tag = 2
-        self.sortByFavoritesButton.tag = 3
-
         self.addShadow()
     }
 
@@ -39,7 +34,6 @@ class SortCategoryView: NibLoadableView {
     // MARK: Event Methods
 
     @IBAction func sortButtonWasPressed(sender: UIButton) {
-        //self.delegate!.sortCategoryWasSelected(sender.tag as! SortCategory)
-        //TODO: Not sure how to convert this Int into another Int that is a SortCategory enum.
+        self.delegate!.sortCategoryWasSelected(SortCategory(rawValue: sender.tag)!)
     }
 }
