@@ -7,9 +7,9 @@ class FacebookViewController: UIViewController {
     @IBAction func loginWithFacebook(sender: UIButton) {
         let readPermissions = ["public_profile", "email", "user_friends"]
         PFFacebookUtils.logInInBackgroundWithReadPermissions(readPermissions) {
-            (user: PFUser?, error: NSError?) -> Void in
+            [weak self] (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
-                self.updateUserProfile(user)
+                self?.updateUserProfile(user)
                 if user.isNew {
                     print("User signed up and logged in through Facebook!")
                 } else {
@@ -23,7 +23,7 @@ class FacebookViewController: UIViewController {
     
     func updateUserProfile(user: PFUser) {
         let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "first_name, last_name, name, email"])
-        request.startWithCompletionHandler({ (connection, result, error) -> Void in
+        request.startWithCompletionHandler({[weak self]  (connection, result, error) -> Void in
             if error == nil {
                 if let firstName = result?["first_name"] as? String {
                     user["firstName"] = firstName
@@ -49,7 +49,7 @@ class FacebookViewController: UIViewController {
                 })
             } else {
                 print(error)
-                self.simpleAlert("Error logging in", defaultMessage: "We had an issue logging you in", error: error, completion: {
+                self?.simpleAlert("Error logging in", defaultMessage: "We had an issue logging you in", error: error, completion: {
                     PFUser.logOutInBackgroundWithBlock { [weak self] (error) in
                         self?.notify(.LogoutSuccess)
                     }

@@ -51,7 +51,6 @@
 		E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164531D5F78BB00926692 /* SortCategoryView.swift */; };
 		E56164561D5F78D500926692 /* SortCategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56164551D5F78D500926692 /* SortCategoryView.xib */; };
 		E561645B1D5F972700926692 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CD1D55585A00CC4928 /* AppDelegate.swift */; };
-		E561645D1D5F99F800926692 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E561645C1D5F99F800926692 /* ViewController.swift */; };
 		E56164601D5F9AB200926692 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E561645E1D5F9AB200926692 /* Main.storyboard */; };
 		E56164631D61260700926692 /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164621D61260700926692 /* UIView+Utils.swift */; };
 		E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164641D689FFC00926692 /* UIColor+LunrColors.swift */; };
@@ -122,7 +121,6 @@
 		E561644F1D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderSkillTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		E56164531D5F78BB00926692 /* SortCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortCategoryView.swift; sourceTree = "<group>"; };
 		E56164551D5F78D500926692 /* SortCategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SortCategoryView.xib; path = Xibs/SortCategoryView.xib; sourceTree = "<group>"; };
-		E561645C1D5F99F800926692 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E561645F1D5F9AB200926692 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E56164621D61260700926692 /* UIView+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
 		E56164641D689FFC00926692 /* UIColor+LunrColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+LunrColors.swift"; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
-				E561645C1D5F99F800926692 /* ViewController.swift */,
 			);
 			name = "Main Controllers";
 			path = Controllers;
@@ -501,7 +498,6 @@
 				8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */,
 				E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */,
 				E56164631D61260700926692 /* UIView+Utils.swift in Sources */,
-				E561645D1D5F99F800926692 /* ViewController.swift in Sources */,
 				E56164511D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift in Sources */,
 				44BA7F411D73C9F5006B347D /* ReviewTableViewCell.swift in Sources */,
 				E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */,

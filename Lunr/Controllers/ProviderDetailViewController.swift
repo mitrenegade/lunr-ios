@@ -18,12 +18,12 @@ class ProviderDetailViewController : UIViewController {
         if let user = provider where user.reviews == nil {
             // only load reviews if none exist
             
-            UserService.sharedInstance.queryReviewsForProvider(user, completionHandler: { (reviews) in
+            UserService.sharedInstance.queryReviewsForProvider(user, completionHandler: {[weak self]  (reviews) in
                 user.reviews = reviews
-                self.tableView.reloadData()
+                self?.tableView.reloadData()
                 
-                }, errorHandler: { (error) in
-                    self.simpleAlert("Could not load reviews", defaultMessage: "There was an error loading reviews for this provider", error: error, completion: nil)
+                }, errorHandler: {[weak self]  (error) in
+                    self?.simpleAlert("Could not load reviews", defaultMessage: "There was an error loading reviews for this provider", error: error, completion: nil)
             })
         }
     }
