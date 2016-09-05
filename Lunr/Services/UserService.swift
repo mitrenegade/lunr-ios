@@ -12,10 +12,13 @@ import Parse
 class UserService {
     static let sharedInstance: UserService = UserService()
     
-    func queryProviders(availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+    let pageSize = 10
+    func queryProvidersAtPage(page: Int = 0, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()
         query?.whereKeyExists("type")
         query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
+        query?.limit = pageSize
+        query?.skip = page * pageSize
         if availableOnly {
             query?.whereKey("available", equalTo: true)
         }
