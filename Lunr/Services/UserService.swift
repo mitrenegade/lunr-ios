@@ -9,13 +9,13 @@
 import Foundation
 import Parse
 
-class UserService {
+class UserService: NSObject {
     static let sharedInstance: UserService = UserService()
     
     class func logout() {
         PFUser.logOut()
         QBUserService.sharedInstance.logoutQBUser()
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.LogoutSuccess.rawValue, object: nil)
+        sharedInstance.notify(.LogoutSuccess)
     }
     
     func queryProviders(availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
