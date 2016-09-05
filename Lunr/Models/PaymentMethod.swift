@@ -13,6 +13,11 @@ class PaymentMethod: PFObject {
     // Placeholder for Card that needs to be associated with payments and calls
     @NSManaged var type: String
     @NSManaged var last4: String
+    
+    override init () {
+        super.init()
+    }
+
 }
 
 extension PaymentMethod: PFSubclassing {

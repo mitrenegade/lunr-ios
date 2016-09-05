@@ -30,7 +30,7 @@ class SplashViewController: UIViewController {
         case .None:
             return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
         case .Some(let user as User):
-            if user.userType == .Provider {
+            if user.isProvider {
                 return UIStoryboard(name: "ProviderFlow", bundle: nil).instantiateInitialViewController()
             }
             return UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController()

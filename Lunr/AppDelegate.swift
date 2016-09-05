@@ -48,13 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // force root window to appear
         self.window?.makeKeyAndVisible()
 
-        // This call demonstrates the way to use services
-        User.queryProviders({ (providers) in
-            print("Providers received: \(providers)")
-        }) { (error) in
-            print("Error \(error)")
-        }
-        
         // App wide appearance protocols
         setGlobalAppearanceAttributes()
         

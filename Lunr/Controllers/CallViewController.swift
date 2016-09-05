@@ -61,7 +61,7 @@ class CallViewController: UIViewController {
         if !QBChat.instance().isConnected {
             self.state = .NoSession // on startup, button is disabled
             
-            UserService.sharedInstance.refreshSession({ (success) in
+            QBUserService.sharedInstance.refreshSession({ (success) in
                 if !success {
                     self.simpleAlert("Failed user session", message: "Please log in again.", completion: {
                         self.navigationController?.popViewControllerAnimated(true)
@@ -113,7 +113,7 @@ class CallViewController: UIViewController {
     
     func loadUser() {
         if let pfUser = targetPFUser {
-            UserService.getQBUUserFor(pfUser, completion: { (result) in
+            QBUserService.getQBUUserFor(pfUser, completion: { (result) in
                 self.targetQBUUser = result
             })
         }

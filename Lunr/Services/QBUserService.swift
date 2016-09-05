@@ -11,8 +11,8 @@ import UIKit
 import Parse
 import Quickblox
 
-class UserService: NSObject {
-    static let sharedInstance: UserService = UserService()
+class QBUserService: NSObject {
+    static let sharedInstance: QBUserService = QBUserService()
     var isRefreshingSession: Bool = false
     
     // MARK: Create User

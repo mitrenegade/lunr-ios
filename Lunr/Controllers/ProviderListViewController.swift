@@ -6,29 +6,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var sortCategoryView: SortCategoryView!
-    var providers: [User] = //TODO: remove these dummy providers
-        [User(
-            firstName: "John",
-            lastName: "Snow",
-            rating: 5.0,
-            reviews: [],
-            ratePerMin: 4.3,
-            skills: ["Raiding", "Leadership"],
-            info: "John Snow is the son of Rhaegar and Lyanna. Oops that was a spoiler! Well, that's your fault cause you should be caught up on the show...",
-            available: true),
-         User(
-            firstName: "John",
-            lastName: "Snow",
-            rating: 5.0,
-            reviews:
-            [
-                Review(rating: 4.0, text: "this guy is good"),
-                Review(rating: 3.3, text: "John Snow is the son of Rhaegar and Lyanna. Oops that was a spoiler! Well, that's your fault cause you should be caught up on the show...")
-            ],
-            ratePerMin: 4.3,
-            skills: ["Raiding", "Leadership"],
-            info: "oh hello",
-            available: false)]
+    var providers: [User]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +14,14 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         setUpTableView()
         self.searchBar.setImage(UIImage(imageLiteral: "search"), forSearchBarIcon: .Search, state: .Normal)
         self.sortCategoryView.delegate = self
+        
+        UserService.sharedInstance.queryProviders(false, completionHandler: {[weak self] (providers) in
+            self?.providers = providers as? [User]
+            self?.tableView.reloadData()
+            }) {[weak self]  (error) in
+                print("Error loading providers: \(error)")
+                self?.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error, completion: nil)
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -69,8 +55,11 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     // MARK: UITableViewDelegate Methods
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        guard let providers = self.providers else { return }
+        
         if let providerDetails = UIStoryboard(name: "Randall", bundle: nil).instantiateViewControllerWithIdentifier("ProviderDetailViewController") as? ProviderDetailViewController {
-            providerDetails.configureForProvider(self.providers[indexPath.row])
+            providerDetails.configureForProvider(providers[indexPath.row])
             self.navigationController?.pushViewController(providerDetails, animated: true)
         }
     }
@@ -78,12 +67,15 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     // MARK: UITableViewDataSource Methods
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let providers = self.providers else { return 0 }
         return providers.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ProviderTableViewCell") as! ProviderTableViewCell
-        cell.configureForProvider(providers[indexPath.row])
+        if let providers = self.providers {
+            cell.configureForProvider(providers[indexPath.row])
+        }
         return cell
     }
 }

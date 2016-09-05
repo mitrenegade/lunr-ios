@@ -11,8 +11,9 @@ import Parse
 
 enum UserType: String {
     case Client
-    case Provider
-    // todo: Plumber, Electrician, Mechanic, etc?
+    case Plumber
+    case Electrician
+    case Handyman
 }
 
 class User: PFUser {
@@ -34,18 +35,16 @@ class User: PFUser {
     
     override init () {
         super.init()
-        
-        // todo
     }
     
     // This shouldn't be used - only for testing
-    init(firstName: String, lastName: String, rating: Double, reviews: [Review], ratePerMin : Double, skills: [String], info: String, available: Bool) {
+    init(firstName: String, lastName: String, type: UserType, rating: Double, ratePerMin : Double, skills: [String], info: String, available: Bool) {
         super.init()
         
         self.firstName = firstName
         self.lastName = lastName
+        self.type = type.rawValue.lowercaseString
         self.rating = rating
-        self.reviews = reviews
         self.ratePerMin = ratePerMin
         self.skills = skills
         self.info = info
@@ -56,22 +55,18 @@ class User: PFUser {
 
 // MARK: Extension for user convenience methods
 extension User {
-    var name: String? {
-        if let first = self.firstName, last = self.lastName {
-            return "\(first) \(last)"
-        }
-        return self.firstName ?? self.lastName ?? self.username
-    }
-    
     var displayString: String {
         get {
-            return self.name ?? self.email ?? (self.userType == .Provider ? "a provider" : "a client")
+            if let first = self.firstName, last = self.lastName {
+                return "\(first) \(last)"
+            }
+            return self.firstName ?? self.lastName ?? self.email ?? (self.isProvider ? "a provider" : "a client")
         }
     }
     
     var userType: UserType {
         get {
-            let types: [UserType] = [.Provider, .Client]
+            let types: [UserType] = [.Plumber, .Electrician, .Handyman, .Client]
             for type in types {
                 if type.rawValue.lowercaseString == self.type?.lowercaseString {
                     return type
@@ -81,21 +76,8 @@ extension User {
             return .Client
         }
     }
-}
-
-extension User {
-    class func queryProviders(completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
-        let query = PFUser.query()
-        query?.whereKeyExists("type")
-        query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
-        query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            if let error = error {
-                errorHandler(error: error)
-                return
-            }
-            
-            let users = results as? [PFUser]
-            completionHandler(providers: users)
-        }
+    
+    var isProvider: Bool {
+        return self.userType == .Plumber || self.userType == .Electrician || self.userType == .Handyman
     }
 }
