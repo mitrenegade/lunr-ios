@@ -19,20 +19,10 @@ class Call: PFObject {
     
     //var paymentMethod: Card
 
-    override init () {
-        super.init()
-    }
-
-    init(duration: Double, totalCost: Double, client: User?, provider: User?) {
-        super.init()
-
-        self.duration = duration
-        self.totalCost = totalCost
-        
-        // TODO: client and provider must exist
-        self.client = client
-        self.provider = provider
-    }
+    // Call cannot be created in the iOS SDK because it requires a provider.
+    // PFUser will throw an error because setting call.provider forces provider to be saved
+    // and you can't alter a user other than the one that was logged in.
+    // Call must be created via cloudcode
 }
 
 extension Call: PFSubclassing {
