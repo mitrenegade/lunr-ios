@@ -13,7 +13,7 @@ class UserService {
     static let sharedInstance: UserService = UserService()
     
     let pageSize = 10
-    func queryProvidersAtPage(page: Int = 0, filterOption: FilteredBy = .Alphabetical, ascending: Bool = false, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+    func queryProvidersAtPage(page: Int = 0, filterOption: FilteredBy = .Alphabetical, ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()
         query?.whereKeyExists("type")
         query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
@@ -34,7 +34,7 @@ class UserService {
             break
         }
         if ascending {
-            query?.addDescendingOrder(filterKey)
+            query?.addAscendingOrder(filterKey)
         }
         else {
             query?.addDescendingOrder(filterKey)

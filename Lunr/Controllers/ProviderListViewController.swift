@@ -15,7 +15,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.searchBar.setImage(UIImage(imageLiteral: "search"), forSearchBarIcon: .Search, state: .Normal)
         self.sortCategoryView.delegate = self
         
-        UserService.sharedInstance.queryProvidersAtPage(0, filterOption: .Alphabetical, ascending: false, availableOnly: false, completionHandler: {[weak self] (providers) in
+        UserService.sharedInstance.queryProvidersAtPage(0, filterOption: .Cost, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
             self?.providers = providers as? [User]
             self?.tableView.reloadData()
             }) {[weak self]  (error) in
