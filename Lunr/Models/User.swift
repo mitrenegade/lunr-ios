@@ -81,4 +81,26 @@ extension User {
     var isProvider: Bool {
         return self.userType == .Plumber || self.userType == .Electrician || self.userType == .Handyman
     }
+    
+    // MARK: Favorites
+    // Client only
+    func toggleFavorite(provider: User, completion: ((success: Bool)->Void)?) {
+        guard let objectId = provider.objectId else { completion?(success: false); return }
+        if !self.favorites.contains(objectId) {
+            self.favorites.append(objectId)
+        }
+        else {
+            self.favorites.removeAtIndex(self.favorites.indexOf(objectId)!)
+        }
+        
+        self.saveInBackgroundWithBlock { (success, error) in
+            completion?(success: success)
+        }
+    }
+    
+    // Provider only
+    func isFavoriteOf(client: User) -> Bool {
+        guard let objectId = self.objectId else { return false }
+        return client.favorites.contains(objectId)
+    }
 }
