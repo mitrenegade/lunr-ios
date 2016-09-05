@@ -15,8 +15,8 @@ class Call: PFObject {
     @NSManaged var duration: NSNumber?
     @NSManaged var rating: NSNumber?
     @NSManaged var totalCost: NSNumber?
-    @NSManaged var client: PFUser?
-    @NSManaged var provider: PFUser?
+    @NSManaged var client: User?
+    @NSManaged var provider: User?
     
     //var paymentMethod: Card
 
@@ -24,7 +24,7 @@ class Call: PFObject {
         super.init()
     }
 
-    init(date: NSDate, duration: Double, rating: Double, cost: Double, client: PFUser?, provider: PFUser?) {
+    init(date: NSDate, duration: Double, rating: Double, cost: Double, client: User?, provider: User?) {
         super.init()
 
         self.date = date

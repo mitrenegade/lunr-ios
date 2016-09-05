@@ -13,16 +13,22 @@ class Review: PFObject {
     @NSManaged var text : String
     @NSManaged var rating : Double
     
-    @NSManaged var provider: User
+    @NSManaged var provider: User?
+    @NSManaged var client: User?
+    @NSManaged var call: Call
     
     override init () {
         super.init()
     }
 
-    init(rating: Double, text: String) {
+    init(call: Call, rating: Double, text: String) {
         super.init()
         self.rating = rating
         self.text = text
+        
+        self.call = call
+        self.provider = call.provider
+        self.client = call.client
     }
 }
 

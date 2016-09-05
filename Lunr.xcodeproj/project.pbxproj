@@ -39,6 +39,7 @@
 		8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC21D7B03D8007C3C86 /* UserService.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
 		8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */; };
+		8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC14D611D7DC2F600432E8A /* ReviewService.swift */; };
 		8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4501D7684F500DB8C49 /* Call.swift */; };
 		8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */; };
 		8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4581D793EB500DB8C49 /* Review.swift */; };
@@ -109,6 +110,7 @@
 		8E9BB7621D5ECA18001FD26B /* CallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		8E9BB7641D5ECC83001FD26B /* Lunr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lunr-Bridging-Header.h"; sourceTree = "<group>"; };
 		8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
+		8EC14D611D7DC2F600432E8A /* ReviewService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		8EE9D4501D7684F500DB8C49 /* Call.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
 		8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
 		8EE9D4581D793EB500DB8C49 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */,
 				8E6B6FC01D7B038D007C3C86 /* CallService.swift */,
 				8E6B6FC21D7B03D8007C3C86 /* UserService.swift */,
+				8EC14D611D7DC2F600432E8A /* ReviewService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */,
 				8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */,
 				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,
+				8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */,
 				8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */,
 				44BA7F391D73C822006B347D /* DetailTableViewCell.swift in Sources */,
 				8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */,
