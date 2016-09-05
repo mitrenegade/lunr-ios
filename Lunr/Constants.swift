@@ -17,3 +17,10 @@ enum Segue {
         case GoToCallUser
     }
 }
+
+enum FilteredBy: String {
+    case Alphabetical
+    case Rating
+    case Cost
+    case Favorite
+}
