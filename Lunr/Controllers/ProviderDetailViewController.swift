@@ -69,9 +69,10 @@ class ProviderDetailViewController : UIViewController {
     // MARK: Event Methods
 
     @IBAction func callButtonTapped(sender: AnyObject) {
-        print("Let's call \(self.provider?.name)")
+        print("Let's call \(self.provider?.displayString)")
 
-        // TODO: feedback after end call
+        let controller = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as! CallViewController
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 
     func backWasPressed() {

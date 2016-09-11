@@ -1,6 +1,6 @@
 import UIKit
 
-class FeedbackViewController: UITableViewController {
+class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
     @IBOutlet weak var closeButton: UIBarButtonItem!
 
@@ -9,12 +9,7 @@ class FeedbackViewController: UITableViewController {
     @IBOutlet weak var durationLabel: UILabel!
 
     // Experience Rating
-    @IBOutlet weak var oneStarButton: UIButton!
-    @IBOutlet weak var twoStarButton: UIButton!
-    @IBOutlet weak var threeStarButton: UIButton!
-    @IBOutlet weak var fourStarButton: UIButton!
-    @IBOutlet weak var fiveStarButton: UIButton!
-    var ratingButtons : [UIButton]?
+    @IBOutlet weak var starRatingView: StarRatingView!
     var experienceRating : Int = 5
 
     // Feedback
@@ -32,7 +27,7 @@ class FeedbackViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.ratingButtons = [self.oneStarButton, self.twoStarButton, self.threeStarButton, self.fourStarButton, self.fiveStarButton]
+        self.starRatingView.delegate = self
 
         self.leaveFeedbackBarButtonItem.setTitleTextAttributes(
             [NSFontAttributeName : UIFont.futuraMediumWithSize(16)], forState: .Normal
@@ -62,21 +57,8 @@ class FeedbackViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    func configureRatingImagesForRating(rating: Int) {
-        for button : UIButton in self.ratingButtons! {
-            if button.tag <= rating {
-                button.setImage(UIImage(imageLiteral: "star"), forState: .Normal)
-            }
-            else {
-                button.setImage(UIImage(imageLiteral: "heart"), forState: .Normal)
-                //TODO: replace with actual asset
-            }
-        }
-    }
-
-    @IBAction func starRatingButtonPressed(sender: UIButton) {
-        self.configureRatingImagesForRating(sender.tag)
-        self.experienceRating = sender.tag
+    func starRatingSelected(rating: Int) {
+        self.experienceRating = rating
 
         //TODO: save the experience rating as a parameter in a request to update feedback
     }

@@ -59,6 +59,8 @@
 		E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56164641D689FFC00926692 /* UIColor+LunrColors.swift */; };
 		E56164671D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */; };
 		E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */; };
+		E581DA591D85D33E00275DBD /* StarRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E581DA581D85D33E00275DBD /* StarRatingView.xib */; };
+		E581DA5B1D85D35300275DBD /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E581DA5A1D85D35300275DBD /* StarRatingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,6 +133,8 @@
 		E56164641D689FFC00926692 /* UIColor+LunrColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+LunrColors.swift"; sourceTree = "<group>"; };
 		E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProviderSkillTagCollectionViewCell.xib; path = Xibs/ProviderSkillTagCollectionViewCell.xib; sourceTree = "<group>"; };
 		E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+LunrFonts.swift"; sourceTree = "<group>"; };
+		E581DA581D85D33E00275DBD /* StarRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StarRatingView.xib; path = Xibs/StarRatingView.xib; sourceTree = "<group>"; };
+		E581DA5A1D85D35300275DBD /* StarRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lunr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -296,6 +300,7 @@
 				E56164431D5678B700926692 /* ProviderTableViewCell.swift */,
 				44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */,
 				E56164531D5F78BB00926692 /* SortCategoryView.swift */,
+				E581DA5A1D85D35300275DBD /* StarRatingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */,
 				E56164551D5F78D500926692 /* SortCategoryView.xib */,
 				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
+				E581DA581D85D33E00275DBD /* StarRatingView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -412,6 +418,7 @@
 				8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */,
 				8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */,
 				44986F1F1D6A372800C6D0A7 /* DetailTableViewCell.xib in Resources */,
+				E581DA591D85D33E00275DBD /* StarRatingView.xib in Resources */,
 				8E6418D31D55585A00CC4928 /* (null) in Resources */,
 				E56164481D5689A900926692 /* ProviderInfoView.xib in Resources */,
 			);
@@ -517,6 +524,7 @@
 				8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */,
 				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,
 				8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */,
+				E581DA5B1D85D35300275DBD /* StarRatingView.swift in Sources */,
 				8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */,
 				44BA7F391D73C822006B347D /* DetailTableViewCell.swift in Sources */,
 				8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */,
