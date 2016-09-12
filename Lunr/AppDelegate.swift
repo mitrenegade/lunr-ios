@@ -5,6 +5,7 @@ import FBSDKCoreKit
 import Quickblox
 import Fabric
 import Crashlytics
+import Stripe
 
 let LOCAL_TEST = false
 let TEST = false
@@ -52,6 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setGlobalAppearanceAttributes()
         
         Fabric.with([Crashlytics.self])
+
+        STPPaymentConfiguration.sharedConfiguration().publishableKey = "pk_test_C609rO3qPIGLkccHk5V307fV"
 
         return true
     }

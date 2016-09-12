@@ -44,6 +44,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.separatorStyle = .None
+        self.tableView.showsVerticalScrollIndicator = false
     }
     
     func refreshProviders(page: Int) {

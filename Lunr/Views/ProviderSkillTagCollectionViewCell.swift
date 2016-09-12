@@ -25,7 +25,7 @@ class ProviderSkillTagCollectionViewCell: UICollectionViewCell, LoadableInit {
         NSBundle.mainBundle().loadNibNamed(self.nibName, owner: self, options: nil)
 
         self.userContentView.frame = self.bounds
-        self.userContentView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+        self.userContentView.autoresizingMask = [.FlexibleWidth]
         self.userContentView.layer.cornerRadius = 5
 
         self.contentView.addSubview(userContentView)

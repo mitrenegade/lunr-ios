@@ -14,6 +14,7 @@ target 'Lunr' do
   pod 'Quickblox-WebRTC'
   pod 'QMChatViewController'
   pod 'QMServices'
+  pod 'Stripe'
 end
 
 post_install do |installer|
