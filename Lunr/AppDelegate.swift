@@ -16,7 +16,7 @@ let PARSE_CLIENT_KEY = "unused"
 
 let QB_APP_ID: UInt = 45456
 let QB_AUTH_KEY = "Ts3YVE7kHKUcYA3"
-let QB_ACCOUNT_KEY = ""
+let QB_ACCOUNT_KEY = "qezMRGfSugu3WHCiT1wg"
 let QB_AUTH_SECRET = "DptKZexBTDjhNt3"
 
 @UIApplicationMain

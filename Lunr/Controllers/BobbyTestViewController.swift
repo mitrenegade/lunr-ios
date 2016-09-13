@@ -1,6 +1,7 @@
 // This controller is a placeholder for the app flow as well as various button functionalities.
 // logout
 // initiateCall (generic)
+// being used for chatViewController for now
 
 import UIKit
 import Parse
@@ -10,50 +11,28 @@ class BobbyTestViewController: UIViewController {
     @IBOutlet weak var buttonCall: UIButton!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    var targetUser: PFUser?
+    var targetUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.loadUsers()
+        if let user = self.targetUser {
+            self.buttonCall.enabled = true
+            self.buttonCall.setTitle("Call \(user.displayString)", forState: .Normal)
+        }
+        else {
+            self.buttonCall.setTitle("No calls available", forState: .Normal)
+        }
+        self.activityIndicator.stopAnimating()
     }
 
     @IBAction func didClickButton(sender: UIButton) {
         if sender == self.buttonLogout {
-            self.logout()
+            UserService.logout()
         }
         else if sender == self.buttonCall {
             self.initiateCall()
-        }
-    }
-    
-    func loadUsers() {
-        // TODO: this method will be used to populate a tableview of providers
-        self.activityIndicator.startAnimating()
-        self.buttonCall.setTitle(nil, forState: .Normal)
-        self.buttonCall.enabled = false
-        let query = PFUser.query()
-        query?.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            self.activityIndicator.stopAnimating()
-            if let users = result as? [User] {
-                for user in users {
-                    if user.isProvider {
-                        self.targetUser = user
-                        self.buttonCall.enabled = true
-                        self.buttonCall.setTitle("Call \(user.displayString)", forState: .Normal)
-                    }
-                }
-                if self.targetUser == nil {
-                    self.buttonCall.setTitle("No calls available", forState: .Normal)
-                }
-            }
-        }
-    }
-
-    func logout() {
-        PFUser.logOutInBackgroundWithBlock { [weak self] (error) in
-            self?.notify(.LogoutSuccess)
         }
     }
     

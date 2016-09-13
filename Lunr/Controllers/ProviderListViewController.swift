@@ -57,11 +57,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         guard let providers = self.providers else { return }
-        
-        if let providerDetails = UIStoryboard(name: "Randall", bundle: nil).instantiateViewControllerWithIdentifier("ProviderDetailViewController") as? ProviderDetailViewController {
-            providerDetails.configureForProvider(providers[indexPath.row])
-            self.navigationController?.pushViewController(providerDetails, animated: true)
-        }
+
+        self.performSegueWithIdentifier("GoToProviderDetail", sender: providers[indexPath.row])
     }
 
     // MARK: UITableViewDataSource Methods
@@ -77,6 +74,15 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             cell.configureForProvider(providers[indexPath.row])
         }
         return cell
+    }
+    
+    // MARK: Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GoToProviderDetail" {
+            if let providerDetails = segue.destinationViewController as? ProviderDetailViewController, let user = sender as? User {
+                providerDetails.configureForProvider(user)
+            }
+        }
     }
 }
 

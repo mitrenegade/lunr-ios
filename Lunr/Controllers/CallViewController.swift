@@ -33,6 +33,8 @@ class CallViewController: UIViewController {
     
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
+    var sessionStart: NSDate?
+    var sessionEnd: NSDate?
     
     var videoCapture: QBRTCCameraCapture?
     var state: CallState = .Disconnected
@@ -78,6 +80,7 @@ class CallViewController: UIViewController {
             self.loadVideoView()
         }
 
+        sessionStart = NSDate()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -135,12 +138,17 @@ class CallViewController: UIViewController {
     
     // Main action button
     @IBAction func didClickButton(button: UIButton) {
+        /*
         if self.state == .Disconnected {
             self.startCall()
         }
         else {
-            print("invalid state")
+            self.endCall()
         }
+        */
+        
+        // for now, create a call object and end the call and go to review
+        self.endCall()
     }
 }
 
@@ -165,8 +173,24 @@ extension CallViewController {
     
     func endCall() {
         self.session?.hangUp(nil)
-        
+        sessionEnd = NSDate()
         // TODO: end video stream
+        
+        // create the call object. TODO: this should be done when the call is started
+        guard let provider = targetPFUser as? User else { return }
+        guard let start = sessionStart else { return }
+        guard let duration = sessionEnd?.timeIntervalSinceDate(start) else { return }
+        
+        CallService.sharedInstance.postNewCall(provider, duration: duration as Double, totalCost: 45) { (call, error) in
+            if let error = error {
+                self.simpleAlert("Could not end call", defaultMessage: "There was an error saving your call.", error: error, completion: { 
+                    // TODO: dismiss?
+                })
+            }
+            else {
+                // TODO: go to review
+            }
+        }
     }
 }
 

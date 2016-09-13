@@ -11,31 +11,18 @@ import Foundation
 
 class Call: PFObject {
     // PFSubclassing and NSManaged is required so that PFObject.init() can be used, and PFObject's getters and setters correctly set key-value pairs that save to Parse
-    @NSManaged var date: NSDate?
     @NSManaged var duration: NSNumber?
-    @NSManaged var rating: NSNumber?
     @NSManaged var totalCost: NSNumber?
-    @NSManaged var client: PFUser?
-    @NSManaged var provider: PFUser?
+
+    @NSManaged var client: User?
+    @NSManaged var provider: User?
     
     //var paymentMethod: Card
 
-    override init () {
-        super.init()
-    }
-
-    init(date: NSDate, duration: Double, rating: Double, cost: Double, client: PFUser?, provider: PFUser?) {
-        super.init()
-
-        self.date = date
-        self.duration = duration
-        self.rating = rating
-        self.totalCost = cost
-        
-        // TODO: client and provider must exist
-        self.client = client
-        self.provider = provider
-    }
+    // Call cannot be created in the iOS SDK because it requires a provider.
+    // PFUser will throw an error because setting call.provider forces provider to be saved
+    // and you can't alter a user other than the one that was logged in.
+    // Call must be created via cloudcode
 }
 
 extension Call: PFSubclassing {

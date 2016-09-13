@@ -4,7 +4,7 @@ extension UIViewController {
     
     func simpleAlert(title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)? = nil) {
         if let msg = error?.userInfo["error"] as? String {
-            self.simpleAlert(title, message: msg)
+            self.simpleAlert(title, message: msg, completion: completion)
             return
         }
         self.simpleAlert(title, message: defaultMessage, completion: completion)
@@ -14,18 +14,12 @@ extension UIViewController {
         let alert: UIAlertController = UIAlertController.simpleAlert(title, message: message, completion: completion)
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    func appDelegate() -> AppDelegate {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        return appDelegate
-    }
 }
 
 extension NSObject {
-    
-    enum NotificationType: String {
-        case LogoutSuccess = "logout:success"
-        case LoginSuccess = "login:success"
+    func appDelegate() -> AppDelegate {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        return appDelegate
     }
     
     // MARK: - Notifications
