@@ -1,4 +1,5 @@
 import UIKit
+import Parse
 
 class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
@@ -10,6 +11,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var skillCollectionView: UICollectionView!
     var skills: [String]?
+    var provider: User?
 
     override var nibName: String {
         get {
@@ -35,11 +37,14 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
     }
 
     func configureForProvider(provider: User) {
+        self.provider = provider
         self.nameLabel.text = provider.displayString
         self.ratingLabel.text = "\(provider.rating)"
         self.priceRateLabel.text = "$\(provider.ratePerMin)/min"
         self.configureAvailability(provider.available)
         self.skills = provider.skills
+        
+        self.configureFavoriteIcon()
         
         self.skillCollectionView.reloadData()
     }
@@ -54,11 +59,32 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         }
     }
 
+    func configureFavoriteIcon() {
+        guard let user = PFUser.currentUser() as? User else { return }
+        guard let provider = self.provider else { return }
+        if provider.isFavoriteOf(user) {
+            // TODO: use different image instead of template?
+            self.favoriteButton.setImage(UIImage(named: "heart")!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+            self.favoriteButton.tintColor = UIColor.redColor()
+        }
+        else {
+            // TODO: use different image instead of template?
+            self.favoriteButton.setImage(UIImage(named: "heart")!.imageWithRenderingMode(.AlwaysOriginal), forState: .Normal)
+        }
+    }
+    
     // MARK: Event Methods
 
     @IBAction func favoriteButtonWasPressed(sender: UIButton) {
-        // TODO: make request to favorite this provider
-        // TODO: update the image of the button to reflect if favorited
+        
+        // make request to favorite this provider
+        guard let user = PFUser.currentUser() as? User else { return }
+        guard let provider = self.provider else { return }
+        
+        user.toggleFavorite(provider) { (success) in
+            // update the image of the button to reflect if favorited
+            self.configureFavoriteIcon()
+        }
     }
 
     // MARK: UICollectionViewDataSource Methods
