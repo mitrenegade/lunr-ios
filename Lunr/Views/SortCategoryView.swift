@@ -1,12 +1,5 @@
 import UIKit
 
-enum SortCategory : Int {
-    case Alphabetical = 0
-    case Rating = 1
-    case Price = 2
-    case Favorites = 3
-}
-
 protocol SortCategoryProtocol {
     func sortCategoryWasSelected(sortCategory : SortCategory)
 }
@@ -39,7 +32,19 @@ class SortCategoryView: NibLoadableView {
     // MARK: Event Methods
 
     @IBAction func sortButtonWasPressed(sender: UIButton) {
-        //self.delegate!.sortCategoryWasSelected(sender.tag as! SortCategory)
-        //TODO: Not sure how to convert this Int into another Int that is a SortCategory enum.
+        let sortCategory: SortCategory
+        switch sender.tag {
+        case SortCategory.Alphabetical.rawValue:
+            sortCategory = .Alphabetical
+        case SortCategory.Favorites.rawValue:
+            sortCategory = .Favorites
+        case SortCategory.Price.rawValue:
+            sortCategory = .Price
+        case SortCategory.Rating.rawValue:
+            sortCategory = .Rating
+        default:
+            sortCategory = .Alphabetical
+        }
+        self.delegate!.sortCategoryWasSelected(sortCategory)
     }
 }

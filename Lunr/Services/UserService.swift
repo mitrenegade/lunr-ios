@@ -19,7 +19,7 @@ class UserService: NSObject {
     }
     
     let pageSize = 10
-    func queryProvidersAtPage(page: Int = 0, filterOption: FilteredBy = .Alphabetical, ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+    func queryProvidersAtPage(page: Int = 0, filterOption: SortCategory = .Alphabetical, ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()
         query?.whereKeyExists("type")
         query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
@@ -31,7 +31,7 @@ class UserService: NSObject {
         
         var filterKey = "lastName"
         switch filterOption {
-        case .Cost:
+        case .Price:
             filterKey = "ratePerMin"
             break
         case .Rating:
@@ -47,7 +47,7 @@ class UserService: NSObject {
         }
         
         // favorites
-        if filterOption == .Favorite {
+        if filterOption == .Favorites {
             if let user = PFUser.currentUser() as? User {
                 query?.whereKey("objectId", containedIn: user.favorites)
             }

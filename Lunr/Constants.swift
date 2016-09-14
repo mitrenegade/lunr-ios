@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum UserDefaults: String {
+    case SortCategory = "defaults:sortCategory"
+}
+
 enum Segue {
     enum Login: String {
         case GoToLogin
@@ -23,9 +27,10 @@ enum NotificationType: String {
     case LoginSuccess = "login:success"
 }
 
-enum FilteredBy: String {
-    case Alphabetical
-    case Rating
-    case Cost
-    case Favorite
+enum SortCategory : Int {
+    case None = -1 // startup
+    case Alphabetical = 0
+    case Rating = 1
+    case Price = 2
+    case Favorites = 3
 }
