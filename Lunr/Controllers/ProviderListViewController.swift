@@ -9,6 +9,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     
     var providers: [User]?
     var currentSortCategory: SortCategory = .None
+    var searchTerms: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     }
     
     func refreshProviders(page: Int) {
-        UserService.sharedInstance.queryProvidersAtPage(page, filterOption: currentSortCategory, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
+        UserService.sharedInstance.queryProvidersAtPage(page, filterOption: currentSortCategory, searchTerms: searchTerms, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
             self?.providers = providers as? [User]
             self?.tableView.reloadData()
         }) {[weak self]  (error) in
@@ -112,10 +113,11 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
         self.view.endEditing(true)
-        guard let searchTerm = searchBar.text else { return }
-        print("Searching for \(searchBar.text)")
+        guard let text = searchBar.text else { return }
+        print("Searching for \(text)")
         
-        
+        searchTerms = text.characters.split(" ").map(String.init)
+        self.refreshProviders(0)
     }
 }
 
