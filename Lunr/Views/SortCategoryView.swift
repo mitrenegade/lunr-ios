@@ -32,19 +32,6 @@ class SortCategoryView: NibLoadableView {
     // MARK: Event Methods
 
     @IBAction func sortButtonWasPressed(sender: UIButton) {
-        let sortCategory: SortCategory
-        switch sender.tag {
-        case SortCategory.Alphabetical.rawValue:
-            sortCategory = .Alphabetical
-        case SortCategory.Favorites.rawValue:
-            sortCategory = .Favorites
-        case SortCategory.Price.rawValue:
-            sortCategory = .Price
-        case SortCategory.Rating.rawValue:
-            sortCategory = .Rating
-        default:
-            sortCategory = .Alphabetical
-        }
-        self.delegate!.sortCategoryWasSelected(sortCategory)
+        self.delegate!.sortCategoryWasSelected(SortCategory(rawValue: sender.tag)!)
     }
 }
