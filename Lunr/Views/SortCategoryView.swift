@@ -33,5 +33,33 @@ class SortCategoryView: NibLoadableView {
 
     @IBAction func sortButtonWasPressed(sender: UIButton) {
         self.delegate!.sortCategoryWasSelected(SortCategory(rawValue: sender.tag)!)
+        
+        for button in [sortAlphabeticallyButton, sortByFavoritesButton, sortByPriceButton, sortByRatingButton] {
+            let category = SortCategory(rawValue: button.tag)!
+            self.toggleButtonForCategory(category, selected: button == sender)
+        }
+    }
+    
+    // MARK: selectors
+    func toggleButtonForCategory(category: SortCategory, selected: Bool) {
+        let button: UIButton
+        let image: UIImage
+        switch category {
+        case .Rating:
+            button = self.sortByRatingButton
+            image = UIImage(named: "star")!.imageWithRenderingMode(.AlwaysTemplate)
+        case .Price:
+            button = self.sortByPriceButton
+            image = UIImage(named: "dollarsign")!.imageWithRenderingMode(.AlwaysTemplate)
+        case .Favorites:
+            button = self.sortByFavoritesButton
+            image = UIImage(named: "heart")!.imageWithRenderingMode(.AlwaysTemplate)
+        default:
+            button = self.sortAlphabeticallyButton
+            image = UIImage(named: "atoz")!.imageWithRenderingMode(.AlwaysTemplate)
+        }
+        
+        button.setImage(image, forState: .Normal)
+        button.tintColor = selected ? UIColor.lunr_darkBlue() : UIColor.lunr_grayText()
     }
 }
