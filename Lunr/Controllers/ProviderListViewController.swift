@@ -19,19 +19,9 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         
         // load cached sort category if user previously selected one
         if let cachedSortCategory = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaults.SortCategory.rawValue) as? SortCategory.RawValue {
-            switch cachedSortCategory {
-            case SortCategory.Alphabetical.rawValue:
-                self.sortCategoryWasSelected(.Alphabetical)
-            case SortCategory.Favorites.rawValue:
-                self.sortCategoryWasSelected(.Favorites)
-            case SortCategory.Rating.rawValue:
-                self.sortCategoryWasSelected(.Rating)
-            case SortCategory.Price.rawValue:
-                self.sortCategoryWasSelected(.Price)
-            default:
-                self.sortCategoryWasSelected(.Alphabetical)
-                break
-            }
+            let category = SortCategory(rawValue: cachedSortCategory)!
+            self.sortCategoryView.highlightButtonForCategory(category) // update the view
+            self.sortCategoryWasSelected(category) // make the query
         }
     }
 
