@@ -52,6 +52,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
 
     @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
         // TODO: show the settings
+        self.searchBar.resignFirstResponder()
+
         print("showSettings")
         let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("AccountSettingsViewController") as! AccountSettingsViewController
         self.navigationController?.pushViewController(controller, animated: true)
@@ -61,6 +63,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
 
     func sortCategoryWasSelected(sortCategory: SortCategory) {
         // make request for providers in the order specified by the sort category.
+        self.searchBar.resignFirstResponder()
+
         guard sortCategory != currentSortCategory else { return }
         
         self.currentSortCategory = sortCategory
@@ -73,6 +77,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.searchBar.resignFirstResponder()
+
         guard let providers = self.providers else { return }
 
         self.performSegueWithIdentifier("GoToProviderDetail", sender: providers[indexPath.row])
@@ -100,6 +106,16 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
                 providerDetails.configureForProvider(user)
             }
         }
+    }
+    
+    // MARK: Search bar
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
+        self.view.endEditing(true)
+        guard let searchTerm = searchBar.text else { return }
+        print("Searching for \(searchBar.text)")
+        
+        
     }
 }
 
