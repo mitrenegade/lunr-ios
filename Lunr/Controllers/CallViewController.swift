@@ -82,6 +82,13 @@ class CallViewController: UIViewController {
 
         sessionStart = NSDate()
     }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "feedbackSegue") {
+//            let feedbackVC = segue.destinationViewController as! FeedbackViewController
+// TODO: call feedbackVC.configureForCall(call)
+        }
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
