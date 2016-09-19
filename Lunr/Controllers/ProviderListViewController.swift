@@ -19,7 +19,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.sortCategoryView.delegate = self
         
         // load cached sort category if user previously selected one
-        if let cachedSortCategory = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaults.SortCategory.rawValue) as? SortCategory.RawValue {
+        if let cachedSortCategory = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaultsKeys.SortCategory.rawValue) as? SortCategory.RawValue {
             let category = SortCategory(rawValue: cachedSortCategory)!
             self.sortCategoryView.highlightButtonForCategory(category) // update the view
             self.sortCategoryWasSelected(category) // make the query
@@ -71,7 +71,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.currentSortCategory = sortCategory
         self.refreshProviders(0)
         
-        NSUserDefaults.standardUserDefaults().setValue(sortCategory.rawValue, forKey: UserDefaults.SortCategory.rawValue)
+        NSUserDefaults.standardUserDefaults().setValue(sortCategory.rawValue, forKey: UserDefaultsKeys.SortCategory.rawValue)
     }
 
     // MARK: UITableViewDelegate Methods
