@@ -50,6 +50,9 @@ class CallViewController: UIViewController {
     // call controls
     @IBOutlet weak var buttonCall: UIButton!
     
+    // resulting call
+    var call: Call?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,8 +88,14 @@ class CallViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "feedbackSegue") {
-            if let feedbackVC = segue.destinationViewController as? FeedbackViewController {
-                feedbackVC.configureForCall(Call()) //TODO: replace with actual call
+            if let nav = segue.destinationViewController as? UINavigationController {// FeedbackViewController {
+                if let feedbackVC = nav.viewControllers[0] as? FeedbackViewController {
+                    let call = Call()
+                    call.duration = 30
+                    call.totalCost = 9.99
+                    self.call = call
+                    feedbackVC.call = call
+                }
             }
         }
     }

@@ -5,6 +5,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     @IBOutlet weak var closeButton: UIBarButtonItem!
 
     // Call Summary
+    var call: Call?
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
 
@@ -16,11 +17,6 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     @IBOutlet weak var feedbackTextView: UITextView!
     @IBOutlet var feedbackToolbar: UIToolbar!
     @IBOutlet weak var leaveFeedbackBarButtonItem: UIBarButtonItem!
-
-    func configureForCall(call: Call) { //TODO: call this in prepare for segue
-        self.durationLabel.text = "\(call.duration)"
-        self.costLabel.text = "\(call.totalCost)"
-    }
 
     // MARK: UIViewController Methods
 
@@ -40,6 +36,11 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.closeButton.tintColor = UIColor.lunr_darkBlue()
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
         self.title = "Call Feedback"
+        
+        if let call = self.call {
+            self.durationLabel.text = "\(call.duration)"
+            self.costLabel.text = "\(call.totalCost)"
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
