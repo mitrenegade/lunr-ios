@@ -250,10 +250,11 @@
 			isa = PBXGroup;
 			children = (
 				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
-				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
 				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
 				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
+				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
+				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 			);
 			name = "Client Flow Controllers";
 			path = Controllers;
@@ -263,10 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
-				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
-				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
-				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 			);
 			name = "Provider Flow Controllers";
 			path = Controllers;
@@ -275,6 +273,8 @@
 		8EB459A91D7B0602007D1EC3 /* Main Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
+				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
 				8E6418CF1D55585A00CC4928 /* ChatPlaceholderViewController.swift */,
 			);
 			name = "Main Controllers";
