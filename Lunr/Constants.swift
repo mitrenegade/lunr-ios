@@ -19,6 +19,7 @@ enum Segue {
     }
     enum Call: String {
         case GoToCallUser
+        case GoToFeedback = "feedbackSegue"
     }
 }
 

@@ -72,6 +72,7 @@ class ProviderDetailViewController : UIViewController {
         print("Let's call \(self.provider?.displayString)")
 
         if let controller = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
+            controller.targetPFUser = self.provider
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }

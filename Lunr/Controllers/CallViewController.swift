@@ -66,6 +66,7 @@ class CallViewController: UIViewController {
         if !QBChat.instance().isConnected {
             self.state = .NoSession // on startup, button is disabled
             
+            self.state = .Joining // TODO: not actually joining here
             QBUserService.sharedInstance.refreshSession({ (success) in
                 if !success {
                     self.simpleAlert("Failed user session", message: "Please log in again.", completion: {
@@ -73,7 +74,8 @@ class CallViewController: UIViewController {
                     })
                 }
                 else {
-                    self.state = .Disconnected
+                    // TODO: allow user to connect when button is clicked instead of automatically connecting
+                    self.state = .Connected // TODO: this is faking the connected state
                     self.refreshState()
                 }
             })
@@ -81,21 +83,17 @@ class CallViewController: UIViewController {
         else {
             // load video view
             self.loadVideoView()
+            self.state = .Connected // TODO: this is faking the connected state
+            self.refreshState()
         }
 
         sessionStart = NSDate()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "feedbackSegue") {
-            if let nav = segue.destinationViewController as? UINavigationController {// FeedbackViewController {
-                if let feedbackVC = nav.viewControllers[0] as? FeedbackViewController {
-                    let call = Call()
-                    call.duration = 30
-                    call.totalCost = 9.99
-                    self.call = call
-                    feedbackVC.call = call
-                }
+        if segue.identifier == Segue.Call.GoToFeedback.rawValue {
+            if let controller = segue.destinationViewController as? FeedbackViewController {
+                controller.call = self.call
             }
         }
     }
@@ -125,6 +123,11 @@ class CallViewController: UIViewController {
             self.buttonCall.enabled = false
             self.buttonCall.alpha = 0.5
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Done, target: self, action: #selector(didClickBack))
+        case .Connected:
+            self.labelRemote.text = "Connected! Click to end call"
+            self.buttonCall.enabled = true
+            self.buttonCall.alpha = 1
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Done, target: self, action: #selector(didClickBack))
         default:
             self.labelRemote.text = "Current state: \(state)"
             break
@@ -148,6 +151,8 @@ class CallViewController: UIViewController {
         switch state {
         case .Joining:
             endCall()
+        case .Connected:
+            self.endCall()
         default:
             self.close()
         }
@@ -205,7 +210,9 @@ extension CallViewController {
                 })
             }
             else {
-                // TODO: go to review
+                // Go to feedback
+                self.call = call
+                self.performSegueWithIdentifier(Segue.Call.GoToFeedback.rawValue, sender: nil)
             }
         }
     }

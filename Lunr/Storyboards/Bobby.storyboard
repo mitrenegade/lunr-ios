@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YEF-XD-gfJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YEF-XD-gfJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -142,7 +142,6 @@
                                         </state>
                                         <connections>
                                             <action selector="didClickButton:" destination="C23-Ga-fTy" eventType="touchUpInside" id="4KS-Vu-OE3"/>
-                                            <segue destination="Ozj-zq-nAo" kind="presentation" identifier="feedbackSegue" id="OzH-5D-MVj"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -185,6 +184,7 @@
                         <outlet property="labelRemote" destination="Pze-Y2-giP" id="dQi-la-xDI"/>
                         <outlet property="localVideoView" destination="jxV-WE-PZL" id="bj1-46-FiF"/>
                         <outlet property="remoteVideoView" destination="cd3-Tz-UZ9" id="tPY-7w-fri"/>
+                        <segue destination="q6y-Fj-lKD" kind="show" identifier="feedbackSegue" id="MIC-ZI-I5N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91m-TR-L5O" sceneMemberID="firstResponder"/>
@@ -204,7 +204,7 @@
                             <tableViewSection headerTitle="Call Summary:" id="ZZg-JK-gee">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="xVq-U3-Eq9" rowHeight="30" style="IBUITableViewCellStyleDefault" id="08w-yv-Zob">
-                                        <rect key="frame" x="0.0" y="114" width="600" height="30"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="600" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="08w-yv-Zob" id="J8C-hM-9IS">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
@@ -222,7 +222,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Ujd-NK-K41" rowHeight="29" style="IBUITableViewCellStyleDefault" id="mAB-80-RZi">
-                                        <rect key="frame" x="0.0" y="144" width="600" height="29"/>
+                                        <rect key="frame" x="0.0" y="79.5" width="600" height="29"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mAB-80-RZi" id="VjL-TO-U6Z">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="29"/>
@@ -244,7 +244,7 @@
                             <tableViewSection headerTitle="Rate Experience:" id="4Og-sh-x2N">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="35" id="vnp-Dt-w9Q">
-                                        <rect key="frame" x="0.0" y="224" width="600" height="35"/>
+                                        <rect key="frame" x="0.0" y="158.5" width="600" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vnp-Dt-w9Q" id="TMH-BK-BuJ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="35"/>
@@ -271,7 +271,7 @@
                             <tableViewSection headerTitle="Feedback:" id="wEy-DR-EDN">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="280" id="9Ln-bD-L1d">
-                                        <rect key="frame" x="0.0" y="310" width="600" height="280"/>
+                                        <rect key="frame" x="0.0" y="243.5" width="600" height="280"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Ln-bD-L1d" id="U45-ab-3xB">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="280"/>
@@ -351,25 +351,7 @@
                     </items>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="3129" y="442"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="TLZ-pl-PlA">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ozj-zq-nAo" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="grv-M7-T4A">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="q6y-Fj-lKD" kind="relationship" relationship="rootViewController" id="Gm4-P3-eZB"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uQf-vA-WM8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2377" y="412"/>
+            <point key="canvasLocation" x="2384" y="324"/>
         </scene>
     </scenes>
     <resources>
