@@ -19,7 +19,7 @@ class UserService: NSObject {
     }
     
     let pageSize = 10
-    func queryProvidersAtPage(page: Int = 0, filterOption: FilteredBy = .Alphabetical, ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+    func queryProvidersAtPage(page: Int = 0, filterOption: SortCategory = .Alphabetical, searchTerms: [String] = [], ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()
         query?.whereKeyExists("type")
         query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
@@ -31,7 +31,7 @@ class UserService: NSObject {
         
         var filterKey = "lastName"
         switch filterOption {
-        case .Cost:
+        case .Price:
             filterKey = "ratePerMin"
             break
         case .Rating:
@@ -47,10 +47,30 @@ class UserService: NSObject {
         }
         
         // favorites
-        if filterOption == .Favorite {
+        if filterOption == .Favorites {
             if let user = PFUser.currentUser() as? User {
                 query?.whereKey("objectId", containedIn: user.favorites)
             }
+        }
+        
+        // search terms
+        if searchTerms.count > 0 {
+            print("Search terms: \(searchTerms)")
+            // HACK: make capitalization insensitive by searching for both lowercased versions and first letter capitalization. The correct way to do this is to create an all lowercase canonical search field for each user
+
+            let lowerCase = searchTerms.map{$0.lowercaseString}
+            let capitalized = searchTerms.map{$0.capitalizedString}
+            
+            let lastNameQuery = PFUser.query()!.whereKey("lastName", containedIn: lowerCase)
+            let firstNameQuery = PFUser.query()!.whereKey("firstName", containedIn: lowerCase)
+            let skillsQuery = PFUser.query()!.whereKey("skills", containedIn: lowerCase)
+            let lastNameQueryCap = PFUser.query()!.whereKey("lastName", containedIn: capitalized)
+            let firstNameQueryCap = PFUser.query()!.whereKey("firstName", containedIn: capitalized)
+            let skillsQueryCap = PFUser.query()!.whereKey("skills", containedIn: capitalized)
+            
+            let orQuery = PFQuery.orQueryWithSubqueries([lastNameQuery, firstNameQuery, skillsQuery,lastNameQueryCap, firstNameQueryCap, skillsQueryCap])
+            
+            query?.whereKey("objectId", matchesKey:"objectId", inQuery: orQuery)
         }
         
         query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in

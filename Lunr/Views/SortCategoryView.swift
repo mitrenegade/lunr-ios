@@ -1,12 +1,5 @@
 import UIKit
 
-enum SortCategory : Int {
-    case Alphabetical = 0
-    case Rating = 1
-    case Price = 2
-    case Favorites = 3
-}
-
 protocol SortCategoryProtocol {
     func sortCategoryWasSelected(sortCategory : SortCategory)
 }
@@ -39,7 +32,33 @@ class SortCategoryView: NibLoadableView {
     // MARK: Event Methods
 
     @IBAction func sortButtonWasPressed(sender: UIButton) {
-        //self.delegate!.sortCategoryWasSelected(sender.tag as! SortCategory)
-        //TODO: Not sure how to convert this Int into another Int that is a SortCategory enum.
+        let category = SortCategory(rawValue: sender.tag)!
+        self.highlightButtonForCategory(category)
+        self.delegate!.sortCategoryWasSelected(category)
+    }
+    
+    // MARK: selectors
+    func toggleButton(button: UIButton, selected: Bool) {
+        let category = SortCategory(rawValue: button.tag)!
+        let image: UIImage
+        switch category {
+        case .Rating:
+            image = UIImage(named: "star")!.imageWithRenderingMode(.AlwaysTemplate)
+        case .Price:
+            image = UIImage(named: "dollarsign")!.imageWithRenderingMode(.AlwaysTemplate)
+        case .Favorites:
+            image = UIImage(named: "heart")!.imageWithRenderingMode(.AlwaysTemplate)
+        default:
+            image = UIImage(named: "atoz")!.imageWithRenderingMode(.AlwaysTemplate)
+        }
+        
+        button.setImage(image, forState: .Normal)
+        button.tintColor = selected ? UIColor.lunr_darkBlue() : UIColor.lunr_grayText()
+    }
+    
+    func highlightButtonForCategory(category: SortCategory) {
+        for button in [sortAlphabeticallyButton, sortByFavoritesButton, sortByPriceButton, sortByRatingButton] {
+            self.toggleButton(button, selected: button.tag == category.rawValue)
+        }
     }
 }

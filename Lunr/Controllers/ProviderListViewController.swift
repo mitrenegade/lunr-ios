@@ -6,8 +6,11 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var sortCategoryView: SortCategoryView!
+    
     var providers: [User]?
-
+    var currentSortCategory: SortCategory = .None
+    var searchTerms: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -15,12 +18,11 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.searchBar.setImage(UIImage(imageLiteral: "search"), forSearchBarIcon: .Search, state: .Normal)
         self.sortCategoryView.delegate = self
         
-        UserService.sharedInstance.queryProvidersAtPage(0, filterOption: .Cost, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
-            self?.providers = providers as? [User]
-            self?.tableView.reloadData()
-            }) {[weak self]  (error) in
-                print("Error loading providers: \(error)")
-                self?.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error, completion: nil)
+        // load cached sort category if user previously selected one
+        if let cachedSortCategory = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaults.SortCategory.rawValue) as? SortCategory.RawValue {
+            let category = SortCategory(rawValue: cachedSortCategory)!
+            self.sortCategoryView.highlightButtonForCategory(category) // update the view
+            self.sortCategoryWasSelected(category) // make the query
         }
     }
 
@@ -36,11 +38,23 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.separatorStyle = .None
     }
+    
+    func refreshProviders(page: Int) {
+        UserService.sharedInstance.queryProvidersAtPage(page, filterOption: currentSortCategory, searchTerms: searchTerms, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
+            self?.providers = providers as? [User]
+            self?.tableView.reloadData()
+        }) {[weak self]  (error) in
+            print("Error loading providers: \(error)")
+            self?.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error, completion: nil)
+        }
+    }
 
     // MARK: Event Methods
 
     @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
         // TODO: show the settings
+        self.searchBar.resignFirstResponder()
+
         print("showSettings")
         let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("AccountSettingsViewController") as! AccountSettingsViewController
         self.navigationController?.pushViewController(controller, animated: true)
@@ -49,13 +63,23 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     // MARK: SortCategoryProtocol Methods
 
     func sortCategoryWasSelected(sortCategory: SortCategory) {
-        // TODO: make request for providers in the order specified by the sort category.
+        // make request for providers in the order specified by the sort category.
+        self.searchBar.resignFirstResponder()
+
+        guard sortCategory != currentSortCategory else { return }
+        
+        self.currentSortCategory = sortCategory
+        self.refreshProviders(0)
+        
+        NSUserDefaults.standardUserDefaults().setValue(sortCategory.rawValue, forKey: UserDefaults.SortCategory.rawValue)
     }
 
     // MARK: UITableViewDelegate Methods
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.searchBar.resignFirstResponder()
+
         guard let providers = self.providers else { return }
 
         self.performSegueWithIdentifier("GoToProviderDetail", sender: providers[indexPath.row])
@@ -83,6 +107,17 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
                 providerDetails.configureForProvider(user)
             }
         }
+    }
+    
+    // MARK: Search bar
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
+        self.view.endEditing(true)
+        guard let text = searchBar.text else { return }
+        print("Searching for \(text)")
+        
+        searchTerms = text.characters.split(" ").map(String.init)
+        self.refreshProviders(0)
     }
 }
 
