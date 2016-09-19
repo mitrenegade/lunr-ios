@@ -37,9 +37,14 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
         self.title = "Call Feedback"
         
-        if let call = self.call {
-            self.durationLabel.text = "\(call.duration)"
-            self.costLabel.text = "\(call.totalCost)"
+        if let call = self.call, let duration = call.duration, let cost = call.totalCost {
+            self.durationLabel.text = "Duration: \(duration)"
+            self.costLabel.text = "Cost: \(cost)"
+        }
+        else {
+            // TODO: need to handle invalid calls some other way
+            self.durationLabel.text = ""
+            self.costLabel.text = ""
         }
     }
 
