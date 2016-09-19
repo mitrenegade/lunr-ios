@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum UserDefaults: String {
+enum UserDefaultsKeys: String {
     case SortCategory = "defaults:sortCategory"
 }
 
