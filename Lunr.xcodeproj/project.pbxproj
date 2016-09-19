@@ -184,10 +184,10 @@
 		847133271D7649BC00DD2045 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */,
 				8E6B6FC01D7B038D007C3C86 /* CallService.swift */,
-				8E6B6FC21D7B03D8007C3C86 /* UserService.swift */,
+				8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */,
 				8EC14D611D7DC2F600432E8A /* ReviewService.swift */,
+				8E6B6FC21D7B03D8007C3C86 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -252,8 +252,8 @@
 				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
-				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
 				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
+				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
 			);
 			name = "Client Flow Controllers";
 			path = Controllers;
@@ -302,11 +302,11 @@
 		E56164571D5F7BC000926692 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */,
+				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
 				E56164471D5689A900926692 /* ProviderInfoView.xib */,
 				E56164661D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib */,
+				44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */,
 				E56164551D5F78D500926692 /* SortCategoryView.xib */,
-				44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */,
 				E581DA581D85D33E00275DBD /* StarRatingView.xib */,
 			);
 			name = Xibs;

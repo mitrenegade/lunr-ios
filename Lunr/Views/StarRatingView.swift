@@ -6,11 +6,8 @@ protocol StarRatingViewDelegate {
 
 class StarRatingView: NibLoadableView {
 
-    @IBOutlet weak var oneStarButton: UIButton!
-    @IBOutlet weak var twoStarButton: UIButton!
-    @IBOutlet weak var threeStarButton: UIButton!
-    @IBOutlet weak var fourStarButton: UIButton!
-    @IBOutlet weak var fiveStarButton: UIButton!
+    @IBOutlet var starRatingButtons: [UIButton]!
+
     var delegate : StarRatingViewDelegate?
 
     override var nibName: String {
@@ -25,8 +22,7 @@ class StarRatingView: NibLoadableView {
     }
 
     func configureRatingImagesForRating(rating: Int) {
-        for button : UIButton in [self.oneStarButton, self.twoStarButton, self.threeStarButton,
-                                  self.fourStarButton, self.fiveStarButton] {
+        for button : UIButton in self.starRatingButtons {
             if button.tag <= rating {
                 button.setImage(UIImage(imageLiteral: "star"), forState: .Normal)
             }

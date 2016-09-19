@@ -71,8 +71,9 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(sender: AnyObject) {
         print("Let's call \(self.provider?.displayString)")
 
-        let controller = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as! CallViewController
-        self.navigationController?.pushViewController(controller, animated: true)
+        if let controller = UIStoryboard(name: "Bobby", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 
     func backWasPressed() {

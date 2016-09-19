@@ -85,8 +85,9 @@ class CallViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "feedbackSegue") {
-//            let feedbackVC = segue.destinationViewController as! FeedbackViewController
-// TODO: call feedbackVC.configureForCall(call)
+            if let feedbackVC = segue.destinationViewController as? FeedbackViewController {
+                feedbackVC.configureForCall(Call()) //TODO: replace with actual call
+            }
         }
     }
     

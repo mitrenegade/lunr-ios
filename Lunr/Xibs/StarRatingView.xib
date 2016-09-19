@@ -8,11 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StarRatingView" customModule="Lunr" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="Rt1-TA-gwc" id="FGk-4f-Hbu"/>
-                <outlet property="fiveStarButton" destination="gDg-Zu-PDC" id="unC-oJ-rWV"/>
-                <outlet property="fourStarButton" destination="t7I-4o-XEP" id="ZOQ-cL-bI5"/>
-                <outlet property="oneStarButton" destination="2Pf-bj-obz" id="CDH-MZ-DmD"/>
-                <outlet property="threeStarButton" destination="bwy-4U-0e7" id="e7u-Up-VFD"/>
-                <outlet property="twoStarButton" destination="SSU-uX-wOh" id="5jz-9L-19K"/>
+                <outletCollection property="starRatingButtons" destination="bwy-4U-0e7" collectionClass="NSMutableArray" id="K7k-Qp-LC0"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
