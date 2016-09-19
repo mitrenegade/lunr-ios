@@ -6,7 +6,7 @@
 import UIKit
 import Parse
 
-class BobbyTestViewController: UIViewController {
+class ChatPlaceholderViewController: UIViewController {
     @IBOutlet weak var buttonLogout: UIButton!
     @IBOutlet weak var buttonCall: UIButton!
     
@@ -37,13 +37,13 @@ class BobbyTestViewController: UIViewController {
     }
     
     func initiateCall() {
-        self.performSegueWithIdentifier(Segue.Call.GoToCallUser.rawValue, sender: self.targetUser)
+        self.performSegueWithIdentifier(Segue.Call.GoToCallUser.rawValue, sender: nil)
     }
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Segue.Call.GoToCallUser.rawValue {
-            if let user: PFUser = sender as? PFUser {
+            if let user: PFUser = self.targetUser {
                 let controller: CallViewController = segue.destinationViewController as! CallViewController
                 controller.targetPFUser = user
             }
