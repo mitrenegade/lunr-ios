@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 import QMChatViewController
 import QMServices
 import CoreTelephony
@@ -51,6 +52,10 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let currentUser = PFUser.currentUser() where !QBChat.instance().isConnected {
+            QBUserService.sharedInstance.loginQBUser(currentUser.objectId!, completion: nil)
+        }
         
         // top layout inset for collectionView
         topContentAdditionalInset = (navigationController?.navigationBar.frame.size.height ?? 0) + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -928,7 +933,6 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
     // MARK : QMChatConnectionDelegate
     
     func refreshAndReadMessages() {
-        simpleAlert("Loading", message: nil)
         loadMessages()
         
         if let messagesToRead = unreadMessages {
