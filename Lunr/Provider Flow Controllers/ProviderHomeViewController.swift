@@ -13,12 +13,22 @@ class ProviderHomeViewController: UIViewController {
     
     // MARK: Properties
     @IBOutlet weak var onDutyToggleButton: LunrButton!
+    let chatSegue = "chatWithClient"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         onDutyToggleButton.cornerRadius = onDutyToggleButton.bounds.height / 2
         updateUI()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == chatSegue {
+            guard let chatVC = segue.destinationViewController as? ChatViewController else { return }
+            PFUser.query()?.getObjectInBackgroundWithId("aECYB3GJL4") { user, error in
+                chatVC.targetPFUser = user as? PFUser
+            }
+        }
     }
     
     @IBAction func toggleOnDuty(sender: AnyObject) {

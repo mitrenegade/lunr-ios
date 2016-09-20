@@ -30,17 +30,17 @@ class QBUserService: NSObject {
     }
     
     // Mark: Login user
-    func loginQBUser(parseUserId: String, completion: ((success: Bool, error: NSError?)->Void)) {
+    func loginQBUser(parseUserId: String, completion: ((success: Bool, error: NSError?)->Void)?) {
         QBRequest.logInWithUserLogin(parseUserId, password: parseUserId, successBlock: { (response, user) in
             print("results: \(user)")
             user?.password = parseUserId // must set it again to connect to QBChat
             QBChat.instance().connectWithUser(user!) { (error) in
                 if error != nil {
                     print("error: \(error)")
-                    completion(success: false, error: error)
+                    completion?(success: false, error: error)
                 }
                 else {
-                    completion(success: true, error: nil)
+                    completion?(success: true, error: nil)
                 }
             }
         }) { (errorResponse) in
@@ -53,12 +53,12 @@ class QBUserService: NSObject {
                         self.loginQBUser(parseUserId, completion: completion)
                     }
                     else {
-                        completion(success: false, error: nil)
+                        completion?(success: false, error: nil)
                     }
                 })
             }
             else {
-                completion(success: false, error: nil)
+                completion?(success: false, error: nil)
             }
         }
     }
