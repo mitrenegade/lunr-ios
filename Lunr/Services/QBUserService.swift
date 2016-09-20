@@ -156,4 +156,49 @@ class QBUserService: QMServicesManager {
             print("error with users response: \(response.error)")
         }
     }
+    
+    // MARK: QMChatServiceDelegate
+    
+    override func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
+        super.chatService(chatService, didAddMessageToMemoryStorage: message, forDialogID: dialogID)
+        
+        if authService.isAuthorized {
+            handleNewMessage(message, dialogID: dialogID)
+        }
+    }
+    
+    func handleNewMessage(message: QBChatMessage, dialogID: String) {
+        guard currentDialogID != dialogID else { return }
+        guard message.senderID != currentUser()?.ID else { return }
+        guard let dialog = chatService.dialogsMemoryStorage.chatDialogWithID(dialogID) else { return }
+        
+        var dialogName = "New Message"
+        if dialog.type != QBChatDialogType.Private {
+            if dialog.name != nil {
+                dialogName = dialog.name!
+            }
+        } else {
+            if let user = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
+                dialogName = user.login!
+            }
+        }
+        
+//        QMMessageNotificationManager.showNotificationWithTitle(dialogName, subtitle: message.text, type: QMMessageNotificationType.Info)
+    }
+    
+    func color(forUser user:QBUUser) -> UIColor {
+        let defaultColor = UIColor.blackColor()
+        let users = usersService.usersMemoryStorage.unsortedUsers()
+        guard let givenUser = usersService.usersMemoryStorage.userWithID(user.ID) else {
+            return defaultColor
+        }
+        
+        let indexOfGivenUser = users.indexOf(givenUser)
+        
+        if indexOfGivenUser < colors.count {
+            return colors[indexOfGivenUser!]
+        } else {
+            return defaultColor
+        }
+    }
 }

@@ -16,7 +16,6 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
     
     // MARK: Properties
 	let messageContainerWidthPadding: CGFloat = 40.0
-    let currentQBUUser = QBSession.currentSession().currentUser
     let maxCharactersNumber = 1024 // 0 - unlimited
     var messageTimeDateFormatter: NSDateFormatter {
         struct Static {
@@ -39,8 +38,40 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
             popoverController?.modalPresentationStyle = .Popover
         }
     }
-    var dialog: QBChatDialog! {
-        didSet {
+    var dialog: QBChatDialog!
+    
+    lazy var imagePickerViewController : UIImagePickerController = {
+        let imagePickerViewController = UIImagePickerController()
+        imagePickerViewController.delegate = self
+        
+        return imagePickerViewController
+    }()
+    
+    var unreadMessages: [QBChatMessage]?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // top layout inset for collectionView
+        topContentAdditionalInset = (navigationController?.navigationBar.frame.size.height ?? 0) + UIApplication.sharedApplication().statusBarFrame.size.height
+        
+        if let currentUser = QBSession.currentSession().currentUser {
+            senderID = currentUser.ID
+            senderDisplayName = currentUser.login
+            
+            heightForSectionHeader = 40.0
+            
+            collectionView?.backgroundColor = UIColor.whiteColor()
+            inputToolbar?.contentView?.backgroundColor = UIColor.whiteColor()
+            inputToolbar?.contentView?.textView?.placeHolder = "Start typing"
+            
+            attachmentCellsMap = NSMapTable(keyOptions: NSPointerFunctionsOptions.StrongMemory, valueOptions: NSPointerFunctionsOptions.WeakMemory)
+            
+            QBUserService.instance().chatService.addDelegate(self)
+            QBUserService.instance().chatService.chatAttachmentService.delegate = self
+            
+            enableTextCheckingTypes = NSTextCheckingAllTypes
+            
             QBUserService.instance().currentDialogID = dialog.ID!
             updateTitle()
             if (storedMessages()?.count > 0 && chatSectionManager.totalMessagesCount == 0) {
@@ -58,40 +89,6 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
                     self?.updateTitle()
                 }
             }
-        }
-    }
-    
-    lazy var imagePickerViewController : UIImagePickerController = {
-        let imagePickerViewController = UIImagePickerController()
-        imagePickerViewController.delegate = self
-        
-        return imagePickerViewController
-    }()
-    
-    var unreadMessages: [QBChatMessage]?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // top layout inset for collectionView
-        topContentAdditionalInset = (navigationController?.navigationBar.frame.size.height ?? 0) + UIApplication.sharedApplication().statusBarFrame.size.height
-        
-        if let currentUser = currentQBUUser {
-            senderID = currentUser.ID
-            senderDisplayName = currentUser.login
-            
-            heightForSectionHeader = 40.0
-            
-            collectionView?.backgroundColor = UIColor.whiteColor()
-            inputToolbar?.contentView?.backgroundColor = UIColor.whiteColor()
-            inputToolbar?.contentView?.textView?.placeHolder = "Start typing"
-            
-            attachmentCellsMap = NSMapTable(keyOptions: NSPointerFunctionsOptions.StrongMemory, valueOptions: NSPointerFunctionsOptions.WeakMemory)
-            
-            QBUserService.instance().chatService.addDelegate(self)
-            QBUserService.instance().chatService.chatAttachmentService.delegate = self
-            
-            enableTextCheckingTypes = NSTextCheckingAllTypes
         }
     }
     
@@ -126,6 +123,10 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
 //            chatInfoViewController.dialog = self.dialog
 //        }
 //    }
+    
+    @IBAction func dismiss(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -163,7 +164,7 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
     }
     
     func sendReadStatusForMessage(message: QBChatMessage) {
-        guard let currentUser = currentQBUUser where message.senderID != currentUser.ID else { return }
+        guard let currentUser = QBSession.currentSession().currentUser where message.senderID != currentUser.ID else { return }
         let currentUserID = NSNumber(unsignedInteger: currentUser.ID)
         
         if (message.readIDs == nil || !message.readIDs!.contains(currentUserID)) {
@@ -408,7 +409,6 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
                 return QMChatIncomingCell.self
             }
         } else {
-            
             if (item.isMediaMessage() && item.attachmentStatus != QMMessageAttachmentStatus.Error) {
                 return QMChatAttachmentOutgoingCell.self
             } else {
@@ -900,9 +900,7 @@ class ChatViewController: QMChatViewController, QMChatServiceDelegate, UIActionS
     // MARK: QMChatAttachmentServiceDelegate
     
     func chatAttachmentService(chatAttachmentService: QMChatAttachmentService, didChangeAttachmentStatus status: QMMessageAttachmentStatus, forMessage message: QBChatMessage) {
-        
         if status != QMMessageAttachmentStatus.NotLoaded {
-            
             if message.dialogID == dialog.ID {
                 chatSectionManager.updateMessage(message)
             }

@@ -31,9 +31,11 @@ class ProviderHomeViewController: UIViewController {
                 guard let user = user else { return }
                 QBUserService.instance().chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
                     self?.chatButton.busy = false
-                    let chatVC = ChatViewController()
-                    chatVC.dialog = dialog
-                    self?.presentViewController(chatVC, animated: true, completion: nil)
+                    if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? UINavigationController,
+                        let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
+                        chatVC.dialog = dialog
+                        self?.presentViewController(chatNavigationVC, animated: true, completion: nil)
+                    }
                 }
             }
         }
