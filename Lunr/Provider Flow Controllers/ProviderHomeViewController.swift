@@ -12,7 +12,8 @@ import Parse
 class ProviderHomeViewController: UIViewController {
     
     // MARK: Properties
-    @IBOutlet weak var onDutyToggleButton: LunrButton!
+    @IBOutlet weak var chatButton: LunrActivityButton!
+    @IBOutlet weak var onDutyToggleButton: LunrActivityButton!
     let chatSegue = "chatWithClient"
 
     override func viewDidLoad() {
@@ -22,11 +23,18 @@ class ProviderHomeViewController: UIViewController {
         updateUI()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == chatSegue {
-            guard let chatVC = segue.destinationViewController as? ChatViewController else { return }
-            PFUser.query()?.getObjectInBackgroundWithId("aECYB3GJL4") { user, error in
-                chatVC.targetPFUser = user as? PFUser
+    @IBAction func chatWithClient(sender: AnyObject) {
+        chatButton.busy = true
+        PFUser.query()?.getObjectInBackgroundWithId("aECYB3GJL4") { user, error in
+            guard let user = user as? PFUser where error == nil else { return }
+            QBUserService.getQBUUserFor(user) { user in
+                guard let user = user else { return }
+                QBUserService.instance().chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
+                    self?.chatButton.busy = false
+                    let chatVC = ChatViewController()
+                    chatVC.dialog = dialog
+                    self?.presentViewController(chatVC, animated: true, completion: nil)
+                }
             }
         }
     }

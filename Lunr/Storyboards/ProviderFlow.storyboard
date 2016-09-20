@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5r1-Hw-5t9" customClass="LunrButton" customModule="Lunr" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5r1-Hw-5t9" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
                                 <rect key="frame" x="209" y="40" width="182" height="42"/>
                                 <color key="backgroundColor" red="0.7803921568627451" green="0.82745098039215681" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
@@ -28,7 +28,7 @@
                                     <action selector="toggleOnDuty:" destination="70H-Hq-aLx" eventType="touchUpInside" id="WSE-Vi-EZi"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stA-Dg-e0q">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stA-Dg-e0q" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
                                 <rect key="frame" x="209" y="98" width="182" height="42"/>
                                 <color key="backgroundColor" red="0.78039215689999997" green="0.82745098039999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -36,7 +36,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="8hl-l7-AFW" kind="show" identifier="chatWithClient" id="HiV-0y-mIw"/>
+                                    <action selector="chatWithClient:" destination="70H-Hq-aLx" eventType="touchUpInside" id="Uao-AU-AIa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -52,30 +52,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="HOME" id="qJH-aX-UMw"/>
                     <connections>
+                        <outlet property="chatButton" destination="stA-Dg-e0q" id="CDa-34-CCq"/>
                         <outlet property="onDutyToggleButton" destination="5r1-Hw-5t9" id="Kha-wH-9PE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FnB-gb-0ih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="762" y="-31"/>
-        </scene>
-        <!--Chat View Controller-->
-        <scene sceneID="BPf-pm-gKm">
-            <objects>
-                <viewController id="8hl-l7-AFW" customClass="ChatViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rVZ-c4-sox"/>
-                        <viewControllerLayoutGuide type="bottom" id="MaJ-G0-Ccc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tsF-d4-0Y3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kES-Qp-0ik" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1424" y="-31"/>
         </scene>
         <!--ACCOUNT-->
         <scene sceneID="AbP-gC-YQ0">

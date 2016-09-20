@@ -19,10 +19,11 @@
 		44BA7F451D73CB47006B347D /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F441D73CB47006B347D /* Settings.storyboard */; };
 		44BA7F471D77C198006B347D /* Randall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F461D77C198006B347D /* Randall.storyboard */; };
 		6441927D0CD7E83D78420929 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */; };
-		84258F0E1D90DFFC00A61969 /* QBChatMessage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84258F0D1D90DFFC00A61969 /* QBChatMessage+LunrExtensions.swift */; };
+		84258F101D90F4E400A61969 /* QBNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84258F0F1D90F4E400A61969 /* QBNotificationService.swift */; };
+		84258F121D91049E00A61969 /* UIImage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84258F111D91049E00A61969 /* UIImage+LunrExtensions.swift */; };
 		842984A61D74E3B20063F1B5 /* ProviderFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842984A51D74E3B20063F1B5 /* ProviderFlow.storyboard */; };
 		842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */; };
-		847133261D75C14400DD2045 /* LunrButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847133251D75C14400DD2045 /* LunrButton.swift */; };
+		847133261D75C14400DD2045 /* LunrActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847133251D75C14400DD2045 /* LunrActivityButton.swift */; };
 		84E2D2CF1D902083003F4A86 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2D2CE1D902083003F4A86 /* ChatViewController.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
 		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
@@ -78,10 +79,11 @@
 		44BA7F461D77C198006B347D /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Randall.storyboard; sourceTree = "<group>"; };
 		5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
 		84258F0C1D90D30800A61969 /* Lunr-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Lunr-Bridging-Header.h"; sourceTree = "<group>"; };
-		84258F0D1D90DFFC00A61969 /* QBChatMessage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QBChatMessage+LunrExtensions.swift"; sourceTree = "<group>"; };
+		84258F0F1D90F4E400A61969 /* QBNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBNotificationService.swift; sourceTree = "<group>"; };
+		84258F111D91049E00A61969 /* UIImage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		842984A51D74E3B20063F1B5 /* ProviderFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProviderFlow.storyboard; sourceTree = "<group>"; };
 		842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderHomeViewController.swift; sourceTree = "<group>"; };
-		847133251D75C14400DD2045 /* LunrButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrButton.swift; sourceTree = "<group>"; };
+		847133251D75C14400DD2045 /* LunrActivityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrActivityButton.swift; sourceTree = "<group>"; };
 		84E2D2CE1D902083003F4A86 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */,
 				8EC14D611D7DC2F600432E8A /* ReviewService.swift */,
 				8E6B6FC21D7B03D8007C3C86 /* UserService.swift */,
+				84258F0F1D90F4E400A61969 /* QBNotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -289,7 +292,7 @@
 				44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */,
 				446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */,
 				44BA7F381D73C822006B347D /* DetailTableViewCell.swift */,
-				847133251D75C14400DD2045 /* LunrButton.swift */,
+				847133251D75C14400DD2045 /* LunrActivityButton.swift */,
 				8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */,
 				E56164451D56818500926692 /* ProviderInfoView.swift */,
 				E561644F1D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift */,
@@ -321,7 +324,7 @@
 				E561646D1D7257FE00926692 /* UIFont+LunrFonts.swift */,
 				E56164621D61260700926692 /* UIView+Utils.swift */,
 				8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */,
-				84258F0D1D90DFFC00A61969 /* QBChatMessage+LunrExtensions.swift */,
+				84258F111D91049E00A61969 /* UIImage+LunrExtensions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -505,7 +508,7 @@
 				8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */,
 				44BA7F3D1D73C9CF006B347D /* ProviderDetailViewController.swift in Sources */,
 				8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */,
-				847133261D75C14400DD2045 /* LunrButton.swift in Sources */,
+				847133261D75C14400DD2045 /* LunrActivityButton.swift in Sources */,
 				8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */,
 				E561646E1D7257FE00926692 /* UIFont+LunrFonts.swift in Sources */,
 				8E6418E51D567FDE00CC4928 /* EmailViewController.swift in Sources */,
@@ -517,6 +520,7 @@
 				44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */,
 				E50615801D7CB4AA001AC445 /* FeedbackViewController.swift in Sources */,
 				8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */,
+				84258F121D91049E00A61969 /* UIImage+LunrExtensions.swift in Sources */,
 				8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */,
 				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,
 				8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */,
@@ -527,6 +531,7 @@
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
 				8E6D089E1D92332E00D140BF /* ChatPlaceholderViewController.swift in Sources */,
 				446144FD1D723DF3003B89F8 /* CallHistoryCell.swift in Sources */,
+				84258F101D90F4E400A61969 /* QBNotificationService.swift in Sources */,
 				842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */,
 				8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */,
 				E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */,
@@ -538,7 +543,6 @@
 				E56164461D56818500926692 /* ProviderInfoView.swift in Sources */,
 				8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */,
 				8E6B6FC11D7B038D007C3C86 /* CallService.swift in Sources */,
-				84258F0E1D90DFFC00A61969 /* QBChatMessage+LunrExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
