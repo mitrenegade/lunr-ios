@@ -100,11 +100,9 @@ class ChatViewController: QMChatViewController {
     
     override func collectionView(collectionView: QMChatCollectionView!, dynamicSizeAtIndexPath indexPath: NSIndexPath!, maxWidth: CGFloat) -> CGSize {
         let item = chatSectionManager.messageForIndexPath(indexPath)
-        let viewClass = viewClassForItem(item).dynamicType
-        
         var size = CGSize.zero
         
-        if viewClass == QMChatAttachmentIncomingCell.self || viewClass == QMChatAttachmentOutgoingCell.self {
+        if viewClassForItem(item) == QMChatAttachmentIncomingCell.self || viewClassForItem(item) == QMChatAttachmentOutgoingCell.self {
             size = CGSize(width: min(200, maxWidth), height: 200)
         } else {
             let attrString = attributedStringForItem(item)
@@ -126,6 +124,7 @@ class ChatViewController: QMChatViewController {
                 guard let imageData = NSData(contentsOfFile: url) else { return }
                 attachmentCell.setAttachmentImage(UIImage(data: imageData))
                 cell.updateConstraints()
+                cell.setNeedsLayout()
             }
         }
         
