@@ -63,11 +63,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallHistoryCell.swift; path = ../CallHistoryCell.swift; sourceTree = "<group>"; };
+		446144FC1D723DF3003B89F8 /* CallHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryCell.swift; sourceTree = "<group>"; };
 		44986F171D6A372800C6D0A7 /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailTableViewCell.xib; path = Xibs/DetailTableViewCell.xib; sourceTree = "<group>"; };
-		44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountSettingsViewController.swift; path = ../AccountSettingsViewController.swift; sourceTree = "<group>"; };
-		44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountInfoCell.swift; path = ../AccountInfoCell.swift; sourceTree = "<group>"; };
-		44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAccountSettingsViewController.swift; path = ../EditAccountSettingsViewController.swift; sourceTree = "<group>"; };
+		44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
+		44986F281D6A687200C6D0A7 /* AccountInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInfoCell.swift; sourceTree = "<group>"; };
+		44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		44BA7F381D73C822006B347D /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderDetailViewController.swift; sourceTree = "<group>"; };
 		44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobbyTestViewController.swift; sourceTree = "<group>"; };
+		8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BobbyTestViewController.swift; path = "Lunr/Main Controllers/BobbyTestViewController.swift"; sourceTree = "<group>"; };
 		8E6418D41D55585A00CC4928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E6418D71D55585A00CC4928 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E6418D91D55585A00CC4928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -252,11 +252,11 @@
 				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
+				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
 				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
 			);
-			name = "Client Flow Controllers";
-			path = Controllers;
+			path = "Client Flow Controllers";
 			sourceTree = "<group>";
 		};
 		8E6B6FC41D7B050A007C3C86 /* Provider Flow Controllers */ = {
@@ -264,12 +264,10 @@
 			children = (
 				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
-				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
 				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 			);
-			name = "Provider Flow Controllers";
-			path = Controllers;
+			path = "Provider Flow Controllers";
 			sourceTree = "<group>";
 		};
 		8EB459A91D7B0602007D1EC3 /* Main Controllers */ = {

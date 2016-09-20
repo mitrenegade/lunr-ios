@@ -22,14 +22,16 @@ class StarRatingView: NibLoadableView {
     }
 
     func configureRatingImagesForRating(rating: Int) {
+        var image : UIImage?
+
         for button : UIButton in self.starRatingButtons {
             if button.tag <= rating {
-                button.setImage(UIImage(imageLiteral: "star"), forState: .Normal)
+                image = UIImage(named: "star")!.imageWithRenderingMode(.AlwaysTemplate)
+            } else {
+                image = UIImage(named: "gray_star")!.imageWithRenderingMode(.AlwaysTemplate)
             }
-            else {
-                button.setImage(UIImage(imageLiteral: "heart"), forState: .Normal)
-                //TODO: replace with actual asset
-            }
+
+            button.setImage(image, forState: .Normal)
         }
     }
 }

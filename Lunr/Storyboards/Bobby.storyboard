@@ -142,7 +142,7 @@
                                         </state>
                                         <connections>
                                             <action selector="didClickButton:" destination="C23-Ga-fTy" eventType="touchUpInside" id="4KS-Vu-OE3"/>
-                                            <segue destination="Ozj-zq-nAo" kind="presentation" identifier="feedbackSegue" id="OzH-5D-MVj"/>
+                                            <segue destination="Ozj-zq-nAo" kind="presentation" identifier="GoToFeedback" id="OzH-5D-MVj"/>
                                         </connections>
                                     </button>
                                 </subviews>
