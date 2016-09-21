@@ -19,6 +19,12 @@ class CallService: NSObject {
         let params = ["date": NSDate(), "duration": duration, "totalCost": totalCost, "providerId": providerId]
         PFCloud.callFunctionInBackground("postNewCall", withParameters: params) { (results, error) in
             print("Results \(results) error \(error)")
+            if let error = error {
+                completion?(call: nil, error: error)
+            }
+            else if let call = results as? Call {
+                completion?(call: call, error: nil)
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     @IBOutlet weak var closeButton: UIBarButtonItem!
 
     // Call Summary
+    var call: Call?
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
 
@@ -16,8 +17,6 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     @IBOutlet weak var feedbackTextView: UITextView!
     @IBOutlet var feedbackToolbar: UIToolbar!
     @IBOutlet weak var leaveFeedbackBarButtonItem: UIBarButtonItem!
-
-    var call : Call?
 
     func configureCall() {
         if self.call != nil {
@@ -46,6 +45,16 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.closeButton.tintColor = UIColor.lunr_darkBlue()
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
         self.title = "Call Feedback"
+        
+        if let call = self.call, let duration = call.duration, let cost = call.totalCost {
+            self.durationLabel.text = "Duration: \(duration)"
+            self.costLabel.text = "Cost: \(cost)"
+        }
+        else {
+            // TODO: need to handle invalid calls some other way
+            self.durationLabel.text = ""
+            self.costLabel.text = ""
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
