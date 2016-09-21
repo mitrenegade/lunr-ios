@@ -15,11 +15,6 @@ class SortCategoryView: NibLoadableView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.sortAlphabeticallyButton.tag = 0
-        self.sortByRatingButton.tag = 1
-        self.sortByPriceButton.tag = 2
-        self.sortByFavoritesButton.tag = 3
-
         self.addShadow()
     }
 

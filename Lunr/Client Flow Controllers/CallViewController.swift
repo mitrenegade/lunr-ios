@@ -31,14 +31,15 @@ class CallViewController: UIViewController {
         }
     }
     
+    var currentCall: Call?
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
     var sessionStart: NSDate?
     var sessionEnd: NSDate?
-    
+
     var videoCapture: QBRTCCameraCapture?
     var state: CallState = .Disconnected
-    
+
     // remote video
     @IBOutlet weak var remoteVideoView: QBRTCRemoteVideoView!
     @IBOutlet weak var labelRemote: UILabel!
@@ -49,7 +50,23 @@ class CallViewController: UIViewController {
     
     // call controls
     @IBOutlet weak var buttonCall: UIButton!
-    
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == Segue.Call.GoToFeedback.rawValue) {
+            if let feedbackNavVC = segue.destinationViewController as? UINavigationController {
+                if let feedbackVC = feedbackNavVC.topViewController as? FeedbackViewController {
+                    feedbackVC.call = self.currentCall
+                }
+            }
+        }
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.refreshState()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,13 +99,7 @@ class CallViewController: UIViewController {
 
         sessionStart = NSDate()
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.refreshState()
-    }
-    
+
     // UI states
     func refreshState() {
         
@@ -189,6 +200,7 @@ extension CallViewController {
             }
             else {
                 // TODO: go to review
+                self.currentCall = call
             }
         }
     }

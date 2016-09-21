@@ -8,11 +8,11 @@ PODS:
   - Crashlytics (3.8.1):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.8)
-  - FBSDKCoreKit (4.15.0):
+  - FBSDKCoreKit (4.15.1):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.15.0):
+  - FBSDKLoginKit (4.15.1):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.15.0):
+  - FBSDKShareKit (4.15.1):
     - FBSDKCoreKit
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
@@ -22,7 +22,7 @@ PODS:
     - FBSDKLoginKit (~> 4.10)
     - FBSDKTVOSKit (~> 4.10)
     - Parse (~> 1.12)
-  - QuickBlox (2.7.6)
+  - QuickBlox (2.8)
   - Quickblox-WebRTC (2.2)
 
 DEPENDENCIES:
@@ -40,12 +40,12 @@ SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
-  FBSDKCoreKit: 6680cbd33a4243d80700f182d0af36b3fa7f3118
-  FBSDKLoginKit: 96d9b70b5784490f02ab86119e542a1f182017a8
-  FBSDKShareKit: 06ef20cb2f16828ca4b20055333313dd445de362
+  FBSDKCoreKit: fc7fa53d16b095ee3fd53f0cd59f1df8bcbb634d
+  FBSDKLoginKit: 073f79b3b2e762fc6f54a283fe15f45372d59f5f
+  FBSDKShareKit: 11cbb5a4d7b5fda8143cc95b76188147e6725736
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
-  QuickBlox: 348157145386d7fe568f5dab13ef7c4e4c1b5e05
+  QuickBlox: f2bcadce2e150b8b1385f74f037b067aa670b069
   Quickblox-WebRTC: 4575357666869f1d517eaef7da3d70da09f66686
 
 PODFILE CHECKSUM: ab599cb1b4aa6a2483edd9d85f9bd9420f79be80
