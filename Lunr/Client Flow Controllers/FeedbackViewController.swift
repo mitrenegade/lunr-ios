@@ -18,10 +18,21 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     @IBOutlet var feedbackToolbar: UIToolbar!
     @IBOutlet weak var leaveFeedbackBarButtonItem: UIBarButtonItem!
 
+    var call : Call?
+
+    func configureCall() {
+        if self.call != nil {
+            self.durationLabel.text = "\(self.call!.duration)"
+            self.costLabel.text = "\(self.call!.totalCost)"
+        }
+    }
+
     // MARK: UIViewController Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.configureCall();
 
         self.starRatingView.delegate = self
 
@@ -57,11 +68,14 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.navigationController?.navigationBar.addShadow()
     }
 
+
     // MARK: Event Methods
 
     @IBAction func closedButtonPressed(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+
+    // MARK: StarRatingViewDelegate Methods
 
     func starRatingSelected(rating: Int) {
         self.experienceRating = rating

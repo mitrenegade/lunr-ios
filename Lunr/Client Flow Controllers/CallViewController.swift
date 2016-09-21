@@ -31,14 +31,15 @@ class CallViewController: UIViewController {
         }
     }
     
+    var currentCall: Call?
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
     var sessionStart: NSDate?
     var sessionEnd: NSDate?
-    
+
     var videoCapture: QBRTCCameraCapture?
     var state: CallState = .Disconnected
-    
+
     // remote video
     @IBOutlet weak var remoteVideoView: QBRTCRemoteVideoView!
     @IBOutlet weak var labelRemote: UILabel!
