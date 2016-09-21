@@ -24,8 +24,6 @@
 		847133261D75C14400DD2045 /* LunrButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847133251D75C14400DD2045 /* LunrButton.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
 		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
-		8E6418D01D55585A00CC4928 /* ChatPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CF1D55585A00CC4928 /* ChatPlaceholderViewController.swift */; };
-		8E6418D01D55585A00CC4928 /* BobbyTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */; };
 		8E6418D31D55585A00CC4928 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D41D55585A00CC4928 /* Assets.xcassets */; };
 		8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */; };
@@ -38,6 +36,7 @@
 		8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EF1D56E8FA00CC4928 /* Constants.swift */; };
 		8E6B6FC11D7B038D007C3C86 /* CallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC01D7B038D007C3C86 /* CallService.swift */; };
 		8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC21D7B03D8007C3C86 /* UserService.swift */; };
+		8E6D089E1D92332E00D140BF /* ChatPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6D089D1D92332E00D140BF /* ChatPlaceholderViewController.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
 		8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */; };
 		8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC14D611D7DC2F600432E8A /* ReviewService.swift */; };
@@ -83,8 +82,6 @@
 		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8E6418CF1D55585A00CC4928 /* ChatPlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPlaceholderViewController.swift; sourceTree = "<group>"; };
-		8E6418CF1D55585A00CC4928 /* BobbyTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BobbyTestViewController.swift; path = "Lunr/Main Controllers/BobbyTestViewController.swift"; sourceTree = "<group>"; };
 		8E6418D41D55585A00CC4928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E6418D71D55585A00CC4928 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E6418D91D55585A00CC4928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,6 +94,7 @@
 		8E6418EF1D56E8FA00CC4928 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8E6B6FC01D7B038D007C3C86 /* CallService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallService.swift; sourceTree = "<group>"; };
 		8E6B6FC21D7B03D8007C3C86 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		8E6D089D1D92332E00D140BF /* ChatPlaceholderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPlaceholderViewController.swift; sourceTree = "<group>"; };
 		8E9BB7401D5EC3C0001FD26B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E9BB7421D5EC3CA001FD26B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		8E9BB7441D5EC3D3001FD26B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -253,7 +251,6 @@
 			children = (
 				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
-				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
 				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
@@ -276,7 +273,7 @@
 			children = (
 				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
-				8E6418CF1D55585A00CC4928 /* ChatPlaceholderViewController.swift */,
+				8E6D089D1D92332E00D140BF /* ChatPlaceholderViewController.swift */,
 			);
 			name = "Main Controllers";
 			path = Controllers;
@@ -502,7 +499,6 @@
 				E561645B1D5F972700926692 /* AppDelegate.swift in Sources */,
 				8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */,
 				44BA7F3D1D73C9CF006B347D /* ProviderDetailViewController.swift in Sources */,
-				8E6418D01D55585A00CC4928 /* ChatPlaceholderViewController.swift in Sources */,
 				8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */,
 				847133261D75C14400DD2045 /* LunrButton.swift in Sources */,
 				8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */,
@@ -524,6 +520,7 @@
 				44BA7F391D73C822006B347D /* DetailTableViewCell.swift in Sources */,
 				8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */,
 				8E6418E71D5687B600CC4928 /* UIViewController+Utils.swift in Sources */,
+				8E6D089E1D92332E00D140BF /* ChatPlaceholderViewController.swift in Sources */,
 				446144FD1D723DF3003B89F8 /* CallHistoryCell.swift in Sources */,
 				842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */,
 				8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */,

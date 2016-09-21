@@ -18,8 +18,6 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     @IBOutlet var feedbackToolbar: UIToolbar!
     @IBOutlet weak var leaveFeedbackBarButtonItem: UIBarButtonItem!
 
-    var call : Call?
-
     func configureCall() {
         if self.call != nil {
             self.durationLabel.text = "\(self.call!.duration)"

@@ -142,7 +142,6 @@
                                         </state>
                                         <connections>
                                             <action selector="didClickButton:" destination="C23-Ga-fTy" eventType="touchUpInside" id="4KS-Vu-OE3"/>
-                                            <segue destination="Ozj-zq-nAo" kind="presentation" identifier="GoToFeedback" id="OzH-5D-MVj"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -185,7 +184,7 @@
                         <outlet property="labelRemote" destination="Pze-Y2-giP" id="dQi-la-xDI"/>
                         <outlet property="localVideoView" destination="jxV-WE-PZL" id="bj1-46-FiF"/>
                         <outlet property="remoteVideoView" destination="cd3-Tz-UZ9" id="tPY-7w-fri"/>
-                        <segue destination="q6y-Fj-lKD" kind="show" identifier="feedbackSegue" id="MIC-ZI-I5N"/>
+                        <segue destination="q6y-Fj-lKD" kind="show" identifier="GoToFeedback" id="MIC-ZI-I5N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91m-TR-L5O" sceneMemberID="firstResponder"/>
