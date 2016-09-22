@@ -251,8 +251,8 @@
 			children = (
 				44986F261D6A3AC900C6D0A7 /* AccountSettingsViewController.swift */,
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
-				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
 				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
+				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
 				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 			);

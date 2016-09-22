@@ -24,6 +24,11 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             self.sortCategoryView.highlightButtonForCategory(category) // update the view
             self.sortCategoryWasSelected(category) // make the query
         }
+        else {
+            let category = SortCategory.Alphabetical
+            self.sortCategoryView.highlightButtonForCategory(category) // update the view
+            self.sortCategoryWasSelected(category) // make the query
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
