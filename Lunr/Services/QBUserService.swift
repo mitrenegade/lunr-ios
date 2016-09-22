@@ -168,21 +168,21 @@ class QBUserService: QMServicesManager {
     }
     
     func handleNewMessage(message: QBChatMessage, dialogID: String) {
-        guard currentDialogID != dialogID else { return }
-        guard message.senderID != currentUser()?.ID else { return }
-        guard let dialog = chatService.dialogsMemoryStorage.chatDialogWithID(dialogID) else { return }
-        
-        var dialogName = "New Message"
-        if dialog.type != QBChatDialogType.Private {
-            if dialog.name != nil {
-                dialogName = dialog.name!
-            }
-        } else {
-            if let user = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
-                dialogName = user.login!
-            }
-        }
-        
+//        guard currentDialogID != dialogID else { return }
+//        guard message.senderID != currentUser()?.ID else { return }
+//        guard let dialog = chatService.dialogsMemoryStorage.chatDialogWithID(dialogID) else { return }
+//        
+//        var dialogName = "New Message"
+//        if dialog.type != QBChatDialogType.Private {
+//            if dialog.name != nil {
+//                dialogName = dialog.name!
+//            }
+//        } else {
+//            if let user = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
+//                dialogName = user.login!
+//            }
+//        }
+//
 //        QMMessageNotificationManager.showNotificationWithTitle(dialogName, subtitle: message.text, type: QMMessageNotificationType.Info)
     }
     
