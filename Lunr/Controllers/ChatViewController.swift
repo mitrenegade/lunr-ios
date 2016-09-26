@@ -21,8 +21,6 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     var willResignActiveBlock: AnyObject?
     var attachmentCellsMap: NSMapTable!
     var detailedCells: Set<String> = []
-    var currentUser: PFUser!
-    var qbCurrentUser: QBUUser!
     var typingTimer: NSTimer?
     var popoverController: UIViewController? {
         didSet {
@@ -52,11 +50,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
                     self?.dismissWithError(error)
                     return
                 }
-                
-                self?.configureSender()
             }
-        } else {
-            configureSender()
         }
     }
     

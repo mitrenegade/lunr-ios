@@ -31,9 +31,7 @@ extension QBChatMessage {
     }
     
     func attributedString(withOpponentID opponentID: UInt) -> NSAttributedString? {
-        guard text != nil else {
-            return nil
-        }
+        guard let text = text else { return nil }
         
         var textColor = senderID == opponentID ? UIColor.whiteColor() : UIColor.blackColor()
         if isNotificatonMessage() {
@@ -44,18 +42,18 @@ extension QBChatMessage {
         attributes[NSForegroundColorAttributeName] = textColor
         attributes[NSFontAttributeName] = UIFont(name: "Helvetica", size: 17)
         
-        return NSAttributedString(string: text!, attributes: attributes)
+        return NSAttributedString(string: text, attributes: attributes)
     }
     
     func topLabelAttributedString(withOpponentID opponentID: UInt, forDialog dialog: QBChatDialog) -> NSAttributedString? {
         guard senderID != opponentID && dialog.type != QBChatDialogType.Private else { return nil }
         
-        let paragrpahStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragrpahStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         var attributes = Dictionary<String, AnyObject>()
         attributes[NSForegroundColorAttributeName] = UIColor(red: 11.0/255.0, green: 96.0/255.0, blue: 255.0/255.0, alpha: 1.0)
         attributes[NSFontAttributeName] = UIFont(name: "Helvetica", size: 17)
-        attributes[NSParagraphStyleAttributeName] = paragrpahStyle
+        attributes[NSParagraphStyleAttributeName] = paragraphStyle
         
         var topLabelAttributedString : NSAttributedString?
         
