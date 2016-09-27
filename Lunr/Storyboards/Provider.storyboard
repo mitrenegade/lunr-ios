@@ -93,7 +93,7 @@
                     <navigationItem key="navigationItem" id="MuZ-VM-9aS">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="836-Y7-poN" userLabel="search bar container">
-                            <rect key="frame" x="63.5" y="0.0" width="473" height="44"/>
+                            <rect key="frame" x="64" y="0.0" width="473" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="dQT-Wf-Npp">
