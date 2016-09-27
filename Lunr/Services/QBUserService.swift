@@ -189,4 +189,20 @@ class QBUserService: QMServicesManager {
             return defaultColor
         }
     }
+    
+    // MARK: Push
+    func updateUserPushTag() {
+        guard let qbUser = QBSession.currentSession().currentUser else {
+            return
+        }
+        guard let channel = qbUser.login else { return }
+        let params = QBUpdateUserParameters()
+        params.tags = ["push\(channel)"]
+
+        QBRequest.updateCurrentUser(params, successBlock: { (response, user) in
+            print("Success! \(user)")
+            }) { (response) in
+                print("Error response: \(response)")
+        }
+    }
 }

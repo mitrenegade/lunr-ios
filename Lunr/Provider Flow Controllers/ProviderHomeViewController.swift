@@ -48,8 +48,10 @@ class ProviderHomeViewController: UIViewController {
             user.saveInBackgroundWithBlock { [weak self] (success, error) in
                 self?.onDutyToggleButton.busy = false
                 if success {
-//                    self?.updateUI()
-                    self?.enablePushNotifications()
+                    self?.updateUI()
+                    if user.available {
+                        self?.enablePushNotifications()
+                    }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
                 }
@@ -69,7 +71,7 @@ class ProviderHomeViewController: UIViewController {
         if !QBChat.instance().isConnected {
             QBUserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
                 if !success {
-                    self.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
+                    self.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error, completion: nil)
                 }
                 else {
                     self.enablePushNotifications()
@@ -80,8 +82,6 @@ class ProviderHomeViewController: UIViewController {
         else {
             // TODO: check if it is already enabled, and show error message to go to settings
             PushService.registerForRemoteNotification()
-            
-            self.updateUI()
         }
     }
 }
