@@ -46,7 +46,15 @@ class FacebookViewController: UIViewController {
                         }
                     }
                     else {
-                        self?.notify(.LoginSuccess)
+                        let userId = user.objectId!
+                        QBUserService.sharedInstance.loginQBUser(userId, completion: { [weak self] (success, error) in
+                            if success {
+                                self?.notify(.LoginSuccess)
+                            }
+                            else {
+                                self?.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error, completion: nil)
+                            }
+                            })
                     }
                 })
             } else {
