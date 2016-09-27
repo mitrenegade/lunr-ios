@@ -3,16 +3,17 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'Lunr' do
-
-pod 'FBSDKCoreKit'
-pod 'FBSDKLoginKit'
-pod 'FBSDKShareKit'
-pod 'Parse'
-pod 'ParseFacebookUtilsV4'
-pod 'Fabric'
-pod 'Crashlytics'
-       pod 'QuickBlox'
-       pod 'Quickblox-WebRTC'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
+  pod 'Parse'
+  pod 'ParseFacebookUtilsV4'
+  pod 'Fabric'
+  pod 'Crashlytics'
+  pod 'QuickBlox'
+  pod 'Quickblox-WebRTC'
+  pod 'QMChatViewController'
+  pod 'QMServices'
 end
 
 post_install do |installer|
@@ -22,4 +23,3 @@ post_install do |installer|
     end
   end
 end
-

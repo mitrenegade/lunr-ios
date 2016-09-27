@@ -10,10 +10,14 @@
 import UIKit
 import Parse
 import Quickblox
+import QMServices
 
-class QBUserService: NSObject {
+class QBUserService: QMServicesManager {
     static let sharedInstance: QBUserService = QBUserService()
+    let notificationService = QBNotificationService()
     var isRefreshingSession: Bool = false
+    var currentDialogID = ""
+    var isProcessingLogOut: Bool = false
     
     // MARK: Create User
     func createQBUser(parseUserId: String, completion: ((user: QBUUser?)->Void)) {
@@ -30,17 +34,17 @@ class QBUserService: NSObject {
     }
     
     // Mark: Login user
-    func loginQBUser(parseUserId: String, completion: ((success: Bool, error: NSError?)->Void)) {
+    func loginQBUser(parseUserId: String, completion: ((success: Bool, error: NSError?)->Void)?) {
         QBRequest.logInWithUserLogin(parseUserId, password: parseUserId, successBlock: { (response, user) in
             print("results: \(user)")
             user?.password = parseUserId // must set it again to connect to QBChat
             QBChat.instance().connectWithUser(user!) { (error) in
                 if error != nil {
                     print("error: \(error)")
-                    completion(success: false, error: error)
+                    completion?(success: false, error: error)
                 }
                 else {
-                    completion(success: true, error: nil)
+                    completion?(success: true, error: nil)
                 }
             }
         }) { (errorResponse) in
@@ -53,12 +57,12 @@ class QBUserService: NSObject {
                         self.loginQBUser(parseUserId, completion: completion)
                     }
                     else {
-                        completion(success: false, error: nil)
+                        completion?(success: false, error: nil)
                     }
                 })
             }
             else {
-                completion(success: false, error: nil)
+                completion?(success: false, error: nil)
             }
         }
     }
@@ -138,6 +142,51 @@ class QBUserService: NSObject {
             
         }) { (response) in
             print("error with users response: \(response.error)")
+        }
+    }
+    
+    // MARK: QMChatServiceDelegate
+    
+    override func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
+        super.chatService(chatService, didAddMessageToMemoryStorage: message, forDialogID: dialogID)
+        
+        if authService.isAuthorized {
+            handleNewMessage(message, dialogID: dialogID)
+        }
+    }
+    
+    func handleNewMessage(message: QBChatMessage, dialogID: String) {
+//        guard currentDialogID != dialogID else { return }
+//        guard message.senderID != currentUser()?.ID else { return }
+//        guard let dialog = chatService.dialogsMemoryStorage.chatDialogWithID(dialogID) else { return }
+//        
+//        var dialogName = "New Message"
+//        if dialog.type != QBChatDialogType.Private {
+//            if dialog.name != nil {
+//                dialogName = dialog.name!
+//            }
+//        } else {
+//            if let user = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
+//                dialogName = user.login!
+//            }
+//        }
+//
+//        QMMessageNotificationManager.showNotificationWithTitle(dialogName, subtitle: message.text, type: QMMessageNotificationType.Info)
+    }
+    
+    func color(forUser user:QBUUser) -> UIColor {
+        let defaultColor = UIColor.blackColor()
+        let users = usersService.usersMemoryStorage.unsortedUsers()
+        guard let givenUser = usersService.usersMemoryStorage.userWithID(user.ID) else {
+            return defaultColor
+        }
+        
+        let indexOfGivenUser = users.indexOf(givenUser)
+        
+        if indexOfGivenUser < UIColor.qbChatColors.count {
+            return UIColor.qbChatColors[indexOfGivenUser!]
+        } else {
+            return defaultColor
         }
     }
 }

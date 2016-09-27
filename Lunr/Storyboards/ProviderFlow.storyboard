@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="k0i-sg-GLL">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A320" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="k0i-sg-GLL">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5r1-Hw-5t9" customClass="LunrButton" customModule="Lunr" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5r1-Hw-5t9" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
                                 <rect key="frame" x="209" y="40" width="182" height="42"/>
                                 <color key="backgroundColor" red="0.7803921568627451" green="0.82745098039215681" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
@@ -28,15 +28,31 @@
                                     <action selector="toggleOnDuty:" destination="70H-Hq-aLx" eventType="touchUpInside" id="WSE-Vi-EZi"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stA-Dg-e0q" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
+                                <rect key="frame" x="209" y="98" width="182" height="42"/>
+                                <color key="backgroundColor" red="0.78039215689999997" green="0.82745098039999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Chat">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="chatWithClient:" destination="70H-Hq-aLx" eventType="touchUpInside" id="Uao-AU-AIa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="stA-Dg-e0q" firstAttribute="centerX" secondItem="5r1-Hw-5t9" secondAttribute="centerX" id="Hfd-3C-X0B"/>
                             <constraint firstItem="5r1-Hw-5t9" firstAttribute="centerX" secondItem="cWJ-a2-E1W" secondAttribute="centerX" id="Rru-LQ-RV7"/>
+                            <constraint firstItem="stA-Dg-e0q" firstAttribute="top" secondItem="5r1-Hw-5t9" secondAttribute="bottom" constant="16" id="tLq-rv-rlX"/>
+                            <constraint firstItem="stA-Dg-e0q" firstAttribute="width" secondItem="5r1-Hw-5t9" secondAttribute="width" id="tmu-qh-f4k"/>
+                            <constraint firstItem="stA-Dg-e0q" firstAttribute="height" secondItem="5r1-Hw-5t9" secondAttribute="height" id="vMg-No-83P"/>
                             <constraint firstItem="5r1-Hw-5t9" firstAttribute="top" secondItem="4D7-QU-BOU" secondAttribute="bottom" constant="20" id="vz3-xw-5OO"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="HOME" id="qJH-aX-UMw"/>
                     <connections>
+                        <outlet property="chatButton" destination="stA-Dg-e0q" id="CDa-34-CCq"/>
                         <outlet property="onDutyToggleButton" destination="5r1-Hw-5t9" id="Kha-wH-9PE"/>
                     </connections>
                 </viewController>

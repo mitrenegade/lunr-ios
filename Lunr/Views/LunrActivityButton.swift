@@ -1,5 +1,5 @@
 //
-//  LunrButton.swift
+//  LunrActivityButton.swift
 //  Lunr
 //
 //  Created by Brent Raines on 8/30/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LunrButton: UIButton {
+class LunrActivityButton: UIButton {
     let activity = UIActivityIndicatorView(activityIndicatorStyle: .White)
     var busy: Bool = false {
         didSet {

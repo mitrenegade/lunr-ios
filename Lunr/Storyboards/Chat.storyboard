@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A320" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="guA-42-OjK">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--I-->
+        <scene sceneID="hmb-sJ-e10">
+            <objects>
+                <navigationController id="guA-42-OjK" customClass="I" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EX5-9k-cQY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vcG-gE-skg" kind="relationship" relationship="rootViewController" id="CSI-NH-ITv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cHW-nV-jh7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="79" y="343"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="80G-ws-Si2">
+            <objects>
+                <viewController id="vcG-gE-skg" customClass="ChatViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PSN-4V-Yid"/>
+                        <viewControllerLayoutGuide type="bottom" id="sxI-l6-UZ9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="w3J-DG-F2u">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dhA-NE-at4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="Ddp-6J-Pni">
+                            <connections>
+                                <action selector="dismiss:" destination="vcG-gE-skg" id="Brc-Gs-IBt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qri-mf-Ooy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="771" y="343"/>
+        </scene>
+    </scenes>
+</document>
