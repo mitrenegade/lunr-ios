@@ -69,17 +69,33 @@ class ProviderDetailViewController : UIViewController {
     // MARK: Event Methods
 
     @IBAction func callButtonTapped(sender: AnyObject) {
-        print("Let's call \(self.provider?.displayString)")
+        guard let provider = self.provider else { return }
+        print("Let's call \(self.provider?.displayString) on channel \(provider.objectId!)")
 
         /*
+         // PLACEHOLDER: go to ChatPlaceholderViewController, then go to Call
         if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("ChatPlaceholderViewController") as? ChatPlaceholderViewController {
             controller.targetUser = self.provider
             self.navigationController?.pushViewController(controller, animated: true)
         }
         */
+        
+        /*
+         // PLACEHOLDER: go directly to CallViewController
         if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
             controller.targetPFUser = self.provider
             self.navigationController?.pushViewController(controller, animated: true)
+        }
+        */
+        
+        // PLACEHOLDER: send a push notification to the given provider
+        PushService().sendNotificationToUser(provider) { (success, error) in
+            if success {
+                self.simpleAlert("Push sent!", message: "You have successfully notified \(self.provider!.displayString) to chat")
+            }
+            else {
+                self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
+            }
         }
     }
 
