@@ -10,7 +10,6 @@ class FacebookViewController: UIViewController {
             [weak self] (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
                 self?.updateUserProfile(user)
-                self?.loginQBUser(user)
                 if user.isNew {
                     print("User signed up and logged in through Facebook!")
                 } else {
@@ -80,8 +79,4 @@ class FacebookViewController: UIViewController {
         }
     }
     
-    private func loginQBUser(user: PFUser) {
-        guard let userID = user.objectId else { return }
-        QBUserService.sharedInstance.loginQBUser(userID, completion: nil)
-    }
 }
