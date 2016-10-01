@@ -192,13 +192,16 @@ class QBUserService: QMServicesManager {
     
     // MARK: Push
     func updateUserPushTag() {
+        // this updates QBUUser information for a provider. Update tags as well as display name
         guard let qbUser = QBSession.currentSession().currentUser else {
             return
         }
         guard let channel = qbUser.login else { return }
         let params = QBUpdateUserParameters()
         params.tags = ["push\(channel)"]
-
+        if let pfUser = PFUser.currentUser() as? User {
+            params.fullName = pfUser.displayString
+        }
         QBRequest.updateCurrentUser(params, successBlock: { (response, user) in
             print("Success! \(user)")
             }) { (response) in

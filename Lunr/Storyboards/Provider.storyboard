@@ -73,6 +73,9 @@
                                     <outlet property="delegate" destination="IcZ-0J-wMC" id="HJm-SH-vyw"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3y6-oe-0Ce">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803926" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -82,6 +85,8 @@
                             <constraint firstItem="rco-c8-gIO" firstAttribute="top" secondItem="J2o-Nt-d2P" secondAttribute="bottom" id="Gwa-b9-8Bg"/>
                             <constraint firstAttribute="trailing" secondItem="rco-c8-gIO" secondAttribute="trailing" constant="20" id="Qks-yH-zLI"/>
                             <constraint firstItem="J2o-Nt-d2P" firstAttribute="top" secondItem="5aO-5j-POh" secondAttribute="bottom" id="VQX-2T-AHW"/>
+                            <constraint firstItem="3y6-oe-0Ce" firstAttribute="centerY" secondItem="wnY-lZ-eaQ" secondAttribute="centerY" id="WQh-SK-v8U"/>
+                            <constraint firstItem="3y6-oe-0Ce" firstAttribute="centerX" secondItem="wnY-lZ-eaQ" secondAttribute="centerX" id="e0b-Fh-UbV"/>
                             <constraint firstItem="rco-c8-gIO" firstAttribute="leading" secondItem="wnY-lZ-eaQ" secondAttribute="leading" constant="20" id="weo-c4-9VQ"/>
                         </constraints>
                     </view>
@@ -120,6 +125,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="3y6-oe-0Ce" id="bR0-uI-jah"/>
                         <outlet property="searchBar" destination="dQT-Wf-Npp" id="8jV-MJ-76b"/>
                         <outlet property="settingsButton" destination="lrR-kz-8I3" id="ccB-ET-IMG"/>
                         <outlet property="sortCategoryView" destination="J2o-Nt-d2P" id="40P-kE-JhY"/>
@@ -146,7 +152,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5p-Bg-33A" userLabel="Call Button View">
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="200" horizontalCompressionResistancePriority="200" verticalCompressionResistancePriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ8-mh-TV0" userLabel="Call Now Button">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="200" horizontalCompressionResistancePriority="200" verticalCompressionResistancePriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ8-mh-TV0" userLabel="Call Now Button" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                         <state key="normal" title="Button"/>

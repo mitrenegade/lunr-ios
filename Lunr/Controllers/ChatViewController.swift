@@ -149,7 +149,10 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
             title = dialog.name
         } else {
             if let recipient = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
-                title = recipient.login
+                title = recipient.fullName
+            }
+            else {
+                title = "New chat"
             }
         }
     }
