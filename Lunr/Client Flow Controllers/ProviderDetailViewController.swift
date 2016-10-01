@@ -88,17 +88,6 @@ class ProviderDetailViewController : UIViewController {
         }
         */
         
-        // PLACEHOLDER: send a push notification to the given provider
-        /*
-        PushService().sendNotificationToUser(provider) { (success, error) in
-            if success {
-                self.simpleAlert("Push sent!", message: "You have successfully notified \(self.provider!.displayString) to chat")
-            }
-            else {
-                self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
-            }
-        }
-        */
         self.chatWithProvider(provider)
     }
 
@@ -114,11 +103,13 @@ extension ProviderDetailViewController {
             guard let user = user else { self?.callButton.busy = false; return }
             QBUserService.instance().usersService.usersMemoryStorage.addUser(user)
             QBUserService.instance().chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
-                self?.callButton.busy = false
-                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? UINavigationController,
-                    let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
+                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ClientChatNavigationController") as? UINavigationController,
+                    let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                     chatVC.dialog = dialog
-                    self?.presentViewController(chatNavigationVC, animated: true, completion: nil)
+                    chatVC.provider = self?.provider
+                    self?.presentViewController(chatNavigationVC, animated: true, completion: { 
+                        self?.callButton.busy = false
+                    })
                 }
             }
         }
