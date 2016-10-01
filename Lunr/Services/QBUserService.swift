@@ -26,6 +26,7 @@ class QBUserService: QMServicesManager {
         user.password = parseUserId
         QBRequest.signUp(user, successBlock: { (response, user) in
             print("results: \(user)")
+            self.updateUserFullName()
             completion(user: user)
         }) { (errorResponse) in
             print("Error: \(errorResponse)")
@@ -206,6 +207,22 @@ class QBUserService: QMServicesManager {
             print("Success! \(user)")
             }) { (response) in
                 print("Error response: \(response)")
+        }
+    }
+
+    func updateUserFullName() {
+        // adds fullName to a qbUser when they create an account
+        guard let qbUser = QBSession.currentSession().currentUser else {
+            return
+        }
+        guard let pfUser = PFUser.currentUser() as? User else { return }
+        let params = QBUpdateUserParameters()
+        params.fullName = pfUser.displayString
+        
+        QBRequest.updateCurrentUser(params, successBlock: { (response, user) in
+            print("Success! \(user)")
+        }) { (response) in
+            print("Error response: \(response)")
         }
     }
 }
