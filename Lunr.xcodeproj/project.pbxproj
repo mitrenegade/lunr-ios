@@ -42,6 +42,8 @@
 		8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6418EF1D56E8FA00CC4928 /* Constants.swift */; };
 		8E6B6FC11D7B038D007C3C86 /* CallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC01D7B038D007C3C86 /* CallService.swift */; };
 		8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC21D7B03D8007C3C86 /* UserService.swift */; };
+		8E6D089E1D92332E00D140BF /* ChatPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6D089D1D92332E00D140BF /* ChatPlaceholderViewController.swift */; };
+		8E7A513D1D9A1C5E00D501ED /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7A513C1D9A1C5E00D501ED /* PushService.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
 		8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */; };
 		8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC14D611D7DC2F600432E8A /* ReviewService.swift */; };
@@ -106,6 +108,8 @@
 		8E6418EF1D56E8FA00CC4928 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8E6B6FC01D7B038D007C3C86 /* CallService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallService.swift; sourceTree = "<group>"; };
 		8E6B6FC21D7B03D8007C3C86 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		8E6D089D1D92332E00D140BF /* ChatPlaceholderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPlaceholderViewController.swift; sourceTree = "<group>"; };
+		8E7A513C1D9A1C5E00D501ED /* PushService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		8E9BB7401D5EC3C0001FD26B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E9BB7421D5EC3CA001FD26B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		8E9BB7441D5EC3D3001FD26B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -199,6 +203,7 @@
 				8EC14D611D7DC2F600432E8A /* ReviewService.swift */,
 				8E6B6FC21D7B03D8007C3C86 /* UserService.swift */,
 				84258F0F1D90F4E400A61969 /* QBNotificationService.swift */,
+				8E7A513C1D9A1C5E00D501ED /* PushService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -385,6 +390,11 @@
 					8E6418C91D55585A00CC4928 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = H799H8B8DD;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -542,6 +552,7 @@
 				842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */,
 				8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */,
 				84066CCE1D94222000AF27AC /* QBChatMessage+LunrExtensions.swift in Sources */,
+				8E7A513D1D9A1C5E00D501ED /* PushService.swift in Sources */,
 				E56164441D5678B700926692 /* ProviderTableViewCell.swift in Sources */,
 				E56164631D61260700926692 /* UIView+Utils.swift in Sources */,
 				84066CCC1D93643100AF27AC /* ChatPlaceholderViewController.swift in Sources */,
@@ -668,13 +679,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bobby Ren (UQA7D88UV9)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Lunr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.renderapps.lunr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "507b162d-b306-485e-8960-58e49cfcec7f";
+				PROVISIONING_PROFILE = "8f9ee2f3-2d48-444f-9ccd-689d94e8ca56";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lunr/Lunr-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -692,7 +703,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.renderapps.lunr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "507b162d-b306-485e-8960-58e49cfcec7f";
+				PROVISIONING_PROFILE = "22d8cba2-4027-4485-a5fa-1383dbc44884";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lunr/Lunr-Bridging-Header.h";
 			};
 			name = Release;

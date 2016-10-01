@@ -10,7 +10,6 @@ class FacebookViewController: UIViewController {
             [weak self] (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
                 self?.updateUserProfile(user)
-                self?.loginQBUser(user)
                 if user.isNew {
                     print("User signed up and logged in through Facebook!")
                 } else {
@@ -46,7 +45,15 @@ class FacebookViewController: UIViewController {
                         }
                     }
                     else {
-                        self?.notify(.LoginSuccess)
+                        let userId = user.objectId!
+                        QBUserService.sharedInstance.loginQBUser(userId, completion: { [weak self] (success, error) in
+                            if success {
+                                self?.notify(.LoginSuccess)
+                            }
+                            else {
+                                self?.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error, completion: nil)
+                            }
+                            })
                     }
                 })
             } else {
@@ -72,8 +79,4 @@ class FacebookViewController: UIViewController {
         }
     }
     
-    private func loginQBUser(user: PFUser) {
-        guard let userID = user.objectId else { return }
-        QBUserService.sharedInstance.loginQBUser(userID, completion: nil)
-    }
 }

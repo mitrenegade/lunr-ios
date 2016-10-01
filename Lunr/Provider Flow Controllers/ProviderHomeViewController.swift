@@ -49,6 +49,9 @@ class ProviderHomeViewController: UIViewController {
                 self?.onDutyToggleButton.busy = false
                 if success {
                     self?.updateUI()
+                    if user.available {
+                        self?.enablePushNotifications()
+                    }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
                 }
@@ -60,6 +63,25 @@ class ProviderHomeViewController: UIViewController {
         if let user = PFUser.currentUser() as? User {
             let onDutyTitle = user.available ? "Go Offline" : "Go Online"
             onDutyToggleButton.setTitle(onDutyTitle, forState: .Normal)
+        }
+    }
+    
+    private func enablePushNotifications() {
+        let userId = PFUser.currentUser()!.objectId! // TODO: use optional checks
+        if !QBChat.instance().isConnected {
+            QBUserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
+                if !success {
+                    self.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error, completion: nil)
+                }
+                else {
+                    self.enablePushNotifications()
+                }
+            })
+            return
+        }
+        else {
+            // TODO: check if it is already enabled, and show error message to go to settings
+            PushService.registerForRemoteNotification()
         }
     }
 }

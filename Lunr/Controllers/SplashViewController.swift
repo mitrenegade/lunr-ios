@@ -33,6 +33,7 @@ class SplashViewController: UIViewController {
             if user.isProvider {
                 return UIStoryboard(name: "ProviderFlow", bundle: nil).instantiateInitialViewController()
             }
+            
             return UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController()
         default:
             // PFUser.currentUser is only a PFUser. This case should not exist

@@ -102,4 +102,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         selectedTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor.lunr_blueText()
         tabBarItemAppearance.setTitleTextAttributes(selectedTabBarItemTextAttr, forState: .Selected)
     }
+    
+    // MARK: Push
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let deviceIdentifier: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
+
+        let subscription: QBMSubscription! = QBMSubscription()
+        subscription.notificationChannel = QBMNotificationChannel.APNS
+        subscription.deviceUDID = deviceIdentifier
+        subscription.deviceToken = deviceToken
+        QBRequest.createSubscription(subscription, successBlock: { (response: QBResponse!, objects: [QBMSubscription]?) -> Void in
+            // success
+            print("Subscription created: \(objects)")
+            
+            QBUserService.sharedInstance.updateUserPushTag()
+            
+        }) { (response: QBResponse!) -> Void in
+            // error
+            print("Error response: \(response)")
+        }
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        NSLog("Push failed to register with error: %@", error)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        NSLog("my push is: %@", userInfo)
+        if application.applicationState == UIApplicationState.Inactive {
+            print("Inactive")
+        }
+        
+        /*
+        guard let dialogID = userInfo["SA_STR_PUSH_NOTIFICATION_DIALOG_ID".localized] as? String else {
+            return
+        }
+        
+        guard !dialogID.isEmpty else {
+            return
+        }
+        
+        
+        let dialogWithIDWasEntered: String? = ServicesManager.instance().currentDialogID
+        if dialogWithIDWasEntered == dialogID {
+            return
+        }
+        
+        ServicesManager.instance().notificationService.pushDialogID = dialogID
+        
+        // calling dispatch async for push notification handling to have priority in main queue
+        dispatch_async(dispatch_get_main_queue(), {
+            ServicesManager.instance().notificationService.handlePushNotificationWithDelegate(self)
+        });
+        */
+    }
 }
