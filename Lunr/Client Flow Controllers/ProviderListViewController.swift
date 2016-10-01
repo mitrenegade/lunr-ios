@@ -6,6 +6,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var sortCategoryView: SortCategoryView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var providers: [User]?
     var currentSortCategory: SortCategory = .None
@@ -17,6 +18,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         setUpTableView()
         self.searchBar.setImage(UIImage(imageLiteral: "search"), forSearchBarIcon: .Search, state: .Normal)
         self.sortCategoryView.delegate = self
+        self.activityIndicator.tintColor = UIColor.lunr_darkBlue()
         
         // load cached sort category if user previously selected one
         if let cachedSortCategory = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaultsKeys.SortCategory.rawValue) as? SortCategory.RawValue {
@@ -45,10 +47,13 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     }
     
     func refreshProviders(page: Int) {
+        self.activityIndicator.startAnimating()
         UserService.sharedInstance.queryProvidersAtPage(page, filterOption: currentSortCategory, searchTerms: searchTerms, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
+            self?.activityIndicator.stopAnimating()
             self?.providers = providers as? [User]
             self?.tableView.reloadData()
         }) {[weak self]  (error) in
+            self?.activityIndicator.stopAnimating()
             print("Error loading providers: \(error)")
             self?.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error, completion: nil)
         }
