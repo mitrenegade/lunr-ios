@@ -113,10 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         subscription.deviceToken = deviceToken
         QBRequest.createSubscription(subscription, successBlock: { (response: QBResponse!, objects: [QBMSubscription]?) -> Void in
             // success
-            print("Subscription created: \(objects)")
-            
-            QBUserService.sharedInstance.updateUserPushTag()
-            
+            print("Subscription created: \(objects)")            
         }) { (response: QBResponse!) -> Void in
             // error
             print("Error response: \(response)")
