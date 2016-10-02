@@ -76,9 +76,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="UFI-xb-6y5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="IgM-ao-ojS">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="IgM-ao-ojS">
                             <connections>
                                 <action selector="dismiss:" destination="Wcy-Lc-nUr" id="GtQ-9U-pcg"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Start Call" id="37Q-Rd-nT6">
+                            <connections>
+                                <action selector="startCall:" destination="Wcy-Lc-nUr" id="95A-Aw-64Y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

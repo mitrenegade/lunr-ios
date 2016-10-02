@@ -20,7 +20,7 @@ enum CallState {
 }
 
 class CallViewController: UIViewController {
-    var targetPFUser: PFUser? {
+    var targetPFUserId: String? {
         didSet {
             self.loadUser()
         }
@@ -136,8 +136,8 @@ class CallViewController: UIViewController {
     }
     
     func loadUser() {
-        if let pfUser = targetPFUser {
-            QBUserService.getQBUUserFor(pfUser, completion: { (result) in
+        if let pfUserId = targetPFUserId {
+            QBUserService.getQBUUserForPFUserId(pfUserId, completion: { (result) in
                 self.targetQBUUser = result
             })
         }
@@ -200,11 +200,11 @@ extension CallViewController {
         // TODO: end video stream
         
         // create the call object. TODO: this should be done when the call is started
-        guard let provider = targetPFUser as? User else { return }
+        guard let providerId = targetPFUserId else { return }
         guard let start = sessionStart else { return }
         guard let duration = sessionEnd?.timeIntervalSinceDate(start) else { return }
         
-        CallService.sharedInstance.postNewCall(provider, duration: duration as Double, totalCost: 45) { (call, error) in
+        CallService.sharedInstance.postNewCall(providerId, duration: duration as Double, totalCost: 45) { (call, error) in
             if let error = error {
                 self.simpleAlert("Could not end call", defaultMessage: "There was an error saving your call.", error: error, completion: { 
                     // TODO: dismiss?

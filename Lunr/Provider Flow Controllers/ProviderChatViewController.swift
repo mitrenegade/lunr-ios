@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ProviderChatViewController: ChatViewController {
 
@@ -41,14 +42,18 @@ class ProviderChatViewController: ChatViewController {
         })
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction override func dismiss(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+        
+        // TODO: send push notification to cancel
     }
-    */
 
+    @IBAction func startCall(sender: AnyObject) {
+        if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController, let userId = incomingPFUserId {
+            controller.targetPFUserId = userId
+            self.navigationController?.pushViewController(controller, animated: true)
+            
+            // TODO: send psh notification to go to video chat
+        }
+    }
 }

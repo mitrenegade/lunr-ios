@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A320" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YEF-XD-gfJ">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YEF-XD-gfJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -15,78 +15,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="m3d-mR-6BA" kind="relationship" relationship="rootViewController" id="o32-7i-5tb"/>
+                        <segue destination="C23-Ga-fTy" kind="relationship" relationship="rootViewController" id="sjh-4C-K1W"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DB7-r6-osr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="242" y="339"/>
-        </scene>
-        <!--Chat Placeholder View Controller-->
-        <scene sceneID="8Gf-8k-ssa">
-            <objects>
-                <viewController storyboardIdentifier="ChatPlaceholderViewController" id="m3d-mR-6BA" customClass="ChatPlaceholderViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="f03-kA-AC6"/>
-                        <viewControllerLayoutGuide type="bottom" id="DAc-aH-QaY"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="epR-Yr-POu">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gb1-Po-7Kl">
-                                <rect key="frame" x="60" y="235" width="480" height="97"/>
-                                <color key="backgroundColor" red="0.18039215689999999" green="0.73725490199999999" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="97" id="VMe-LH-pTK"/>
-                                </constraints>
-                                <state key="normal" title="Call Provider">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didClickButton:" destination="m3d-mR-6BA" eventType="touchUpInside" id="Lvf-Ag-PnZ"/>
-                                </connections>
-                            </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="XP5-w2-KYH">
-                                <rect key="frame" x="282" y="265" width="37" height="37"/>
-                            </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ac1-B9-pPF">
-                                <rect key="frame" x="60" y="93" width="480" height="97"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="97" id="LDl-lL-T71"/>
-                                </constraints>
-                                <state key="normal" title="Logout">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didClickButton:" destination="m3d-mR-6BA" eventType="touchUpInside" id="m43-1l-MCR"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="ac1-B9-pPF" firstAttribute="width" secondItem="epR-Yr-POu" secondAttribute="width" multiplier="4:5" id="72E-aH-O8l"/>
-                            <constraint firstItem="gb1-Po-7Kl" firstAttribute="top" secondItem="ac1-B9-pPF" secondAttribute="bottom" constant="45" id="JNf-MD-W7I"/>
-                            <constraint firstItem="ac1-B9-pPF" firstAttribute="centerX" secondItem="epR-Yr-POu" secondAttribute="centerX" id="O7l-Eu-Ka5"/>
-                            <constraint firstItem="ac1-B9-pPF" firstAttribute="top" secondItem="f03-kA-AC6" secondAttribute="bottom" constant="29" id="OQa-ty-02n"/>
-                            <constraint firstItem="XP5-w2-KYH" firstAttribute="centerY" secondItem="gb1-Po-7Kl" secondAttribute="centerY" id="QZx-wr-Kg7"/>
-                            <constraint firstItem="ac1-B9-pPF" firstAttribute="width" secondItem="gb1-Po-7Kl" secondAttribute="width" id="bY1-yq-Vb1"/>
-                            <constraint firstItem="XP5-w2-KYH" firstAttribute="centerX" secondItem="gb1-Po-7Kl" secondAttribute="centerX" id="hwa-5S-OBY"/>
-                            <constraint firstItem="gb1-Po-7Kl" firstAttribute="centerX" secondItem="epR-Yr-POu" secondAttribute="centerX" id="jTb-Z0-Z8N"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="uDl-Ot-yNc"/>
-                    <connections>
-                        <outlet property="activityIndicator" destination="XP5-w2-KYH" id="61B-3x-7SN"/>
-                        <outlet property="buttonCall" destination="gb1-Po-7Kl" id="5kC-cn-7um"/>
-                        <outlet property="buttonLogout" destination="ac1-B9-pPF" id="UZT-1J-XQq"/>
-                        <segue destination="C23-Ga-fTy" kind="show" identifier="GoToCallUser" id="pvo-Xw-EoU"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sME-vg-EHM" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="961" y="324"/>
+            <point key="canvasLocation" x="892" y="339"/>
         </scene>
         <!--Call View Controller-->
         <scene sceneID="ovk-Cv-ea7">
@@ -179,6 +113,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="jf2-iC-eO7"/>
                     <connections>
                         <outlet property="buttonCall" destination="A86-JZ-Cf2" id="jdq-Rk-cqv"/>
                         <outlet property="labelRemote" destination="Pze-Y2-giP" id="dQi-la-xDI"/>
