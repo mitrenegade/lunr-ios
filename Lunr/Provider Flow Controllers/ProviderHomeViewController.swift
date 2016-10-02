@@ -52,7 +52,11 @@ class ProviderHomeViewController: UIViewController {
                 if success {
                     self?.updateUI()
                     if user.available {
-                        self?.enablePushNotifications()
+                        PushService().enablePushNotifications({ (success) in
+                            if !success {
+                                self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error, completion: nil)
+                            }
+                        })
                     }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
@@ -67,26 +71,7 @@ class ProviderHomeViewController: UIViewController {
             onDutyToggleButton.setTitle(onDutyTitle, forState: .Normal)
         }
     }
-    
-    private func enablePushNotifications() {
-        let userId = PFUser.currentUser()!.objectId! // TODO: use optional checks
-        if !QBChat.instance().isConnected {
-            QBUserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
-                if !success {
-                    self.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error, completion: nil)
-                }
-                else {
-                    self.enablePushNotifications()
-                }
-            })
-            return
-        }
-        else {
-            // TODO: check if it is already enabled, and show error message to go to settings
-            PushService.registerForRemoteNotification()
-        }
-    }
-    
+        
     func openChat(notification: NSNotification) {
         guard let userInfo = notification.userInfo, dialog = userInfo["dialog"] as? QBChatDialog, incomingPFUserId = userInfo["pfUserId"] as? String else { return }
         if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ProviderChatNavigationController") as? UINavigationController, let chatVC = chatNavigationVC.viewControllers[0] as? ProviderChatViewController {

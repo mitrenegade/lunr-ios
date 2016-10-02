@@ -23,10 +23,9 @@ class ProviderChatViewController: ChatViewController {
     }
     
     override func updateTitle() {
-        if let recipient = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
-            title = recipient.fullName
-        }
-        else {
+        super.updateTitle()
+        
+        if self.recipient == nil {
             self.loadUser()
         }
     }
@@ -43,9 +42,11 @@ class ProviderChatViewController: ChatViewController {
     }
 
     @IBAction override func dismiss(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
-        
-        // TODO: send push notification to cancel
+        dismissViewControllerAnimated(true) { 
+            // send push notification to cancel
+            guard let recipient = self.recipient else { return }
+            self.notifyForVideo(recipient, didInitiateVideo: false)
+        }
     }
 
     @IBAction func startCall(sender: AnyObject) {
@@ -53,7 +54,31 @@ class ProviderChatViewController: ChatViewController {
             controller.targetPFUserId = userId
             self.navigationController?.pushViewController(controller, animated: true)
             
-            // TODO: send psh notification to go to video chat
+            // send psh notification to go to video chat
+            guard let recipient = self.recipient else { return }
+            self.notifyForVideo(recipient, didInitiateVideo: false)
         }
     }
+    
+    // MARK: Push notifications
+    func notifyForVideo(user: QBUUser, didInitiateVideo: Bool) {
+        //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
+        guard let currentUser = PFUser.currentUser() as? User else { return }
+        
+        let name = currentUser.displayString
+        
+        let status = didInitiateVideo ? "started": "cancelled"
+        let message = "\(name) has \(status) video chat"
+        let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status]
+        
+        PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
+            if success {
+                self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+            }
+            else {
+                self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
+            }
+        }
+    }
+
 }
