@@ -37,33 +37,65 @@ protocol NotificationServiceDelegate {
 /**
 *  Service responsible for working with push notifications
 */
-class QBNotificationService {
+class QBNotificationService: NotificationServiceDelegate {
+    static let sharedInstance: QBNotificationService = QBNotificationService()
+
     var delegate: NotificationServiceDelegate?
     var pushDialogID: String?
     
-    func handlePushNotificationWithDelegate(delegate: NotificationServiceDelegate!) {
+    func handlePushNotification(dialogId: String) {
         guard let dialogID = self.pushDialogID where !dialogID.isEmpty else { return }
-        self.delegate = delegate;
 		
         QBUserService.instance().chatService.fetchDialogWithID(dialogID) { [weak self] chatDialog in
-			guard let strongSelf = self else { return }
+            guard let strongSelf = self else { return }
 			if let chatDialog = chatDialog {
 				strongSelf.pushDialogID = nil;
-				strongSelf.delegate?.notificationServiceDidSucceedFetchingDialog(chatDialog);
+				strongSelf.notificationServiceDidSucceedFetchingDialog(chatDialog);
 			} else {
-                strongSelf.delegate?.notificationServiceDidStartLoadingDialogFromServer()
+                strongSelf.notificationServiceDidStartLoadingDialogFromServer()
                 QBUserService.instance().chatService.loadDialogWithID(dialogID) { loadedDialog in
                     guard let unwrappedDialog = loadedDialog else {
-                        strongSelf.delegate?.notificationServiceDidFailFetchingDialog()
+                        self?.notificationServiceDidFailFetchingDialog()
                         return
                     }
                     
-                    strongSelf.delegate?.notificationServiceDidFinishLoadingDialogFromServer()
-                    strongSelf.delegate?.notificationServiceDidSucceedFetchingDialog(unwrappedDialog)
+                    strongSelf.notificationServiceDidFinishLoadingDialogFromServer()
+                    strongSelf.notificationServiceDidSucceedFetchingDialog(unwrappedDialog)
                     
                 }
             }
             
         }
     }
+    
+    // MARK: NotificationServiceDelegate protocol
+    func notificationServiceDidStartLoadingDialogFromServer() {
+    }
+    
+    func notificationServiceDidFinishLoadingDialogFromServer() {
+    }
+    
+    func notificationServiceDidSucceedFetchingDialog(chatDialog: QBChatDialog!) {
+        NSNotificationCenter.defaultCenter().postNotificationName("dialog:fetched", object: nil, userInfo: ["dialog": chatDialog])
+
+        /*
+        let navigatonController: UINavigationController! = self.window?.rootViewController as! UINavigationController
+        
+        let chatController: ChatViewController = UIStoryboard(name:"Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        chatController.dialog = chatDialog
+        */
+        /*
+         let dialogWithIDWasEntered = QBNotificationService.sharedInstance.currentDialogID
+         if !dialogWithIDWasEntered.isEmpty {
+         // some chat already opened, return to dialogs view controller first
+         navigatonController.popViewControllerAnimated(false);
+         }
+         */
+        //navigatonController.pushViewController(chatController, animated: true)
+    }
+    
+    func notificationServiceDidFailFetchingDialog() {
+    }
+    
+
 }

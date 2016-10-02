@@ -21,6 +21,8 @@ class ProviderHomeViewController: UIViewController {
         
         onDutyToggleButton.cornerRadius = onDutyToggleButton.bounds.height / 2
         updateUI()
+        
+        self.listenFor("dialog:fetched", action: #selector(openChat), object: nil)
     }
     
     @IBAction func chatWithClient(sender: AnyObject) {
@@ -83,5 +85,15 @@ class ProviderHomeViewController: UIViewController {
             // TODO: check if it is already enabled, and show error message to go to settings
             PushService.registerForRemoteNotification()
         }
+    }
+    
+    func openChat(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, dialog = userInfo["dialog"] as? QBChatDialog else { return }
+        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? UINavigationController,
+            let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
+            chatVC.dialog = dialog
+            self.presentViewController(chatNavigationVC, animated: true, completion: nil)
+        }
+
     }
 }
