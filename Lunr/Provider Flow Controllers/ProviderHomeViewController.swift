@@ -88,10 +88,10 @@ class ProviderHomeViewController: UIViewController {
     }
     
     func openChat(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, dialog = userInfo["dialog"] as? QBChatDialog else { return }
-        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? UINavigationController,
-            let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
+        guard let userInfo = notification.userInfo, dialog = userInfo["dialog"] as? QBChatDialog, incomingPFUserId = userInfo["pfUserId"] as? String else { return }
+        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ProviderChatNavigationController") as? UINavigationController, let chatVC = chatNavigationVC.viewControllers[0] as? ProviderChatViewController {
             chatVC.dialog = dialog
+            chatVC.incomingPFUserId = incomingPFUserId
             self.presentViewController(chatNavigationVC, animated: true, completion: nil)
         }
 

@@ -45,14 +45,13 @@ class PushService: NSObject {
     }
     
     func sendChatNotificationToQBUser(user: QBUUser, dialogId: String, completion: ((success:Bool, error:QBError?) -> Void)) {
-        guard let channel = self.channelStringForQBUser(user) else { return }
+        guard let channel = self.channelStringForQBUser(user) else { completion(success: false, error: nil); return }
+        guard let user = PFUser.currentUser() else { completion(success: false, error: nil); return }
         print("Channel: \(channel)")
 
         let message = "You have a new client request"
-        let aps = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "dialogId": dialogId]
-//        let payload = [QBMPushMessageApsKey: aps, "dialogId": dialogId] as NSMutableDictionary
-        let push = QBMPushMessage(payload: aps)
-//        push.payloadDict = payload
+        let payload = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "dialogId": dialogId, "pfUserId": user.objectId ?? ""]
+        let push = QBMPushMessage(payload: payload)
         QBRequest.sendPush(push, toUsersWithAnyOfTheseTags: channel, successBlock: { (response, events) in
             print("Successful push \(events)")
             completion(success: true, error: nil)

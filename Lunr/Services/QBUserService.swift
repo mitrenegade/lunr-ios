@@ -45,6 +45,7 @@ class QBUserService: QMServicesManager {
                     completion?(success: false, error: error)
                 }
                 else {
+                    self.updateUserFullName() // update existing QBUsers with their name
                     completion?(success: true, error: nil)
                 }
             }
@@ -114,24 +115,15 @@ class QBUserService: QMServicesManager {
             completion(result: nil)
             return
         }
-
-        QBRequest.userWithLogin(objectId, successBlock: { (response, user) in
+        self.getQBUUserForPFUserId(objectId, completion: completion)
+    }
+    
+    class func getQBUUserForPFUserId(userId: String, completion: ((result: QBUUser?) -> Void)) {
+        QBRequest.userWithLogin(userId, successBlock: { (response, user) in
                 completion(result: user)
             }) { (response) in
                 completion(result: nil)
         }
-
-        /*
-        self.loadUsersWithCompletion { (results) in
-            guard let users = results, objectId = user.objectId else {
-                completion(result: nil)
-                return
-            }
-
-            let matches = users.filter { $0.login == objectId };
-            completion(result: matches.first)
-        }
-        */
     }
     
     // Loads all users from quickblox (paged)

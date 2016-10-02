@@ -141,6 +141,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
+        guard let incomingPFUserId = userInfo["pfUserId"] as? String else {
+            return
+        }
+        
         /*
         let dialogWithIDWasEntered: String? = ServicesManager.instance().currentDialogID
         if dialogWithIDWasEntered == dialogID {
@@ -149,6 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          */
         
         QBNotificationService.sharedInstance.pushDialogID = dialogID
+        QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
         
         // calling dispatch async for push notification handling to have priority in main queue
         dispatch_async(dispatch_get_main_queue(), {

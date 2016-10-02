@@ -42,6 +42,7 @@ class QBNotificationService: NotificationServiceDelegate {
 
     var delegate: NotificationServiceDelegate?
     var pushDialogID: String?
+    var incomingPFUserId: String?
     
     func handlePushNotification(dialogId: String) {
         guard let dialogID = self.pushDialogID where !dialogID.isEmpty else { return }
@@ -76,22 +77,7 @@ class QBNotificationService: NotificationServiceDelegate {
     }
     
     func notificationServiceDidSucceedFetchingDialog(chatDialog: QBChatDialog!) {
-        NSNotificationCenter.defaultCenter().postNotificationName("dialog:fetched", object: nil, userInfo: ["dialog": chatDialog])
-
-        /*
-        let navigatonController: UINavigationController! = self.window?.rootViewController as! UINavigationController
-        
-        let chatController: ChatViewController = UIStoryboard(name:"Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        chatController.dialog = chatDialog
-        */
-        /*
-         let dialogWithIDWasEntered = QBNotificationService.sharedInstance.currentDialogID
-         if !dialogWithIDWasEntered.isEmpty {
-         // some chat already opened, return to dialogs view controller first
-         navigatonController.popViewControllerAnimated(false);
-         }
-         */
-        //navigatonController.pushViewController(chatController, animated: true)
+        NSNotificationCenter.defaultCenter().postNotificationName("dialog:fetched", object: nil, userInfo: ["dialog": chatDialog, "pfUserId": incomingPFUserId ?? ""])
     }
     
     func notificationServiceDidFailFetchingDialog() {

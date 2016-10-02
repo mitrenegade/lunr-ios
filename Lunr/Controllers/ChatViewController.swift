@@ -152,11 +152,11 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
                 title = recipient.fullName
             }
             else {
-                title = "New chat"
+                self.title = "New Chat"
             }
         }
     }
-    
+        
     func storedMessages() -> [QBChatMessage]? {
         return QBUserService.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog.ID!)
     }

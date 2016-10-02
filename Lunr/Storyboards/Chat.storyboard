@@ -46,5 +46,46 @@
             </objects>
             <point key="canvasLocation" x="771" y="343"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="T6x-6X-916">
+            <objects>
+                <navigationController storyboardIdentifier="ProviderChatNavigationController" id="4OR-Cq-wcY" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gaH-h2-pmF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Wcy-Lc-nUr" kind="relationship" relationship="rootViewController" id="o1R-3Z-46J"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="py2-ci-svT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="71" y="1167"/>
+        </scene>
+        <!--Provider Chat View Controller-->
+        <scene sceneID="sr4-ln-7Sp">
+            <objects>
+                <viewController storyboardIdentifier="ProviderChatViewController" id="Wcy-Lc-nUr" customClass="ProviderChatViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MXN-KD-MRl"/>
+                        <viewControllerLayoutGuide type="bottom" id="VYp-eT-zsC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uvv-eE-6q1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="UFI-xb-6y5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="IgM-ao-ojS">
+                            <connections>
+                                <action selector="dismiss:" destination="Wcy-Lc-nUr" id="GtQ-9U-pcg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5P7-r7-Nez" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="763" y="1167"/>
+        </scene>
     </scenes>
 </document>
