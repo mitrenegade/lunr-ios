@@ -76,7 +76,9 @@ class AccountSettingsViewController: UIViewController {
         // Placeholder
     }
 
-
+    @IBAction func didClickLogout(sender: AnyObject) {
+        UserService.logout()
+    }
 }
 
 extension AccountSettingsViewController: UITableViewDataSource {

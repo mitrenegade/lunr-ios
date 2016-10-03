@@ -41,32 +41,82 @@ class QBNotificationService: NotificationServiceDelegate {
     static let sharedInstance: QBNotificationService = QBNotificationService()
 
     var delegate: NotificationServiceDelegate?
-    var pushDialogID: String?
     var incomingPFUserId: String?
+    var incomingDialogId: String? // dialogID to be pushed
+    var currentDialogID: String? // open dialogID
     
-    func handlePushNotification(dialogId: String) {
-        guard let dialogID = self.pushDialogID where !dialogID.isEmpty else { return }
-		
-        QBUserService.instance().chatService.fetchDialogWithID(dialogID) { [weak self] chatDialog in
-            guard let strongSelf = self else { return }
-			if let chatDialog = chatDialog {
-				strongSelf.pushDialogID = nil;
-				strongSelf.notificationServiceDidSucceedFetchingDialog(chatDialog);
-			} else {
-                strongSelf.notificationServiceDidStartLoadingDialogFromServer()
-                QBUserService.instance().chatService.loadDialogWithID(dialogID) { loadedDialog in
-                    guard let unwrappedDialog = loadedDialog else {
-                        self?.notificationServiceDidFailFetchingDialog()
-                        return
-                    }
-                    
-                    strongSelf.notificationServiceDidFinishLoadingDialogFromServer()
-                    strongSelf.notificationServiceDidSucceedFetchingDialog(unwrappedDialog)
-                    
-                }
-            }
-            
+    func handlePushNotification(userInfo: [NSObject: AnyObject]) {
+        if let _ = userInfo["chatStatus"] as? String {
+            self.handleChatInvite(userInfo)
         }
+        else if let _ = userInfo["videoChatStatus"] as? String {
+            self.handleChatResponse(userInfo)
+        }
+    }
+    
+    func handleChatInvite(userInfo: [NSObject: AnyObject]) {
+        guard let dialogID = userInfo["dialogId"] as? String where !dialogID.isEmpty else { return }
+        self.incomingDialogId = dialogID
+        if self.currentDialogID == self.incomingDialogId {
+            return
+        }
+        
+        guard let incomingPFUserId = userInfo["pfUserId"] as? String else {
+            return
+        }
+        QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
+        
+        // calling dispatch async for push notification handling to have priority in main queue
+        dispatch_async(dispatch_get_main_queue(), {
+            QBUserService.instance().chatService.fetchDialogWithID(dialogID) { [weak self] chatDialog in
+                guard let strongSelf = self else { return }
+                if let chatDialog = chatDialog {
+                    strongSelf.incomingDialogId = nil;
+                    strongSelf.notificationServiceDidSucceedFetchingDialog(chatDialog);
+                } else {
+                    strongSelf.notificationServiceDidStartLoadingDialogFromServer()
+                    QBUserService.instance().chatService.loadDialogWithID(dialogID) { loadedDialog in
+                        guard let unwrappedDialog = loadedDialog else {
+                            self?.notificationServiceDidFailFetchingDialog()
+                            return
+                        }
+                        
+                        strongSelf.notificationServiceDidFinishLoadingDialogFromServer()
+                        strongSelf.notificationServiceDidSucceedFetchingDialog(unwrappedDialog)
+                        
+                    }
+                }
+                
+            }
+        });
+    }
+    
+    func handleChatResponse(userInfo: [NSObject: AnyObject]) {
+        guard let status = userInfo["videoChatStatus"] as? String where !status.isEmpty else { return }
+        guard let dialogID = userInfo["dialogId"] as? String where !dialogID.isEmpty else { return }
+        self.incomingDialogId = dialogID
+        
+        if self.currentDialogID != self.incomingDialogId {
+            return
+        }
+        
+        // calling dispatch async for push notification handling to have priority in main queue
+        dispatch_async(dispatch_get_main_queue(), {
+            if status == "cancelled" {
+                // close current chat
+                NSNotificationCenter.defaultCenter().postNotificationName("video:cancelled", object: nil, userInfo: ["dialog": self.incomingDialogId ?? "", "pfUserId": self.incomingPFUserId ?? ""])
+            }
+            else if status == "started" {
+                // go to video chat
+                NSNotificationCenter.defaultCenter().postNotificationName("video:accepted", object: nil, userInfo: ["dialog": self.incomingDialogId ?? "", "pfUserId": self.incomingPFUserId ?? ""])
+            }
+        });
+    }
+    
+    func clearDialog() {
+        QBNotificationService.sharedInstance.currentDialogID = nil
+        QBNotificationService.sharedInstance.incomingDialogId = nil
+        QBNotificationService.sharedInstance.incomingPFUserId = nil
     }
     
     // MARK: NotificationServiceDelegate protocol

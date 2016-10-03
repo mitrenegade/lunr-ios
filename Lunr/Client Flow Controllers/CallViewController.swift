@@ -145,6 +145,7 @@ class CallViewController: UIViewController {
     
     func close() {
         self.navigationController?.popViewControllerAnimated(true)
+        QBNotificationService.sharedInstance.clearDialog()
     }
     
     // Back button action on navigation item

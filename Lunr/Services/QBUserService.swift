@@ -24,9 +24,14 @@ class QBUserService: QMServicesManager {
         let user = QBUUser()
         user.login = parseUserId
         user.password = parseUserId
+        if let pfUser = PFUser.currentUser() as? User {
+            user.fullName = pfUser.displayString
+            if let channel = PushService().channelStringForPFUser(pfUser) {
+                user.tags.addObject(channel)
+            }
+        }
         QBRequest.signUp(user, successBlock: { (response, user) in
             print("results: \(user)")
-            self.updateUserFullName()
             completion(user: user)
         }) { (errorResponse) in
             print("Error: \(errorResponse)")
@@ -45,7 +50,6 @@ class QBUserService: QMServicesManager {
                     completion?(success: false, error: error)
                 }
                 else {
-                    self.updateUserFullName() // update existing QBUsers with their name
                     completion?(success: true, error: nil)
                 }
             }
@@ -184,6 +188,7 @@ class QBUserService: QMServicesManager {
     }
     
     // MARK: Push
+    /*
     func updateUserPushTag() {
         // this updates QBUUser information for a provider. Update tags as well as display name
         guard let qbUser = QBSession.currentSession().currentUser else {
@@ -217,4 +222,5 @@ class QBUserService: QMServicesManager {
             print("Error response: \(response)")
         }
     }
+    */
 }
