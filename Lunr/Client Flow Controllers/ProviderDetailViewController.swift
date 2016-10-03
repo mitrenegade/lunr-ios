@@ -71,23 +71,6 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(sender: AnyObject) {
         guard let provider = self.provider else { return }
         print("Let's call \(self.provider?.displayString) on channel \(provider.objectId!)")
-
-        /*
-         // PLACEHOLDER: go to ChatPlaceholderViewController, then go to Call
-        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("ChatPlaceholderViewController") as? ChatPlaceholderViewController {
-            controller.targetUser = self.provider
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-        */
-        
-        /*
-         // PLACEHOLDER: go directly to CallViewController
-        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
-            controller.targetPFUser = self.provider
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-        */
-        
         self.chatWithProvider(provider)
     }
 
@@ -106,7 +89,7 @@ extension ProviderDetailViewController {
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ClientChatNavigationController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                     chatVC.dialog = dialog
-                    chatVC.provider = self?.provider
+                    chatVC.providerId = self?.provider?.objectId
                     self?.presentViewController(chatNavigationVC, animated: true, completion: { 
                         self?.callButton.busy = false
                         QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!

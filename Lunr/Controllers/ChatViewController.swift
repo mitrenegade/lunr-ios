@@ -135,7 +135,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         }
     }
     
-    @IBAction func dismiss(sender: AnyObject) {
+    @IBAction func dismiss(sender: AnyObject?) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     

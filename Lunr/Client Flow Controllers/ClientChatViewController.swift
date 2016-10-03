@@ -11,7 +11,7 @@ import UIKit
 import Parse
 
 class ClientChatViewController: ChatViewController {
-    var provider: User?
+    var providerId: String?
     var lastNotificationTimestamp: NSDate? = NSDate()
     private let kMinNotificationInterval: NSTimeInterval = 10 // production: 1 minute?
     
@@ -46,5 +46,28 @@ class ClientChatViewController: ChatViewController {
                 }
             }
         })
+        
+        self.listenFor("video:accepted", action: #selector(openVideo), object: nil)
+        self.listenFor("video:cancelled", action: #selector(cancelChat), object: nil)
+    }
+    
+    func openVideo() {
+        let title = "Video chat was accepted"
+        let message = "\(self.recipient!.fullName!) has initiated a video chat. Click start"
+        self.simpleAlert(title, message: message) {
+            if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
+                controller.targetPFUserId = self.providerId
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+        }
+    }
+    
+    func cancelChat() {
+        let title = "Video chat was declined"
+        let message = "\(self.recipient!.fullName!) has cancelled the video chat."
+        self.simpleAlert(title, message: message) {
+            self.dismiss(nil)
+            QBNotificationService.sharedInstance.clearDialog()
+        }
     }
 }

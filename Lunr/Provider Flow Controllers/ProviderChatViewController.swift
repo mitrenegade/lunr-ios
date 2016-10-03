@@ -41,10 +41,11 @@ class ProviderChatViewController: ChatViewController {
         })
     }
 
-    @IBAction override func dismiss(sender: AnyObject) {
+    @IBAction override func dismiss(sender: AnyObject?) {
         dismissViewControllerAnimated(true) { 
             // send push notification to cancel
             guard let recipient = self.recipient else { return }
+            QBNotificationService.sharedInstance.clearDialog()
             self.notifyForVideo(recipient, didInitiateVideo: false)
         }
     }
@@ -56,7 +57,7 @@ class ProviderChatViewController: ChatViewController {
             
             // send psh notification to go to video chat
             guard let recipient = self.recipient else { return }
-            self.notifyForVideo(recipient, didInitiateVideo: false)
+            self.notifyForVideo(recipient, didInitiateVideo: true)
         }
     }
     

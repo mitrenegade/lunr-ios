@@ -106,11 +106,17 @@ class QBNotificationService: NotificationServiceDelegate {
                 // close current chat
                 NSNotificationCenter.defaultCenter().postNotificationName("video:cancelled", object: nil, userInfo: ["dialog": self.incomingDialogId ?? "", "pfUserId": self.incomingPFUserId ?? ""])
             }
-            else if status == "accepted" {
+            else if status == "started" {
                 // go to video chat
                 NSNotificationCenter.defaultCenter().postNotificationName("video:accepted", object: nil, userInfo: ["dialog": self.incomingDialogId ?? "", "pfUserId": self.incomingPFUserId ?? ""])
             }
         });
+    }
+    
+    func clearDialog() {
+        QBNotificationService.sharedInstance.currentDialogID = nil
+        QBNotificationService.sharedInstance.incomingDialogId = nil
+        QBNotificationService.sharedInstance.incomingPFUserId = nil
     }
     
     // MARK: NotificationServiceDelegate protocol
