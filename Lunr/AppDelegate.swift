@@ -130,32 +130,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Inactive")
         }
         
-        guard let dialogID = userInfo["dialogId"] as? String else {
-            return
-        }
-        
-        guard !dialogID.isEmpty else {
-            return
-        }
-        
-        guard let incomingPFUserId = userInfo["pfUserId"] as? String else {
-            return
-        }
-        
-        /*
-        let dialogWithIDWasEntered: String? = ServicesManager.instance().currentDialogID
-        if dialogWithIDWasEntered == dialogID {
-            return
-        }
-         */
-        
-        QBNotificationService.sharedInstance.pushDialogID = dialogID
-        QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
-        
-        // calling dispatch async for push notification handling to have priority in main queue
-        dispatch_async(dispatch_get_main_queue(), {
-            QBNotificationService.sharedInstance.handlePushNotification(dialogID)
-        });
+        QBNotificationService.sharedInstance.handlePushNotification(userInfo)
     }
+    
+
 }
 

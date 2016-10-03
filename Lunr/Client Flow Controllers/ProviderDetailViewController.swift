@@ -109,6 +109,7 @@ extension ProviderDetailViewController {
                     chatVC.provider = self?.provider
                     self?.presentViewController(chatNavigationVC, animated: true, completion: { 
                         self?.callButton.busy = false
+                        QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
                     })
                 }
             }

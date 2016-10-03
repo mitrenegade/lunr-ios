@@ -75,7 +75,12 @@ class UserService: NSObject {
         
         query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
             if let error = error {
-                errorHandler(error: error)
+                if error.code == 209 {
+                    UserService.logout()
+                }
+                else {
+                    errorHandler(error: error)
+                }
                 return
             }
             

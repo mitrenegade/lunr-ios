@@ -69,7 +69,7 @@ class ProviderChatViewController: ChatViewController {
         
         let status = didInitiateVideo ? "started": "cancelled"
         let message = "\(name) has \(status) video chat"
-        let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status]
+        let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
         
         PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
             if success {

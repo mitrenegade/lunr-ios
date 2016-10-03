@@ -74,9 +74,15 @@ class ProviderHomeViewController: UIViewController {
         
     func openChat(notification: NSNotification) {
         guard let userInfo = notification.userInfo, dialog = userInfo["dialog"] as? QBChatDialog, incomingPFUserId = userInfo["pfUserId"] as? String else { return }
+        guard QBNotificationService.sharedInstance.currentDialogID == nil else {
+            print("Trying to open dialog \(dialog.ID!) but dialog \(QBNotificationService.sharedInstance.currentDialogID!) already open")
+            return
+        }
+        
         if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ProviderChatNavigationController") as? UINavigationController, let chatVC = chatNavigationVC.viewControllers[0] as? ProviderChatViewController {
             chatVC.dialog = dialog
             chatVC.incomingPFUserId = incomingPFUserId
+            QBNotificationService.sharedInstance.currentDialogID = dialog.ID
             self.presentViewController(chatNavigationVC, animated: true, completion: nil)
         }
 
