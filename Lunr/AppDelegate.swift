@@ -113,10 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         subscription.deviceToken = deviceToken
         QBRequest.createSubscription(subscription, successBlock: { (response: QBResponse!, objects: [QBMSubscription]?) -> Void in
             // success
-            print("Subscription created: \(objects)")
-            
-            QBUserService.sharedInstance.updateUserPushTag()
-            
+            print("Subscription created: \(objects)")            
         }) { (response: QBResponse!) -> Void in
             // error
             print("Error response: \(response)")
@@ -133,27 +130,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Inactive")
         }
         
-        /*
-        guard let dialogID = userInfo["SA_STR_PUSH_NOTIFICATION_DIALOG_ID".localized] as? String else {
-            return
-        }
-        
-        guard !dialogID.isEmpty else {
-            return
-        }
-        
-        
-        let dialogWithIDWasEntered: String? = ServicesManager.instance().currentDialogID
-        if dialogWithIDWasEntered == dialogID {
-            return
-        }
-        
-        ServicesManager.instance().notificationService.pushDialogID = dialogID
-        
-        // calling dispatch async for push notification handling to have priority in main queue
-        dispatch_async(dispatch_get_main_queue(), {
-            ServicesManager.instance().notificationService.handlePushNotificationWithDelegate(self)
-        });
-        */
+        QBNotificationService.sharedInstance.handlePushNotification(userInfo)
     }
+    
+
 }
+

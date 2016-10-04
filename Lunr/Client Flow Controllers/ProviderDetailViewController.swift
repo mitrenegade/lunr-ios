@@ -2,7 +2,7 @@ import UIKit
 
 class ProviderDetailViewController : UIViewController {
 
-    @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var callButton: LunrActivityButton!
     @IBOutlet weak var callButtonView: UIView!
     @IBOutlet weak var tableView: UITableView!
 
@@ -71,37 +71,34 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(sender: AnyObject) {
         guard let provider = self.provider else { return }
         print("Let's call \(self.provider?.displayString) on channel \(provider.objectId!)")
-
-        /*
-         // PLACEHOLDER: go to ChatPlaceholderViewController, then go to Call
-        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("ChatPlaceholderViewController") as? ChatPlaceholderViewController {
-            controller.targetUser = self.provider
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-        */
-        
-        /*
-         // PLACEHOLDER: go directly to CallViewController
-        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
-            controller.targetPFUser = self.provider
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-        */
-        
-        // PLACEHOLDER: send a push notification to the given provider
-        PushService().sendNotificationToUser(provider) { (success, error) in
-            if success {
-                self.simpleAlert("Push sent!", message: "You have successfully notified \(self.provider!.displayString) to chat")
-            }
-            else {
-                self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
-            }
-        }
+        self.chatWithProvider(provider)
     }
 
     func backWasPressed() {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
+}
+
+extension ProviderDetailViewController {
+    func chatWithProvider(provider: User) {
+        self.callButton.busy = true
+        QBUserService.getQBUUserFor(provider) { [weak self] user in
+            guard let user = user else { self?.callButton.busy = false; return }
+            QBUserService.instance().usersService.usersMemoryStorage.addUser(user)
+            QBUserService.instance().chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
+                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ClientChatNavigationController") as? UINavigationController,
+                    let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
+                    chatVC.dialog = dialog
+                    chatVC.providerId = self?.provider?.objectId
+                    self?.presentViewController(chatNavigationVC, animated: true, completion: { 
+                        self?.callButton.busy = false
+                        QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
+                    })
+                }
+            }
+        }
+    }
+
 }
 
 extension ProviderDetailViewController: UITableViewDataSource, UITableViewDelegate {

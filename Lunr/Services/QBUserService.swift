@@ -24,6 +24,12 @@ class QBUserService: QMServicesManager {
         let user = QBUUser()
         user.login = parseUserId
         user.password = parseUserId
+        if let pfUser = PFUser.currentUser() as? User {
+            user.fullName = pfUser.displayString
+            if let channel = PushService().channelStringForPFUser(pfUser) {
+                user.tags.addObject(channel)
+            }
+        }
         QBRequest.signUp(user, successBlock: { (response, user) in
             print("results: \(user)")
             completion(user: user)
@@ -113,24 +119,15 @@ class QBUserService: QMServicesManager {
             completion(result: nil)
             return
         }
-
-        QBRequest.userWithLogin(objectId, successBlock: { (response, user) in
+        self.getQBUUserForPFUserId(objectId, completion: completion)
+    }
+    
+    class func getQBUUserForPFUserId(userId: String, completion: ((result: QBUUser?) -> Void)) {
+        QBRequest.userWithLogin(userId, successBlock: { (response, user) in
                 completion(result: user)
             }) { (response) in
                 completion(result: nil)
         }
-
-        /*
-        self.loadUsersWithCompletion { (results) in
-            guard let users = results, objectId = user.objectId else {
-                completion(result: nil)
-                return
-            }
-
-            let matches = users.filter { $0.login == objectId };
-            completion(result: matches.first)
-        }
-        */
     }
     
     // Loads all users from quickblox (paged)
@@ -191,18 +188,39 @@ class QBUserService: QMServicesManager {
     }
     
     // MARK: Push
+    /*
     func updateUserPushTag() {
+        // this updates QBUUser information for a provider. Update tags as well as display name
         guard let qbUser = QBSession.currentSession().currentUser else {
             return
         }
         guard let channel = qbUser.login else { return }
         let params = QBUpdateUserParameters()
         params.tags = ["push\(channel)"]
-
+        if let pfUser = PFUser.currentUser() as? User {
+            params.fullName = pfUser.displayString
+        }
         QBRequest.updateCurrentUser(params, successBlock: { (response, user) in
             print("Success! \(user)")
             }) { (response) in
                 print("Error response: \(response)")
         }
     }
+
+    func updateUserFullName() {
+        // adds fullName to a qbUser when they create an account
+        guard let qbUser = QBSession.currentSession().currentUser else {
+            return
+        }
+        guard let pfUser = PFUser.currentUser() as? User else { return }
+        let params = QBUpdateUserParameters()
+        params.fullName = pfUser.displayString
+        
+        QBRequest.updateCurrentUser(params, successBlock: { (response, user) in
+            print("Success! \(user)")
+        }) { (response) in
+            print("Error response: \(response)")
+        }
+    }
+    */
 }

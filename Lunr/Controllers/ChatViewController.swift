@@ -28,6 +28,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         }
     }
     var dialog: QBChatDialog!
+    var recipient: QBUUser?
     
     lazy var imagePickerViewController : UIImagePickerController = {
         let imagePickerViewController = UIImagePickerController()
@@ -134,7 +135,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         }
     }
     
-    @IBAction func dismiss(sender: AnyObject) {
+    @IBAction func dismiss(sender: AnyObject?) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -149,11 +150,15 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
             title = dialog.name
         } else {
             if let recipient = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
-                title = recipient.login
+                title = recipient.fullName
+                self.recipient = recipient
+            }
+            else {
+                self.title = "New Chat"
             }
         }
     }
-    
+        
     func storedMessages() -> [QBChatMessage]? {
         return QBUserService.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog.ID!)
     }

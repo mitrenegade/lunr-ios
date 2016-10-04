@@ -12,10 +12,9 @@ import Parse
 class CallService: NSObject {
     static let sharedInstance: CallService = CallService()
 
-    func postNewCall(provider: User, duration: NSTimeInterval, totalCost: Double, completion: ((call: Call?, error: NSError?)->Void)?) {
+    func postNewCall(providerId: String, duration: NSTimeInterval, totalCost: Double, completion: ((call: Call?, error: NSError?)->Void)?) {
         Call.registerSubclass()
 
-        guard let providerId = provider.objectId else { return }
         let params = ["date": NSDate(), "duration": duration, "totalCost": totalCost, "providerId": providerId]
         PFCloud.callFunctionInBackground("postNewCall", withParameters: params) { (results, error) in
             print("Results \(results) error \(error)")
