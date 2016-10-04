@@ -78,19 +78,11 @@ class AccountSettingsViewController: UIViewController {
     func showPaymentInfo() {
         // Placeholder
         
-        /*
         let addCardViewController = STPAddCardViewController()
         addCardViewController.delegate = self
         // STPAddCardViewController must be shown inside a UINavigationController.
         let navigationController = UINavigationController(rootViewController: addCardViewController)
         self.presentViewController(navigationController, animated: true, completion: nil)
-        */
-        
-        let user = PFUser.currentUser()
-        user?.setValue("test", forKey: "info")
-        user?.saveInBackgroundWithBlock({ (success, error) in
-            print("success \(success) error \(error)")
-        })
     }
 
     @IBAction func didClickLogout(sender: AnyObject) {
@@ -219,15 +211,19 @@ extension AccountSettingsViewController: STPAddCardViewControllerDelegate {
     }
 
     func addCardViewController(addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: STPErrorBlock) {
-//        self.submitTokenToBackend(token, completion: { (error: NSError?) in
-//            if let error = error {
-//                completion(error)
-//            } else {
-//                self.dismissViewControllerAnimated(true, completion: {
-//                    self.showReceiptPage()
-//                    completion(nil)
-//                })
-//            }
-//        })
+
+        guard let user = PFUser.currentUser() as? User else { return }
+        StripeService().postNewPayment(user, token: token) { (result, error) in
+            print("\(result) \(error)")
+            if let error = error {
+                self.simpleAlert("Could not add card", defaultMessage: "There was an issue adding your credit card", error: error, completion: { 
+                    // nothing
+                })
+            }
+            else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            completion(error)
+        }
     }
 }
