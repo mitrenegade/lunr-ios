@@ -48,7 +48,7 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hVt-Hy-DY3" id="GwM-OF-6sa">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="123.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="123"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvE-7i-Pii" customClass="ProviderInfoView" customModule="Lunr" customModuleProvider="target">
@@ -93,7 +93,7 @@
                     <navigationItem key="navigationItem" id="MuZ-VM-9aS">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="836-Y7-poN" userLabel="search bar container">
-                            <rect key="frame" x="63.5" y="0.0" width="473" height="44"/>
+                            <rect key="frame" x="64" y="0.0" width="473" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="dQT-Wf-Npp">

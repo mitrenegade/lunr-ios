@@ -6,6 +6,9 @@
 //  Copyright © 2016 Bobby Ren. All rights reserved.
 //
 
+import Stripe
+import Parse
+
 private let NumberOfSectionsInTableView = 3
 private let SectionTitles = ["Account Information", "Payment Information", "Call History"]
 private let AccountInfoSectionTitles = ["Email:", "Name:", "Password:"]
@@ -74,6 +77,12 @@ class AccountSettingsViewController: UIViewController {
 
     func showPaymentInfo() {
         // Placeholder
+        
+        let addCardViewController = STPAddCardViewController()
+        addCardViewController.delegate = self
+        // STPAddCardViewController must be shown inside a UINavigationController.
+        let navigationController = UINavigationController(rootViewController: addCardViewController)
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
 
     @IBAction func didClickLogout(sender: AnyObject) {
@@ -146,6 +155,7 @@ extension AccountSettingsViewController: UITableViewDataSource {
 extension AccountSettingsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Placeholder
+        print("did select")
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -192,5 +202,28 @@ extension AccountSettingsViewController: UITableViewDelegate {
         }
         footerView.addSubview(button)
         return footerView
+    }
+}
+
+extension AccountSettingsViewController: STPAddCardViewControllerDelegate {
+    func addCardViewControllerDidCancel(addCardViewController: STPAddCardViewController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    func addCardViewController(addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: STPErrorBlock) {
+
+        guard let user = PFUser.currentUser() as? User else { return }
+        StripeService().postNewPayment(user, token: token) { (result, error) in
+            print("\(result) \(error)")
+            if let error = error {
+                self.simpleAlert("Could not add card", defaultMessage: "There was an issue adding your credit card", error: error, completion: { 
+                    // nothing
+                })
+            }
+            else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            completion(error)
+        }
     }
 }

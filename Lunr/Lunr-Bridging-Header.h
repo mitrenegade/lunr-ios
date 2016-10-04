@@ -10,3 +10,4 @@
 #import <QuickbloxWebRTC/QuickbloxWebRTC.h>
 #import "Parse/PFConstants.h"
 #import <QuickBlox/QBPushNotificationsEnums.h>
+#import <Stripe/Stripe.h>
