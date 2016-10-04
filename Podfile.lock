@@ -64,10 +64,10 @@ PODS:
     - QuickBlox (>= 2.6.5)
   - QuickBlox (2.8)
   - Quickblox-WebRTC (2.2)
-  - Stripe (8.0.4)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
+  - Stripe (8.0.4)
   - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
@@ -97,10 +97,10 @@ SPEC CHECKSUMS:
   QMServices: 4e62c3dc9986db0cc3b9e06ae02a06a93429c1b8
   QuickBlox: f2bcadce2e150b8b1385f74f037b067aa670b069
   Quickblox-WebRTC: 4575357666869f1d517eaef7da3d70da09f66686
-  Stripe: c3e325e0309dcdcb478191dbd298082823a210c1
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  Stripe: c3e325e0309dcdcb478191dbd298082823a210c1
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 60cdd0d0d55213a0c4fbf1ededb1df9621a5ffa6
+PODFILE CHECKSUM: 1500fd624ea2315c596a1976b79d41b768b64c90
 
 COCOAPODS: 1.0.1

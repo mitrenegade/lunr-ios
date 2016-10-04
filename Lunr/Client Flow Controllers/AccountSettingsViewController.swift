@@ -7,6 +7,7 @@
 //
 
 import Stripe
+import Parse
 
 private let NumberOfSectionsInTableView = 3
 private let SectionTitles = ["Account Information", "Payment Information", "Call History"]
@@ -76,11 +77,20 @@ class AccountSettingsViewController: UIViewController {
 
     func showPaymentInfo() {
         // Placeholder
+        
+        /*
         let addCardViewController = STPAddCardViewController()
         addCardViewController.delegate = self
         // STPAddCardViewController must be shown inside a UINavigationController.
         let navigationController = UINavigationController(rootViewController: addCardViewController)
         self.presentViewController(navigationController, animated: true, completion: nil)
+        */
+        
+        let user = PFUser.currentUser()
+        user?.setValue("test", forKey: "info")
+        user?.saveInBackgroundWithBlock({ (success, error) in
+            print("success \(success) error \(error)")
+        })
     }
 
     @IBAction func didClickLogout(sender: AnyObject) {
