@@ -3,8 +3,10 @@ import ParseFacebookUtilsV4
 import Parse
 
 class FacebookViewController: UIViewController {
+    @IBOutlet var buttonFacebook: LunrActivityButton!
     
     @IBAction func loginWithFacebook(sender: UIButton) {
+        buttonFacebook.busy = true
         let readPermissions = ["public_profile", "email", "user_friends"]
         PFFacebookUtils.logInInBackgroundWithReadPermissions(readPermissions) {
             [weak self] (user: PFUser?, error: NSError?) -> Void in
@@ -18,6 +20,8 @@ class FacebookViewController: UIViewController {
                 
             } else {
                 print("Uh oh. The user cancelled the Facebook login.")
+                self?.buttonFacebook.busy = false
+                self?.simpleAlert("Error logging in", defaultMessage: "We had an issue logging you in", error: error, completion: nil)
             }
         }
     }
@@ -36,6 +40,7 @@ class FacebookViewController: UIViewController {
                 user.saveInBackgroundWithBlock({[ weak self ]  (success, error) in
                     if let error = error {
                         print("error")
+                        self?.buttonFacebook.busy = false
                         if error.code == PFErrorCode.ErrorUsernameTaken.rawValue || error.code == PFErrorCode.ErrorUserEmailTaken.rawValue {
                             // For error "Account already exists for this email address." when logging in via facebook with an account that was created w/ email.
                             self?.simpleAlert("Error logging in", defaultMessage: "We had an issue logging you in", error: error, completion: nil)
@@ -48,16 +53,19 @@ class FacebookViewController: UIViewController {
                         let userId = user.objectId!
                         QBUserService.sharedInstance.loginQBUser(userId, completion: { [weak self] (success, error) in
                             if success {
+                                self?.buttonFacebook.busy = false
                                 self?.notify(.LoginSuccess)
                             }
                             else {
+                                self?.buttonFacebook.busy = false
                                 self?.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error, completion: nil)
                             }
-                            })
+                        })
                     }
                 })
             } else {
                 print(error)
+                self?.buttonFacebook.busy = false
                 self?.simpleAlert("Error logging in", defaultMessage: "We had an issue logging you in", error: error, completion: {
                     PFUser.logOutInBackgroundWithBlock { [weak self] (error) in
                         self?.notify(.LogoutSuccess)
