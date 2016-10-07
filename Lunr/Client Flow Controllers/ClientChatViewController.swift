@@ -41,7 +41,7 @@ class ClientChatViewController: ChatViewController {
                 self.simpleAlert("There was an error enabling push", defaultMessage: nil, error: nil, completion: nil)
             }
             else {
-                if let recipient = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(self.dialog.recipientID)) {
+                if let recipient = QBUserService.qbUUserWithId(self.dialog.recipientID) {
                     self.notifyForChat(recipient)
                 }
             }

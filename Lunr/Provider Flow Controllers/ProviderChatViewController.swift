@@ -34,8 +34,7 @@ class ProviderChatViewController: ChatViewController {
         // load user
         guard let pfUserId = incomingPFUserId else { return }
         QBUserService.getQBUUserForPFUserId(pfUserId, completion: { (result) in
-            if let recipient = result {
-                QBUserService.instance().usersService.usersMemoryStorage.addUser(recipient)
+            if let _ = result {
                 self.updateTitle()
             }
         })

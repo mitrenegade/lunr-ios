@@ -149,7 +149,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         if dialog.type != QBChatDialogType.Private {
             title = dialog.name
         } else {
-            if let recipient = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
+            if let recipient = QBUserService.qbUUserWithId(dialog.recipientID) {
                 title = recipient.fullName
                 self.recipient = recipient
             }

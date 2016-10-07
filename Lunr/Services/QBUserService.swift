@@ -73,37 +73,6 @@ class QBUserService: QMServicesManager {
         }
     }
     
-    // MARK: Refresh user session
-    func refreshSession(completion: ((success: Bool) -> Void)?) {
-        // if not connected to QBChat. For example at startup
-        // TODO: make this part of the Session service
-        guard !isRefreshingSession else { return }
-        isRefreshingSession = true
-        
-        guard let qbUser = QBSession.currentSession().currentUser else {
-            print("No qbUser, handle this error!")
-            completion?(success: false)
-            return
-        }
-        
-        guard let pfUser = PFUser.currentUser() else {
-            completion?(success: false)
-            return
-        }
-        
-        qbUser.password = pfUser.objectId!
-        QBChat.instance().connectWithUser(qbUser) { (error) in
-            self.isRefreshingSession = false
-            if error != nil {
-                print("error: \(error)")
-                completion?(success: false)
-            }
-            else {
-                print("login to chat succeeded")
-                completion?(success: true)
-            }
-        }
-    }
     
     func logoutQBUser() {
         if QBChat.instance().isConnected {
@@ -111,6 +80,14 @@ class QBUserService: QMServicesManager {
                 print("error: \(error)")
             })
         }
+    }
+    
+    // load a QBUUser from cache
+    class func qbUUserWithId(userId: Int) -> QBUUser? {
+        if let user = self.instance().usersService.usersMemoryStorage.userWithID(UInt(userId)) {
+            return user
+        }
+        return nil
     }
 
     // load a QBUUser based on a PFUser
@@ -124,9 +101,12 @@ class QBUserService: QMServicesManager {
     
     class func getQBUUserForPFUserId(userId: String, completion: ((result: QBUUser?) -> Void)) {
         QBRequest.userWithLogin(userId, successBlock: { (response, user) in
-                completion(result: user)
-            }) { (response) in
-                completion(result: nil)
+            if let user = user {
+                self.instance().usersService.usersMemoryStorage.addUser(user)
+            }
+            completion(result: user)
+        }) { (response) in
+            completion(result: nil)
         }
     }
     
