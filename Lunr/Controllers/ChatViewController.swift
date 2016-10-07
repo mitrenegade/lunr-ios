@@ -149,7 +149,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         if dialog.type != QBChatDialogType.Private {
             title = dialog.name
         } else {
-            if let recipient = QBUserService.qbUUserWithId(dialog.recipientID) {
+            if let recipient = QBUserService.cachedUserWithId(UInt(dialog.recipientID)) {
                 title = recipient.fullName
                 self.recipient = recipient
             }
@@ -238,8 +238,8 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
             
             // Sending attachment.
             dispatch_async(dispatch_get_main_queue()) {
-                QBUserService
-                    .instance()
+                SessionService
+                    .sharedInstance
                     .chatService
                     .sendAttachmentMessage(
                         message,
@@ -281,8 +281,8 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     }
     
     func sendMessage(message: QBChatMessage) {
-        QBUserService
-            .instance()
+        SessionService
+            .sharedInstance
             .chatService
             .sendMessage(
                 message,
@@ -554,8 +554,8 @@ extension ChatViewController {
                 
                 // Getting image from chat attachment cache.
                 
-                QBUserService
-                    .instance()
+                SessionService
+                    .sharedInstance
                     .chatService
                     .chatAttachmentService
                     .imageForAttachmentMessage(message) { [weak self] error, image in
