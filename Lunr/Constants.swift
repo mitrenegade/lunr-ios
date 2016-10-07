@@ -26,7 +26,11 @@ enum Segue {
 enum NotificationType: String {
     case LogoutSuccess
     case LoginSuccess
-    case CallStateChanged
+    enum VideoSession: String {
+        case CallStateChanged
+        case StreamInitialized
+        case VideoReceived
+    }
 }
 
 enum SortCategory : Int {
