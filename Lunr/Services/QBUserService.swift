@@ -82,15 +82,24 @@ class QBUserService: QMServicesManager {
         }
     }
     
-    // load a QBUUser from cache
-    class func qbUUserWithId(userId: Int) -> QBUUser? {
-        if let user = self.instance().usersService.usersMemoryStorage.userWithID(UInt(userId)) {
-            return user
+    // load a QBUUser from cache by QBUserId
+    class func qbUUserWithId(userId: UInt, loadFromWeb: Bool = false, completion: ((result: QBUUser?) -> Void)){
+        if let user = self.instance().usersService.usersMemoryStorage.userWithID(userId) {
+            completion(result: user)
         }
-        return nil
+        if loadFromWeb {
+            QBRequest.userWithID(userId, successBlock: { (response, user) in
+                completion(result: user)
+            }) { (response) in
+                completion(result: nil)
+            }
+        }
+        else {
+            completion(result: nil)
+        }
     }
 
-    // load a QBUUser based on a PFUser
+    // load a QBUUser from web based on a PFUser
     class func getQBUUserFor(user: PFUser, completion: ((result: QBUUser?)->Void)) {
         guard let objectId = user.objectId else {
             completion(result: nil)
@@ -100,6 +109,7 @@ class QBUserService: QMServicesManager {
     }
     
     class func getQBUUserForPFUserId(userId: String, completion: ((result: QBUUser?) -> Void)) {
+        // TODO: can optimize to prevent extra web calls by storing qbUserId in PFUser object
         QBRequest.userWithLogin(userId, successBlock: { (response, user) in
             if let user = user {
                 self.instance().usersService.usersMemoryStorage.addUser(user)

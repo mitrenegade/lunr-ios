@@ -24,8 +24,9 @@ enum Segue {
 }
 
 enum NotificationType: String {
-    case LogoutSuccess = "logout:success"
-    case LoginSuccess = "login:success"
+    case LogoutSuccess
+    case LoginSuccess
+    case CallStateChanged
 }
 
 enum SortCategory : Int {
