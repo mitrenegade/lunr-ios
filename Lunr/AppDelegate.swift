@@ -123,10 +123,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // error
             print("Error response: \(response)")
         }
+        
+        self.notify(.PushRegistered)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         NSLog("Push failed to register with error: %@", error)
+        self.notify(.PushRegistered)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
