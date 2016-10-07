@@ -11,31 +11,50 @@ import Parse
 import Quickblox
 import QMServices
 
+public typealias EnablePushCompletionHandler = (success: Bool) -> Void
+
 class PushService: NSObject {
+    var enablePushCompletionHandler: EnablePushCompletionHandler?
+    
     class func registerForRemoteNotification() {
         let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
     }
     
-    func enablePushNotifications(completion: ((success:Bool) -> Void)) {
-        let userId = PFUser.currentUser()!.objectId! // TODO: use optional checks
-        if !QBChat.instance().isConnected {
-            QBUserService.sharedInstance.loginQBUser(userId, completion: { (success, error) in
-                if !success {
-                    completion(success: false)
-                }
-                else {
-                    self.enablePushNotifications(completion)
-                }
-            })
-            return
+    class func hasPushEnabled() -> Bool {
+        if Platform.isSimulator {
+            return true
+        }
+        
+        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+            return false
+        }
+        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
+        if (settings?.types.contains(.Alert) == true){
+            return true
         }
         else {
-            // TODO: check if it is already enabled, and show error message to go to settings
-            PushService.registerForRemoteNotification()
+            return false
+        }
+    }
+
+    func enablePushNotifications(completion: ((success:Bool) -> Void)) {
+        if PushService.hasPushEnabled() {
             completion(success: true)
         }
+        else {
+            self.enablePushCompletionHandler = completion
+            PushService.registerForRemoteNotification()
+            
+            self.listenFor(.PushRegistered, action: #selector(enablePushNotificationsCompleted), object: nil)
+        }
+    }
+    
+    @objc private func enablePushNotificationsCompleted() {
+        self.enablePushCompletionHandler?(success: PushService.hasPushEnabled())
+        self.enablePushCompletionHandler = nil
+        self.stopListeningFor(.PushRegistered)
     }
 
     func channelStringForPFUser(user: PFUser?) -> String? {

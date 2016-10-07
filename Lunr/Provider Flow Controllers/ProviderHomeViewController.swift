@@ -22,6 +22,12 @@ class ProviderHomeViewController: UIViewController {
         onDutyToggleButton.cornerRadius = onDutyToggleButton.bounds.height / 2
         updateUI()
         
+        if let user = PFUser.currentUser() as? User where user.available {
+            PushService().enablePushNotifications({ (success) in
+                print("User is available and push is enabled")
+            })
+        }
+        
         self.listenFor("dialog:fetched", action: #selector(openChat), object: nil)
     }
     
@@ -31,7 +37,7 @@ class ProviderHomeViewController: UIViewController {
             guard let user = user as? PFUser where error == nil else { return }
             QBUserService.getQBUUserFor(user) { user in
                 guard let user = user else { return }
-                QBUserService.instance().chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
+                SessionService.sharedInstance.chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
                     self?.chatButton.busy = false
                     if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? UINavigationController,
                         let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {

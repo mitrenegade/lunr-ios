@@ -10,13 +10,10 @@
 import UIKit
 import Parse
 import Quickblox
-import QMServices
 
-class QBUserService: QMServicesManager {
+class QBUserService {
     static let sharedInstance: QBUserService = QBUserService()
-    let notificationService = QBNotificationService()
-    var isRefreshingSession: Bool = false
-    var currentDialogID = ""
+    
     var isProcessingLogOut: Bool = false
     
     // MARK: Create User
@@ -73,37 +70,6 @@ class QBUserService: QMServicesManager {
         }
     }
     
-    // MARK: Refresh user session
-    func refreshSession(completion: ((success: Bool) -> Void)?) {
-        // if not connected to QBChat. For example at startup
-        // TODO: make this part of the Session service
-        guard !isRefreshingSession else { return }
-        isRefreshingSession = true
-        
-        guard let qbUser = QBSession.currentSession().currentUser else {
-            print("No qbUser, handle this error!")
-            completion?(success: false)
-            return
-        }
-        
-        guard let pfUser = PFUser.currentUser() else {
-            completion?(success: false)
-            return
-        }
-        
-        qbUser.password = pfUser.objectId!
-        QBChat.instance().connectWithUser(qbUser) { (error) in
-            self.isRefreshingSession = false
-            if error != nil {
-                print("error: \(error)")
-                completion?(success: false)
-            }
-            else {
-                print("login to chat succeeded")
-                completion?(success: true)
-            }
-        }
-    }
     
     func logoutQBUser() {
         if QBChat.instance().isConnected {
@@ -112,8 +78,29 @@ class QBUserService: QMServicesManager {
             })
         }
     }
+    
+    // load a QBUUser from cache by QBUserId
+    class func qbUUserWithId(userId: UInt, loadFromWeb: Bool = false, completion: ((result: QBUUser?) -> Void)){
+        if let user = self.cachedUserWithId(userId) {
+            completion(result: user)
+        }
+        if loadFromWeb {
+            QBRequest.userWithID(userId, successBlock: { (response, user) in
+                completion(result: user)
+            }) { (response) in
+                completion(result: nil)
+            }
+        }
+        else {
+            completion(result: nil)
+        }
+    }
+    
+    class func cachedUserWithId(userId: UInt) -> QBUUser? {
+        return SessionService.sharedInstance.usersService.usersMemoryStorage.userWithID(userId)
+    }
 
-    // load a QBUUser based on a PFUser
+    // load a QBUUser from web based on a PFUser
     class func getQBUUserFor(user: PFUser, completion: ((result: QBUUser?)->Void)) {
         guard let objectId = user.objectId else {
             completion(result: nil)
@@ -123,10 +110,14 @@ class QBUserService: QMServicesManager {
     }
     
     class func getQBUUserForPFUserId(userId: String, completion: ((result: QBUUser?) -> Void)) {
+        // TODO: can optimize to prevent extra web calls by storing qbUserId in PFUser object
         QBRequest.userWithLogin(userId, successBlock: { (response, user) in
-                completion(result: user)
-            }) { (response) in
-                completion(result: nil)
+            if let user = user {
+                SessionService.sharedInstance.usersService.usersMemoryStorage.addUser(user)
+            }
+            completion(result: user)
+        }) { (response) in
+            completion(result: nil)
         }
     }
     
@@ -141,40 +132,11 @@ class QBUserService: QMServicesManager {
             print("error with users response: \(response.error)")
         }
     }
-    
-    // MARK: QMChatServiceDelegate
-    
-    override func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
-        super.chatService(chatService, didAddMessageToMemoryStorage: message, forDialogID: dialogID)
         
-        if authService.isAuthorized {
-            handleNewMessage(message, dialogID: dialogID)
-        }
-    }
-    
-    func handleNewMessage(message: QBChatMessage, dialogID: String) {
-//        guard currentDialogID != dialogID else { return }
-//        guard message.senderID != currentUser()?.ID else { return }
-//        guard let dialog = chatService.dialogsMemoryStorage.chatDialogWithID(dialogID) else { return }
-//        
-//        var dialogName = "New Message"
-//        if dialog.type != QBChatDialogType.Private {
-//            if dialog.name != nil {
-//                dialogName = dialog.name!
-//            }
-//        } else {
-//            if let user = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
-//                dialogName = user.login!
-//            }
-//        }
-//
-//        QMMessageNotificationManager.showNotificationWithTitle(dialogName, subtitle: message.text, type: QMMessageNotificationType.Info)
-    }
-    
     func color(forUser user:QBUUser) -> UIColor {
         let defaultColor = UIColor.blackColor()
-        let users = usersService.usersMemoryStorage.unsortedUsers()
-        guard let givenUser = usersService.usersMemoryStorage.userWithID(user.ID) else {
+        let users = SessionService.sharedInstance.usersService.usersMemoryStorage.unsortedUsers()
+        guard let givenUser = SessionService.sharedInstance.usersService.usersMemoryStorage.userWithID(user.ID) else {
             return defaultColor
         }
         

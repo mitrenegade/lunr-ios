@@ -2,43 +2,13 @@ import UIKit
 import Quickblox
 import Parse
 
-// Selector Syntatic sugar: https://medium.com/swift-programming/swift-selector-syntax-sugar-81c8a8b10df3#.a6ml91o38
-private extension Selector {
-    // private to only this swift file
-    static let didClickBack =
-        #selector(CallViewController.didClickBack)
-    static let didClickButton =
-        #selector(CallViewController.didClickButton(_:))
-}
-
-enum CallState {
-    case NoSession // session token to QuickBlox does not exist or expired
-    case Disconnected // no chatroom/webrtc joined
-    case Joining // currently joining the chatroom
-    case Waiting // in the chat but no one else is; sending call signal
-    case Connected // both people are in
-}
-
 class CallViewController: UIViewController {
-    var targetPFUserId: String? {
-        didSet {
-            self.loadUser()
-        }
-    }
-    var targetQBUUser: QBUUser? {
-        didSet {
-            self.refreshState()
-        }
-    }
-    
+    /*
     var currentCall: Call?
-    var session: QBRTCSession?
-    var incomingSession: QBRTCSession?
     var sessionStart: NSDate?
     var sessionEnd: NSDate?
 
     var videoCapture: QBRTCCameraCapture?
-    var state: CallState = .Disconnected
 
     // remote video
     @IBOutlet weak var remoteVideoView: QBRTCRemoteVideoView!
@@ -84,11 +54,17 @@ class CallViewController: UIViewController {
         else {
             // load video view
             self.loadVideoView()
-            self.state = .Connected // TODO: this is faking the connected state
             self.refreshState()
         }
 
         sessionStart = NSDate()
+        
+        if let _ = self.targetQBUUser {
+            self.startCall()
+        }
+        else {
+            self.shouldInitiateCall = true
+        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -103,6 +79,17 @@ class CallViewController: UIViewController {
         super.viewDidAppear(animated)
         
         self.refreshState()
+    }
+    
+    // MARK: - Video
+    func loadVideoView() {
+        let width: UInt = UInt(self.localVideoView.frame.size.width)
+        let height: UInt = UInt(self.localVideoView.frame.size.height)
+        let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .Format420f)
+        self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .Front)
+        self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
+        self.videoCapture!.startSession()
+        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
     }
     
     // UI states
@@ -139,6 +126,11 @@ class CallViewController: UIViewController {
         if let pfUserId = targetPFUserId {
             QBUserService.getQBUUserForPFUserId(pfUserId, completion: { (result) in
                 self.targetQBUUser = result
+                
+                if self.shouldInitiateCall {
+                    self.startCall()
+                    self.shouldInitiateCall = false
+                }
             })
         }
     }
@@ -180,8 +172,6 @@ class CallViewController: UIViewController {
 extension CallViewController {
     func startCall() {
         guard let user = self.targetQBUUser else {
-            self.simpleAlert("Calling disabled", message: "Could not find QBUUser to call", completion: {
-            })
             return
         }
         
@@ -218,82 +208,6 @@ extension CallViewController {
             }
         }
     }
-}
-
-extension CallViewController: QBChatDelegate{
-    // MARK: - QBChatDelegate - initial connection
-    func chatDidNotConnectWithError(error: NSError?) {
-        print("error: \(error)")
-    }
-    
-    func chatDidConnect() {
-        print("didconnect")
-    }
-}
-
-extension CallViewController: QBRTCClientDelegate {
-    // MARK: - QBRTCClientDelegate
-    //
-    // MARK: Outbound connections
-    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call accepted")
-        
-    }
-    
-    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call rejected")
-
-        self.endCall()
-    }
-    
-    // MARK: Inbound connections - only for provider?
-    func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
-        self.incomingSession = session
-        if (self.session != nil) {
-            // automatically reject call if a session exists
-            return
-        }
-
-        let userId = self.incomingSession!.initiatorID as UInt
-        QBRequest.userWithID(userId, successBlock: { (response, user) in
-            print("Incoming call from a known user with id \(user?.ID)")
-        }) { (response) in
-            print("UserID could not be loaded")
-        }
-    }
-    
-    // MARK: All connections
-    func session(session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("session hung up")
-        self.endCall()
-    }
-    
-    func sessionDidClose(session: QBRTCSession!) {
-        print("Session closed")
-        // notified when all remotes are inactive
-        self.session = nil
-        
-        self.state = .Disconnected
-        self.refreshState()
-    }
-    
-    // MARK: - Video
-    func loadVideoView() {
-        let width: UInt = UInt(self.localVideoView.frame.size.width)
-        let height: UInt = UInt(self.localVideoView.frame.size.height)
-        let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .Format420f)
-        self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .Front)
-        self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
-        self.videoCapture!.startSession()
-        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
-    }
-
-    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
-        mediaStream.videoTrack.videoCapture = self.videoCapture
-    }
-    
-    func session(session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
-        self.remoteVideoView.setVideoTrack(videoTrack)
-    }
+ */
 }
 

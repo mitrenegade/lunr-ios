@@ -57,7 +57,7 @@ extension QBChatMessage {
         
         var topLabelAttributedString : NSAttributedString?
         
-        if let topLabelText = QBUserService.instance().usersService.usersMemoryStorage.userWithID(senderID)?.login {
+        if let topLabelText = QBUserService.cachedUserWithId(senderID)?.login {
             topLabelAttributedString = NSAttributedString(string: topLabelText, attributes: attributes)
         } else { // no user in memory storage
             topLabelAttributedString = NSAttributedString(string: "\(senderID)", attributes: attributes)
@@ -113,7 +113,7 @@ extension QBChatMessage {
             
             if !messageReadIDs.isEmpty {
                 for readID in messageReadIDs {
-                    let user = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(readID))
+                    let user = QBUserService.cachedUserWithId(UInt(readID))
                     
                     guard let unwrappedUser = user else {
                         let unknownUserLogin = "@\(readID)"
@@ -139,7 +139,7 @@ extension QBChatMessage {
             
             if !messageDeliveredIDs.isEmpty {
                 for deliveredID in messageDeliveredIDs {
-                    let user = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(deliveredID))
+                    let user = QBUserService.cachedUserWithId(UInt(deliveredID))
                     
                     guard let unwrappedUser = user else {
                         let unknownUserLogin = "@\(deliveredID)"

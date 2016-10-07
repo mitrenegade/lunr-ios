@@ -79,12 +79,12 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         
         attachmentCellsMap = NSMapTable(keyOptions: NSPointerFunctionsOptions.StrongMemory, valueOptions: NSPointerFunctionsOptions.WeakMemory)
         
-        QBUserService.instance().chatService.addDelegate(self)
-        QBUserService.instance().chatService.chatAttachmentService.delegate = self
+        SessionService.sharedInstance.chatService.addDelegate(self)
+        SessionService.sharedInstance.chatService.chatAttachmentService.delegate = self
         
         enableTextCheckingTypes = NSTextCheckingAllTypes
         
-        QBUserService.instance().currentDialogID = dialog.ID!
+        SessionService.sharedInstance.currentDialogID = dialog.ID!
         updateTitle()
         if (storedMessages()?.count > 0 && chatSectionManager.totalMessagesCount == 0) {
             chatSectionManager.addMessages(storedMessages()!)
@@ -123,7 +123,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         }
         
         // Resetting current dialog ID.
-        QBUserService.instance().currentDialogID = ""
+        SessionService.sharedInstance.currentDialogID = ""
         
         // clearing typing status blocks
         dialog.clearTypingStatusBlocks()
@@ -149,7 +149,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         if dialog.type != QBChatDialogType.Private {
             title = dialog.name
         } else {
-            if let recipient = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
+            if let recipient = QBUserService.cachedUserWithId(UInt(dialog.recipientID)) {
                 title = recipient.fullName
                 self.recipient = recipient
             }
@@ -160,13 +160,13 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     }
         
     func storedMessages() -> [QBChatMessage]? {
-        return QBUserService.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog.ID!)
+        return SessionService.sharedInstance.chatService.messagesMemoryStorage.messagesWithDialogID(dialog.ID!)
     }
     
     func loadMessages() {
         // Retrieving messages for chat dialog ID.
         guard let currentDialogID = dialog.ID else { return }
-        QBUserService.instance().chatService.messagesWithChatDialogID(currentDialogID) { [weak self] response, messages in
+        SessionService.sharedInstance.chatService.messagesWithChatDialogID(currentDialogID) { [weak self] response, messages in
             guard let strongSelf = self where response.error == nil else {
                 self?.simpleAlert("There was an error retrieving your messages", defaultMessage: nil, error: response.error as? NSError)
                 return
@@ -183,7 +183,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         let currentUserID = NSNumber(unsignedInteger: currentUser.ID)
         
         if (message.readIDs == nil || !message.readIDs!.contains(currentUserID)) {
-            QBUserService.instance().chatService.readMessage(message) { error in
+            SessionService.sharedInstance.chatService.readMessage(message) { error in
                 guard error == nil else { return }
                 
                 if UIApplication.sharedApplication().applicationIconBadgeNumber > 0 {
@@ -196,7 +196,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     
     func readMessages(messages: [QBChatMessage]) {
         if QBChat.instance().isConnected {
-            QBUserService.instance().chatService.readMessages(messages, forDialogID: dialog.ID!, completion: nil)
+            SessionService.sharedInstance.chatService.readMessages(messages, forDialogID: dialog.ID!, completion: nil)
         } else {
             unreadMessages = messages
         }
@@ -238,8 +238,8 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
             
             // Sending attachment.
             dispatch_async(dispatch_get_main_queue()) {
-                QBUserService
-                    .instance()
+                SessionService
+                    .sharedInstance
                     .chatService
                     .sendAttachmentMessage(
                         message,
@@ -250,7 +250,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
                         guard error != nil else { return }
                         
                         // perform local attachment message deleting if error
-                        QBUserService.instance().chatService.deleteMessageLocally(message)
+                        SessionService.sharedInstance.chatService.deleteMessageLocally(message)
                         self?.chatSectionManager.deleteMessage(message)
                 }
             }
@@ -281,8 +281,8 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     }
     
     func sendMessage(message: QBChatMessage) {
-        QBUserService
-            .instance()
+        SessionService
+            .sharedInstance
             .chatService
             .sendMessage(
                 message,
@@ -554,8 +554,8 @@ extension ChatViewController {
                 
                 // Getting image from chat attachment cache.
                 
-                QBUserService
-                    .instance()
+                SessionService
+                    .sharedInstance
                     .chatService
                     .chatAttachmentService
                     .imageForAttachmentMessage(message) { [weak self] error, image in
@@ -627,7 +627,7 @@ extension ChatViewController {
                 return super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
             }
             
-            QBUserService.instance().chatService.loadEarlierMessagesWithChatDialogID(dialogID).continueWithBlock({ [weak self] task in
+            SessionService.sharedInstance.chatService.loadEarlierMessagesWithChatDialogID(dialogID).continueWithBlock({ [weak self] task in
                 guard let strongSelf = self else { return nil }
                 if (task.result?.count > 0) {
                     strongSelf.chatSectionManager.addMessages(task.result as! [QBChatMessage]!)

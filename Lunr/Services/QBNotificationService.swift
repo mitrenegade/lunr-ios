@@ -68,14 +68,14 @@ class QBNotificationService: NotificationServiceDelegate {
         
         // calling dispatch async for push notification handling to have priority in main queue
         dispatch_async(dispatch_get_main_queue(), {
-            QBUserService.instance().chatService.fetchDialogWithID(dialogID) { [weak self] chatDialog in
+            SessionService.sharedInstance.chatService.fetchDialogWithID(dialogID) { [weak self] chatDialog in
                 guard let strongSelf = self else { return }
                 if let chatDialog = chatDialog {
                     strongSelf.incomingDialogId = nil;
                     strongSelf.notificationServiceDidSucceedFetchingDialog(chatDialog);
                 } else {
                     strongSelf.notificationServiceDidStartLoadingDialogFromServer()
-                    QBUserService.instance().chatService.loadDialogWithID(dialogID) { loadedDialog in
+                    SessionService.sharedInstance.chatService.loadDialogWithID(dialogID) { loadedDialog in
                         guard let unwrappedDialog = loadedDialog else {
                             self?.notificationServiceDidFailFetchingDialog()
                             return

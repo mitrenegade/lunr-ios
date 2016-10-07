@@ -24,8 +24,14 @@ enum Segue {
 }
 
 enum NotificationType: String {
-    case LogoutSuccess = "logout:success"
-    case LoginSuccess = "login:success"
+    case LogoutSuccess
+    case LoginSuccess
+    enum VideoSession: String {
+        case CallStateChanged
+        case StreamInitialized
+        case VideoReceived
+    }
+    case PushRegistered
 }
 
 enum SortCategory : Int {
@@ -34,4 +40,14 @@ enum SortCategory : Int {
     case Rating = 1
     case Price = 2
     case Favorites = 3
+}
+
+struct Platform {
+    static let isSimulator: Bool = {
+        var isSim = false
+        #if arch(i386) || arch(x86_64)
+            isSim = true
+        #endif
+        return isSim
+    }()
 }

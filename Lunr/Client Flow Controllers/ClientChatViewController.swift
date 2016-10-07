@@ -41,9 +41,11 @@ class ClientChatViewController: ChatViewController {
                 self.simpleAlert("There was an error enabling push", defaultMessage: nil, error: nil, completion: nil)
             }
             else {
-                if let recipient = QBUserService.instance().usersService.usersMemoryStorage.userWithID(UInt(self.dialog.recipientID)) {
-                    self.notifyForChat(recipient)
-                }
+                QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
+                    if let recipient = result {
+                        self.notifyForChat(recipient)
+                    }
+                })
             }
         })
         
@@ -56,7 +58,8 @@ class ClientChatViewController: ChatViewController {
         let message = "\(self.recipient!.fullName!) has initiated a video chat. Click start"
         self.simpleAlert(title, message: message) {
             if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
-                controller.targetPFUserId = self.providerId
+                // BOBBY TODO
+                //controller.targetPFUserId = self.providerId
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }

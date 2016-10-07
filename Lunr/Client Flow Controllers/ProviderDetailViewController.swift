@@ -84,8 +84,7 @@ extension ProviderDetailViewController {
         self.callButton.busy = true
         QBUserService.getQBUUserFor(provider) { [weak self] user in
             guard let user = user else { self?.callButton.busy = false; return }
-            QBUserService.instance().usersService.usersMemoryStorage.addUser(user)
-            QBUserService.instance().chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
+            SessionService.sharedInstance.chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ClientChatNavigationController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                     chatVC.dialog = dialog

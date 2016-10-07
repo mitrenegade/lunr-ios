@@ -48,6 +48,7 @@
 		8ED6E1721D9FF03E00F5444B /* ClientChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */; };
 		8ED6E1741DA1916D00F5444B /* ProviderChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */; };
 		8ED6E1761DA3368300F5444B /* StripeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED6E1751DA3368300F5444B /* StripeService.swift */; };
+		8ED6E1781DA3CDB500F5444B /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED6E1771DA3CDB500F5444B /* SessionService.swift */; };
 		8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4501D7684F500DB8C49 /* Call.swift */; };
 		8EE9D4571D793EAC00DB8C49 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */; };
 		8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9D4581D793EB500DB8C49 /* Review.swift */; };
@@ -130,6 +131,7 @@
 		8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientChatViewController.swift; sourceTree = "<group>"; };
 		8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderChatViewController.swift; sourceTree = "<group>"; };
 		8ED6E1751DA3368300F5444B /* StripeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StripeService.swift; sourceTree = "<group>"; };
+		8ED6E1771DA3CDB500F5444B /* SessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		8EE9D4501D7684F500DB8C49 /* Call.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
 		8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
 		8EE9D4581D793EB500DB8C49 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				8E6B6FC01D7B038D007C3C86 /* CallService.swift */,
+				8ED6E1771DA3CDB500F5444B /* SessionService.swift */,
 				8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */,
 				8EC14D611D7DC2F600432E8A /* ReviewService.swift */,
 				8E6B6FC21D7B03D8007C3C86 /* UserService.swift */,
@@ -543,6 +546,7 @@
 				E50615801D7CB4AA001AC445 /* FeedbackViewController.swift in Sources */,
 				8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */,
 				84258F121D91049E00A61969 /* UIImage+LunrExtensions.swift in Sources */,
+				8ED6E1781DA3CDB500F5444B /* SessionService.swift in Sources */,
 				8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */,
 				8ED6E1761DA3368300F5444B /* StripeService.swift in Sources */,
 				E56164651D689FFC00926692 /* UIColor+LunrColors.swift in Sources */,
