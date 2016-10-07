@@ -51,7 +51,8 @@ class ProviderChatViewController: ChatViewController {
 
     @IBAction func startCall(sender: AnyObject) {
         if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController, let userId = incomingPFUserId {
-            controller.targetPFUserId = userId
+            // BOBBY TODO
+            //controller.targetPFUserId = userId
             self.navigationController?.pushViewController(controller, animated: true)
             
             // send psh notification to go to video chat
