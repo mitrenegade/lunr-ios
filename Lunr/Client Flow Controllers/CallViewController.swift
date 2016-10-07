@@ -2,20 +2,9 @@ import UIKit
 import Quickblox
 import Parse
 
-// Selector Syntatic sugar: https://medium.com/swift-programming/swift-selector-syntax-sugar-81c8a8b10df3#.a6ml91o38
-private extension Selector {
-    // private to only this swift file
-    static let didClickBack =
-        #selector(CallViewController.didClickBack)
-    static let didClickButton =
-        #selector(CallViewController.didClickButton(_:))
-}
-
 class CallViewController: UIViewController {
-    var shouldInitiateCall: Bool = false
-    
+    /*
     var currentCall: Call?
-    var incomingSession: QBRTCSession?
     var sessionStart: NSDate?
     var sessionEnd: NSDate?
 
@@ -219,5 +208,6 @@ extension CallViewController {
             }
         }
     }
+ */
 }
 
