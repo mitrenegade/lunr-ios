@@ -22,6 +22,12 @@ class ProviderHomeViewController: UIViewController {
         onDutyToggleButton.cornerRadius = onDutyToggleButton.bounds.height / 2
         updateUI()
         
+        if let user = PFUser.currentUser() as? User where user.available {
+            PushService().enablePushNotifications({ (success) in
+                print("User is available and push is enabled")
+            })
+        }
+        
         self.listenFor("dialog:fetched", action: #selector(openChat), object: nil)
     }
     
