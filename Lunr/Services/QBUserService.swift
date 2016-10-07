@@ -81,7 +81,7 @@ class QBUserService {
     
     // load a QBUUser from cache by QBUserId
     class func qbUUserWithId(userId: UInt, loadFromWeb: Bool = false, completion: ((result: QBUUser?) -> Void)){
-        if let user = self.usersService.usersMemoryStorage.userWithID(userId) {
+        if let user = self.cachedUserWithId(userId) {
             completion(result: user)
         }
         if loadFromWeb {
@@ -94,6 +94,10 @@ class QBUserService {
         else {
             completion(result: nil)
         }
+    }
+    
+    class func cachedUserWithId(userId: UInt) -> QBUUser? {
+        return SessionService.sharedInstance.usersService.usersMemoryStorage.userWithID(userId)
     }
 
     // load a QBUUser from web based on a PFUser
@@ -109,7 +113,7 @@ class QBUserService {
         // TODO: can optimize to prevent extra web calls by storing qbUserId in PFUser object
         QBRequest.userWithLogin(userId, successBlock: { (response, user) in
             if let user = user {
-                self.usersService.usersMemoryStorage.addUser(user)
+                SessionService.sharedInstance.usersService.usersMemoryStorage.addUser(user)
             }
             completion(result: user)
         }) { (response) in
@@ -131,8 +135,8 @@ class QBUserService {
         
     func color(forUser user:QBUUser) -> UIColor {
         let defaultColor = UIColor.blackColor()
-        let users = self.usersService.usersMemoryStorage.unsortedUsers()
-        guard let givenUser = self.usersService.usersMemoryStorage.userWithID(user.ID) else {
+        let users = SessionService.sharedInstance.usersService.usersMemoryStorage.unsortedUsers()
+        guard let givenUser = SessionService.sharedInstance.usersService.usersMemoryStorage.userWithID(user.ID) else {
             return defaultColor
         }
         
