@@ -50,20 +50,22 @@ class ProviderChatViewController: ChatViewController {
     }
 
     @IBAction func startCall(sender: AnyObject) {
+        guard let recipient = self.recipient else { return }
+        print("Starting call service")
+        SessionService.sharedInstance.startCall(recipient.ID)
+        // start listening for incoming session
+        self.listenForAcceptSession()
+    }
+    
+    func openVideo() {
         if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController, let userId = incomingPFUserId {
-            // BOBBY TODO
-            //controller.targetPFUserId = userId
             self.navigationController?.pushViewController(controller, animated: true)
-            
-            // send psh notification to go to video chat
-            guard let recipient = self.recipient else { return }
-            self.notifyForVideo(recipient, didInitiateVideo: true)
         }
     }
     
     // MARK: Push notifications
     func notifyForVideo(user: QBUUser, didInitiateVideo: Bool) {
-        //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
+        // actually notifyForRejectVideo - do not create a call state but send a push
         guard let currentUser = PFUser.currentUser() as? User else { return }
         
         let name = currentUser.displayString
@@ -82,14 +84,22 @@ class ProviderChatViewController: ChatViewController {
                 }
             }
         }
-        else {
-            self.initiateVideoSession(user)
-        }
     }
 
     // MARK: Session
-    func initiateVideoSession(user: QBUUser) {
-        print("Starting call service")
-        SessionService.sharedInstance.startCall(user.ID)
+    func listenForAcceptSession() {
+        self.listenFor(NotificationType.VideoSession.CallStateChanged.rawValue, action: #selector(handleSessionState(_:)), object: nil)
     }
+
+    func handleSessionState(notification: NSNotification) {
+        let userInfo = notification.userInfo
+        switch SessionService.sharedInstance.state {
+        case .Connected:
+            print("incoming call")
+            self.openVideo()
+        default:
+            break
+        }
+    }
+
 }

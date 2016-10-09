@@ -88,6 +88,7 @@ class ClientChatViewController: ChatViewController {
         case .Connected:
             print("incoming call")
             self.openVideo()
+            SessionService.sharedInstance.session?.acceptCall(nil)
         default:
             break
         }

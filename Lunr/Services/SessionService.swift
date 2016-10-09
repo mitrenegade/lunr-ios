@@ -30,6 +30,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             _instance = SessionService()
             QBRTCClient.initializeRTC()
             QBRTCClient.instance().addDelegate(_instance)
+            QBRTCConfig.setAnswerTimeInterval(30)
             return _instance!
         }
     }
@@ -121,18 +122,18 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         }
     }
     
-    // MARK: Outbound connections
-    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call accepted")
-        self.state = .Connected
-    }
+    // MARK: Session lifecycle
     
-    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call rejected")
-        self.state = .Disconnected
+    // user action (provider)
+    func startCall(userID: UInt) {
+        // create and start session
+        let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
+        self.session = newSession
+        let userInfo: [String: AnyObject]? = nil // send any info through
+        self.session!.startCall(userInfo)
     }
-    
-    // MARK: Inbound connections - only for provider?
+
+    // delegate (client)
     func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
         self.incomingSession = session
         if (self.session != nil) {
@@ -152,6 +153,28 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
                 print("UserID could not be loaded")
             }
         }
+    }
+    
+    // user action (client)
+    func acceptCall(userInfo: [String: AnyObject]?) {
+        // happens automatically when client receives an incoming call and goes to video view
+        self.session?.acceptCall(userInfo)
+    }
+    
+    func rejectCall(userInfo: [String: AnyObject]?) {
+        // might happen if client is already in a call and goes to video view...shouldn't happen
+        self.session?.rejectCall(userInfo)
+    }
+    
+    // delegate (provider)
+    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        print("call accepted")
+        self.state = .Connected
+    }
+    
+    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        print("call rejected")
+        self.state = .Disconnected
     }
     
     // MARK: All connections
@@ -180,12 +203,4 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         // self.remoteVideoView.setVideoTrack(videoTrack)
     }
     
-    // MARK: User actions
-    func startCall(userID: UInt) {
-        // create and start session
-        let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
-        self.session = newSession
-        self.session!.startCall(nil)
-    }
-
 }
