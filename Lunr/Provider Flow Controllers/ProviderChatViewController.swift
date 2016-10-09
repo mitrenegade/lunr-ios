@@ -58,7 +58,7 @@ class ProviderChatViewController: ChatViewController {
     }
     
     func openVideo() {
-        if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController, let userId = incomingPFUserId {
+        if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }

@@ -20,14 +20,18 @@ class CallViewController: UIViewController {
         
         // for now, no calling
         self.buttonCall.enabled = false
-        // load video view
-        self.loadVideoView()
 
-        //sessionStart = NSDate()
+        // load video view
+        self.loadVideoViews()
+
+        // listen for incoming video stream
+        self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
+        self.listenFor(NotificationType.VideoSession.VideoReceived.rawValue, action: #selector(receiveVideoFromStream(_:)), object: nil)
     }
 
     // MARK: - Video
-    func loadVideoView() {
+    func loadVideoViews() {
+        // initialize own video view
         let width: UInt = UInt(self.localVideoView.frame.size.width)
         let height: UInt = UInt(self.localVideoView.frame.size.height)
         let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .Format420f)
@@ -35,8 +39,37 @@ class CallViewController: UIViewController {
         self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
         self.videoCapture!.startSession()
         self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
+        
+        // check to see if session has already received a video track
+        if let videoTrack = SessionService.sharedInstance.remoteVideoTrack {
+            self.remoteVideoView.setVideoTrack(videoTrack)
+        }
     }
 
+    // MARK: - own video
+    func attachVideoToStream(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {
+            print ("cannot load video")
+            return
+        }
+        
+        guard let mediaStream: QBRTCMediaStream = userInfo["stream"] as? QBRTCMediaStream else { return }
+        
+        mediaStream.videoTrack.videoCapture = self.videoCapture
+    }
+    
+    // MARK: - incoming video
+    func receiveVideoFromStream(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {
+            print ("cannot load video")
+            return
+        }
+        
+        guard let videoTrack: QBRTCVideoTrack = userInfo["track"] as? QBRTCVideoTrack else { return }
+        
+        self.remoteVideoView.setVideoTrack(videoTrack)
+    }
+    
     /*
     var currentCall: Call?
     var sessionStart: NSDate?

@@ -39,6 +39,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     var isRefreshingSession: Bool = false
 
     var currentDialogID = ""
+    var remoteVideoTrack: QBRTCVideoTrack?
 
     // MARK: Refresh user session
     func refreshChatSession(completion: ((success: Bool) -> Void)?) {
@@ -177,6 +178,17 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         self.state = .Disconnected
     }
     
+    // delegate (both - video received)
+    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.StreamInitialized.rawValue, object: nil, userInfo: ["stream": mediaStream] )
+    }
+    
+    func session(session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
+        self.remoteVideoTrack = videoTrack // store it
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReceived.rawValue, object: nil, userInfo: ["track": videoTrack])
+    }
+    
+
     // MARK: All connections
     func session(session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
         print("session hung up")
@@ -189,18 +201,6 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         // notified when all remotes are inactive
         self.session = nil
         self.state = .Disconnected
-    }
-    
-    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.StreamInitialized.rawValue, object: nil, userInfo: nil)
-        // BOBBY TODO
-        //mediaStream.videoTrack.videoCapture = self.videoCapture
-    }
-    
-    func session(session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReceived.rawValue, object: nil, userInfo: nil)
-        // BOBBY TODO
-        // self.remoteVideoView.setVideoTrack(videoTrack)
     }
     
 }

@@ -57,14 +57,14 @@ class ClientChatViewController: ChatViewController {
     }
     
     func openVideo() {
+        /*
         let title = "Video chat was accepted"
         let message = "\(self.recipient!.fullName!) has initiated a video chat. Click start"
         self.simpleAlert(title, message: message) {
-            if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
-                // BOBBY TODO
-                //controller.targetPFUserId = self.providerId
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
+        }
+        */
+        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
