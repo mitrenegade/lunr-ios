@@ -128,6 +128,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     // user action (provider)
     func startCall(userID: UInt) {
         // create and start session
+        // must be called after video track has been started!
         let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
         self.session = newSession
         let userInfo: [String: AnyObject]? = nil // send any info through

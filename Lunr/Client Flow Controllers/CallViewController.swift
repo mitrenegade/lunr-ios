@@ -40,6 +40,9 @@ class CallViewController: UIViewController {
         self.videoCapture!.startSession()
         self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
         
+        // tells provider that video stream is ready and should attach it
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
+
         // check to see if session has already received a video track
         if let videoTrack = SessionService.sharedInstance.remoteVideoTrack {
             self.remoteVideoView.setVideoTrack(videoTrack)

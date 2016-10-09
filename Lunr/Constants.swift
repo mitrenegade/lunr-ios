@@ -28,8 +28,9 @@ enum NotificationType: String {
     case LoginSuccess
     enum VideoSession: String {
         case CallStateChanged
-        case StreamInitialized
-        case VideoReceived
+        case VideoReady // own video has been initialized
+        case StreamInitialized // after startCall, successfully connected to stream
+        case VideoReceived // recipient video received
     }
     case PushRegistered
 }

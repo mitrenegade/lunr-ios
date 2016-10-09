@@ -50,17 +50,25 @@ class ProviderChatViewController: ChatViewController {
     }
 
     @IBAction func startCall(sender: AnyObject) {
-        guard let recipient = self.recipient else { return }
         print("Starting call service")
-        SessionService.sharedInstance.startCall(recipient.ID)
-        // start listening for incoming session
-        self.listenForAcceptSession()
+        self.openVideo()
     }
     
     func openVideo() {
         if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
+
+            // don't start call until local video stream is ready
+            self.listenFor(NotificationType.VideoSession.VideoReady.rawValue, action: #selector(startSession), object: nil)
         }
+    }
+    
+    func startSession() {
+        // initiates call to recipient after video stream is ready
+        guard let recipient = self.recipient else { return }
+        SessionService.sharedInstance.startCall(recipient.ID)
+        // start listening for incoming session
+        self.listenForAcceptSession()
     }
     
     // MARK: Push notifications
@@ -95,8 +103,7 @@ class ProviderChatViewController: ChatViewController {
         let userInfo = notification.userInfo
         switch SessionService.sharedInstance.state {
         case .Connected:
-            print("incoming call")
-            self.openVideo()
+            print("yay")
         default:
             break
         }
