@@ -125,7 +125,7 @@
 		8E9BB7581D5EC417001FD26B /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		8E9BB75A1D5EC41C001FD26B /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		8E9BB75C1D5EC423001FD26B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		8E9BB7621D5ECA18001FD26B /* CallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
+		8E9BB7621D5ECA18001FD26B /* CallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallViewController.swift; path = "../Client Flow Controllers/CallViewController.swift"; sourceTree = "<group>"; };
 		8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
 		8EC14D611D7DC2F600432E8A /* ReviewService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientChatViewController.swift; sourceTree = "<group>"; };
@@ -276,7 +276,6 @@
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
 				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
 				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
-				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
 				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 				8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */,
 			);
@@ -299,6 +298,7 @@
 				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
 				84E2D2CE1D902083003F4A86 /* ChatViewController.swift */,
+				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
 			);
 			name = "Main Controllers";
 			path = Controllers;

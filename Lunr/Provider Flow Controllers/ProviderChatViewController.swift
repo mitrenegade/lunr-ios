@@ -68,18 +68,28 @@ class ProviderChatViewController: ChatViewController {
         
         let name = currentUser.displayString
         
-        let status = didInitiateVideo ? "started": "cancelled"
-        let message = "\(name) has \(status) video chat"
-        let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
-        
-        PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
-            if success {
-                self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+        if !didInitiateVideo {
+            let status = "cancelled"
+            let message = "\(name) has \(status) video chat"
+            let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
+            
+            PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
+                if success {
+                    self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+                }
+                else {
+                    self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
+                }
             }
-            else {
-                self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
-            }
+        }
+        else {
+            self.initiateVideoSession(user)
         }
     }
 
+    // MARK: Session
+    func initiateVideoSession(user: QBUUser) {
+        print("Starting call service")
+        SessionService.sharedInstance.startCall(user.ID)
+    }
 }

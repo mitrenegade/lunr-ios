@@ -83,6 +83,7 @@ class QBUserService {
     class func qbUUserWithId(userId: UInt, loadFromWeb: Bool = false, completion: ((result: QBUUser?) -> Void)){
         if let user = self.cachedUserWithId(userId) {
             completion(result: user)
+            return
         }
         if loadFromWeb {
             QBRequest.userWithID(userId, successBlock: { (response, user) in

@@ -3,13 +3,6 @@ import Quickblox
 import Parse
 
 class CallViewController: UIViewController {
-    /*
-    var currentCall: Call?
-    var sessionStart: NSDate?
-    var sessionEnd: NSDate?
-
-    var videoCapture: QBRTCCameraCapture?
-
     // remote video
     @IBOutlet weak var remoteVideoView: QBRTCRemoteVideoView!
     @IBOutlet weak var labelRemote: UILabel!
@@ -17,55 +10,41 @@ class CallViewController: UIViewController {
     // local video
     @IBOutlet weak var localVideoView: UIView!
     @IBOutlet weak var labelLocal: UILabel!
-    
+    var videoCapture: QBRTCCameraCapture?
+        
     // call controls
     @IBOutlet weak var buttonCall: UIButton!
-    
-    // resulting call
-    var call: Call?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // for now, no calling
         self.buttonCall.enabled = false
-        QBRTCClient.initializeRTC()
-        QBRTCClient.instance().addDelegate(self)
-        self.state = .Disconnected
+        // load video view
+        self.loadVideoView()
 
-        QBChat.instance().addDelegate(self)
-        if !QBChat.instance().isConnected {
-            self.state = .NoSession // on startup, button is disabled
-            
-            self.state = .Joining // TODO: not actually joining here
-            QBUserService.sharedInstance.refreshSession({ (success) in
-                if !success {
-                    self.simpleAlert("Failed user session", message: "Please log in again.", completion: {
-                        self.navigationController?.popViewControllerAnimated(true)
-                    })
-                }
-                else {
-                    // TODO: allow user to connect when button is clicked instead of automatically connecting
-                    self.state = .Connected // TODO: this is faking the connected state
-                    self.refreshState()
-                }
-            })
-        }
-        else {
-            // load video view
-            self.loadVideoView()
-            self.refreshState()
-        }
-
-        sessionStart = NSDate()
-        
-        if let _ = self.targetQBUUser {
-            self.startCall()
-        }
-        else {
-            self.shouldInitiateCall = true
-        }
+        //sessionStart = NSDate()
     }
+
+    // MARK: - Video
+    func loadVideoView() {
+        let width: UInt = UInt(self.localVideoView.frame.size.width)
+        let height: UInt = UInt(self.localVideoView.frame.size.height)
+        let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .Format420f)
+        self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .Front)
+        self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
+        self.videoCapture!.startSession()
+        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
+    }
+
+    /*
+    var currentCall: Call?
+    var sessionStart: NSDate?
+    var sessionEnd: NSDate?
+
+    // resulting call
+    var call: Call?
+    
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Segue.Call.GoToFeedback.rawValue {
@@ -80,18 +59,7 @@ class CallViewController: UIViewController {
         
         self.refreshState()
     }
-    
-    // MARK: - Video
-    func loadVideoView() {
-        let width: UInt = UInt(self.localVideoView.frame.size.width)
-        let height: UInt = UInt(self.localVideoView.frame.size.height)
-        let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .Format420f)
-        self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .Front)
-        self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
-        self.videoCapture!.startSession()
-        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
-    }
-    
+     
     // UI states
     func refreshState() {
         
@@ -170,20 +138,6 @@ class CallViewController: UIViewController {
 
 // MARK: - Call actions
 extension CallViewController {
-    func startCall() {
-        guard let user = self.targetQBUUser else {
-            return
-        }
-        
-        // create and start session
-        let id = user.ID
-        let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([id], withConferenceType: QBRTCConferenceType.Video)
-        self.session = newSession
-        self.session!.startCall(nil)
-        
-        self.state = .Joining
-        self.refreshState()
-    }
     
     func endCall() {
         self.session?.hangUp(nil)

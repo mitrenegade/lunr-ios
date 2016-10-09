@@ -20,9 +20,19 @@ enum CallState: String {
     case Connected // both people are in
 }
 
-class SessionService: QMServicesManager {
-    static let sharedInstance: SessionService = SessionService()
-    
+class SessionService: QMServicesManager, QBRTCClientDelegate {
+    static var _instance: SessionService?
+    static var sharedInstance: SessionService {
+        get {
+            if _instance != nil {
+                return _instance!
+            }
+            _instance = SessionService()
+            QBRTCClient.initializeRTC()
+            QBRTCClient.instance().addDelegate(_instance)
+            return _instance!
+        }
+    }
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
     var isRefreshingSession: Bool = false
@@ -169,4 +179,13 @@ class SessionService: QMServicesManager {
         // BOBBY TODO
         // self.remoteVideoView.setVideoTrack(videoTrack)
     }
+    
+    // MARK: User actions
+    func startCall(userID: UInt) {
+        // create and start session
+        let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
+        self.session = newSession
+        self.session!.startCall(nil)
+    }
+
 }
