@@ -50,35 +50,62 @@ class ProviderChatViewController: ChatViewController {
     }
 
     @IBAction func startCall(sender: AnyObject) {
-        if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController, let userId = incomingPFUserId {
-            // BOBBY TODO
-            //controller.targetPFUserId = userId
+        print("Starting call service")
+        self.openVideo()
+    }
+    
+    func openVideo() {
+        if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
-            
-            // send psh notification to go to video chat
-            guard let recipient = self.recipient else { return }
-            self.notifyForVideo(recipient, didInitiateVideo: true)
+
+            // don't start call until local video stream is ready
+            self.listenFor(NotificationType.VideoSession.VideoReady.rawValue, action: #selector(startSession), object: nil)
         }
+    }
+    
+    func startSession() {
+        // initiates call to recipient after video stream is ready
+        guard let recipient = self.recipient else { return }
+        SessionService.sharedInstance.startCall(recipient.ID)
+        // start listening for incoming session
+        self.listenForAcceptSession()
     }
     
     // MARK: Push notifications
     func notifyForVideo(user: QBUUser, didInitiateVideo: Bool) {
-        //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
+        // actually notifyForRejectVideo - do not create a call state but send a push
         guard let currentUser = PFUser.currentUser() as? User else { return }
         
         let name = currentUser.displayString
         
-        let status = didInitiateVideo ? "started": "cancelled"
-        let message = "\(name) has \(status) video chat"
-        let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
-        
-        PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
-            if success {
-                self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+        if !didInitiateVideo {
+            let status = "cancelled"
+            let message = "\(name) has \(status) video chat"
+            let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
+            
+            PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
+                if success {
+                    self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+                }
+                else {
+                    self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
+                }
             }
-            else {
-                self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
-            }
+        }
+    }
+
+    // MARK: Session
+    func listenForAcceptSession() {
+        self.listenFor(NotificationType.VideoSession.CallStateChanged.rawValue, action: #selector(handleSessionState(_:)), object: nil)
+    }
+
+    func handleSessionState(notification: NSNotification) {
+        let userInfo = notification.userInfo
+        switch SessionService.sharedInstance.state {
+        case .Connected:
+            print("yay")
+        default:
+            break
         }
     }
 

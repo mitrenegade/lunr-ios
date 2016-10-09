@@ -46,6 +46,15 @@ extension NSObject {
     func notify(notificationName: String, object: AnyObject?, userInfo: [NSObject: AnyObject]?) {
         NSNotificationCenter.defaultCenter().postNotificationName(notificationName, object: object, userInfo: userInfo)
     }
+    
+    func wait(delay:Double, then:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), then)
+    }
 }
 
 extension UIAlertController {

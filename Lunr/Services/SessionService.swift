@@ -20,14 +20,26 @@ enum CallState: String {
     case Connected // both people are in
 }
 
-class SessionService: QMServicesManager {
-    static let sharedInstance: SessionService = SessionService()
-    
+class SessionService: QMServicesManager, QBRTCClientDelegate {
+    static var _instance: SessionService?
+    static var sharedInstance: SessionService {
+        get {
+            if _instance != nil {
+                return _instance!
+            }
+            _instance = SessionService()
+            QBRTCClient.initializeRTC()
+            QBRTCClient.instance().addDelegate(_instance)
+            QBRTCConfig.setAnswerTimeInterval(30)
+            return _instance!
+        }
+    }
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
     var isRefreshingSession: Bool = false
 
     var currentDialogID = ""
+    var remoteVideoTrack: QBRTCVideoTrack?
 
     // MARK: Refresh user session
     func refreshChatSession(completion: ((success: Bool) -> Void)?) {
@@ -111,18 +123,19 @@ class SessionService: QMServicesManager {
         }
     }
     
-    // MARK: Outbound connections
-    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call accepted")
-        self.state = .Connected
-    }
+    // MARK: Session lifecycle
     
-    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
-        print("call rejected")
-        self.state = .Disconnected
+    // user action (provider)
+    func startCall(userID: UInt) {
+        // create and start session
+        // must be called after video track has been started!
+        let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
+        self.session = newSession
+        let userInfo: [String: AnyObject]? = nil // send any info through
+        self.session!.startCall(userInfo)
     }
-    
-    // MARK: Inbound connections - only for provider?
+
+    // delegate (client)
     func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
         self.incomingSession = session
         if (self.session != nil) {
@@ -144,6 +157,39 @@ class SessionService: QMServicesManager {
         }
     }
     
+    // user action (client)
+    func acceptCall(userInfo: [String: AnyObject]?) {
+        // happens automatically when client receives an incoming call and goes to video view
+        self.session?.acceptCall(userInfo)
+    }
+    
+    func rejectCall(userInfo: [String: AnyObject]?) {
+        // might happen if client is already in a call and goes to video view...shouldn't happen
+        self.session?.rejectCall(userInfo)
+    }
+    
+    // delegate (provider)
+    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        print("call accepted")
+        self.state = .Connected
+    }
+    
+    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        print("call rejected")
+        self.state = .Disconnected
+    }
+    
+    // delegate (both - video received)
+    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.StreamInitialized.rawValue, object: nil, userInfo: ["stream": mediaStream] )
+    }
+    
+    func session(session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
+        self.remoteVideoTrack = videoTrack // store it
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReceived.rawValue, object: nil, userInfo: ["track": videoTrack])
+    }
+    
+
     // MARK: All connections
     func session(session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
         print("session hung up")
@@ -158,15 +204,4 @@ class SessionService: QMServicesManager {
         self.state = .Disconnected
     }
     
-    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.StreamInitialized.rawValue, object: nil, userInfo: nil)
-        // BOBBY TODO
-        //mediaStream.videoTrack.videoCapture = self.videoCapture
-    }
-    
-    func session(session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReceived.rawValue, object: nil, userInfo: nil)
-        // BOBBY TODO
-        // self.remoteVideoView.setVideoTrack(videoTrack)
-    }
 }

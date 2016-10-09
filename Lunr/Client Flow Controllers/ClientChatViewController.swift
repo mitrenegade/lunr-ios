@@ -26,6 +26,9 @@ class ClientChatViewController: ChatViewController {
         PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
             if success {
                 self.simpleAlert("Push sent!", message: "You have successfully notified \(user.fullName ?? "someone") to chat")
+                
+                // start listening for incoming session
+                self.listenForSession()
             }
             else {
                 self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
@@ -49,19 +52,19 @@ class ClientChatViewController: ChatViewController {
             }
         })
         
-        self.listenFor("video:accepted", action: #selector(openVideo), object: nil)
-        self.listenFor("video:cancelled", action: #selector(cancelChat), object: nil)
+//        self.listenFor("video:accepted", action: #selector(openVideo), object: nil)
+//        self.listenFor("video:cancelled", action: #selector(cancelChat), object: nil)
     }
     
     func openVideo() {
+        /*
         let title = "Video chat was accepted"
         let message = "\(self.recipient!.fullName!) has initiated a video chat. Click start"
         self.simpleAlert(title, message: message) {
-            if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
-                // BOBBY TODO
-                //controller.targetPFUserId = self.providerId
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
+        }
+        */
+        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -71,6 +74,23 @@ class ClientChatViewController: ChatViewController {
         self.simpleAlert(title, message: message) {
             self.dismiss(nil)
             QBNotificationService.sharedInstance.clearDialog()
+        }
+    }
+    
+    // MARK: - Session
+    func listenForSession() {
+        self.listenFor(NotificationType.VideoSession.CallStateChanged.rawValue, action: #selector(handleSessionState(_:)), object: nil)
+    }
+    
+    func handleSessionState(notification: NSNotification) {
+        let userInfo = notification.userInfo
+        switch SessionService.sharedInstance.state {
+        case .Connected:
+            print("incoming call")
+            self.openVideo()
+            SessionService.sharedInstance.session?.acceptCall(nil)
+        default:
+            break
         }
     }
 }
