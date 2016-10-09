@@ -41,7 +41,7 @@ class CallViewController: UIViewController {
         self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
         
         // tells provider that video stream is ready and should attach it
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
+        self.notify(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
 
         // check to see if session has already received a video track
         if let videoTrack = SessionService.sharedInstance.remoteVideoTrack {
@@ -71,6 +71,12 @@ class CallViewController: UIViewController {
         guard let videoTrack: QBRTCVideoTrack = userInfo["track"] as? QBRTCVideoTrack else { return }
         
         self.remoteVideoView.setVideoTrack(videoTrack)
+    }
+    
+    func endCall() {
+        self.stopListeningFor(NotificationType.VideoSession.StreamInitialized.rawValue)
+        self.stopListeningFor(NotificationType.VideoSession.VideoReceived.rawValue)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     /*

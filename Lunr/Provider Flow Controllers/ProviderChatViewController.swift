@@ -12,6 +12,7 @@ import Parse
 class ProviderChatViewController: ChatViewController {
 
     var incomingPFUserId: String?
+    var callViewController: CallViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,7 @@ class ProviderChatViewController: ChatViewController {
         if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
 
+            self.callViewController = controller
             // don't start call until local video stream is ready
             self.listenFor(NotificationType.VideoSession.VideoReady.rawValue, action: #selector(startSession), object: nil)
         }
@@ -104,9 +106,19 @@ class ProviderChatViewController: ChatViewController {
         switch SessionService.sharedInstance.state {
         case .Connected:
             print("yay")
+        case .Disconnected:
+            self.cleanupLastSession()
         default:
             break
         }
+    }
+    
+    func cleanupLastSession() {
+        // ends listeners and pops controller. video should automatically stop
+        self.callViewController?.endCall()
+        
+        // end chat
+        
     }
 
 }
