@@ -25,6 +25,7 @@
 		84258F121D91049E00A61969 /* UIImage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84258F111D91049E00A61969 /* UIImage+LunrExtensions.swift */; };
 		842984A61D74E3B20063F1B5 /* ProviderFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842984A51D74E3B20063F1B5 /* ProviderFlow.storyboard */; };
 		842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */; };
+		8430DAF01DAC13F50018D642 /* LunarTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430DAEF1DAC13F50018D642 /* LunarTabBarViewController.swift */; };
 		847133261D75C14400DD2045 /* LunrActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847133251D75C14400DD2045 /* LunrActivityButton.swift */; };
 		84E2D2CF1D902083003F4A86 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2D2CE1D902083003F4A86 /* ChatViewController.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
@@ -91,6 +92,7 @@
 		84258F111D91049E00A61969 /* UIImage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		842984A51D74E3B20063F1B5 /* ProviderFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProviderFlow.storyboard; sourceTree = "<group>"; };
 		842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderHomeViewController.swift; sourceTree = "<group>"; };
+		8430DAEF1DAC13F50018D642 /* LunarTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunarTabBarViewController.swift; sourceTree = "<group>"; };
 		847133251D75C14400DD2045 /* LunrActivityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrActivityButton.swift; sourceTree = "<group>"; };
 		84E2D2CE1D902083003F4A86 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
 				84E2D2CE1D902083003F4A86 /* ChatViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
+				8430DAEF1DAC13F50018D642 /* LunarTabBarViewController.swift */,
 			);
 			name = "Main Controllers";
 			path = Controllers;
@@ -529,6 +532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8430DAF01DAC13F50018D642 /* LunarTabBarViewController.swift in Sources */,
 				E561645B1D5F972700926692 /* AppDelegate.swift in Sources */,
 				8E6418E31D56791700CC4928 /* FacebookViewController.swift in Sources */,
 				44BA7F3D1D73C9CF006B347D /* ProviderDetailViewController.swift in Sources */,

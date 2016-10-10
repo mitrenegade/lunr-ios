@@ -53,7 +53,6 @@ class AccountSettingsViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .lunr_darkBlue()
         self.navigationController?.navigationBar.addShadow()
         // Do any additional setup after loading the view, typically from a nib.
-        self.title = "Account Settings"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .Plain, target: self, action: #selector(dismiss))
 
         self.tableView.rowHeight = UITableViewAutomaticDimension

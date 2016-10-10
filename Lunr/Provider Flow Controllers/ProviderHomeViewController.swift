@@ -12,7 +12,7 @@ import Parse
 class ProviderHomeViewController: UIViewController {
     
     // MARK: Properties
-    @IBOutlet weak var chatButton: LunrActivityButton!
+//    @IBOutlet weak var chatButton: LunrActivityButton!
     @IBOutlet weak var onDutyToggleButton: LunrActivityButton!
     let chatSegue = "chatWithClient"
 
@@ -31,23 +31,23 @@ class ProviderHomeViewController: UIViewController {
         self.listenFor("dialog:fetched", action: #selector(openChat), object: nil)
     }
     
-    @IBAction func chatWithClient(sender: AnyObject) {
-        chatButton.busy = true
-        PFUser.query()?.getObjectInBackgroundWithId("aECYB3GJL4") { user, error in
-            guard let user = user as? PFUser where error == nil else { return }
-            QBUserService.getQBUUserFor(user) { user in
-                guard let user = user else { return }
-                SessionService.sharedInstance.chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
-                    self?.chatButton.busy = false
-                    if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? UINavigationController,
-                        let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
-                        chatVC.dialog = dialog
-                        self?.presentViewController(chatNavigationVC, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-    }
+//    @IBAction func chatWithClient(sender: AnyObject) {
+//        chatButton.busy = true
+//        PFUser.query()?.getObjectInBackgroundWithId("aECYB3GJL4") { user, error in
+//            guard let user = user as? PFUser where error == nil else { return }
+//            QBUserService.getQBUUserFor(user) { user in
+//                guard let user = user else { return }
+//                SessionService.sharedInstance.chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
+//                    self?.chatButton.busy = false
+//                    if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? UINavigationController,
+//                        let chatVC = chatNavigationVC.viewControllers[0] as? ChatViewController {
+//                        chatVC.dialog = dialog
+//                        self?.presentViewController(chatNavigationVC, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     @IBAction func toggleOnDuty(sender: AnyObject) {
         if let user = PFUser.currentUser() as? User {

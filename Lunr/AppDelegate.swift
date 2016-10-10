@@ -92,19 +92,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setGlobalAppearanceAttributes() {
         // UITabBar
         let tabBarAppearance = UITabBar.appearance()
-        tabBarAppearance.barTintColor = UIColor.lunr_darkBlue()
-        tabBarAppearance.tintColor = UIColor.whiteColor()
+        tabBarAppearance.barTintColor = UIColor(red:0.180, green:0.220, blue:0.357, alpha:1)
+        tabBarAppearance.tintColor = UIColor(red:0.780, green:0.827, blue:0.933, alpha:1)
         
         // UITabBarItem
         let tabBarItemAppearance = UITabBarItem.appearance()
         
         var normalTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributesForState(.Normal) ?? [String:AnyObject]()
-        normalTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor.whiteColor()
-        normalTabBarItemTextAttr[NSFontAttributeName] = UIFont.futuraMediumWithSize(17)
-        tabBarItemAppearance.setTitleTextAttributes(normalTabBarItemTextAttr, forState: .Selected)
+        normalTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor(red:0.961, green:0.965, blue:0.969, alpha:1)
+        normalTabBarItemTextAttr[NSFontAttributeName] = UIFont.futuraMediumWithSize(12)
+        tabBarItemAppearance.setTitleTextAttributes(normalTabBarItemTextAttr, forState: .Normal)
         
         var selectedTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributesForState(.Selected) ?? [String:AnyObject]()
-        selectedTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor.lunr_blueText()
+        selectedTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor(red:0.780, green:0.827, blue:0.933, alpha:1)
         tabBarItemAppearance.setTitleTextAttributes(selectedTabBarItemTextAttr, forState: .Selected)
     }
     
