@@ -17,7 +17,6 @@ class LunarTabBarViewController: UITabBarController {
         tabBar.frame.origin.y += (heightDiff)
         tabBar.frame.size.height = tabBarHeight
         tabBar.items?.forEach { item in
-            print("\nHEIGHT DIFF: \(heightDiff)\n")
             item.titlePositionAdjustment.vertical = heightDiff / 2
         }
     }

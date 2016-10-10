@@ -140,7 +140,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         QBNotificationService.sharedInstance.handlePushNotification(userInfo)
     }
-    
-
 }
 
