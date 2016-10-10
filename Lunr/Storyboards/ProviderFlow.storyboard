@@ -42,19 +42,19 @@
                                             <constraint firstAttribute="bottom" secondItem="5r1-Hw-5t9" secondAttribute="bottom" constant="20" id="u4n-V3-Jt8"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LlD-E1-TRf">
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="156" translatesAutoresizingMaskIntoConstraints="NO" id="LlD-E1-TRf">
                                         <rect key="frame" x="0.0" y="105" width="600" height="156"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AWQ-KA-K46" userLabel="Top Spacer">
-                                                <rect key="frame" x="300" y="0.0" width="0.0" height="10"/>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWQ-KA-K46" userLabel="Top Spacer">
+                                                <rect key="frame" x="300" y="0.0" width="0.0" height="78"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" id="4bT-qq-sHN"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="DIY-vd-ZCN"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-7z-mdR" userLabel="Bottom Spacer">
-                                                <rect key="frame" x="300" y="146" width="0.0" height="9.5"/>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-7z-mdR" userLabel="Bottom Spacer">
+                                                <rect key="frame" x="300" y="78" width="0.0" height="77.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" id="OBW-Hx-B6e"/>
@@ -66,19 +66,8 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7Y3-Fy-kh6">
-                                                <rect key="frame" x="0.0" y="10" width="600" height="136"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently waiting for requests…" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSK-Ge-3U9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="16"/>
-                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
-                                                        <color key="textColor" red="0.6470588235294118" green="0.6470588235294118" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" image="hourglass" translatesAutoresizingMaskIntoConstraints="NO" id="5JG-a9-qIW">
-                                                        <rect key="frame" x="0.0" y="36" width="600" height="100"/>
-                                                    </imageView>
-                                                </subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7Y3-Fy-kh6" customClass="ProviderStatusView" customModule="Lunr" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="78" width="600" height="0.0"/>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
@@ -241,19 +230,19 @@
                                                         <rect key="frame" x="459" y="40" width="101" height="19"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_filled" translatesAutoresizingMaskIntoConstraints="NO" id="nVD-DX-Var" userLabel="Star One">
-                                                                <rect key="frame" x="0.0" y="0.0" width="19.5" height="19"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="20" height="19"/>
                                                             </imageView>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_filled" translatesAutoresizingMaskIntoConstraints="NO" id="Oe7-6l-uwa" userLabel="Star Two">
-                                                                <rect key="frame" x="20.5" y="0.0" width="19.5" height="19"/>
+                                                                <rect key="frame" x="21" y="0.0" width="20" height="19"/>
                                                             </imageView>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_filled" translatesAutoresizingMaskIntoConstraints="NO" id="9Hp-pP-Ute" userLabel="Star Three">
                                                                 <rect key="frame" x="41" y="0.0" width="19" height="19"/>
                                                             </imageView>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_filled" translatesAutoresizingMaskIntoConstraints="NO" id="EcW-O8-t8T" userLabel="Star Four">
-                                                                <rect key="frame" x="61" y="0.0" width="19.5" height="19"/>
+                                                                <rect key="frame" x="61" y="0.0" width="20" height="19"/>
                                                             </imageView>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="Cn6-eT-MAO" userLabel="Star Five">
-                                                                <rect key="frame" x="81.5" y="0.0" width="19.5" height="19"/>
+                                                                <rect key="frame" x="82" y="0.0" width="20" height="19"/>
                                                             </imageView>
                                                         </subviews>
                                                         <constraints>
@@ -329,6 +318,7 @@
                     <tabBarItem key="tabBarItem" title="HOME" image="icon_home" selectedImage="icon_homeSelected" id="qJH-aX-UMw"/>
                     <connections>
                         <outlet property="onDutyToggleButton" destination="5r1-Hw-5t9" id="Kha-wH-9PE"/>
+                        <outlet property="providerStatusView" destination="7Y3-Fy-kh6" id="FSi-8O-yDb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FnB-gb-0ih" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -402,7 +392,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="hourglass" width="100" height="100"/>
         <image name="icon_home" width="23" height="20"/>
         <image name="icon_homeSelected" width="23" height="20"/>
         <image name="icon_user" width="21" height="20"/>

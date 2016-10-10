@@ -12,7 +12,7 @@ import Parse
 class ProviderHomeViewController: UIViewController {
     
     // MARK: Properties
-//    @IBOutlet weak var chatButton: LunrActivityButton!
+    @IBOutlet weak var providerStatusView: ProviderStatusView!
     @IBOutlet weak var onDutyToggleButton: LunrActivityButton!
     let chatSegue = "chatWithClient"
 
@@ -77,6 +77,7 @@ class ProviderHomeViewController: UIViewController {
         if let user = PFUser.currentUser() as? User {
             let onDutyTitle = user.available ? "Go Offline" : "Go Online"
             onDutyToggleButton.setTitle(onDutyTitle, forState: .Normal)
+            providerStatusView.status = user.available ? .Online : .Offline
         }
     }
         
