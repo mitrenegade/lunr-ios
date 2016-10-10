@@ -20,6 +20,8 @@ class ProviderHomeViewController: UIViewController {
         super.viewDidLoad()
         
         onDutyToggleButton.cornerRadius = onDutyToggleButton.bounds.height / 2
+        onDutyToggleButton.backgroundColor = UIColor.lunr_darkBlue()
+        
         updateUI()
         
         if let user = PFUser.currentUser() as? User where user.available {
