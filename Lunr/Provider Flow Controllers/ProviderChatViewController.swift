@@ -121,6 +121,9 @@ class ProviderChatViewController: ChatViewController {
     }
 
     /* TODO: 
+     - handle close button in client side chat
+       - provider received notification and hasn't clicked "Reply"
+       - provider has not received notification yet
      - handle back button from client in video chat
        - client side close session
        - provider side listen for notification and close session

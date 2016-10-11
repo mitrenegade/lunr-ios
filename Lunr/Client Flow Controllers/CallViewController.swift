@@ -18,15 +18,14 @@ class CallViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // for now, no calling
-        self.buttonCall.enabled = false
-
         // load video view
         self.loadVideoViews()
 
         // listen for incoming video stream
         self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.VideoReceived.rawValue, action: #selector(receiveVideoFromStream(_:)), object: nil)
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Done, target: self, action: #selector(nothing))
     }
 
     // MARK: - Video
@@ -73,12 +72,27 @@ class CallViewController: UIViewController {
         self.remoteVideoView.setVideoTrack(videoTrack)
     }
     
+    // MARK: Session
     func endCall() {
         self.stopListeningFor(NotificationType.VideoSession.StreamInitialized.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.VideoReceived.rawValue)
+        
+        SessionService.sharedInstance.endCall()
+        
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    // Main action button
+    @IBAction func didClickButton(button: UIButton) {
+        // for now, create a call object and end the call and go to review
+        self.endCall()
+    }
+
+    // Back button action on navigation item
+    func nothing() {
+        // don't let user click back
+    }
+
     /*
     var currentCall: Call?
     var sessionStart: NSDate?
@@ -150,32 +164,6 @@ class CallViewController: UIViewController {
         QBNotificationService.sharedInstance.clearDialog()
     }
     
-    // Back button action on navigation item
-    func didClickBack() {
-        switch state {
-        case .Joining:
-            endCall()
-        case .Connected:
-            self.endCall()
-        default:
-            self.close()
-        }
-    }
-    
-    // Main action button
-    @IBAction func didClickButton(button: UIButton) {
-        /*
-        if self.state == .Disconnected {
-            self.startCall()
-        }
-        else {
-            self.endCall()
-        }
-        */
-        
-        // for now, create a call object and end the call and go to review
-        self.endCall()
-    }
 }
 
 // MARK: - Call actions

@@ -201,6 +201,9 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReceived.rawValue, object: nil, userInfo: ["track": videoTrack])
     }
     
+    func endCall() {
+        self.session?.hangUp(nil)
+    }
 
     // MARK: All connections
     func session(session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
