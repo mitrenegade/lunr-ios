@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import Quickblox
+
+protocol ProviderStatusViewDelegate: class {
+    func didClickReply()
+}
 
 class ProviderStatusView: UIStackView {
+    weak var delegate: ProviderStatusViewDelegate?
+    
     enum ProviderStatus {
         case Offline
         case Online
-        case NewRequest(User)
+        case NewRequest(QBUUser) // user, dialogId
     }
     
     var status: ProviderStatus = .Offline {
@@ -55,7 +62,7 @@ class ProviderStatusView: UIStackView {
                     strongSelf.addArrangedSubview(strongSelf.icon("hourglass"))
                 case .NewRequest(let user):
                     strongSelf.addArrangedSubview(strongSelf.label("New call request"))
-                    strongSelf.addArrangedSubview(strongSelf.label("\(user.firstName) has sent you a message."))
+                    strongSelf.addArrangedSubview(strongSelf.label("\(user.fullName!) has sent you a message."))
                     strongSelf.addArrangedSubview(strongSelf.button(user))
                 }
                 UIView.animateWithDuration(0.2, animations: { _ in
@@ -86,7 +93,7 @@ class ProviderStatusView: UIStackView {
         return view
     }
     
-    private func button(user: User) -> UIButton {
+    private func button(user: QBUUser) -> UIButton {
         let button = LunrActivityButton()
         button.setTitle("Reply", forState: .Normal)
         button.titleLabel?.font = UIFont.futuraMediumWithSize(16)
@@ -94,7 +101,12 @@ class ProviderStatusView: UIStackView {
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         button.cornerRadius = button.bounds.height / 2
         button.alpha = 0
+        button.addTarget(self, action: #selector(didClickReply), forControlEvents: .TouchUpInside)
         
         return button
+    }
+    
+    @objc private func didClickReply() {
+        self.delegate?.didClickReply()
     }
 }
