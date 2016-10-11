@@ -23,6 +23,7 @@ class CallViewController: UIViewController {
         // listen for incoming video stream
         self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.VideoReceived.rawValue, action: #selector(receiveVideoFromStream(_:)), object: nil)
+        self.listenFor(NotificationType.VideoSession.HungUp.rawValue, action: #selector(endCall), object: nil)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(leftBarButtonAction))
     }
@@ -75,6 +76,7 @@ class CallViewController: UIViewController {
     func endCall() {
         self.stopListeningFor(NotificationType.VideoSession.StreamInitialized.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.VideoReceived.rawValue)
+        self.stopListeningFor(NotificationType.VideoSession.HungUp.rawValue)
         
         SessionService.sharedInstance.endCall()
         
