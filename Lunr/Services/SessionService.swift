@@ -41,6 +41,18 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     var currentDialogID = ""
     var remoteVideoTrack: QBRTCVideoTrack?
 
+    // MARK: Chat session
+    func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
+        self.chatService.createPrivateChatDialogWithOpponent(user) { (response, dialog) in
+            if let dialog = dialog {
+                completion(success: true, dialog: dialog)
+            }
+            else {
+                completion(success: false, dialog: nil)
+            }
+        }
+    }
+    
     // MARK: Refresh user session
     func refreshChatSession(completion: ((success: Bool) -> Void)?) {
         // if not connected to QBChat. For example at startup

@@ -116,9 +116,20 @@ class ProviderChatViewController: ChatViewController {
     func cleanupLastSession() {
         // ends listeners and pops controller. video should automatically stop
         self.callViewController?.endCall()
-        
-        // end chat
-        
     }
 
+    /* TODO: 
+     - handle back button from client in video chat
+       - client side close session
+       - provider side listen for notification and close session
+     - handle back button from provider in video chat
+       - provider side close session
+       - client side listen for notification and close session
+     - provider side handle time out after starting video session (DONE)
+       - show "Client No longer available" message?
+     - handle client chat window closed
+       - provider side listen for chat dialog close notification and close chat
+     - handle provider chat window closed (DONE?)
+       - client side listen for push notification and close chat
+     */
 }
