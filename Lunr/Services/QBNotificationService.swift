@@ -57,6 +57,7 @@ class QBNotificationService: NotificationServiceDelegate {
     func handleChatInvite(userInfo: [NSObject: AnyObject]) {
         guard let dialogID = userInfo["dialogId"] as? String where !dialogID.isEmpty else { return }
         self.incomingDialogId = dialogID
+        
         if self.currentDialogID == self.incomingDialogId {
             return
         }
@@ -64,6 +65,7 @@ class QBNotificationService: NotificationServiceDelegate {
         guard let incomingPFUserId = userInfo["pfUserId"] as? String else {
             return
         }
+        
         QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
         
         // calling dispatch async for push notification handling to have priority in main queue
