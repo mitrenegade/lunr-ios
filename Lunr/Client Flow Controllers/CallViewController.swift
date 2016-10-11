@@ -5,7 +5,6 @@ import Parse
 class CallViewController: UIViewController {
     // remote video
     @IBOutlet weak var remoteVideoView: QBRTCRemoteVideoView!
-    @IBOutlet weak var labelRemote: UILabel!
     
     // local video
     @IBOutlet weak var localVideoView: UIView!
@@ -24,8 +23,8 @@ class CallViewController: UIViewController {
         // listen for incoming video stream
         self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.VideoReceived.rawValue, action: #selector(receiveVideoFromStream(_:)), object: nil)
-
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Done, target: self, action: #selector(nothing))
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(leftBarButtonAction))
     }
 
     // MARK: - Video
@@ -89,7 +88,7 @@ class CallViewController: UIViewController {
     }
 
     // Back button action on navigation item
-    func nothing() {
+    @IBAction func leftBarButtonAction() {
         // don't let user click back
     }
 

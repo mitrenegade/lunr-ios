@@ -210,6 +210,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         print("session hung up")
         self.session = nil
         self.state = .Disconnected
+        self.notify(NotificationType.VideoSession.HungUp.rawValue, object: nil, userInfo: nil)
     }
     
     func sessionDidClose(session: QBRTCSession!) {
