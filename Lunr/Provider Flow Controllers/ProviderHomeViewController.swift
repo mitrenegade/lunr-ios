@@ -61,11 +61,16 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     }
     
     private func updateUI() {
+        // does not handle .NewRequest because updateUI is for online/offline and waiting
         if let user = PFUser.currentUser() as? User {
             let onDutyTitle = user.available ? "Go Offline" : "Go Online"
             onDutyToggleButton.setTitle(onDutyTitle, forState: .Normal)
             providerStatusView.status = user.available ? .Online : .Offline
         }
+        
+        // clear locally stored dialog and userIds that were saved from previous notifications
+        self.dialog = nil
+        self.incomingPFUserId = nil
     }
     
     func handleIncomingChatRequest(notification: NSNotification) {
@@ -97,8 +102,6 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             self.presentViewController(chatNavigationVC, animated: true, completion: { 
                 // reset to original state
                 self.updateUI()
-                self.dialog = nil
-                self.incomingPFUserId = nil
             })
         }
 
