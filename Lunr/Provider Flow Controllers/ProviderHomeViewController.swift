@@ -97,6 +97,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             self.presentViewController(chatNavigationVC, animated: true, completion: { 
                 // reset to original state
                 self.updateUI()
+                self.dialog = nil
+                self.incomingPFUserId = nil
             })
         }
 
