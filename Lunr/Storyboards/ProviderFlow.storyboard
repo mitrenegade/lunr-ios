@@ -23,8 +23,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JI3-OQ-5ou">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="105"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5r1-Hw-5t9" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
-                                                <rect key="frame" x="209" y="43" width="182" height="42"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5r1-Hw-5t9" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
+                                                <rect key="frame" x="209" y="43" width="150" height="40"/>
                                                 <color key="backgroundColor" red="0.7803921568627451" green="0.82745098039215681" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                                 <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
                                                 <state key="normal" title="Go Offline">

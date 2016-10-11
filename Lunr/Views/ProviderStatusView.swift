@@ -39,10 +39,10 @@ class ProviderStatusView: UIStackView {
     }
     
     private func setup() {
-        alignment = .Fill
-        distribution = .EqualCentering
-        spacing = 20
         axis = .Vertical
+        alignment = .Center
+        distribution = .FillProportionally
+        spacing = 20
     }
     
     private func refresh() {
@@ -96,10 +96,8 @@ class ProviderStatusView: UIStackView {
     private func button(user: QBUUser) -> UIButton {
         let button = LunrActivityButton()
         button.setTitle("Reply", forState: .Normal)
-        button.titleLabel?.font = UIFont.futuraMediumWithSize(16)
         button.backgroundColor = UIColor.lunr_darkBlue()
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        button.cornerRadius = button.bounds.height / 2
         button.alpha = 0
         button.addTarget(self, action: #selector(didClickReply), forControlEvents: .TouchUpInside)
         

@@ -22,7 +22,6 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        onDutyToggleButton.cornerRadius = onDutyToggleButton.bounds.height / 2
         onDutyToggleButton.backgroundColor = UIColor.lunr_darkBlue()
         
         providerStatusView.delegate = self
