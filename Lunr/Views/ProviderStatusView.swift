@@ -33,7 +33,7 @@ class ProviderStatusView: UIStackView {
     
     private func setup() {
         alignment = .Fill
-        distribution = .Fill
+        distribution = .EqualCentering
         spacing = 20
         axis = .Vertical
     }
