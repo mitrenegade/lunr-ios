@@ -87,7 +87,9 @@ class ProviderChatViewController: ChatViewController {
             
             PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
                 if success {
-                    self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+                    if TEST {
+                        self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+                    }
                 }
                 else {
                     self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)

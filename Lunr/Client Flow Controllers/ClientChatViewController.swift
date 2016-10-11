@@ -25,7 +25,9 @@ class ClientChatViewController: ChatViewController {
 
         PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
             if success {
-                self.simpleAlert("Push sent!", message: "You have successfully notified \(user.fullName ?? "someone") to chat")
+                if TEST {
+                    self.simpleAlert("Push sent!", message: "You have successfully notified \(user.fullName ?? "someone") to chat")
+                }
                 
                 // start listening for incoming session
                 self.listenForSession()
