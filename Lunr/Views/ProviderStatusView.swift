@@ -94,7 +94,7 @@ class ProviderStatusView: UIStackView {
     }
     
     private func button(user: QBUUser) -> UIButton {
-        let button = LunrActivityButton()
+        let button = LunrRoundActivityButton()
         button.setTitle("Reply", forState: .Normal)
         button.backgroundColor = UIColor.lunr_darkBlue()
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)

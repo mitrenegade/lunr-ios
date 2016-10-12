@@ -13,7 +13,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     // MARK: Properties
     @IBOutlet weak var providerStatusView: ProviderStatusView!
-    @IBOutlet weak var onDutyToggleButton: LunrActivityButton!
+    @IBOutlet weak var onDutyToggleButton: LunrRoundActivityButton!
     let chatSegue = "chatWithClient"
 
     var dialog: QBChatDialog?

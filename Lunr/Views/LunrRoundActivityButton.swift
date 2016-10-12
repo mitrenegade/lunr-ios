@@ -15,7 +15,7 @@ class LunrRoundActivityButton: LunrActivityButton {
         cornerRadius = bounds.height / 2
     }
     
-    func setup() {
+    override func setup() {
         widthAnchor.constraintEqualToConstant(150).active = true
         heightAnchor.constraintEqualToConstant(40).active = true
         

@@ -36,7 +36,7 @@ private let dummyUser: TestUser = TestUser(email: "JSnow@uknownothing.com", name
 
 class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var logoutButton: LunrR!
+    @IBOutlet weak var logoutButton: LunrActivityButton!
 
     var callHistory: [TestCall] = dummyCalls
     var user: TestUser = dummyUser
