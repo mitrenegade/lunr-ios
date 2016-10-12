@@ -86,13 +86,13 @@ class ProviderChatViewController: ChatViewController {
             let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
             
             PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
-                if success {
-                    if TEST {
+                if TEST {
+                    if success {
                         self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
                     }
-                }
-                else {
-                    self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
+                    else {
+                        self.simpleAlert("Client is not available", defaultMessage: nil, error: nil)
+                    }
                 }
             }
         }

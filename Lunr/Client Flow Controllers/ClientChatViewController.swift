@@ -33,7 +33,7 @@ class ClientChatViewController: ChatViewController {
                 self.listenForSession()
             }
             else {
-                self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
+                self.simpleAlert("Provider is not available", defaultMessage: nil, error: nil)
             }
         }
     }

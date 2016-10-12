@@ -79,7 +79,9 @@ class CallViewController: UIViewController {
         self.stopListeningFor(NotificationType.VideoSession.HungUp.rawValue)
         
         SessionService.sharedInstance.endCall()
-        
+
+        self.videoCapture?.stopSession()
+
         self.navigationController?.popViewControllerAnimated(true)
     }
     

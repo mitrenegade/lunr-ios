@@ -105,4 +105,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         }
 
     }
+    
+    /* TODO:
+     - dismiss a call request. (other than go offline)
+    */
 }
