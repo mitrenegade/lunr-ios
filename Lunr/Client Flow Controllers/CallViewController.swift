@@ -96,6 +96,9 @@ class CallViewController: UIViewController {
         // don't let user click back
     }
 
+    deinit {
+        print("here")
+    }
     /*
     var currentCall: Call?
     var sessionStart: NSDate?

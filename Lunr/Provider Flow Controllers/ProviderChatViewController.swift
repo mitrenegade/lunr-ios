@@ -118,6 +118,7 @@ class ProviderChatViewController: ChatViewController {
     func cleanupLastSession() {
         // ends listeners and pops controller. video should automatically stop
         self.callViewController?.endCall()
+        self.callViewController = nil
     }
 
     /* TODO: 
