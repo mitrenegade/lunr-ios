@@ -28,7 +28,9 @@
 		8430DAF01DAC13F50018D642 /* LunarTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430DAEF1DAC13F50018D642 /* LunarTabBarViewController.swift */; };
 		8430DAF41DAC269D0018D642 /* ProviderStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430DAF31DAC269D0018D642 /* ProviderStatusView.swift */; };
 		8430DAF61DAC2B0B0018D642 /* UIStackView+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430DAF51DAC2B0B0018D642 /* UIStackView+LunrExtensions.swift */; };
+		845016931DB3D7BD00BC2477 /* TransparentNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845016921DB3D7BD00BC2477 /* TransparentNavigationBar.swift */; };
 		847133261D75C14400DD2045 /* LunrActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847133251D75C14400DD2045 /* LunrActivityButton.swift */; };
+		84D78DFB1DB1814C004822F1 /* ProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */; };
 		84E2D2CF1D902083003F4A86 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2D2CE1D902083003F4A86 /* ChatViewController.swift */; };
 		8E2919361DADC2000095F89A /* LunrRoundActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
@@ -98,7 +100,9 @@
 		8430DAEF1DAC13F50018D642 /* LunarTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunarTabBarViewController.swift; sourceTree = "<group>"; };
 		8430DAF31DAC269D0018D642 /* ProviderStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderStatusView.swift; sourceTree = "<group>"; };
 		8430DAF51DAC2B0B0018D642 /* UIStackView+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+LunrExtensions.swift"; sourceTree = "<group>"; };
+		845016921DB3D7BD00BC2477 /* TransparentNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentNavigationBar.swift; sourceTree = "<group>"; };
 		847133251D75C14400DD2045 /* LunrActivityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrActivityButton.swift; sourceTree = "<group>"; };
+		84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderSettingsViewController.swift; sourceTree = "<group>"; };
 		84E2D2CE1D902083003F4A86 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrRoundActivityButton.swift; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
@@ -296,6 +300,7 @@
 				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
 				8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */,
+				84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */,
 			);
 			path = "Provider Flow Controllers";
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				E581DA5A1D85D35300275DBD /* StarRatingView.swift */,
 				8430DAF31DAC269D0018D642 /* ProviderStatusView.swift */,
 				8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */,
+				845016921DB3D7BD00BC2477 /* TransparentNavigationBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */,
+				845016931DB3D7BD00BC2477 /* TransparentNavigationBar.swift in Sources */,
 				E50615801D7CB4AA001AC445 /* FeedbackViewController.swift in Sources */,
 				8EE9D4511D7684F500DB8C49 /* Call.swift in Sources */,
 				84258F121D91049E00A61969 /* UIImage+LunrExtensions.swift in Sources */,
@@ -584,6 +591,7 @@
 				E56164631D61260700926692 /* UIView+Utils.swift in Sources */,
 				E56164511D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift in Sources */,
 				44BA7F411D73C9F5006B347D /* ReviewTableViewCell.swift in Sources */,
+				84D78DFB1DB1814C004822F1 /* ProviderSettingsViewController.swift in Sources */,
 				E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */,
 				84E2D2CF1D902083003F4A86 /* ChatViewController.swift in Sources */,
 				E56164461D56818500926692 /* ProviderInfoView.swift in Sources */,

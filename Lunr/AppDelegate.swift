@@ -90,6 +90,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Appearance
     private func setGlobalAppearanceAttributes() {
+        // UINavBar
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.tintColor = UIColor(red:0.200, green:0.200, blue:0.200, alpha:1)
+        var navBarTitleAttr = navBarAppearance.titleTextAttributes ?? [String:AnyObject]()
+        navBarTitleAttr[NSFontAttributeName] = UIFont.futuraMediumWithSize(16)
+        navBarTitleAttr[NSForegroundColorAttributeName] = UIColor(red:0.200, green:0.200, blue:0.200, alpha:1)
+        navBarAppearance.titleTextAttributes = navBarTitleAttr
+        
         // UITabBar
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.barTintColor = UIColor(red:0.180, green:0.220, blue:0.357, alpha:1)
