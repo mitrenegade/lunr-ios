@@ -31,20 +31,8 @@ class LunrActivityButton: UIButton {
         setup()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        cornerRadius = bounds.height / 2
-    }
-    
-    private func setup() {
-        widthAnchor.constraintEqualToConstant(150).active = true
-        heightAnchor.constraintEqualToConstant(40).active = true
-        
-        titleEdgeInsets = UIEdgeInsetsZero
-        contentEdgeInsets = UIEdgeInsetsZero
-        titleLabel?.font = UIFont.futuraMediumWithSize(16)
+    func setup() {
         setTitle("", forState: .Disabled)
-        
         activity.hidesWhenStopped = true
         activity.translatesAutoresizingMaskIntoConstraints = false
         addSubview(activity)

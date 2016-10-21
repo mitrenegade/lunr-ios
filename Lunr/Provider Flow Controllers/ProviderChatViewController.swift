@@ -12,6 +12,7 @@ import Parse
 class ProviderChatViewController: ChatViewController {
 
     var incomingPFUserId: String?
+    var callViewController: CallViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,7 @@ class ProviderChatViewController: ChatViewController {
         if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
 
+            self.callViewController = controller
             // don't start call until local video stream is ready
             self.listenFor(NotificationType.VideoSession.VideoReady.rawValue, action: #selector(startSession), object: nil)
         }
@@ -84,11 +86,13 @@ class ProviderChatViewController: ChatViewController {
             let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
             
             PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
-                if success {
-                    self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
-                }
-                else {
-                    self.simpleAlert("Could not send push", defaultMessage: nil, error: nil)
+                if TEST {
+                    if success {
+                        self.simpleAlert("Push sent!", message: "You have successfully \(status) video chat with \(user.fullName ?? "someone")")
+                    }
+                    else {
+                        self.simpleAlert("Client is not available", defaultMessage: nil, error: nil)
+                    }
                 }
             }
         }
@@ -104,9 +108,34 @@ class ProviderChatViewController: ChatViewController {
         switch SessionService.sharedInstance.state {
         case .Connected:
             print("yay")
+        case .Disconnected:
+            self.cleanupLastSession()
         default:
             break
         }
     }
+    
+    func cleanupLastSession() {
+        // ends listeners and pops controller. video should automatically stop
+        self.callViewController?.endCall()
+        self.callViewController = nil
+    }
 
+    /* TODO: 
+     - handle close button in client side chat
+       - provider received notification and hasn't clicked "Reply"
+       - provider has not received notification yet
+     - handle back button from client in video chat
+       - client side close session
+       - provider side listen for notification and close session
+     - handle back button from provider in video chat
+       - provider side close session
+       - client side listen for notification and close session
+     - provider side handle time out after starting video session (DONE)
+       - show "Client No longer available" message?
+     - handle client chat window closed
+       - provider side listen for chat dialog close notification and close chat
+     - handle provider chat window closed (DONE?)
+       - client side listen for push notification and close chat
+     */
 }

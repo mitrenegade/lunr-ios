@@ -62,6 +62,7 @@ class PushService: NSObject {
         guard let user = user else { return nil }
         guard let userId = user.objectId else { return nil }
         let channel = "push\(userId)"
+        print("Push channel: \(channel)")
         return channel
     }
     

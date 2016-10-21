@@ -55,9 +55,6 @@ class AccountSettingsViewController: UIViewController {
         self.navigationController?.navigationBar.addShadow()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .Plain, target: self, action: #selector(dismiss))
-
-        logoutButton.cornerRadius = logoutButton.bounds.height / 2
-        logoutButton.backgroundColor = UIColor.lunr_darkBlue()
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 140

@@ -41,6 +41,18 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     var currentDialogID = ""
     var remoteVideoTrack: QBRTCVideoTrack?
 
+    // MARK: Chat session
+    func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
+        self.chatService.createPrivateChatDialogWithOpponent(user) { (response, dialog) in
+            if let dialog = dialog {
+                completion(success: true, dialog: dialog)
+            }
+            else {
+                completion(success: false, dialog: nil)
+            }
+        }
+    }
+    
     // MARK: Refresh user session
     func refreshChatSession(completion: ((success: Bool) -> Void)?) {
         // if not connected to QBChat. For example at startup
@@ -189,12 +201,16 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReceived.rawValue, object: nil, userInfo: ["track": videoTrack])
     }
     
+    func endCall() {
+        self.session?.hangUp(nil)
+    }
 
     // MARK: All connections
     func session(session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
         print("session hung up")
         self.session = nil
         self.state = .Disconnected
+        self.notify(NotificationType.VideoSession.HungUp.rawValue, object: nil, userInfo: nil)
     }
     
     func sessionDidClose(session: QBRTCSession!) {

@@ -41,24 +41,12 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are talking to:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pze-Y2-giP">
-                                        <rect key="frame" x="8" y="13" width="584" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="vra-rR-SWe"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="cd3-Tz-UZ9" secondAttribute="trailing" id="D3V-p3-cYE"/>
-                                    <constraint firstItem="Pze-Y2-giP" firstAttribute="top" secondItem="Pap-aZ-fVD" secondAttribute="top" constant="13" id="JLD-DG-Wme"/>
                                     <constraint firstItem="cd3-Tz-UZ9" firstAttribute="top" secondItem="Pap-aZ-fVD" secondAttribute="top" id="JMf-dw-WFo"/>
                                     <constraint firstAttribute="bottom" secondItem="cd3-Tz-UZ9" secondAttribute="bottom" id="Odh-VL-QKb"/>
-                                    <constraint firstAttribute="trailing" secondItem="Pze-Y2-giP" secondAttribute="trailing" constant="8" id="YGu-yA-cW0"/>
-                                    <constraint firstItem="Pze-Y2-giP" firstAttribute="leading" secondItem="Pap-aZ-fVD" secondAttribute="leading" constant="8" id="g6Z-TI-pdF"/>
                                     <constraint firstItem="cd3-Tz-UZ9" firstAttribute="leading" secondItem="Pap-aZ-fVD" secondAttribute="leading" id="lNb-nR-BbD"/>
                                 </constraints>
                             </view>
@@ -116,7 +104,6 @@
                     <navigationItem key="navigationItem" id="jf2-iC-eO7"/>
                     <connections>
                         <outlet property="buttonCall" destination="A86-JZ-Cf2" id="jdq-Rk-cqv"/>
-                        <outlet property="labelRemote" destination="Pze-Y2-giP" id="dQi-la-xDI"/>
                         <outlet property="localVideoView" destination="jxV-WE-PZL" id="bj1-46-FiF"/>
                         <outlet property="remoteVideoView" destination="cd3-Tz-UZ9" id="tPY-7w-fri"/>
                         <segue destination="q6y-Fj-lKD" kind="show" identifier="GoToFeedback" id="MIC-ZI-I5N"/>
@@ -133,7 +120,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="12" sectionFooterHeight="18" id="BOK-ma-2Qy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" red="0.13725490200000001" green="0.16078431369999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection headerTitle="Call Summary:" id="ZZg-JK-gee">

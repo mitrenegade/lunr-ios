@@ -84,17 +84,23 @@ extension ProviderDetailViewController {
         self.callButton.busy = true
         QBUserService.getQBUUserFor(provider) { [weak self] user in
             guard let user = user else { self?.callButton.busy = false; return }
-            SessionService.sharedInstance.chatService.createPrivateChatDialogWithOpponent(user) { [weak self] response, dialog in
+            SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+                guard success else {
+                    print("Could not start chat")
+                    self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
+                    return
+                }
+                
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ClientChatNavigationController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                     chatVC.dialog = dialog
                     chatVC.providerId = self?.provider?.objectId
-                    self?.presentViewController(chatNavigationVC, animated: true, completion: { 
+                    self?.presentViewController(chatNavigationVC, animated: true, completion: {
                         self?.callButton.busy = false
                         QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
                     })
                 }
-            }
+            })
         }
     }
 
