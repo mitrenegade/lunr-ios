@@ -14,21 +14,10 @@ private let SectionTitles = ["Account Information", "Payment Information", "Call
 private let AccountInfoSectionTitles = ["Email:", "Name:"]
 private let PaymentInfoSectionTitles = ["Default:"]
 
-
-// MARK: Dummy Data
-
-struct TestCall {
-    var date: NSDate
-    var nameOfCaller: String
-    var cost: Double
-    var card: String
-}
-
-private let dummyCalls: [TestCall] = [TestCall(date: NSDate(), nameOfCaller: "John Snow", cost: 24.50, card: "VISA - 1234")]
 class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
-    var callHistory: [TestCall] = dummyCalls
+    var callHistory: [Call]?
     var user: User?
 
     var dateFormatter: NSDateFormatter {
@@ -55,7 +44,10 @@ class AccountSettingsViewController: UIViewController {
 
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
-
+        CallService.sharedInstance.queryCallsForUser(self.user) { [weak self] (results, error) in
+            self?.callHistory = results
+            self?.tableView.reloadData()
+        }
     }
 
     func dismiss() {
@@ -106,11 +98,30 @@ extension AccountSettingsViewController: UITableViewDataSource {
             return cell
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! CallHistoryCell
-            let call = self.callHistory[row]
-            cell.dateLabel.text = dateFormatter.stringFromDate(call.date)
-            cell.nameLabel.text = call.nameOfCaller
-            cell.priceLabel.text = String(call.cost)
-            cell.cardLabel.text = call.card
+            guard let calls = self.callHistory where row < calls.count else {
+                return cell
+            }
+            let call = calls[row]
+            
+            if let date = call.date {
+                cell.dateLabel.text = dateFormatter.stringFromDate(date)
+            }
+            
+            if cell.nameLabel.text == nil {
+                cell.nameLabel.text = "..."
+            }
+            if let user = self.user where !user.isProvider, let provider = call.provider {
+                provider.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+                    cell.nameLabel.text = provider.displayString
+                })
+            }
+            else if let user = self.user where user.isProvider, let client = call.client {
+                client.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+                    cell.nameLabel.text = client.displayString
+                })
+            }
+            cell.priceLabel.text = String(call.totalCostString)
+            cell.cardLabel.text = StripeService().paymentStringForUser(self.user)
             cell.separatorView.backgroundColor = UIColor.lunr_separatorGray()
             return cell
         default:
@@ -122,7 +133,7 @@ extension AccountSettingsViewController: UITableViewDataSource {
         switch section {
         case 0 : return AccountInfoSectionTitles.count
         case 1 : return PaymentInfoSectionTitles.count
-        case 2 : return callHistory.count
+        case 2 : return callHistory?.count ?? 0
         default: return 0
         }
     }
