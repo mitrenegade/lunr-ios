@@ -40,6 +40,8 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
 
     var currentDialogID = ""
     var remoteVideoTrack: QBRTCVideoTrack?
+    
+    var currentCallId: String? = nil // pfObjectId for a Call
 
     // MARK: Chat session
     func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
@@ -138,13 +140,29 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     // MARK: Session lifecycle
     
     // user action (provider)
-    func startCall(userID: UInt) {
-        // create and start session
-        // must be called after video track has been started!
-        let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
-        self.session = newSession
-        let userInfo: [String: AnyObject]? = nil // send any info through
-        self.session!.startCall(userInfo)
+    func startCall(userID: UInt, pfUserId: String) {
+        // create call object
+        CallService.sharedInstance.postNewCall(pfUserId, duration: 0, totalCost: 0) { (call, error) in
+            if error != nil || call == nil {
+                var info: [String: AnyObject]? = nil
+                if let error = error {
+                    info = ["error": error]
+                }
+                self.notify(NotificationType.VideoSession.CallCreationFailed.rawValue, object: nil, userInfo: info)
+                return
+            }
+            
+            // create and start session
+            // must be called after video track has been started!
+            let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
+            self.session = newSession
+            var userInfo: [String: AnyObject]? = nil // send any info through
+            if let call = call, let objectId = call.objectId {
+                self.currentCallId = objectId // stores callId on the provider side
+                userInfo = ["callId": objectId]
+            }
+            self.session!.startCall(userInfo)
+        }
     }
 
     // delegate (client)
@@ -161,6 +179,9 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
                 print("Incoming call from a known user with id \(user.ID)")
                 self.session = self.incomingSession
                 self.state = .Connected
+                if let pfObjectId = userInfo["callId"] as? String {
+                    self.currentCallId = pfObjectId
+                }
             }
             else {
                 self.incomingSession = nil

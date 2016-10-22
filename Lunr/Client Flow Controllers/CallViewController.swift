@@ -24,8 +24,13 @@ class CallViewController: UIViewController {
         self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.VideoReceived.rawValue, action: #selector(receiveVideoFromStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.HungUp.rawValue, action: #selector(endCall), object: nil)
-        
+        self.listenFor(NotificationType.VideoSession.CallCreationFailed.rawValue, action: #selector(callCreationFailed(_:)), object: nil)
+
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(leftBarButtonAction))
+        
+        if let user = PFUser.currentUser() as? User where user.isProvider {
+            self.buttonCall.hidden = true
+        }
     }
 
     // MARK: - Video
@@ -77,6 +82,7 @@ class CallViewController: UIViewController {
         self.stopListeningFor(NotificationType.VideoSession.StreamInitialized.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.VideoReceived.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.HungUp.rawValue)
+        self.stopListeningFor(NotificationType.VideoSession.CallCreationFailed.rawValue)
         
         SessionService.sharedInstance.endCall()
 
@@ -95,6 +101,16 @@ class CallViewController: UIViewController {
     @IBAction func leftBarButtonAction() {
         // don't let user click back
     }
+
+    // Call creation failed (Provider)
+    func callCreationFailed(notification: NSNotification) {
+        let userInfo = notification.userInfo
+        let error = userInfo?["error"] as? NSError
+        self.simpleAlert("Could not initiate call", defaultMessage: "There was an error creating starting a new call", error: error, completion: {
+            self.endCall()
+        })
+    }
+    
 
     deinit {
         print("here")
@@ -172,32 +188,6 @@ class CallViewController: UIViewController {
     
 }
 
-// MARK: - Call actions
-extension CallViewController {
-    
-    func endCall() {
-        self.session?.hangUp(nil)
-        sessionEnd = NSDate()
-        // TODO: end video stream
-        
-        // create the call object. TODO: this should be done when the call is started
-        guard let providerId = targetPFUserId else { return }
-        guard let start = sessionStart else { return }
-        guard let duration = sessionEnd?.timeIntervalSinceDate(start) else { return }
-        
-        CallService.sharedInstance.postNewCall(providerId, duration: duration as Double, totalCost: 45) { (call, error) in
-            if let error = error {
-                self.simpleAlert("Could not end call", defaultMessage: "There was an error saving your call.", error: error, completion: { 
-                    // TODO: dismiss?
-                })
-            }
-            else {
-                // Go to feedback
-                self.call = call
-                self.performSegueWithIdentifier(Segue.Call.GoToFeedback.rawValue, sender: nil)
-            }
-        }
-    }
  */
 }
 

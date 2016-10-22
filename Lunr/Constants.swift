@@ -32,6 +32,8 @@ enum NotificationType: String {
         case StreamInitialized // after startCall, successfully connected to stream
         case VideoReceived // recipient video received
         case HungUp // recipient hung up
+        
+        case CallCreationFailed // not related to session but session cannot proceed because Parse failed
     }
     case PushRegistered
 }

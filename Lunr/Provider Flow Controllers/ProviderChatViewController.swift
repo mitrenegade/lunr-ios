@@ -13,6 +13,7 @@ class ProviderChatViewController: ChatViewController {
 
     var incomingPFUserId: String?
     var callViewController: CallViewController?
+    var currentCall: Call? // saved here because we don't send the call parameters until a new controller is started and need to store this info
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +69,8 @@ class ProviderChatViewController: ChatViewController {
     func startSession() {
         // initiates call to recipient after video stream is ready
         guard let recipient = self.recipient else { return }
-        SessionService.sharedInstance.startCall(recipient.ID)
+        guard let userId = incomingPFUserId else { return }
+        SessionService.sharedInstance.startCall(recipient.ID, pfUserId: userId)
         // start listening for incoming session
         self.listenForAcceptSession()
     }

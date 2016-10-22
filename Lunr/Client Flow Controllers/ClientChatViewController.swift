@@ -88,7 +88,6 @@ class ClientChatViewController: ChatViewController {
         let userInfo = notification.userInfo
         switch SessionService.sharedInstance.state {
         case .Connected:
-            print("incoming call")
             self.openVideo()
             SessionService.sharedInstance.session?.acceptCall(nil)
         default:

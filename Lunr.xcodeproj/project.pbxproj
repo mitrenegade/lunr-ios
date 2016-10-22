@@ -114,7 +114,7 @@
 		8E6418D91D55585A00CC4928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E6418E01D56780100CC4928 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8E6418E21D56791700CC4928 /* FacebookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookViewController.swift; sourceTree = "<group>"; };
-		8E6418E41D567FDE00CC4928 /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		8E6418E41D567FDE00CC4928 /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmailViewController.swift; path = "../Provider Flow Controllers/EmailViewController.swift"; sourceTree = "<group>"; };
 		8E6418E61D5687B600CC4928 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		8E6418EA1D56914E00CC4928 /* CallFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CallFlow.storyboard; sourceTree = "<group>"; };
 		8E6418EC1D56921F00CC4928 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -297,7 +297,6 @@
 		8E6B6FC41D7B050A007C3C86 /* Provider Flow Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
 				8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */,
 				84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */,
@@ -313,6 +312,7 @@
 				84E2D2CE1D902083003F4A86 /* ChatViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
 				8430DAEF1DAC13F50018D642 /* LunarTabBarViewController.swift */,
+				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 			);
 			name = "Main Controllers";
 			path = Controllers;
