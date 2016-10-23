@@ -7,6 +7,9 @@
 //
 // manages video sessions
 
+//TODO: hang up on client side is not showing call summary
+//Create charge on provider side if disconencted successfully
+
 import UIKit
 import Parse
 import Quickblox

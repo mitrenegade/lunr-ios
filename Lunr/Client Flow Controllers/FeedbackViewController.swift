@@ -1,4 +1,5 @@
 import UIKit
+import Parse
 
 class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
@@ -18,20 +19,18 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     @IBOutlet var feedbackToolbar: UIToolbar!
     @IBOutlet weak var leaveFeedbackBarButtonItem: UIBarButtonItem!
 
-    func configureCall() {
-        if self.call != nil {
-            self.durationLabel.text = "\(self.call!.duration)"
-            self.costLabel.text = "\(self.call!.totalCost)"
-        }
-    }
-
     // MARK: UIViewController Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.configureCall();
-
+        if let user = PFUser.currentUser() as? User where user.isProvider {
+            self.updateCall()
+        }
+        else {
+            self.configureCallUI()
+        }
+        
         self.starRatingView.delegate = self
 
         self.leaveFeedbackBarButtonItem.setTitleTextAttributes(
@@ -66,7 +65,35 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.navigationController?.navigationBar.addShadow()
     }
 
+    func updateCall() {
+        guard let call = self.call else { return }
+        guard let start = call.date else { return }
+        guard let rate = call.rate as? Double else { return }
+        
+        let duration = NSDate().timeIntervalSinceDate(start)
+        let minutes = round(duration / 60)
+        
+        call.totalCost = minutes * rate
+        // save the call
+        call.saveInBackgroundWithBlock({ (success, error) in
+            if let _ = error {
+                // TODO: store total cost into another object
+                self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
+                }
+            }
+            else {
+                self.configureCallUI()
+            }
+        })
+    }
 
+    func configureCallUI() {
+        if self.call != nil {
+            self.durationLabel.text = "\(self.call!.duration)"
+            self.costLabel.text = "\(self.call!.totalCost)"
+        }
+    }
+    
     // MARK: Event Methods
 
     @IBAction func closedButtonPressed(sender: UIBarButtonItem) {

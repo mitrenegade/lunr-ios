@@ -14,8 +14,12 @@ class CallViewController: UIViewController {
     // call controls
     @IBOutlet weak var buttonCall: UIButton!
     
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        user = PFUser.currentUser() as? User
         
         // load video view
         self.loadVideoViews()
@@ -28,7 +32,7 @@ class CallViewController: UIViewController {
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(leftBarButtonAction))
         
-        if let user = PFUser.currentUser() as? User where user.isProvider {
+        if let user = user where user.isProvider {
             self.buttonCall.hidden = true
         }
     }
@@ -88,60 +92,31 @@ class CallViewController: UIViewController {
 
         self.videoCapture?.stopSession()
         
-        guard wasConnected else {
-            self.simpleAlert("Call was disconnected", message: "No one else joined the call.", completion: { 
-                self.close()
-            })
-            return
+        // TODO: manage call summary in client/provider classes
+        if let user = user where user.isProvider {
+            guard wasConnected else {
+                self.simpleAlert("Call was disconnected", message: "No one else joined the call.", completion: {
+                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                })
+                return
+            }
         }
         
         if let call = CallService.sharedInstance.currentCall {
-            self.displayCallSummary()
+            self.performSegueWithIdentifier("GoToFeedback", sender: call)
         }
         else {
             CallService.sharedInstance.queryCallWithId(CallService.sharedInstance.currentCallId, completion: { (result, error) in
-                self.displayCallSummary()
+                self.performSegueWithIdentifier("GoToFeedback", sender: result)
             })
         }
     }
     
-    func displayCallSummary() {
-        guard let user = PFUser.currentUser() as? User else { return }
-        guard let call = CallService.sharedInstance.currentCall else { return } // TODO: handle errors
-        guard let start = call.date else { return }
-        guard let rate = call.rate as? Double else { return }
-        
-        let duration = NSDate().timeIntervalSinceDate(start)
-        let minutes = round(duration / 60)
-        
-        call.totalCost = minutes * rate
-        let message = "Total duration: \(round(minutes)) Estimated cost: \(call.totalCostString)"
-        self.simpleAlert("Call summary", message: message) { 
-            if user.isProvider {
-                print("provider screen")
-                // save the call
-                call.saveInBackgroundWithBlock({ (success, error) in
-                    if let _ = error {
-                        // TODO: store total cost into another object
-                        self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
-                        }
-                    }
-                    else {
-                        self.close()
-                    }
-                })
-            }
-            else {
-                print("client screen")
-                if user.isProvider {
-                    self.close()
-                }
-                else {
-                    // go to feedback
-                }
-            }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let controller = segue.destinationViewController as? FeedbackViewController {
+            let call = sender as? Call
+            controller.call = call
         }
-        
     }
     
     // Main action button
