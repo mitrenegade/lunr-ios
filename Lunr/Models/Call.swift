@@ -51,7 +51,14 @@ extension Call {
         // localize to your grouping and decimal separator
         currencyFormatter.locale = NSLocale.currentLocale()
         
-        guard let cost = totalCost else { return currencyFormatter.stringFromNumber(0)! }
-        return currencyFormatter.stringFromNumber(cost)!
+        if totalCost == nil || totalCost == 0 {
+            // calculate totalCost for display only
+            let rate = self.rate as? Double ?? 0
+            let time = self.duration as? Double ?? 0
+            self.totalCost = time / 60.0 * rate // time is in seconds; rate is in minutes
+
+        }
+        
+        return currencyFormatter.stringFromNumber(self.totalCost as? Double ?? 0.0)!
     }
 }
