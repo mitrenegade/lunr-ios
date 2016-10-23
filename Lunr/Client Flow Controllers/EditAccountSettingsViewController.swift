@@ -7,17 +7,17 @@
 //
 
 import UIKit
+import Parse
 
 class EditAccountSettingsViewController: UIViewController {
-    @IBOutlet var emailLabel: UILabel!
-    @IBOutlet var emailTextField: UITextField!
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var nameTextField: UITextField!
-    @IBOutlet var currentPasswordLabel: UILabel!
-    @IBOutlet var currentPasswordTextField: UITextField!
-    @IBOutlet var newPasswordLabel: UILabel!
-    @IBOutlet var newPasswordTextField: UITextField!
-    @IBOutlet var saveButton: UIButton!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    
+    @IBOutlet weak var viewOverlay: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    weak var currentInput: UITextField?
 
     @IBOutlet var saveButtonToBottomConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
@@ -31,24 +31,8 @@ class EditAccountSettingsViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .Plain, target: self, action: #selector(dismiss))
 
         configureTextFields()
-        saveButton.backgroundColor = .lunr_darkBlue()
-        registerForKeyboardNotifications()
-    }
-
-    func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWasShown), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: UIKeyboardWillHideNotification, object: nil)
-    }
-
-    func keyboardWasShown(aNotification: NSNotification) {
-        let info = aNotification.userInfo
-        if let size = info?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() {
-            saveButtonToBottomConstraint.constant = size.height
-        }
-    }
-
-    func keyboardWillBeHidden(aNotification: NSNotification) {
-        saveButtonToBottomConstraint.constant = 0
+        
+        self.toggleActivity(false)
     }
 
     func configureTextFields() {
@@ -65,21 +49,88 @@ class EditAccountSettingsViewController: UIViewController {
                 textField.leftView = spacerView
             }
         }
+        self.refreshTextFields()
     }
-
-    @IBAction func saveButtonTapped(sender: UIButton) {
-        // Placeholder
+    
+    func refreshTextFields() {
+        guard let user = PFUser.currentUser() as? User else { return }
+        if let email = user.email {
+            self.emailTextField.text = email
+        }
+        if let firstName = user.firstName {
+            self.firstNameTextField.text = firstName
+        }
+        if let lastName = user.lastName {
+            self.lastNameTextField.text = lastName
+        }
     }
 
     func dismiss() {
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+    func toggleActivity(show: Bool = false) {
+        if show {
+            self.viewOverlay.hidden = false
+            self.activityIndicator.startAnimating()
+        }
+        else {
+            self.viewOverlay.hidden = true
+            self.activityIndicator.stopAnimating()
+        }
+    }
 }
 
 extension EditAccountSettingsViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.currentInput = textField
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        print("new value: \(textField.text)")
+        guard let user = PFUser.currentUser() as? User else { return }
+        
+        if currentInput == self.emailTextField {
+            guard let email = self.emailTextField.text where email.isValidEmail() else {
+                self.emailTextField.text = nil
+                return
+            }
+            user.email = self.emailTextField.text
+            self.toggleActivity(true)
+            user.saveInBackgroundWithBlock({ (success, error) in
+                self.refreshTextFields()
+                self.toggleActivity(false)
+            })
+        }
+        else if currentInput == self.firstNameTextField {
+            guard let name = self.firstNameTextField.text where !name.isEmpty else {
+                self.firstNameTextField.text = nil
+                return
+            }
+            user.firstName = self.firstNameTextField.text
+            self.toggleActivity(true)
+            user.saveInBackgroundWithBlock({ (success, error) in
+                self.refreshTextFields()
+                self.toggleActivity(false)
+            })
+        }
+        else if currentInput == self.lastNameTextField {
+            guard let name = self.lastNameTextField.text where !name.isEmpty else {
+                self.lastNameTextField.text = nil
+                return
+            }
+            user.lastName = self.lastNameTextField.text
+            self.toggleActivity(true)
+            user.saveInBackgroundWithBlock({ (success, error) in
+                self.refreshTextFields()
+                self.toggleActivity(false)
+            })
+        }
     }
 }
 

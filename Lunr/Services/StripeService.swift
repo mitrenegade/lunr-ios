@@ -27,4 +27,12 @@ class StripeService: NSObject {
             }
         }
     }
+    
+    func paymentStringForUser(user: User?) -> String {
+        guard let user = user else { return "None" }
+        if let last4 = user.objectForKey("last4") as? String {
+            return "Credit Card *\(last4)"
+        }
+        return "None"
+    }
 }

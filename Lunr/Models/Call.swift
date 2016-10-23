@@ -13,6 +13,7 @@ class Call: PFObject {
     // PFSubclassing and NSManaged is required so that PFObject.init() can be used, and PFObject's getters and setters correctly set key-value pairs that save to Parse
     @NSManaged var duration: NSNumber?
     @NSManaged var totalCost: NSNumber?
+    @NSManaged var date: NSDate?
 
     @NSManaged var client: User?
     @NSManaged var provider: User?
@@ -31,3 +32,15 @@ extension Call: PFSubclassing {
     }
 }
 
+extension Call {
+    var totalCostString: String {
+        let currencyFormatter = NSNumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        // localize to your grouping and decimal separator
+        currencyFormatter.locale = NSLocale.currentLocale()
+        
+        guard let cost = totalCost else { return currencyFormatter.stringFromNumber(0)! }
+        return currencyFormatter.stringFromNumber(cost)!
+    }
+}

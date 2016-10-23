@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A320" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VT5-xy-vo5">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VT5-xy-vo5">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -31,13 +31,13 @@
                                     <constraint firstAttribute="height" constant="35" id="Ibv-xb-n07"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                 <connections>
                                     <outlet property="delegate" destination="joa-Eo-RdE" id="8Fv-Pn-4ZM"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izu-bR-a8C">
-                                <rect key="frame" x="20" y="110" width="53" height="23"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izu-bR-a8C">
+                                <rect key="frame" x="20" y="110" width="89" height="23"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -49,13 +49,13 @@
                                     <constraint firstAttribute="height" constant="35" id="KJQ-Ch-jRk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="joa-Eo-RdE" id="j5b-dc-1G4"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70m-4w-VGB">
-                                <rect key="frame" x="20" y="192" width="141" height="23"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70m-4w-VGB">
+                                <rect key="frame" x="20" y="192" width="87.5" height="23"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -67,18 +67,18 @@
                                     <constraint firstAttribute="height" constant="35" id="onB-FB-exV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="joa-Eo-RdE" id="dEA-c5-I4v"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="631-BD-CUD">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="631-BD-CUD">
                                 <rect key="frame" x="20" y="274" width="120" height="23"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="create a new password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="clv-H9-ED2">
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="create a new password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="clv-H9-ED2">
                                 <rect key="frame" x="20" y="305" width="560" height="35"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -90,58 +90,50 @@
                                     <outlet property="delegate" destination="joa-Eo-RdE" id="7ow-hZ-thL"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EC8-HH-yzu">
-                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="p6F-ZB-goa"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveButtonTapped:" destination="joa-Eo-RdE" eventType="touchUpInside" id="vSL-84-Sfh"/>
-                                </connections>
-                            </button>
+                            <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p2G-pk-gDC" userLabel="View - overlay">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4o8-Nb-CbD">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="QnO-r7-BOi" secondAttribute="leading" id="3fp-dG-6Dj"/>
                             <constraint firstItem="631-BD-CUD" firstAttribute="top" secondItem="QnO-r7-BOi" secondAttribute="bottom" constant="16" id="7JI-IZ-MKz"/>
                             <constraint firstItem="clv-H9-ED2" firstAttribute="top" secondItem="631-BD-CUD" secondAttribute="bottom" constant="8" id="ABt-Kk-0jo"/>
+                            <constraint firstItem="4o8-Nb-CbD" firstAttribute="centerY" secondItem="uCG-Tc-7GL" secondAttribute="centerY" id="Ba0-Vf-tFq"/>
                             <constraint firstItem="izu-bR-a8C" firstAttribute="top" secondItem="6VA-xw-ZWn" secondAttribute="bottom" constant="16" id="Ery-E2-JoY"/>
                             <constraint firstAttribute="leadingMargin" secondItem="6VA-xw-ZWn" secondAttribute="leading" id="Et3-JH-sYx"/>
                             <constraint firstAttribute="leadingMargin" secondItem="631-BD-CUD" secondAttribute="leading" id="HtX-7c-u1t"/>
+                            <constraint firstItem="4o8-Nb-CbD" firstAttribute="centerX" secondItem="uCG-Tc-7GL" secondAttribute="centerX" id="IGF-yR-Is3"/>
                             <constraint firstAttribute="leadingMargin" secondItem="70m-4w-VGB" secondAttribute="leading" id="Ij5-6h-dSx"/>
+                            <constraint firstItem="p2G-pk-gDC" firstAttribute="top" secondItem="uCG-Tc-7GL" secondAttribute="top" id="LIW-oi-uNs"/>
+                            <constraint firstItem="p2G-pk-gDC" firstAttribute="leading" secondItem="uCG-Tc-7GL" secondAttribute="leading" id="Mqg-ER-06W"/>
                             <constraint firstAttribute="leadingMargin" secondItem="clv-H9-ED2" secondAttribute="leading" id="P7i-LM-yYH"/>
                             <constraint firstAttribute="leadingMargin" secondItem="izu-bR-a8C" secondAttribute="leading" id="WEg-C3-A5M"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QnO-r7-BOi" secondAttribute="trailing" id="WbA-NR-w06"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6VA-xw-ZWn" secondAttribute="trailing" id="azG-pR-C86"/>
                             <constraint firstItem="7f8-5J-r7e" firstAttribute="top" secondItem="izu-bR-a8C" secondAttribute="bottom" constant="8" id="bL1-zP-G26"/>
+                            <constraint firstAttribute="trailing" secondItem="p2G-pk-gDC" secondAttribute="trailing" id="bS4-SN-QCg"/>
                             <constraint firstItem="FPB-Gg-Tmq" firstAttribute="top" secondItem="034-nO-aio" secondAttribute="bottom" constant="8" id="hI1-uS-9XI"/>
                             <constraint firstItem="6VA-xw-ZWn" firstAttribute="top" secondItem="FPB-Gg-Tmq" secondAttribute="bottom" constant="8" id="jGV-GT-8Ug"/>
                             <constraint firstAttribute="leadingMargin" secondItem="7f8-5J-r7e" secondAttribute="leading" id="lrb-S4-gWB"/>
                             <constraint firstAttribute="leadingMargin" secondItem="FPB-Gg-Tmq" secondAttribute="leading" id="pb8-Aa-exr"/>
-                            <constraint firstItem="EC8-HH-yzu" firstAttribute="width" secondItem="uCG-Tc-7GL" secondAttribute="width" id="qZ3-hQ-NHx"/>
-                            <constraint firstItem="EC8-HH-yzu" firstAttribute="centerX" secondItem="uCG-Tc-7GL" secondAttribute="centerX" id="sa6-up-HbX"/>
                             <constraint firstItem="70m-4w-VGB" firstAttribute="top" secondItem="7f8-5J-r7e" secondAttribute="bottom" constant="16" id="tBW-oO-Jhx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7f8-5J-r7e" secondAttribute="trailing" id="uCf-sk-ydQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="clv-H9-ED2" secondAttribute="trailing" id="usc-2H-n3S"/>
-                            <constraint firstItem="Ceb-q0-WxL" firstAttribute="top" secondItem="EC8-HH-yzu" secondAttribute="bottom" id="x2e-Mg-jHC"/>
+                            <constraint firstItem="Ceb-q0-WxL" firstAttribute="top" secondItem="p2G-pk-gDC" secondAttribute="bottom" id="wld-Cs-fe4"/>
                             <constraint firstItem="QnO-r7-BOi" firstAttribute="top" secondItem="70m-4w-VGB" secondAttribute="bottom" constant="8" id="xz2-6b-kB4"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="currentPasswordLabel" destination="70m-4w-VGB" id="Fgs-Md-Stl"/>
-                        <outlet property="currentPasswordTextField" destination="QnO-r7-BOi" id="sVS-Rk-Kq4"/>
-                        <outlet property="emailLabel" destination="FPB-Gg-Tmq" id="Lo5-9r-Q1I"/>
+                        <outlet property="activityIndicator" destination="4o8-Nb-CbD" id="Lvu-ky-pDD"/>
                         <outlet property="emailTextField" destination="6VA-xw-ZWn" id="Zji-xy-GC8"/>
-                        <outlet property="nameLabel" destination="izu-bR-a8C" id="0vU-oP-0LD"/>
-                        <outlet property="nameTextField" destination="7f8-5J-r7e" id="kWb-38-aAS"/>
-                        <outlet property="newPasswordLabel" destination="631-BD-CUD" id="n42-Dk-WTt"/>
-                        <outlet property="newPasswordTextField" destination="clv-H9-ED2" id="Uu8-Xo-LDB"/>
-                        <outlet property="saveButton" destination="EC8-HH-yzu" id="OqC-Y0-MCg"/>
-                        <outlet property="saveButtonToBottomConstraint" destination="x2e-Mg-jHC" id="Req-fF-jo6"/>
+                        <outlet property="firstNameTextField" destination="7f8-5J-r7e" id="nDc-8K-NX1"/>
+                        <outlet property="lastNameTextField" destination="QnO-r7-BOi" id="Xg7-AL-4P9"/>
+                        <outlet property="viewOverlay" destination="p2G-pk-gDC" id="YcE-bs-bnx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6d8-cx-Zei" userLabel="First Responder" sceneMemberID="firstResponder"/>

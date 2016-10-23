@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="lunar" translatesAutoresizingMaskIntoConstraints="NO" id="MHo-PO-s3K">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="lunar" translatesAutoresizingMaskIntoConstraints="NO" id="MHo-PO-s3K">
                                 <rect key="frame" x="208" y="200" width="184" height="200"/>
                             </imageView>
                         </subviews>
