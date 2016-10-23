@@ -23,9 +23,9 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.updateCall()
         
+        self.configureCallUI()
+
         self.starRatingView.delegate = self
 
         self.leaveFeedbackBarButtonItem.setTitleTextAttributes(
@@ -49,35 +49,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont.futuraMediumWithSize(17)]
         self.navigationController?.navigationBar.addShadow()
     }
-
-    func updateCall() {
-        guard let call = self.call else { return }
-        guard let start = call.date else { return }
-        guard let rate = call.rate as? Double else { return }
-        
-        let duration = NSDate().timeIntervalSinceDate(start)
-        let minutes = duration / 60
-        
-        call.duration = duration
-        call.totalCost = minutes * rate
-        // save the call
-        if let user = PFUser.currentUser() as? User where user.isProvider {
-            call.saveInBackgroundWithBlock({ (success, error) in
-                if let _ = error {
-                    // TODO: store total cost into another object
-                    self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
-                    }
-                }
-                else {
-                    self.configureCallUI()
-                }
-            })
-        }
-        else {
-            self.configureCallUI()
-        }
-    }
-
+    
     func configureCallUI() {
         guard let call = call else { return }
         guard let _ = call.totalCost as? Double else {
