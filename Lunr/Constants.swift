@@ -32,8 +32,19 @@ enum NotificationType: String {
         case StreamInitialized // after startCall, successfully connected to stream
         case VideoReceived // recipient video received
         case HungUp // recipient hung up
+        
+        case CallCreationFailed // not related to session but session cannot proceed because Parse failed
     }
     case PushRegistered
+}
+
+let SESSION_TIMEOUT_INTERVAL: NSTimeInterval = 30
+enum CallState: String {
+    //    case NoSession // session token to QuickBlox does not exist or expired
+    case Disconnected // no chatroom/webrtc joined
+    //    case Joining // currently joining the chatroom
+    case Waiting // in the chat but no one else is; sending call signal
+    case Connected // both people are in
 }
 
 enum SortCategory : Int {

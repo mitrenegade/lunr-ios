@@ -7,18 +7,13 @@
 //
 // manages video sessions
 
+//TODO: hang up on client side is not showing call summary
+//Create charge on provider side if disconencted successfully
+
 import UIKit
 import Parse
 import Quickblox
 import QMServices
-
-enum CallState: String {
-//    case NoSession // session token to QuickBlox does not exist or expired
-    case Disconnected // no chatroom/webrtc joined
-//    case Joining // currently joining the chatroom
-//    case Waiting // in the chat but no one else is; sending call signal
-    case Connected // both people are in
-}
 
 class SessionService: QMServicesManager, QBRTCClientDelegate {
     static var _instance: SessionService?
@@ -30,7 +25,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             _instance = SessionService()
             QBRTCClient.initializeRTC()
             QBRTCClient.instance().addDelegate(_instance)
-            QBRTCConfig.setAnswerTimeInterval(30)
+            QBRTCConfig.setAnswerTimeInterval(SESSION_TIMEOUT_INTERVAL)
             return _instance!
         }
     }
@@ -40,7 +35,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
 
     var currentDialogID = ""
     var remoteVideoTrack: QBRTCVideoTrack?
-
+    
     // MARK: Chat session
     func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
         self.chatService.createPrivateChatDialogWithOpponent(user) { (response, dialog) in
@@ -131,20 +126,38 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     // MARK: - QBRTCClientDelegate
     var state: CallState = .Disconnected {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.CallStateChanged.rawValue, object: nil, userInfo: ["state":state.rawValue])
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.CallStateChanged.rawValue, object: nil, userInfo: ["state":state.rawValue, "oldValue": oldValue.rawValue])
         }
     }
     
     // MARK: Session lifecycle
     
     // user action (provider)
-    func startCall(userID: UInt) {
-        // create and start session
-        // must be called after video track has been started!
-        let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
-        self.session = newSession
-        let userInfo: [String: AnyObject]? = nil // send any info through
-        self.session!.startCall(userInfo)
+    func startCall(userID: UInt, pfUserId: String) {
+        // create call object
+        CallService.sharedInstance.postNewCall(pfUserId, duration: 0, totalCost: 0) { (call, error) in
+            if error != nil || call == nil {
+                var info: [String: AnyObject]? = nil
+                if let error = error {
+                    info = ["error": error]
+                }
+                self.notify(NotificationType.VideoSession.CallCreationFailed.rawValue, object: nil, userInfo: info)
+                return
+            }
+            
+            // create and start session
+            // must be called after video track has been started!
+            let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
+            self.session = newSession
+            var userInfo: [String: AnyObject]? = nil // send any info through
+            if let call = call, let objectId = call.objectId {
+                CallService.sharedInstance.currentCall = call
+                CallService.sharedInstance.currentCallId = objectId // stores callId on the provider side
+                userInfo = ["callId": objectId]
+            }
+            self.session!.startCall(userInfo)
+            self.state = .Waiting
+        }
     }
 
     // delegate (client)
@@ -159,6 +172,10 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         QBUserService.qbUUserWithId(userId) { (result) in
             if let user = result {
                 print("Incoming call from a known user with id \(user.ID)")
+                if let pfObjectId = userInfo["callId"] as? String {
+                    CallService.sharedInstance.currentCallId = pfObjectId
+                }
+
                 self.session = self.incomingSession
                 self.state = .Connected
             }
