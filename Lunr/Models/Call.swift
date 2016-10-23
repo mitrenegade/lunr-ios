@@ -14,7 +14,8 @@ class Call: PFObject {
     @NSManaged var duration: NSNumber?
     @NSManaged var totalCost: NSNumber?
     @NSManaged var date: NSDate?
-
+    @NSManaged var rate: NSNumber?
+    
     @NSManaged var client: User?
     @NSManaged var provider: User?
     

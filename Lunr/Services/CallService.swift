@@ -11,11 +11,20 @@ import Parse
 
 class CallService: NSObject {
     static let sharedInstance: CallService = CallService()
+    
+    var currentCallId: String? = nil // pfObjectId for a Call
+    var currentCall: Call? = nil
 
     func postNewCall(clientId: String, duration: NSTimeInterval, totalCost: Double, completion: ((call: Call?, error: NSError?)->Void)?) {
         Call.registerSubclass()
 
-        let params = ["date": NSDate(), "duration": duration, "totalCost": totalCost, "clientId": clientId]
+        var rate: Double = 0
+        if let user = PFUser.currentUser() as? User where user.isProvider {
+            rate = user.ratePerMin
+            // TODO: discount?
+        }
+        
+        let params = ["date": NSDate(), "duration": duration, "totalCost": totalCost, "clientId": clientId, "rate": rate]
         PFCloud.callFunctionInBackground("postNewCall", withParameters: params) { (results, error) in
             print("Results \(results) error \(error)")
             if let error = error {
@@ -27,9 +36,9 @@ class CallService: NSObject {
         }
     }
     
-    func queryCallsForUser(user: User?, completion: ((results: [Call]?, error: NSError?)->Void)?) {
+    func queryCallsForUser(user: User?, completion: ((results: [Call]?, error: NSError?)->Void)) {
         guard let user = user else {
-            completion?(results: nil, error: nil)
+            completion(results: nil, error: nil)
             return
         }
         
@@ -45,7 +54,22 @@ class CallService: NSObject {
         query.orderByDescending("createdAt")
         query.findObjectsInBackgroundWithBlock { (results, error) in
             let calls = results as? [Call]
-            completion?(results: calls, error: error)
+            completion(results: calls, error: error)
+        }
+    }
+    
+    func queryCallWithId(callId: String?, completion: ((result: Call?, error: NSError?)->Void)) {
+        guard let callId = callId else {
+            completion(result: nil, error: nil)
+            return
+        }
+ 
+        Call.registerSubclass()
+        
+        let query: PFQuery = Call.query()! //(className: "Call")
+        query.getObjectInBackgroundWithId(callId) { (result, error) in
+            let call = result as? Call
+            completion(result: call, error: error)
         }
     }
 }

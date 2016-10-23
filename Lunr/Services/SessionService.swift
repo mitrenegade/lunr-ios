@@ -30,7 +30,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             _instance = SessionService()
             QBRTCClient.initializeRTC()
             QBRTCClient.instance().addDelegate(_instance)
-            QBRTCConfig.setAnswerTimeInterval(30)
+            QBRTCConfig.setAnswerTimeInterval(5)
             return _instance!
         }
     }
@@ -41,8 +41,6 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     var currentDialogID = ""
     var remoteVideoTrack: QBRTCVideoTrack?
     
-    var currentCallId: String? = nil // pfObjectId for a Call
-
     // MARK: Chat session
     func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
         self.chatService.createPrivateChatDialogWithOpponent(user) { (response, dialog) in
@@ -158,7 +156,8 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             self.session = newSession
             var userInfo: [String: AnyObject]? = nil // send any info through
             if let call = call, let objectId = call.objectId {
-                self.currentCallId = objectId // stores callId on the provider side
+                CallService.sharedInstance.currentCall = call
+                CallService.sharedInstance.currentCallId = objectId // stores callId on the provider side
                 userInfo = ["callId": objectId]
             }
             self.session!.startCall(userInfo)
@@ -177,11 +176,12 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         QBUserService.qbUUserWithId(userId) { (result) in
             if let user = result {
                 print("Incoming call from a known user with id \(user.ID)")
+                if let pfObjectId = userInfo["callId"] as? String {
+                    CallService.sharedInstance.currentCallId = pfObjectId
+                }
+
                 self.session = self.incomingSession
                 self.state = .Connected
-                if let pfObjectId = userInfo["callId"] as? String {
-                    self.currentCallId = pfObjectId
-                }
             }
             else {
                 self.incomingSession = nil

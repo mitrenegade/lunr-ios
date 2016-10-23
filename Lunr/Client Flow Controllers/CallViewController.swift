@@ -87,8 +87,54 @@ class CallViewController: UIViewController {
         SessionService.sharedInstance.endCall()
 
         self.videoCapture?.stopSession()
-
-        self.navigationController?.popViewControllerAnimated(true)
+        
+        if let call = CallService.sharedInstance.currentCall {
+            self.displayCallSummary()
+        }
+        else {
+            CallService.sharedInstance.queryCallWithId(CallService.sharedInstance.currentCallId, completion: { (result, error) in
+                self.displayCallSummary()
+            })
+        }
+    }
+    
+    func displayCallSummary() {
+        guard let user = PFUser.currentUser() as? User else { return }
+        guard let call = CallService.sharedInstance.currentCall else { return } // TODO: handle errors
+        guard let start = call.date else { return }
+        guard let rate = call.rate as? Double else { return }
+        
+        let duration = NSDate().timeIntervalSinceDate(start)
+        let minutes = round(duration / 60)
+        
+        call.totalCost = minutes * rate
+        let message = "Total duration: \(round(minutes)) Estimated cost: \(call.totalCostString)"
+        self.simpleAlert("Call summary", message: message) { 
+            if user.isProvider {
+                print("provider screen")
+                // save the call
+                call.saveInBackgroundWithBlock({ (success, error) in
+                    if let _ = error {
+                        // TODO: store total cost into another object
+                        self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
+                        }
+                    }
+                    else {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+            }
+            else {
+                print("client screen")
+                if user.isProvider {
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                else {
+                    // go to feedback
+                }
+            }
+        }
+        
     }
     
     // Main action button
