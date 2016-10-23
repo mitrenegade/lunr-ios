@@ -107,19 +107,20 @@ class ProviderChatViewController: ChatViewController {
 
     func handleSessionState(notification: NSNotification) {
         let userInfo = notification.userInfo
+        let oldValue = userInfo?["oldValue"] as? String
         switch SessionService.sharedInstance.state {
         case .Connected:
             print("yay")
         case .Disconnected:
-            self.cleanupLastSession()
+            self.cleanupLastSession(oldValue == CallState.Connected.rawValue)
         default:
             break
         }
     }
     
-    func cleanupLastSession() {
+    func cleanupLastSession(wasConnected: Bool) {
         // ends listeners and pops controller. video should automatically stop
-        self.callViewController?.endCall()
+        self.callViewController?.endCall(wasConnected)
         self.callViewController = nil
     }
 

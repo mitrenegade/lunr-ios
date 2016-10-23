@@ -38,6 +38,15 @@ enum NotificationType: String {
     case PushRegistered
 }
 
+let SESSION_TIMEOUT_INTERVAL: NSTimeInterval = 30
+enum CallState: String {
+    //    case NoSession // session token to QuickBlox does not exist or expired
+    case Disconnected // no chatroom/webrtc joined
+    //    case Joining // currently joining the chatroom
+    case Waiting // in the chat but no one else is; sending call signal
+    case Connected // both people are in
+}
+
 enum SortCategory : Int {
     case None = -1 // startup
     case Alphabetical = 0

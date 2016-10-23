@@ -12,14 +12,6 @@ import Parse
 import Quickblox
 import QMServices
 
-enum CallState: String {
-//    case NoSession // session token to QuickBlox does not exist or expired
-    case Disconnected // no chatroom/webrtc joined
-//    case Joining // currently joining the chatroom
-//    case Waiting // in the chat but no one else is; sending call signal
-    case Connected // both people are in
-}
-
 class SessionService: QMServicesManager, QBRTCClientDelegate {
     static var _instance: SessionService?
     static var sharedInstance: SessionService {
@@ -30,7 +22,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             _instance = SessionService()
             QBRTCClient.initializeRTC()
             QBRTCClient.instance().addDelegate(_instance)
-            QBRTCConfig.setAnswerTimeInterval(5)
+            QBRTCConfig.setAnswerTimeInterval(SESSION_TIMEOUT_INTERVAL)
             return _instance!
         }
     }
@@ -131,7 +123,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     // MARK: - QBRTCClientDelegate
     var state: CallState = .Disconnected {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.CallStateChanged.rawValue, object: nil, userInfo: ["state":state.rawValue])
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.CallStateChanged.rawValue, object: nil, userInfo: ["state":state.rawValue, "oldValue": oldValue.rawValue])
         }
     }
     
@@ -161,6 +153,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
                 userInfo = ["callId": objectId]
             }
             self.session!.startCall(userInfo)
+            self.state = .Waiting
         }
     }
 

@@ -78,7 +78,7 @@ class CallViewController: UIViewController {
     }
     
     // MARK: Session
-    func endCall() {
+    func endCall(wasConnected: Bool) {
         self.stopListeningFor(NotificationType.VideoSession.StreamInitialized.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.VideoReceived.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.HungUp.rawValue)
@@ -87,6 +87,13 @@ class CallViewController: UIViewController {
         SessionService.sharedInstance.endCall()
 
         self.videoCapture?.stopSession()
+        
+        guard wasConnected else {
+            self.simpleAlert("Call was disconnected", message: "No one else joined the call.", completion: { 
+                self.close()
+            })
+            return
+        }
         
         if let call = CallService.sharedInstance.currentCall {
             self.displayCallSummary()
@@ -120,14 +127,14 @@ class CallViewController: UIViewController {
                         }
                     }
                     else {
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.close()
                     }
                 })
             }
             else {
                 print("client screen")
                 if user.isProvider {
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.close()
                 }
                 else {
                     // go to feedback
@@ -140,12 +147,16 @@ class CallViewController: UIViewController {
     // Main action button
     @IBAction func didClickButton(button: UIButton) {
         // for now, create a call object and end the call and go to review
-        self.endCall()
+        self.endCall(SessionService.sharedInstance.state == .Connected)
     }
 
     // Back button action on navigation item
     @IBAction func leftBarButtonAction() {
         // don't let user click back
+    }
+    
+    func close() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     // Call creation failed (Provider)
@@ -153,7 +164,7 @@ class CallViewController: UIViewController {
         let userInfo = notification.userInfo
         let error = userInfo?["error"] as? NSError
         self.simpleAlert("Could not initiate call", defaultMessage: "There was an error creating starting a new call", error: error, completion: {
-            self.endCall()
+            self.endCall(false)
         })
     }
     
