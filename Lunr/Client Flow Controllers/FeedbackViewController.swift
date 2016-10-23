@@ -52,11 +52,6 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     
     func configureCallUI() {
         guard let call = call else { return }
-        guard let _ = call.totalCost as? Double else {
-            costLabel.text = "Calculating total cost..."
-            durationLabel.text = nil
-            return
-        }
         
         self.durationLabel.text = "Time: \(call.totalDurationString)"
         if let user = PFUser.currentUser() as? User where user.isProvider {

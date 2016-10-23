@@ -75,18 +75,15 @@ class CallService: NSObject {
     
     func updateCall(call: Call, shouldSave: Bool = true, completion: ((result: Call?, error: NSError?)->Void)) {
         guard let start = call.date else { completion(result: call, error: nil); return }
-        guard let rate = call.rate as? Double else { completion(result: call, error: nil); return }
-        
         let duration = NSDate().timeIntervalSinceDate(start)
-        let minutes = duration / 60
-        
         call.duration = duration
-        call.totalCost = minutes * rate
-        // save the call
+        // save the duration based on provider
         if shouldSave {
-            call.saveInBackgroundWithBlock({ (success, error) in
+            let params: [NSObject: AnyObject] = ["callId": call.objectId!, "duration": duration]
+            PFCloud.callFunctionInBackground("completeCall", withParameters: params) { (result, error) in
+                let call2 = result as? Call
                 completion(result: call, error: error)
-            })
+            }
         }
         else {
             // only client
