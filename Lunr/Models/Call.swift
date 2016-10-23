@@ -34,6 +34,16 @@ extension Call: PFSubclassing {
 }
 
 extension Call {
+    var totalDurationString: String {
+        let totalTime = duration as? Double ?? 0
+        let minutes = floor(totalTime / 60.0)
+        let seconds = floor(totalTime - minutes * 60)
+        if minutes == 0 {
+            return "\(seconds) seconds"
+        }
+        return "\(minutes)min \(seconds)sec"
+    }
+    
     var totalCostString: String {
         let currencyFormatter = NSNumberFormatter()
         currencyFormatter.usesGroupingSeparator = true

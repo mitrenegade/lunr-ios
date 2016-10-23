@@ -220,6 +220,8 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     
     func endCall() {
         self.session?.hangUp(nil)
+        self.currentDialogID = ""
+        QBNotificationService.sharedInstance.clearDialog()
     }
 
     // MARK: All connections

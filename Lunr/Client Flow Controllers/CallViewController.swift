@@ -103,18 +103,40 @@ class CallViewController: UIViewController {
         }
         
         if let call = CallService.sharedInstance.currentCall {
-            self.performSegueWithIdentifier("GoToFeedback", sender: call)
+            self.goToFeedback(call)
         }
         else {
             CallService.sharedInstance.queryCallWithId(CallService.sharedInstance.currentCallId, completion: { (result, error) in
-                self.performSegueWithIdentifier("GoToFeedback", sender: result)
+                self.goToFeedback(result)
+            })
+        }
+    }
+    
+    func goToFeedback(call: Call?) {
+        guard let call = call else { return } // TODO: handle error
+        if let user = PFUser.currentUser() as? User where user.isProvider {
+            CallService.sharedInstance.updateCall(call, completion: { (result, error) in
+                if error != nil {
+                    // TODO: store total cost into another object
+                    self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
+                        self.performSegueWithIdentifier("GoToFeedback", sender: call)
+                    }
+                }
+                else {
+                    self.performSegueWithIdentifier("GoToFeedback", sender: result)
+                }
+            })
+        }
+        else {
+            // temporarily update call
+            CallService.sharedInstance.updateCall(call, shouldSave: false, completion: { (result, error) in
+                self.performSegueWithIdentifier("GoToFeedback", sender: call)
             })
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let controller = segue.destinationViewController as? FeedbackViewController {
-            let call = sender as? Call
+        if let controller = segue.destinationViewController as? FeedbackViewController, let call = sender as? Call {
             controller.call = call
         }
     }
