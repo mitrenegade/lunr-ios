@@ -73,7 +73,7 @@ class CallService: NSObject {
         }
     }
     
-    func updateCall(call: Call, completion: ((result: Call?, error: NSError?)->Void)) {
+    func updateCall(call: Call, shouldSave: Bool = true, completion: ((result: Call?, error: NSError?)->Void)) {
         guard let start = call.date else { completion(result: call, error: nil); return }
         guard let rate = call.rate as? Double else { completion(result: call, error: nil); return }
         
@@ -83,9 +83,15 @@ class CallService: NSObject {
         call.duration = duration
         call.totalCost = minutes * rate
         // save the call
-        call.saveInBackgroundWithBlock({ (success, error) in
-            completion(result: call, error: error)
-        })
+        if shouldSave {
+            call.saveInBackgroundWithBlock({ (success, error) in
+                completion(result: call, error: error)
+            })
+        }
+        else {
+            // only client
+            completion(result: call, error: nil)
+        }
     }
 
 }

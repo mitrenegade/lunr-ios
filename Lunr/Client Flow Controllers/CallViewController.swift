@@ -128,7 +128,10 @@ class CallViewController: UIViewController {
             })
         }
         else {
-            self.performSegueWithIdentifier("GoToFeedback", sender: call)
+            // temporarily update call
+            CallService.sharedInstance.updateCall(call, shouldSave: false, completion: { (result, error) in
+                self.performSegueWithIdentifier("GoToFeedback", sender: call)
+            })
         }
     }
     
