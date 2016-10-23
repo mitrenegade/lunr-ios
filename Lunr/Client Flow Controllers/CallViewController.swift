@@ -113,8 +113,7 @@ class CallViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let controller = segue.destinationViewController as? FeedbackViewController {
-            let call = sender as? Call
+        if let controller = segue.destinationViewController as? FeedbackViewController, let call = sender as? Call {
             controller.call = call
         }
     }
