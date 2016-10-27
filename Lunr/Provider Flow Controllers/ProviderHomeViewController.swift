@@ -120,7 +120,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         guard let user = PFUser.currentUser() as? User where user.isProvider else { return }
         let startDate = NSDate().startOfWeek
         let endDate = NSDate()
-        CallService.sharedInstance.queryCallsForUser(user, startDate: startDate, endDate: endDate) { (results, error) in
+        CallService.sharedInstance.queryCallsForUser(user, startDate: TEST ? startDate : nil, endDate: endDate) { (results, error) in
             if let error = error {
                 print("Error \(error)")
             }

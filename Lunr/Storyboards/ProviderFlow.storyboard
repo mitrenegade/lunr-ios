@@ -502,7 +502,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSt-6b-48x">
-                                        <rect key="frame" x="0.0" y="77" width="488" height="16"/>
+                                        <rect key="frame" x="0.0" y="77" width="481" height="16"/>
                                         <attributedString key="attributedText">
                                             <fragment content="total calls">
                                                 <attributes>
@@ -524,10 +524,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$875.62" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jt-wz-aTU">
-                                        <rect key="frame" x="496" y="73" width="64" height="21"/>
+                                        <rect key="frame" x="478" y="73" width="82" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Ge6-Ze-sdq"/>
-                                            <constraint firstAttribute="width" constant="64" id="koS-vl-06i"/>
+                                            <constraint firstAttribute="width" constant="82" id="koS-vl-06i"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                         <color key="textColor" red="0.18039215689999999" green="0.21960784310000001" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -556,7 +556,7 @@
                                     <constraint firstItem="kbB-bK-ee5" firstAttribute="leading" secondItem="ju6-ZD-vU5" secondAttribute="leading" id="GfB-R8-LFN"/>
                                     <constraint firstItem="DSt-6b-48x" firstAttribute="baseline" secondItem="5jt-wz-aTU" secondAttribute="baseline" id="Nus-aC-yII"/>
                                     <constraint firstItem="e8v-WB-wvt" firstAttribute="top" secondItem="8Xq-et-zVt" secondAttribute="bottom" constant="20" id="RWF-d1-KHR"/>
-                                    <constraint firstItem="5jt-wz-aTU" firstAttribute="leading" secondItem="DSt-6b-48x" secondAttribute="trailing" constant="8" id="YXc-4H-NjT"/>
+                                    <constraint firstItem="5jt-wz-aTU" firstAttribute="leading" secondItem="DSt-6b-48x" secondAttribute="trailing" constant="-3" id="YXc-4H-NjT"/>
                                     <constraint firstItem="L1I-3G-URt" firstAttribute="top" secondItem="5jt-wz-aTU" secondAttribute="bottom" id="ZxI-EE-R8D"/>
                                     <constraint firstItem="kbB-bK-ee5" firstAttribute="top" secondItem="DSt-6b-48x" secondAttribute="bottom" constant="1" id="dAJ-aH-0hJ"/>
                                     <constraint firstAttribute="bottom" secondItem="L1I-3G-URt" secondAttribute="bottom" id="exS-AU-42D"/>

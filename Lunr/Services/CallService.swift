@@ -53,10 +53,10 @@ class CallService: NSObject {
         }
         query.orderByDescending("createdAt")
         if let start = startDate {
-            query.whereKey("createdAt", lessThanOrEqualTo: start)
+            query.whereKey("createdAt", greaterThanOrEqualTo: start)
         }
         if let end = endDate {
-            query.whereKey("createdAt", greaterThanOrEqualTo: end)
+            query.whereKey("createdAt", lessThanOrEqualTo: end)
         }
         query.findObjectsInBackgroundWithBlock { (results, error) in
             let calls = results as? [Call]

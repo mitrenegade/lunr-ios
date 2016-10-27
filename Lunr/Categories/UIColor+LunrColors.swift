@@ -13,6 +13,10 @@ extension UIColor {
         return UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1.0)
     }
 
+    class func lunr_darkGrayText() -> UIColor {
+        return UIColor(red: 46/255, green: 56/255, blue: 91/255, alpha: 1.0)
+    }
+
     class func lunr_iceBlue() -> UIColor {
         return UIColor(red: 249/255, green: 255/255, blue: 254/255, alpha: 1.0)
     }
@@ -28,6 +32,7 @@ extension UIColor {
     class func lunr_blueText() -> UIColor {
         return UIColor(red:0.780,  green:0.827,  blue:0.929, alpha:1)
     }
+    
     
     // Custom chat message bubble colors based on index of user
     @nonobjc static let qbChatColors = [
