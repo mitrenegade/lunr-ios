@@ -36,7 +36,7 @@ class CallService: NSObject {
         }
     }
     
-    func queryCallsForUser(user: User?, completion: ((results: [Call]?, error: NSError?)->Void)) {
+    func queryCallsForUser(user: User?, startDate: NSDate? = nil, endDate: NSDate? = nil, completion: ((results: [Call]?, error: NSError?)->Void)) {
         guard let user = user else {
             completion(results: nil, error: nil)
             return
@@ -52,6 +52,12 @@ class CallService: NSObject {
             query.whereKey("client", equalTo: user)
         }
         query.orderByDescending("createdAt")
+        if let start = startDate {
+            query.whereKey("createdAt", lessThanOrEqualTo: start)
+        }
+        if let end = endDate {
+            query.whereKey("createdAt", greaterThanOrEqualTo: end)
+        }
         query.findObjectsInBackgroundWithBlock { (results, error) in
             let calls = results as? [Call]
             completion(results: calls, error: error)

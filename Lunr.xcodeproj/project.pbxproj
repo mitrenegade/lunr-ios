@@ -33,6 +33,7 @@
 		84D78DFB1DB1814C004822F1 /* ProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */; };
 		84E2D2CF1D902083003F4A86 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2D2CE1D902083003F4A86 /* ChatViewController.swift */; };
 		8E2919361DADC2000095F89A /* LunrRoundActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */; };
+		8E470E7B1DC2BCA800CF9638 /* WeekSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
 		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
 		8E6418D31D55585A00CC4928 /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -105,6 +106,7 @@
 		84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderSettingsViewController.swift; sourceTree = "<group>"; };
 		84E2D2CE1D902083003F4A86 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrRoundActivityButton.swift; sourceTree = "<group>"; };
+		8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekSummaryViewController.swift; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,6 +302,7 @@
 				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
 				8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */,
 				84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */,
+				8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */,
 			);
 			path = "Provider Flow Controllers";
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				446144FD1D723DF3003B89F8 /* CallHistoryCell.swift in Sources */,
 				84258F101D90F4E400A61969 /* QBNotificationService.swift in Sources */,
 				842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */,
+				8E470E7B1DC2BCA800CF9638 /* WeekSummaryViewController.swift in Sources */,
 				8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */,
 				8ED6E1721D9FF03E00F5444B /* ClientChatViewController.swift in Sources */,
 				8ED6E1741DA1916D00F5444B /* ProviderChatViewController.swift in Sources */,

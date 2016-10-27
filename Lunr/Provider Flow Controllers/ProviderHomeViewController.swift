@@ -19,6 +19,10 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     var dialog: QBChatDialog?
     var incomingPFUserId: String?
     
+    var calls: [Call]?
+    
+    weak var weekSummaryController: WeekSummaryViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +37,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 print("User is available and push is enabled")
             })
         }
+        
+        self.refreshCallHistory()
         
         self.listenFor("dialog:fetched", action: #selector(handleIncomingChatRequest(_:)), object: nil)
     }
@@ -109,4 +115,38 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     /* TODO:
      - dismiss a call request. (other than go offline)
     */
+    
+    func refreshCallHistory() {
+        guard let user = PFUser.currentUser() as? User where user.isProvider else { return }
+        let startDate = NSDate().startOfWeek
+        let endDate = NSDate()
+        CallService.sharedInstance.queryCallsForUser(user, startDate: startDate, endDate: endDate) { (results, error) in
+            if let error = error {
+                print("Error \(error)")
+            }
+            else {
+                self.calls = results
+                self.weekSummaryController?.calls = results
+            }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "EmbedWeekSummary" {
+            if let controller: WeekSummaryViewController = segue.destinationViewController as? WeekSummaryViewController {
+                controller.calls = self.calls
+                self.weekSummaryController = controller
+            }
+        }
+    }
+}
+
+extension NSDate {
+    struct Calendar {
+        static let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+    }
+    var startOfWeek: NSDate {
+        let sunday = Calendar.gregorian.dateFromComponents(Calendar.gregorian.components([.YearForWeekOfYear, .WeekOfYear ], fromDate: self))!
+        return sunday.dateByAddingTimeInterval(3600*24)
+    }
 }
