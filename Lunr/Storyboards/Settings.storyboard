@@ -217,7 +217,7 @@
                                             <outlet property="textField" destination="bZa-Da-B8c" id="Gc6-A8-akR"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CallHistoryCell" rowHeight="120" id="TEA-Xu-SB5" userLabel="CallHistoryCell" customClass="CallHistoryCell" customModule="Lunr" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CallHistoryCell" rowHeight="120" id="TEA-Xu-SB5" userLabel="CallHistoryCell" customClass="ClientCallHistoryCell" customModule="Lunr" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="150" width="600" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TEA-Xu-SB5" id="S8L-e9-QsU">

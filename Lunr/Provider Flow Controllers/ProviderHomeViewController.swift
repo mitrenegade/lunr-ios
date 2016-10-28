@@ -121,15 +121,19 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     func refreshCallHistory() {
         guard let user = PFUser.currentUser() as? User where user.isProvider else { return }
-        let startDate = NSDate().startOfWeek
+        //let startDate = NSDate().startOfWeek
         let endDate = NSDate()
-        CallService.sharedInstance.queryCallsForUser(user, startDate: TEST ? startDate : nil, endDate: endDate) { (results, error) in
+        CallService.sharedInstance.queryCallsForUser(user, startDate:nil, endDate: endDate) { (results, error) in
             if let error = error {
                 print("Error \(error)")
             }
             else {
                 self.calls = results
-                self.weekSummaryController?.calls = results
+                let startDate = NSDate().startOfWeek
+                let filtered = results?.filter({ (call) -> Bool in
+                    return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
+                })
+                self.weekSummaryController?.calls = filtered
                 
                 self.tableView.reloadData()
             }
@@ -155,27 +159,12 @@ extension ProviderHomeViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let row = indexPath.row
-        let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! CallHistoryCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! ProviderCallHistoryCell
         guard let calls = self.calls where row < calls.count else {
             return cell
         }
         let call = calls[row]
-        
-        if let date = call.date {
-            cell.dateLabel.text = dateFormatter.stringFromDate(date)
-        }
-        
-        if cell.nameLabel.text == nil {
-            cell.nameLabel.text = "..."
-        }
-        if let user = PFUser.currentUser() as? User where user.isProvider, let client = call.client {
-            client.fetchIfNeededInBackgroundWithBlock({ (result, error) in
-                cell.nameLabel.text = client.displayString
-            })
-        }
-        cell.priceLabel.text = String(call.totalCostString)
-        cell.cardLabel.text = StripeService().paymentStringForUser(PFUser.currentUser() as? User)
-        cell.separatorView.backgroundColor = UIColor.lunr_separatorGray()
+        cell.configure(call)
         return cell
     }
     

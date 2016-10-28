@@ -29,6 +29,8 @@ class WeekSummaryViewController: UIViewController {
         dateFormatter.dateFormat = "E, d MMM yyyy"
         let start = NSDate().startOfWeek
         labelDate.text = "Week of \(dateFormatter.stringFromDate(start))"
+        
+        self.refresh()
     }
 
     override func didReceiveMemoryWarning() {
