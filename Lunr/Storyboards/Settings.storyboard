@@ -170,7 +170,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="100" sectionFooterHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="ars-5n-QWe">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="100" sectionFooterHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="ars-5n-QWe">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
@@ -224,28 +224,32 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMS-m7-BAq">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hMS-m7-BAq">
                                                     <rect key="frame" x="16" y="8" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="NQM-uo-XU8"/>
+                                                        <constraint firstAttribute="width" constant="42" id="wip-XO-vz7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2L-Fd-pB7">
-                                                    <rect key="frame" x="66" y="8" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="66" y="8" width="526" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="bch-co-Zj9"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                    <color key="textColor" red="0.47058823529411764" green="0.47058823529411764" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kh0-XF-XIi">
-                                                    <rect key="frame" x="66" y="33" width="42" height="32"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxA-Rc-6X9">
-                                                    <rect key="frame" x="66" y="69" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="66" y="33" width="526" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="xHZ-qS-3IY"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                    <color key="textColor" red="0.47058823529411764" green="0.47058823529411764" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12V-q4-odU">
@@ -255,24 +259,37 @@
                                                         <constraint firstAttribute="height" constant="1" id="sY9-dt-fMN"/>
                                                     </constraints>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxA-Rc-6X9">
+                                                    <rect key="frame" x="66" y="58" width="526" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Txj-J9-n4V"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                    <color key="textColor" red="0.47058823529411764" green="0.47058823529411764" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="topMargin" secondItem="hMS-m7-BAq" secondAttribute="top" id="2oJ-Qg-P9K"/>
                                                 <constraint firstItem="Kh0-XF-XIi" firstAttribute="leading" secondItem="m2L-Fd-pB7" secondAttribute="leading" id="3xQ-y7-t7h"/>
+                                                <constraint firstItem="pxA-Rc-6X9" firstAttribute="top" secondItem="Kh0-XF-XIi" secondAttribute="bottom" constant="4" id="DcO-U2-bCo"/>
                                                 <constraint firstItem="Kh0-XF-XIi" firstAttribute="top" secondItem="m2L-Fd-pB7" secondAttribute="bottom" constant="4" id="Dwt-Eo-rrc"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="12V-q4-odU" secondAttribute="trailing" id="Mqk-1S-8W9"/>
+                                                <constraint firstItem="Kh0-XF-XIi" firstAttribute="trailing" secondItem="S8L-e9-QsU" secondAttribute="trailingMargin" id="OZK-Yk-n5o"/>
                                                 <constraint firstItem="12V-q4-odU" firstAttribute="width" secondItem="S8L-e9-QsU" secondAttribute="width" id="PaW-1W-QJ9"/>
+                                                <constraint firstItem="12V-q4-odU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pxA-Rc-6X9" secondAttribute="bottom" id="S0F-oP-Yog"/>
+                                                <constraint firstItem="pxA-Rc-6X9" firstAttribute="trailing" secondItem="S8L-e9-QsU" secondAttribute="trailingMargin" id="Svg-la-el5"/>
                                                 <constraint firstItem="Kh0-XF-XIi" firstAttribute="leading" secondItem="m2L-Fd-pB7" secondAttribute="leading" id="WAm-tw-0Ns"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="pxA-Rc-6X9" secondAttribute="bottom" id="baN-hc-IR9"/>
                                                 <constraint firstItem="pxA-Rc-6X9" firstAttribute="leading" secondItem="m2L-Fd-pB7" secondAttribute="leading" id="mIw-ww-uhh"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="hMS-m7-BAq" secondAttribute="leading" constant="-8" id="n09-Kx-cQi"/>
-                                                <constraint firstItem="12V-q4-odU" firstAttribute="top" secondItem="pxA-Rc-6X9" secondAttribute="bottom" constant="20" id="noS-w9-cMh"/>
                                                 <constraint firstItem="12V-q4-odU" firstAttribute="leading" secondItem="S8L-e9-QsU" secondAttribute="leadingMargin" id="pDO-RR-pgP"/>
                                                 <constraint firstItem="pxA-Rc-6X9" firstAttribute="leading" secondItem="m2L-Fd-pB7" secondAttribute="leading" id="qmO-4o-tlv"/>
                                                 <constraint firstItem="pxA-Rc-6X9" firstAttribute="top" secondItem="Kh0-XF-XIi" secondAttribute="bottom" constant="4" id="rRq-dp-tUp"/>
                                                 <constraint firstItem="m2L-Fd-pB7" firstAttribute="leading" secondItem="hMS-m7-BAq" secondAttribute="trailing" constant="8" id="ufL-pH-UKX"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="12V-q4-odU" secondAttribute="bottom" id="umD-nd-I2s"/>
                                                 <constraint firstItem="m2L-Fd-pB7" firstAttribute="top" secondItem="hMS-m7-BAq" secondAttribute="top" id="wnB-sA-KpV"/>
+                                                <constraint firstItem="m2L-Fd-pB7" firstAttribute="trailing" secondItem="S8L-e9-QsU" secondAttribute="trailingMargin" id="zJ9-de-8ff"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
