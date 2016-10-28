@@ -23,6 +23,9 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     weak var weekSummaryController: WeekSummaryViewController?
     
+    // MARK: Call History TableView
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -127,6 +130,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             else {
                 self.calls = results
                 self.weekSummaryController?.calls = results
+                
+                self.tableView.reloadData()
             }
         }
     }
@@ -138,6 +143,54 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 self.weekSummaryController = controller
             }
         }
+    }
+}
+
+extension ProviderHomeViewController: UITableViewDataSource {
+    var dateFormatter: NSDateFormatter {
+        let df = NSDateFormatter()
+        df.dateFormat = "MM/dd"
+        return df
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let row = indexPath.row
+        let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! CallHistoryCell
+        guard let calls = self.calls where row < calls.count else {
+            return cell
+        }
+        let call = calls[row]
+        
+        if let date = call.date {
+            cell.dateLabel.text = dateFormatter.stringFromDate(date)
+        }
+        
+        if cell.nameLabel.text == nil {
+            cell.nameLabel.text = "..."
+        }
+        if let user = PFUser.currentUser() as? User where user.isProvider, let client = call.client {
+            client.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+                cell.nameLabel.text = client.displayString
+            })
+        }
+        cell.priceLabel.text = String(call.totalCostString)
+        cell.cardLabel.text = StripeService().paymentStringForUser(PFUser.currentUser() as? User)
+        cell.separatorView.backgroundColor = UIColor.lunr_separatorGray()
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.calls?.count ?? 0
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+}
+
+extension ProviderHomeViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
     }
 }
 
