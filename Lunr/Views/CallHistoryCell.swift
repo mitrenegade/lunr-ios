@@ -47,7 +47,7 @@ class ClientCallHistoryCell: UITableViewCell {
 }
 
 
-class ProviderCallHistoryCell: UITableViewCell {
+class ProviderCallHistoryCell: UITableViewCell, StarRatingViewDelegate {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -96,5 +96,11 @@ class ProviderCallHistoryCell: UITableViewCell {
         priceLabel.text = earningsString
 
         //self.separatorView.backgroundColor = UIColor.lunr_separatorGray()
+        self.ratingView.delegate = self
+    }
+    
+    func starRatingSelected(rating: Int) {
+        print("rating: \(rating)")  
     }
 }
+
