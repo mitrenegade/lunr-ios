@@ -17,7 +17,7 @@ class StarRatingView: NibLoadableView {
     }
 
     @IBAction func starRatingButtonPressed(sender: UIButton) {
-        self.delegate!.starRatingSelected(sender.tag)
+        self.delegate?.starRatingSelected(sender.tag)
         self.configureRatingImagesForRating(sender.tag)
     }
 
