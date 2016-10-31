@@ -64,8 +64,8 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     
     // MARK: Event Methods
 
-    @IBAction func closedButtonPressed(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func close(sender: AnyObject) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
     // MARK: StarRatingViewDelegate Methods
@@ -76,7 +76,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         //TODO: save the experience rating as a parameter in a request to update feedback
     }
 
-    @IBAction func leaveFeedbackPressed(sender: UIBarButtonItem) {
+    @IBAction func save(sender: UIBarButtonItem) {
         //TODO: handle leaving feedback
     }
 

@@ -116,7 +116,7 @@
         <!--Feedback View Controller-->
         <scene sceneID="JC8-Zw-rFe">
             <objects>
-                <tableViewController id="q6y-Fj-lKD" customClass="FeedbackViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FeedbackViewController" id="q6y-Fj-lKD" customClass="FeedbackViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="12" sectionFooterHeight="18" id="BOK-ma-2Qy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -239,14 +239,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="NlO-uZ-Nky">
-                        <barButtonItem key="leftBarButtonItem" image="close" id="TOh-Sg-Sfp">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="qMD-CZ-B6Y">
                             <connections>
-                                <action selector="closedButtonPressed:" destination="q6y-Fj-lKD" id="DJh-xA-wIr"/>
+                                <action selector="close:" destination="q6y-Fj-lKD" id="YCY-sq-lW0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="Fq0-dR-sUg">
+                            <connections>
+                                <action selector="save:" destination="q6y-Fj-lKD" id="8Ye-zJ-LMy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="closeButton" destination="TOh-Sg-Sfp" id="dgb-cu-4Kn"/>
                         <outlet property="costLabel" destination="Ujd-NK-K41" id="Xcz-zl-Tqa"/>
                         <outlet property="durationLabel" destination="xVq-U3-Eq9" id="u3S-xG-zdK"/>
                         <outlet property="feedbackTextView" destination="OWT-cP-IFA" id="h9b-Rl-DTF"/>
@@ -278,6 +282,5 @@
     </scenes>
     <resources>
         <image name="Hang Up" width="70" height="70"/>
-        <image name="close" width="22" height="24"/>
     </resources>
 </document>

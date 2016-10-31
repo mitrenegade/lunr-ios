@@ -34,10 +34,10 @@ class SplashViewController: UIViewController {
                 return UIStoryboard(name: "ProviderFlow", bundle: nil).instantiateInitialViewController()
             }
             
-            return UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController()
+            return UIStoryboard(name: "ClientFlow", bundle: nil).instantiateInitialViewController()
         default:
             // PFUser.currentUser is only a PFUser. This case should not exist
-            return UIStoryboard(name: "Provider", bundle: nil).instantiateInitialViewController()
+            return UIStoryboard(name: "ClientFlow", bundle: nil).instantiateInitialViewController()
         }
     }
 
