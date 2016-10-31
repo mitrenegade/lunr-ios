@@ -21,6 +21,10 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     var calls: [Call]?
     
+    private var callsThisWeek: [Call]?
+    private var callsLastWeek: [Call]?
+    private var callsPast: [Call]?
+    
     weak var weekSummaryController: WeekSummaryViewController?
     
     // MARK: Call History TableView
@@ -129,11 +133,23 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             }
             else {
                 self.calls = results
-                let startDate = NSDate().startOfWeek
-                let filtered = results?.filter({ (call) -> Bool in
+
+                // this week
+                var startDate = NSDate().startOfWeek
+                self.callsThisWeek = results?.filter({ (call) -> Bool in
                     return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
                 })
-                self.weekSummaryController?.calls = filtered
+                self.weekSummaryController?.calls = self.callsThisWeek
+                // last week
+                startDate = startDate.dateByAddingTimeInterval(-7*24*3600)
+                self.callsLastWeek = results?.filter({ (call) -> Bool in
+                    return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
+                })
+                // this week
+                startDate = startDate.dateByAddingTimeInterval(-7*24*3600)
+                self.callsPast = results?.filter({ (call) -> Bool in
+                    return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
+                })
                 
                 self.tableView.reloadData()
             }
@@ -169,17 +185,68 @@ extension ProviderHomeViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.calls?.count ?? 0
+        switch section {
+        case 0:
+            return callsThisWeek?.count ?? 0
+        case 1:
+            return callsLastWeek?.count ?? 0
+        default:
+            return callsPast?.count ?? 0
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 3
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            if self.callsThisWeek?.count == 0 {
+                return 0
+            }
+        case 1:
+            if self.callsLastWeek?.count == 0 {
+                return 0
+            }
+        default:
+            if self.callsPast?.count == 0 {
+                return 0
+            }
+        }
+        return 30
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 30))
+        view.backgroundColor = UIColor.whiteColor()
+        let label: UILabel = UILabel(frame: CGRectMake(16, 4, 200, 21))
+        label.font = UIFont(name: "Futura-Medium", size: 16)
+        switch section {
+        case 0:
+            label.text = "This week"
+            if self.callsThisWeek?.count == 0 {
+                return nil
+            }
+        case 1:
+            label.text = "Last week"
+            if self.callsLastWeek?.count == 0 {
+                return nil
+            }
+        default:
+            label.text = "Past calls"
+            if self.callsPast?.count == 0 {
+                return nil
+            }
+        }
+        view.addSubview(label)
+        return view
     }
 }
 
 extension ProviderHomeViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100
+        return 80
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
