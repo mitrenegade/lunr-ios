@@ -18,6 +18,7 @@ class Call: PFObject {
     
     @NSManaged var client: User?
     @NSManaged var provider: User?
+    @NSManaged var review: Review?
     
     //var paymentMethod: Card
 

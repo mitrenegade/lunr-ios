@@ -20,12 +20,6 @@ class AccountSettingsViewController: UIViewController {
     var callHistory: [Call]?
     var user: User?
 
-    var dateFormatter: NSDateFormatter {
-        let df = NSDateFormatter()
-        df.dateFormat = "MM/dd"
-        return df
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = false
@@ -97,32 +91,12 @@ extension AccountSettingsViewController: UITableViewDataSource {
             cell.textField.text = StripeService().paymentStringForUser(self.user)
             return cell
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! CallHistoryCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! ClientCallHistoryCell
             guard let calls = self.callHistory where row < calls.count else {
                 return cell
             }
             let call = calls[row]
-            
-            if let date = call.date {
-                cell.dateLabel.text = dateFormatter.stringFromDate(date)
-            }
-            
-            if cell.nameLabel.text == nil {
-                cell.nameLabel.text = "..."
-            }
-            if let user = self.user where !user.isProvider, let provider = call.provider {
-                provider.fetchIfNeededInBackgroundWithBlock({ (result, error) in
-                    cell.nameLabel.text = provider.displayString
-                })
-            }
-            else if let user = self.user where user.isProvider, let client = call.client {
-                client.fetchIfNeededInBackgroundWithBlock({ (result, error) in
-                    cell.nameLabel.text = client.displayString
-                })
-            }
-            cell.priceLabel.text = String(call.totalCostString)
-            cell.cardLabel.text = StripeService().paymentStringForUser(self.user)
-            cell.separatorView.backgroundColor = UIColor.lunr_separatorGray()
+            cell.configure(call)
             return cell
         default:
             return UITableViewCell()

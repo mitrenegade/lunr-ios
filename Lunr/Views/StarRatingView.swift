@@ -17,7 +17,7 @@ class StarRatingView: NibLoadableView {
     }
 
     @IBAction func starRatingButtonPressed(sender: UIButton) {
-        self.delegate!.starRatingSelected(sender.tag)
+        self.delegate?.starRatingSelected(sender.tag)
         self.configureRatingImagesForRating(sender.tag)
     }
 
@@ -26,9 +26,9 @@ class StarRatingView: NibLoadableView {
 
         for button : UIButton in self.starRatingButtons {
             if button.tag <= rating {
-                image = UIImage(named: "star")!.imageWithRenderingMode(.AlwaysTemplate)
+                image = UIImage(named: "star")!
             } else {
-                image = UIImage(named: "gray_star")!.imageWithRenderingMode(.AlwaysTemplate)
+                image = UIImage(named: "gray_star")!
             }
 
             button.setImage(image, forState: .Normal)

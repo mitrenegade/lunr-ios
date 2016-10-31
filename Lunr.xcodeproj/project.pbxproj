@@ -17,7 +17,6 @@
 		44BA7F411D73C9F5006B347D /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */; };
 		44BA7F431D73CA04006B347D /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */; };
 		44BA7F451D73CB47006B347D /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F441D73CB47006B347D /* Settings.storyboard */; };
-		44BA7F471D77C198006B347D /* Randall.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44BA7F461D77C198006B347D /* Randall.storyboard */; };
 		6441927D0CD7E83D78420929 /* Pods_Lunr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD30739001DDAFD2039F5F51 /* Pods_Lunr.framework */; };
 		84066CCE1D94222000AF27AC /* QBChatMessage+LunrExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84066CCD1D94222000AF27AC /* QBChatMessage+LunrExtensions.swift */; };
 		8413F5AC1D9114AD0086FD19 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8413F5AB1D9114AD0086FD19 /* Chat.storyboard */; };
@@ -33,6 +32,7 @@
 		84D78DFB1DB1814C004822F1 /* ProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */; };
 		84E2D2CF1D902083003F4A86 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2D2CE1D902083003F4A86 /* ChatViewController.swift */; };
 		8E2919361DADC2000095F89A /* LunrRoundActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */; };
+		8E470E7B1DC2BCA800CF9638 /* WeekSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
 		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
 		8E6418D31D55585A00CC4928 /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -88,7 +88,6 @@
 		44BA7F401D73C9F5006B347D /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		44BA7F421D73CA04006B347D /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviewTableViewCell.xib; path = Xibs/ReviewTableViewCell.xib; sourceTree = "<group>"; };
 		44BA7F441D73CB47006B347D /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
-		44BA7F461D77C198006B347D /* Randall.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Randall.storyboard; sourceTree = "<group>"; };
 		5C54BC0FD155D9D86D43B7BC /* Pods-Lunr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.debug.xcconfig"; sourceTree = "<group>"; };
 		84066CCD1D94222000AF27AC /* QBChatMessage+LunrExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QBChatMessage+LunrExtensions.swift"; sourceTree = "<group>"; };
 		8413F5AB1D9114AD0086FD19 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
@@ -105,6 +104,7 @@
 		84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderSettingsViewController.swift; sourceTree = "<group>"; };
 		84E2D2CE1D902083003F4A86 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrRoundActivityButton.swift; sourceTree = "<group>"; };
+		8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekSummaryViewController.swift; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,7 +274,6 @@
 				E561645E1D5F9AB200926692 /* Main.storyboard */,
 				8E4DE0B71D62AFA10013C06C /* Provider.storyboard */,
 				842984A51D74E3B20063F1B5 /* ProviderFlow.storyboard */,
-				44BA7F461D77C198006B347D /* Randall.storyboard */,
 				44BA7F441D73CB47006B347D /* Settings.storyboard */,
 				8413F5AB1D9114AD0086FD19 /* Chat.storyboard */,
 			);
@@ -300,6 +299,7 @@
 				842984A71D7524990063F1B5 /* ProviderHomeViewController.swift */,
 				8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */,
 				84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */,
+				8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */,
 			);
 			path = "Provider Flow Controllers";
 			sourceTree = "<group>";
@@ -454,7 +454,6 @@
 				842984A61D74E3B20063F1B5 /* ProviderFlow.storyboard in Resources */,
 				E56164671D6A13DF00926692 /* ProviderSkillTagCollectionViewCell.xib in Resources */,
 				44BA7F451D73CB47006B347D /* Settings.storyboard in Resources */,
-				44BA7F471D77C198006B347D /* Randall.storyboard in Resources */,
 				E56164561D5F78D500926692 /* SortCategoryView.xib in Resources */,
 				8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */,
 				8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */,
@@ -582,6 +581,7 @@
 				446144FD1D723DF3003B89F8 /* CallHistoryCell.swift in Sources */,
 				84258F101D90F4E400A61969 /* QBNotificationService.swift in Sources */,
 				842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */,
+				8E470E7B1DC2BCA800CF9638 /* WeekSummaryViewController.swift in Sources */,
 				8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */,
 				8ED6E1721D9FF03E00F5444B /* ClientChatViewController.swift in Sources */,
 				8ED6E1741DA1916D00F5444B /* ProviderChatViewController.swift in Sources */,

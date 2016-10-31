@@ -7,17 +7,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StarRatingView" customModule="Lunr" customModuleProvider="target">
             <connections>
-                <outlet property="contentView" destination="Rt1-TA-gwc" id="FGk-4f-Hbu"/>
-                <outletCollection property="starRatingButtons" destination="bwy-4U-0e7" collectionClass="NSMutableArray" id="K7k-Qp-LC0"/>
+                <outlet property="contentView" destination="aHb-b5-9VM" id="Oxi-pj-6WF"/>
+                <outletCollection property="starRatingButtons" destination="2Pf-bj-obz" collectionClass="NSMutableArray" id="fel-fL-Kq6"/>
+                <outletCollection property="starRatingButtons" destination="5bl-gp-8de" collectionClass="NSMutableArray" id="OZ6-XB-mBd"/>
+                <outletCollection property="starRatingButtons" destination="ONM-mI-XtT" collectionClass="NSMutableArray" id="qC9-Jn-Vwc"/>
+                <outletCollection property="starRatingButtons" destination="lHB-hM-QwV" collectionClass="NSMutableArray" id="1hD-Q5-kQP"/>
+                <outletCollection property="starRatingButtons" destination="L93-GY-5yu" collectionClass="NSMutableArray" id="yFB-H1-pkJ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rt1-TA-gwc">
-            <rect key="frame" x="0.0" y="0.0" width="170" height="30"/>
+        <view contentMode="scaleToFill" id="aHb-b5-9VM">
+            <rect key="frame" x="0.0" y="0.0" width="116" height="30"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Pf-bj-obz" userLabel="one star button">
-                    <rect key="frame" x="20" y="0.0" width="20" height="30"/>
+                    <rect key="frame" x="0.0" y="0.0" width="20" height="30"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="20" id="3sh-gW-MYP"/>
+                        <constraint firstAttribute="height" constant="30" id="AkE-MI-paU"/>
                         <constraint firstAttribute="width" constant="55" id="zuN-kd-58N"/>
                     </constraints>
                     <state key="normal" image="star"/>
@@ -30,61 +37,100 @@
                         <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="KfX-eT-kfX"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSU-uX-wOh" userLabel="two star button">
-                    <rect key="frame" x="44" y="0.0" width="20" height="30"/>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONM-mI-XtT" userLabel="one star button">
+                    <rect key="frame" x="24" y="0.0" width="20" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Ihh-3k-frN"/>
+                        <constraint firstAttribute="width" constant="55" id="qI7-g5-z40"/>
+                        <constraint firstAttribute="width" constant="20" id="yG5-1A-equ"/>
+                    </constraints>
                     <state key="normal" image="star"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="qI7-g5-z40"/>
+                        </mask>
+                    </variation>
                     <connections>
-                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="7UF-Kv-NTF"/>
+                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="PRV-6L-7dQ"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwy-4U-0e7" userLabel="three star button">
-                    <rect key="frame" x="68" y="0.0" width="20" height="30"/>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHB-hM-QwV" userLabel="one star button">
+                    <rect key="frame" x="48" y="0.0" width="20" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="gSf-Xx-Zap"/>
+                        <constraint firstAttribute="height" constant="30" id="lVk-5i-ofV"/>
+                        <constraint firstAttribute="width" constant="55" id="vxi-u2-XSc"/>
+                    </constraints>
                     <state key="normal" image="star"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="vxi-u2-XSc"/>
+                        </mask>
+                    </variation>
                     <connections>
-                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="kue-V1-whh"/>
+                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="4CE-aO-mMc"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7I-4o-XEP" userLabel="four star button">
-                    <rect key="frame" x="92" y="0.0" width="20" height="30"/>
+                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L93-GY-5yu" userLabel="one star button">
+                    <rect key="frame" x="72" y="0.0" width="20" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="5g3-uH-EZm"/>
+                        <constraint firstAttribute="width" constant="55" id="x50-pn-ANh"/>
+                        <constraint firstAttribute="height" constant="30" id="yQa-2M-KzD"/>
+                    </constraints>
                     <state key="normal" image="star"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="x50-pn-ANh"/>
+                        </mask>
+                    </variation>
                     <connections>
-                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="yeQ-4f-49f"/>
+                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="6Vf-Cx-fhd"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDg-Zu-PDC" userLabel="five star button">
-                    <rect key="frame" x="116" y="0.0" width="20" height="30"/>
+                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bl-gp-8de" userLabel="one star button">
+                    <rect key="frame" x="96" y="0.0" width="20" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="2Ki-3T-3G8"/>
+                        <constraint firstAttribute="width" constant="55" id="HPW-9j-UOV"/>
+                        <constraint firstAttribute="height" constant="30" id="MQG-bP-iyT"/>
+                    </constraints>
                     <state key="normal" image="star"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="HPW-9j-UOV"/>
+                        </mask>
+                    </variation>
                     <connections>
-                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="On0-AN-0Vk"/>
+                        <action selector="starRatingButtonPressed:" destination="-1" eventType="touchUpInside" id="UpR-oV-A3S"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="gDg-Zu-PDC" firstAttribute="height" secondItem="t7I-4o-XEP" secondAttribute="height" id="0Jp-tA-PeL"/>
-                <constraint firstItem="t7I-4o-XEP" firstAttribute="leading" secondItem="bwy-4U-0e7" secondAttribute="trailing" constant="4" id="28S-pM-E89"/>
-                <constraint firstItem="t7I-4o-XEP" firstAttribute="width" secondItem="bwy-4U-0e7" secondAttribute="width" id="3Oc-Zm-kPm"/>
-                <constraint firstItem="bwy-4U-0e7" firstAttribute="leading" secondItem="SSU-uX-wOh" secondAttribute="trailing" constant="4" id="6Zm-Uh-eeh"/>
-                <constraint firstItem="t7I-4o-XEP" firstAttribute="top" secondItem="bwy-4U-0e7" secondAttribute="top" id="7fX-uq-wq9"/>
-                <constraint firstItem="bwy-4U-0e7" firstAttribute="height" secondItem="SSU-uX-wOh" secondAttribute="height" id="FL8-bx-jJA"/>
-                <constraint firstItem="SSU-uX-wOh" firstAttribute="top" secondItem="2Pf-bj-obz" secondAttribute="top" id="JTy-dB-xpy"/>
-                <constraint firstItem="SSU-uX-wOh" firstAttribute="leading" secondItem="2Pf-bj-obz" secondAttribute="trailing" constant="4" id="Jfo-zj-ORB"/>
-                <constraint firstItem="gDg-Zu-PDC" firstAttribute="leading" secondItem="t7I-4o-XEP" secondAttribute="trailing" constant="4" id="Kd4-VV-Y6S"/>
-                <constraint firstItem="gDg-Zu-PDC" firstAttribute="width" secondItem="t7I-4o-XEP" secondAttribute="width" id="SN5-Y2-cPc"/>
-                <constraint firstItem="2Pf-bj-obz" firstAttribute="top" secondItem="Rt1-TA-gwc" secondAttribute="top" id="aSk-If-JJ6"/>
-                <constraint firstItem="bwy-4U-0e7" firstAttribute="top" secondItem="SSU-uX-wOh" secondAttribute="top" id="bb7-Ic-Dng"/>
-                <constraint firstItem="2Pf-bj-obz" firstAttribute="leading" secondItem="Rt1-TA-gwc" secondAttribute="leading" constant="20" id="cqG-Qe-mHP"/>
-                <constraint firstItem="gDg-Zu-PDC" firstAttribute="top" secondItem="t7I-4o-XEP" secondAttribute="top" id="d3F-aV-0f1"/>
-                <constraint firstItem="bwy-4U-0e7" firstAttribute="width" secondItem="SSU-uX-wOh" secondAttribute="width" id="dIn-to-f1h"/>
-                <constraint firstAttribute="height" constant="30" id="eSG-yD-Pzw"/>
-                <constraint firstItem="t7I-4o-XEP" firstAttribute="height" secondItem="bwy-4U-0e7" secondAttribute="height" id="lcV-aB-LY0"/>
-                <constraint firstItem="SSU-uX-wOh" firstAttribute="height" secondItem="2Pf-bj-obz" secondAttribute="height" id="loB-3k-c7x"/>
-                <constraint firstItem="2Pf-bj-obz" firstAttribute="width" secondItem="SSU-uX-wOh" secondAttribute="width" id="m3y-yl-f4j"/>
-                <constraint firstAttribute="trailing" secondItem="gDg-Zu-PDC" secondAttribute="trailing" constant="34" id="nOd-XT-Huk"/>
-                <constraint firstAttribute="bottom" secondItem="2Pf-bj-obz" secondAttribute="bottom" id="tMy-v4-viB"/>
+                <constraint firstItem="lHB-hM-QwV" firstAttribute="top" secondItem="aHb-b5-9VM" secondAttribute="top" id="3eG-St-iX2"/>
+                <constraint firstItem="L93-GY-5yu" firstAttribute="leading" secondItem="lHB-hM-QwV" secondAttribute="trailing" constant="4" id="6ss-4U-fZx"/>
+                <constraint firstAttribute="trailing" secondItem="5bl-gp-8de" secondAttribute="trailing" id="7G4-iH-yFz"/>
+                <constraint firstItem="2Pf-bj-obz" firstAttribute="top" secondItem="aHb-b5-9VM" secondAttribute="top" id="BNA-cm-e7i"/>
+                <constraint firstItem="ONM-mI-XtT" firstAttribute="leading" secondItem="2Pf-bj-obz" secondAttribute="trailing" constant="4" id="MZ4-cX-6LV"/>
+                <constraint firstItem="ONM-mI-XtT" firstAttribute="top" secondItem="aHb-b5-9VM" secondAttribute="top" id="Ot4-ee-MEi"/>
+                <constraint firstAttribute="bottom" secondItem="L93-GY-5yu" secondAttribute="bottom" id="PfA-1v-Zav"/>
+                <constraint firstItem="lHB-hM-QwV" firstAttribute="leading" secondItem="ONM-mI-XtT" secondAttribute="trailing" constant="4" id="QTY-EJ-3xO"/>
+                <constraint firstItem="lHB-hM-QwV" firstAttribute="leading" secondItem="ONM-mI-XtT" secondAttribute="trailing" constant="4" id="ReN-3e-Xs7"/>
+                <constraint firstAttribute="bottom" secondItem="2Pf-bj-obz" secondAttribute="bottom" id="TXf-IB-Rtg"/>
+                <constraint firstItem="5bl-gp-8de" firstAttribute="leading" secondItem="L93-GY-5yu" secondAttribute="trailing" constant="4" id="TcW-4H-YSZ"/>
+                <constraint firstAttribute="bottom" secondItem="5bl-gp-8de" secondAttribute="bottom" id="Wtx-zd-kfJ"/>
+                <constraint firstItem="2Pf-bj-obz" firstAttribute="leading" secondItem="aHb-b5-9VM" secondAttribute="leading" id="Yx7-mI-Win"/>
+                <constraint firstAttribute="bottom" secondItem="lHB-hM-QwV" secondAttribute="bottom" id="aOq-mB-wP9"/>
+                <constraint firstItem="ONM-mI-XtT" firstAttribute="leading" secondItem="2Pf-bj-obz" secondAttribute="trailing" constant="4" id="dFH-8H-UPX"/>
+                <constraint firstAttribute="bottom" secondItem="ONM-mI-XtT" secondAttribute="bottom" id="dHe-d6-NcJ"/>
+                <constraint firstItem="5bl-gp-8de" firstAttribute="top" secondItem="aHb-b5-9VM" secondAttribute="top" id="f6J-p8-Ir6"/>
+                <constraint firstItem="L93-GY-5yu" firstAttribute="leading" secondItem="lHB-hM-QwV" secondAttribute="trailing" constant="4" id="kgK-u8-iXO"/>
+                <constraint firstItem="5bl-gp-8de" firstAttribute="leading" secondItem="L93-GY-5yu" secondAttribute="trailing" constant="4" id="rDi-Th-dOl"/>
+                <constraint firstItem="L93-GY-5yu" firstAttribute="top" secondItem="aHb-b5-9VM" secondAttribute="top" id="z27-c9-tko"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="40" y="127"/>
+            <point key="canvasLocation" x="-75" y="-28"/>
         </view>
     </objects>
     <resources>

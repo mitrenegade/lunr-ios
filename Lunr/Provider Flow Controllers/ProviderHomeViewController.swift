@@ -19,6 +19,13 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     var dialog: QBChatDialog?
     var incomingPFUserId: String?
     
+    var calls: [Call]?
+    
+    weak var weekSummaryController: WeekSummaryViewController?
+    
+    // MARK: Call History TableView
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +40,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 print("User is available and push is enabled")
             })
         }
+        
+        self.refreshCallHistory()
         
         self.listenFor("dialog:fetched", action: #selector(handleIncomingChatRequest(_:)), object: nil)
     }
@@ -109,4 +118,81 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     /* TODO:
      - dismiss a call request. (other than go offline)
     */
+    
+    func refreshCallHistory() {
+        guard let user = PFUser.currentUser() as? User where user.isProvider else { return }
+        //let startDate = NSDate().startOfWeek
+        let endDate = NSDate()
+        CallService.sharedInstance.queryCallsForUser(user, startDate:nil, endDate: endDate) { (results, error) in
+            if let error = error {
+                print("Error \(error)")
+            }
+            else {
+                self.calls = results
+                let startDate = NSDate().startOfWeek
+                let filtered = results?.filter({ (call) -> Bool in
+                    return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
+                })
+                self.weekSummaryController?.calls = filtered
+                
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "EmbedWeekSummary" {
+            if let controller: WeekSummaryViewController = segue.destinationViewController as? WeekSummaryViewController {
+                controller.calls = self.calls
+                self.weekSummaryController = controller
+            }
+        }
+    }
+}
+
+extension ProviderHomeViewController: UITableViewDataSource {
+    var dateFormatter: NSDateFormatter {
+        let df = NSDateFormatter()
+        df.dateFormat = "MM/dd"
+        return df
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let row = indexPath.row
+        let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! ProviderCallHistoryCell
+        guard let calls = self.calls where row < calls.count else {
+            return cell
+        }
+        let call = calls[row]
+        cell.configure(call)
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.calls?.count ?? 0
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+}
+
+extension ProviderHomeViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+
+extension NSDate {
+    struct Calendar {
+        static let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+    }
+    var startOfWeek: NSDate {
+        let sunday = Calendar.gregorian.dateFromComponents(Calendar.gregorian.components([.YearForWeekOfYear, .WeekOfYear ], fromDate: self))!
+        return sunday.dateByAddingTimeInterval(3600*24)
+    }
 }
