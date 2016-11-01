@@ -122,6 +122,9 @@ class ProviderChatViewController: ChatViewController {
         // ends listeners and pops controller. video should automatically stop
         self.callViewController?.endCall(wasConnected)
         self.callViewController = nil
+        
+        self.stopListeningFor(NotificationType.VideoSession.CallStateChanged.rawValue)
+        self.stopListeningFor(NotificationType.VideoSession.VideoReady.rawValue)
     }
 
     /* TODO: 
