@@ -16,7 +16,8 @@ public typealias EnablePushCompletionHandler = (success: Bool) -> Void
 class PushService: NSObject {
     var enablePushCompletionHandler: EnablePushCompletionHandler?
     
-    class func registerForRemoteNotification() {
+    // APN
+    class func registerForAPNRemoteNotification() {
         let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
@@ -40,18 +41,18 @@ class PushService: NSObject {
     }
 
     func enablePushNotifications(completion: ((success:Bool) -> Void)) {
-        if PushService.hasPushEnabled() {
-            completion(success: true)
-        }
-        else {
+//        if PushService.hasPushEnabled() {
+//            completion(success: true)
+//        }
+//        else {
             self.enablePushCompletionHandler = completion
-            PushService.registerForRemoteNotification()
+            PushService.registerForAPNRemoteNotification()
             
-            self.listenFor(.PushRegistered, action: #selector(enablePushNotificationsCompleted), object: nil)
-        }
+            self.listenFor(.PushRegistered, action: #selector(enableAPNPushNotificationsCompleted), object: nil)
+//        }
     }
     
-    @objc private func enablePushNotificationsCompleted() {
+    @objc private func enableAPNPushNotificationsCompleted() {
         self.enablePushCompletionHandler?(success: PushService.hasPushEnabled())
         self.enablePushCompletionHandler = nil
         self.stopListeningFor(.PushRegistered)
@@ -69,6 +70,25 @@ class PushService: NSObject {
     func channelStringForQBUser(user: QBUUser?) -> String? {
         guard let channel = user?.tags[0] as? String else { return nil }
         return channel
+    }
+    
+    // Quickblox push
+    func registerQBPushSubscription(deviceToken: NSData, completion: ((success: Bool)->Void)?) {
+        let deviceIdentifier: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
+
+        let subscription: QBMSubscription! = QBMSubscription()
+        subscription.notificationChannel = QBMNotificationChannel.APNS
+        subscription.deviceUDID = deviceIdentifier
+        subscription.deviceToken = deviceToken
+        QBRequest.createSubscription(subscription, successBlock: { (response: QBResponse!, objects: [QBMSubscription]?) -> Void in
+            // success
+            print("Subscription created: \(objects)")
+            completion?(success: true)
+        }) { (response: QBResponse!) -> Void in
+            // error
+            print("Error response: \(response)")
+            completion?(success: false)
+        }
     }
     
     func sendNotificationToPFUser(user: PFUser, completion: ((success:Bool, error:QBError?) -> Void)) {
