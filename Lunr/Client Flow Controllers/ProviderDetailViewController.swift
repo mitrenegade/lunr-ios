@@ -3,7 +3,6 @@ import UIKit
 class ProviderDetailViewController : UIViewController {
 
     @IBOutlet weak var callButton: LunrActivityButton!
-    @IBOutlet weak var callButtonView: UIView!
     @IBOutlet weak var tableView: UITableView!
 
     var provider : User?
@@ -72,6 +71,8 @@ class ProviderDetailViewController : UIViewController {
         guard let provider = self.provider else { return }
         print("Let's call \(self.provider?.displayString) on channel \(provider.objectId!)")
         self.chatWithProvider(provider)
+        // TEST
+        //self.testGoToFeedback()
     }
 
     func backWasPressed() {
@@ -104,6 +105,19 @@ extension ProviderDetailViewController {
         }
     }
 
+    // TEST
+    func testGoToFeedback() {
+        guard let provider = self.provider, let pfUserId = provider.objectId else {
+            print("Invalid provider")
+            return
+        }
+        
+        CallService.sharedInstance.postNewCall(pfUserId, duration: 0, totalCost: 0) { [weak self] (call, error) in
+            let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("FeedbackViewController") as? FeedbackViewController
+            controller?.call = call
+            self?.navigationController?.pushViewController(controller!, animated: true)
+        }
+    }
 }
 
 extension ProviderDetailViewController: UITableViewDataSource, UITableViewDelegate {

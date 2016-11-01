@@ -87,7 +87,6 @@ class CallService: NSObject {
         if shouldSave {
             let params: [NSObject: AnyObject] = ["callId": call.objectId!, "duration": duration]
             PFCloud.callFunctionInBackground("completeCall", withParameters: params) { (result, error) in
-                let call2 = result as? Call
                 completion(result: call, error: error)
             }
         }

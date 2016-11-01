@@ -62,7 +62,7 @@ PODS:
   - QMServices (0.4.4):
     - Bolts (>= 1.5.0)
     - QuickBlox (>= 2.6.5)
-  - QuickBlox (2.8)
+  - QuickBlox (2.8.0.1)
   - Quickblox-WebRTC (2.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -95,7 +95,7 @@ SPEC CHECKSUMS:
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   QMChatViewController: cb1f6172f794c85be20637c137c5a0b0c5abdb14
   QMServices: 4e62c3dc9986db0cc3b9e06ae02a06a93429c1b8
-  QuickBlox: f2bcadce2e150b8b1385f74f037b067aa670b069
+  QuickBlox: 51505b8deed7268c1bfd3139d4e4e9a1e9441d44
   Quickblox-WebRTC: 4575357666869f1d517eaef7da3d70da09f66686
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Stripe: c3e325e0309dcdcb478191dbd298082823a210c1
@@ -103,4 +103,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1500fd624ea2315c596a1976b79d41b768b64c90
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

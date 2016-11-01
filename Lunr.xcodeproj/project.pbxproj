@@ -34,7 +34,7 @@
 		8E2919361DADC2000095F89A /* LunrRoundActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */; };
 		8E470E7B1DC2BCA800CF9638 /* WeekSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
-		8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* Provider.storyboard */; };
+		8E4DE0B81D62AFA10013C06C /* ClientFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* ClientFlow.storyboard */; };
 		8E6418D31D55585A00CC4928 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D41D55585A00CC4928 /* Assets.xcassets */; };
 		8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */; };
@@ -106,7 +106,7 @@
 		8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunrRoundActivityButton.swift; sourceTree = "<group>"; };
 		8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekSummaryViewController.swift; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
-		8E4DE0B71D62AFA10013C06C /* Provider.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Provider.storyboard; sourceTree = "<group>"; };
+		8E4DE0B71D62AFA10013C06C /* ClientFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClientFlow.storyboard; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E6418D41D55585A00CC4928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 				8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */,
 				8E6418E01D56780100CC4928 /* Login.storyboard */,
 				E561645E1D5F9AB200926692 /* Main.storyboard */,
-				8E4DE0B71D62AFA10013C06C /* Provider.storyboard */,
+				8E4DE0B71D62AFA10013C06C /* ClientFlow.storyboard */,
 				842984A51D74E3B20063F1B5 /* ProviderFlow.storyboard */,
 				44BA7F441D73CB47006B347D /* Settings.storyboard */,
 				8413F5AB1D9114AD0086FD19 /* Chat.storyboard */,
@@ -446,7 +446,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E4DE0B81D62AFA10013C06C /* Provider.storyboard in Resources */,
+				8E4DE0B81D62AFA10013C06C /* ClientFlow.storyboard in Resources */,
 				8E6418EB1D56914E00CC4928 /* CallFlow.storyboard in Resources */,
 				44BA7F431D73CA04006B347D /* ReviewTableViewCell.xib in Resources */,
 				E56164601D5F9AB200926692 /* Main.storyboard in Resources */,
@@ -521,7 +521,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BE777C20A5A947303BEE3501 /* [CP] Copy Pods Resources */ = {

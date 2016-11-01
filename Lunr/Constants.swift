@@ -36,6 +36,7 @@ enum NotificationType: String {
         case CallCreationFailed // not related to session but session cannot proceed because Parse failed
     }
     case PushRegistered
+    case FeedbackUpdated
 }
 
 let SESSION_TIMEOUT_INTERVAL: NSTimeInterval = 30

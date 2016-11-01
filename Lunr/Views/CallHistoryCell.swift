@@ -12,9 +12,11 @@ import Parse
 class ClientCallHistoryCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var cardLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var ratingView: StarRatingView!
 
     var dateFormatter: NSDateFormatter {
         let df = NSDateFormatter()
@@ -43,6 +45,23 @@ class ClientCallHistoryCell: UITableViewCell {
         self.priceLabel.text = String(call.totalCostString)
         self.cardLabel.text = StripeService().paymentStringForUser(PFUser.currentUser() as? User)
         self.separatorView.backgroundColor = UIColor.lunr_separatorGray()
+
+        if let pointer = call.review {
+            print("pointer exists")
+            self.ratingView.hidden = true
+            self.rateLabel.hidden = true
+            pointer.fetchInBackgroundWithBlock({ (result, error) in
+                if let review = result as? Review {
+                    print("review exists")
+                    self.ratingView.hidden = false
+                    self.ratingView.currentRating = Int(floor(review.rating ?? 0))
+                }
+            })
+        }
+        else {
+            self.ratingView.hidden = true
+            self.rateLabel.hidden = false
+        }
     }
 }
 
@@ -98,11 +117,10 @@ class ProviderCallHistoryCell: UITableViewCell {
         //self.separatorView.backgroundColor = UIColor.lunr_separatorGray()
         if let pointer = call.review {
             self.ratingView.hidden = true
-            self.ratingView.configureRatingImagesForRating(0)
             pointer.fetchInBackgroundWithBlock({ (result, error) in
                 if let review = result as? Review {
                     self.ratingView.hidden = false
-                    self.ratingView.configureRatingImagesForRating(Int(floor(review.rating ?? 0)))
+                    self.ratingView.currentRating = Int(floor(review.rating ?? 0))
                 }
             })
         }

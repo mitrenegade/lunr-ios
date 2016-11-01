@@ -41,16 +41,9 @@ class ClientChatViewController: ChatViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        PushService().enablePushNotifications({ (success) in
-            if !success {
-                self.simpleAlert("There was an error enabling push", defaultMessage: nil, error: nil, completion: nil)
-            }
-            else {
-                QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
-                    if let recipient = result {
-                        self.notifyForChat(recipient)
-                    }
-                })
+        QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
+            if let recipient = result {
+                self.notifyForChat(recipient)
             }
         })
         

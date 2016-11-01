@@ -118,21 +118,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Push
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        let deviceIdentifier: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
-
-        let subscription: QBMSubscription! = QBMSubscription()
-        subscription.notificationChannel = QBMNotificationChannel.APNS
-        subscription.deviceUDID = deviceIdentifier
-        subscription.deviceToken = deviceToken
-        QBRequest.createSubscription(subscription, successBlock: { (response: QBResponse!, objects: [QBMSubscription]?) -> Void in
-            // success
-            print("Subscription created: \(objects)")            
-        }) { (response: QBResponse!) -> Void in
-            // error
-            print("Error response: \(response)")
+        PushService().registerQBPushSubscription(deviceToken) { (success) in
+            self.notify(.PushRegistered)
         }
-        
-        self.notify(.PushRegistered)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

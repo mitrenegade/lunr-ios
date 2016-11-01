@@ -9,19 +9,36 @@ class StarRatingView: NibLoadableView {
     @IBOutlet var starRatingButtons: [UIButton]!
 
     var delegate : StarRatingViewDelegate?
+    var currentRating: Int = 0 {
+        didSet {
+            if currentRating > 0 && currentRating <= 5 {
+                self.configureRatingImagesForRating(currentRating)
+            }
+            else {
+                currentRating = oldValue
+                self.configureRatingImagesForRating(currentRating)
+            }
+        }
+    }
 
     override var nibName: String {
         get {
             return "StarRatingView"
         }
     }
-
-    @IBAction func starRatingButtonPressed(sender: UIButton) {
-        self.delegate?.starRatingSelected(sender.tag)
-        self.configureRatingImagesForRating(sender.tag)
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.configureRatingImagesForRating(0)
     }
 
-    func configureRatingImagesForRating(rating: Int) {
+    @IBAction func starRatingButtonPressed(sender: UIButton) {
+        self.currentRating = sender.tag
+        self.delegate?.starRatingSelected(sender.tag)
+    }
+
+    private func configureRatingImagesForRating(rating: Int) {
         var image : UIImage?
 
         for button : UIButton in self.starRatingButtons {

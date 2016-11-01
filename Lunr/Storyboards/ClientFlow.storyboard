@@ -149,27 +149,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5p-Bg-33A" userLabel="Call Button View">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="200" horizontalCompressionResistancePriority="200" verticalCompressionResistancePriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ8-mh-TV0" userLabel="Call Now Button" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="200" horizontalCompressionResistancePriority="200" verticalCompressionResistancePriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ8-mh-TV0" userLabel="Call Now Button" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="callButtonTapped:" destination="QWN-3G-ho0" eventType="touchUpInside" id="88p-Ry-U8C"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="centerY" secondItem="U5p-Bg-33A" secondAttribute="centerY" id="QVX-zh-73E"/>
-                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="height" secondItem="U5p-Bg-33A" secondAttribute="height" id="Qav-P9-RDl"/>
-                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="width" secondItem="U5p-Bg-33A" secondAttribute="width" id="cwe-Yi-mci"/>
-                                    <constraint firstAttribute="height" constant="50" id="giO-7V-nko"/>
-                                    <constraint firstItem="TJ8-mh-TV0" firstAttribute="centerX" secondItem="U5p-Bg-33A" secondAttribute="centerX" id="hh5-il-wcL"/>
+                                    <constraint firstAttribute="height" constant="50" id="FWs-f9-Py3"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="callButtonTapped:" destination="QWN-3G-ho0" eventType="touchUpInside" id="88p-Ry-U8C"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bKT-gx-TR4">
                                 <rect key="frame" x="0.0" y="64" width="600" height="486"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -182,20 +172,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="TJ8-mh-TV0" secondAttribute="trailing" id="2bn-aB-npd"/>
                             <constraint firstItem="bKT-gx-TR4" firstAttribute="leading" secondItem="elG-V2-Gfj" secondAttribute="leading" id="44E-oD-kra"/>
-                            <constraint firstItem="gHS-Ut-RT1" firstAttribute="top" secondItem="U5p-Bg-33A" secondAttribute="bottom" id="5g7-RW-Z3V"/>
-                            <constraint firstItem="U5p-Bg-33A" firstAttribute="top" secondItem="bKT-gx-TR4" secondAttribute="bottom" id="KTL-Ze-XXG"/>
+                            <constraint firstItem="TJ8-mh-TV0" firstAttribute="top" secondItem="bKT-gx-TR4" secondAttribute="bottom" id="7yf-re-Q9q"/>
+                            <constraint firstItem="TJ8-mh-TV0" firstAttribute="leading" secondItem="elG-V2-Gfj" secondAttribute="leading" id="ATp-DW-hte"/>
                             <constraint firstItem="bKT-gx-TR4" firstAttribute="top" secondItem="5tD-Fn-xv5" secondAttribute="bottom" id="Qn3-K8-IVU"/>
-                            <constraint firstItem="U5p-Bg-33A" firstAttribute="leading" secondItem="elG-V2-Gfj" secondAttribute="leading" id="RMe-JF-1hz"/>
-                            <constraint firstItem="U5p-Bg-33A" firstAttribute="centerX" secondItem="elG-V2-Gfj" secondAttribute="centerX" id="XV4-hT-gWY"/>
+                            <constraint firstItem="gHS-Ut-RT1" firstAttribute="top" secondItem="TJ8-mh-TV0" secondAttribute="bottom" id="c7O-m6-zl9"/>
                             <constraint firstAttribute="trailing" secondItem="bKT-gx-TR4" secondAttribute="trailing" id="jZi-9j-VID"/>
-                            <constraint firstAttribute="trailing" secondItem="U5p-Bg-33A" secondAttribute="trailing" id="oeZ-vA-eUT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4cV-9S-KML"/>
                     <connections>
                         <outlet property="callButton" destination="TJ8-mh-TV0" id="R8n-qn-QIs"/>
-                        <outlet property="callButtonView" destination="U5p-Bg-33A" id="cD9-xn-KHd"/>
                         <outlet property="tableView" destination="bKT-gx-TR4" id="qaI-Or-s1t"/>
                     </connections>
                 </viewController>
