@@ -161,6 +161,7 @@
         <!--Account Settings View Controller-->
         <scene sceneID="UAu-Ez-D5k">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ukv-cw-gA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="AccountSettingsViewController" automaticallyAdjustsScrollViewInsets="NO" id="Hb5-uu-anr" customClass="AccountSettingsViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9jX-hc-xpy"/>
@@ -170,7 +171,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="100" sectionFooterHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="ars-5n-QWe">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="100" sectionFooterHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="ars-5n-QWe">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
@@ -235,7 +236,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2L-Fd-pB7">
-                                                    <rect key="frame" x="66" y="8" width="526" height="21"/>
+                                                    <rect key="frame" x="66" y="8" width="402" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="bch-co-Zj9"/>
                                                     </constraints>
@@ -268,13 +269,34 @@
                                                     <color key="textColor" red="0.47058823529411764" green="0.47058823529411764" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No feedback given" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ts9-74-EWZ" userLabel="ClickToRateLabel">
+                                                    <rect key="frame" x="476" y="8" width="116" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="R4E-ZH-XUF"/>
+                                                        <constraint firstAttribute="width" constant="116" id="id2-Jk-P84"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                    <color key="textColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z2T-u0-cDO" customClass="StarRatingView" customModule="Lunr" customModuleProvider="target">
+                                                    <rect key="frame" x="476" y="8" width="116" height="16"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="klo-kg-ZUF"/>
+                                                        <constraint firstAttribute="width" constant="116" id="oMw-Sy-WQF"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="topMargin" secondItem="hMS-m7-BAq" secondAttribute="top" id="2oJ-Qg-P9K"/>
                                                 <constraint firstItem="Kh0-XF-XIi" firstAttribute="leading" secondItem="m2L-Fd-pB7" secondAttribute="leading" id="3xQ-y7-t7h"/>
+                                                <constraint firstItem="Ts9-74-EWZ" firstAttribute="top" secondItem="S8L-e9-QsU" secondAttribute="topMargin" id="5kJ-nb-9Ue"/>
                                                 <constraint firstItem="pxA-Rc-6X9" firstAttribute="top" secondItem="Kh0-XF-XIi" secondAttribute="bottom" constant="4" id="DcO-U2-bCo"/>
                                                 <constraint firstItem="Kh0-XF-XIi" firstAttribute="top" secondItem="m2L-Fd-pB7" secondAttribute="bottom" constant="4" id="Dwt-Eo-rrc"/>
+                                                <constraint firstItem="z2T-u0-cDO" firstAttribute="leading" secondItem="m2L-Fd-pB7" secondAttribute="trailing" constant="8" id="Iec-Ay-5eh"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="12V-q4-odU" secondAttribute="trailing" id="Mqk-1S-8W9"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ts9-74-EWZ" secondAttribute="trailing" constant="8" id="Nz5-8e-5IF"/>
                                                 <constraint firstItem="Kh0-XF-XIi" firstAttribute="trailing" secondItem="S8L-e9-QsU" secondAttribute="trailingMargin" id="OZK-Yk-n5o"/>
                                                 <constraint firstItem="12V-q4-odU" firstAttribute="width" secondItem="S8L-e9-QsU" secondAttribute="width" id="PaW-1W-QJ9"/>
                                                 <constraint firstItem="12V-q4-odU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pxA-Rc-6X9" secondAttribute="bottom" id="S0F-oP-Yog"/>
@@ -285,11 +307,12 @@
                                                 <constraint firstAttribute="leadingMargin" secondItem="hMS-m7-BAq" secondAttribute="leading" constant="-8" id="n09-Kx-cQi"/>
                                                 <constraint firstItem="12V-q4-odU" firstAttribute="leading" secondItem="S8L-e9-QsU" secondAttribute="leadingMargin" id="pDO-RR-pgP"/>
                                                 <constraint firstItem="pxA-Rc-6X9" firstAttribute="leading" secondItem="m2L-Fd-pB7" secondAttribute="leading" id="qmO-4o-tlv"/>
+                                                <constraint firstItem="z2T-u0-cDO" firstAttribute="top" secondItem="S8L-e9-QsU" secondAttribute="topMargin" id="rPy-Vg-rnt"/>
                                                 <constraint firstItem="pxA-Rc-6X9" firstAttribute="top" secondItem="Kh0-XF-XIi" secondAttribute="bottom" constant="4" id="rRq-dp-tUp"/>
+                                                <constraint firstAttribute="trailing" secondItem="z2T-u0-cDO" secondAttribute="trailing" constant="8" id="sqO-Bo-wCi"/>
                                                 <constraint firstItem="m2L-Fd-pB7" firstAttribute="leading" secondItem="hMS-m7-BAq" secondAttribute="trailing" constant="8" id="ufL-pH-UKX"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="12V-q4-odU" secondAttribute="bottom" id="umD-nd-I2s"/>
                                                 <constraint firstItem="m2L-Fd-pB7" firstAttribute="top" secondItem="hMS-m7-BAq" secondAttribute="top" id="wnB-sA-KpV"/>
-                                                <constraint firstItem="m2L-Fd-pB7" firstAttribute="trailing" secondItem="S8L-e9-QsU" secondAttribute="trailingMargin" id="zJ9-de-8ff"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -305,6 +328,8 @@
                                             <outlet property="dateLabel" destination="hMS-m7-BAq" id="urS-d6-Jwb"/>
                                             <outlet property="nameLabel" destination="m2L-Fd-pB7" id="Wz7-AX-hO8"/>
                                             <outlet property="priceLabel" destination="Kh0-XF-XIi" id="HB5-ud-9sd"/>
+                                            <outlet property="rateLabel" destination="Ts9-74-EWZ" id="o9o-0r-ijm"/>
+                                            <outlet property="ratingView" destination="z2T-u0-cDO" id="w33-eY-z5x"/>
                                             <outlet property="separatorView" destination="12V-q4-odU" id="EOg-zr-Hw1"/>
                                         </connections>
                                     </tableViewCell>
@@ -354,7 +379,6 @@
                         <outlet property="tableView" destination="ars-5n-QWe" id="VgR-CD-Ptr"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ukv-cw-gA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2662" y="337"/>
         </scene>

@@ -38,7 +38,7 @@ class StarRatingView: NibLoadableView {
         self.delegate?.starRatingSelected(sender.tag)
     }
 
-    func configureRatingImagesForRating(rating: Int) {
+    private func configureRatingImagesForRating(rating: Int) {
         var image : UIImage?
 
         for button : UIButton in self.starRatingButtons {

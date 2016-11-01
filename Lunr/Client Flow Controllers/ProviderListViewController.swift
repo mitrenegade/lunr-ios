@@ -68,7 +68,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
 
         print("showSettings")
         let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("AccountSettingsViewController") as! AccountSettingsViewController
-        self.navigationController?.pushViewController(controller, animated: true)
+        let nav = UINavigationController(rootViewController: controller)
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
     }
 
     // MARK: SortCategoryProtocol Methods

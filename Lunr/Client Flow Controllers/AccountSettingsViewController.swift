@@ -37,17 +37,26 @@ class AccountSettingsViewController: UIViewController {
         self.tableView.separatorStyle = .None
 
         UIApplication.sharedApplication().statusBarStyle = .LightContent
-        
-        CallService.sharedInstance.queryCallsForUser(self.user) { [weak self] (results, error) in
-            self?.callHistory = results
-            self?.tableView.reloadData()
-        }
+
+        self.refresh()
+        self.listenFor(NotificationType.FeedbackUpdated, action: #selector(refresh), object: nil)
     }
 
     func dismiss() {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    func refresh() {
+        CallService.sharedInstance.queryCallsForUser(self.user) { [weak self] (results, error) in
+            self?.callHistory = results
+            self?.tableView.reloadData()
+        }
+    }
+    
+    deinit {
+        self.stopListeningFor(NotificationType.FeedbackUpdated)
+    }
+    
     func showAccountInfo() {
         let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("EditAccountSettingsViewController") as! EditAccountSettingsViewController
         self.navigationController?.pushViewController(controller, animated: true)
@@ -125,6 +134,16 @@ extension AccountSettingsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Placeholder
         print("did select")
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        guard let calls = self.callHistory where indexPath.row < calls.count else {
+            return
+        }
+        
+        let call = calls[indexPath.row]
+        let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("FeedbackViewController") as? FeedbackViewController
+        controller?.call = call
+        controller?.existingFeedback = call.review
+        self.navigationController?.pushViewController(controller!, animated: true)        
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
