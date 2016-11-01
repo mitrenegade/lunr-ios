@@ -70,9 +70,9 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(sender: AnyObject) {
         guard let provider = self.provider else { return }
         print("Let's call \(self.provider?.displayString) on channel \(provider.objectId!)")
-        //self.chatWithProvider(provider)
+        self.chatWithProvider(provider)
         // TEST
-        self.testGoToFeedback()
+        //self.testGoToFeedback()
     }
 
     func backWasPressed() {

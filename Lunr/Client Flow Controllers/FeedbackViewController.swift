@@ -55,12 +55,19 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     }
     
     // MARK: Event Methods
-
+    func dismiss() {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
     @IBAction func close(sender: AnyObject) {
+        guard self.call != nil else {
+            self.dismiss()
+            return
+        }
+        
         let alert = UIAlertController(title: "Feedback?", message: "You haven't rated your call. Are you sure you want to leave without giving feedback?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) in
-            // close
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            self.dismiss()
         }))
         alert.addAction(UIAlertAction(title: "No, give feedback", style: .Cancel, handler: { (action) in
             // nothing
@@ -75,6 +82,11 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     }
 
     @IBAction func save(sender: UIBarButtonItem) {
+        guard let call = self.call else {
+            self.dismiss()
+            return
+        }
+        
         if self.starRatingView.currentRating == 0 {
             // return to star rating
             self.feedbackTextView.resignFirstResponder()
@@ -82,6 +94,18 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         else {
             // create feedback
             print("Thanks for your feedback! \(self.starRatingView.currentRating) stars: \(feedbackTextView.text)")
+            ReviewService.sharedInstance.postReview(call, rating: Double(self.starRatingView.currentRating), feedback: self.feedbackTextView.text, completion: { (review, error) in
+                if let error = error {
+                    print("error")
+                    self.simpleAlert("Error submitting feedback", defaultMessage: "You can try again later from your call history", error: error, completion: { 
+                        self.dismiss()
+                    })
+                }
+                else {
+                    print("review posted")
+                    self.dismiss()
+                }
+            })
         }
     }
 
