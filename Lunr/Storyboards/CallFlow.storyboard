@@ -244,9 +244,9 @@
                                 <action selector="close:" destination="q6y-Fj-lKD" id="YCY-sq-lW0"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="Fq0-dR-sUg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Fxq-b9-DRd">
                             <connections>
-                                <action selector="save:" destination="q6y-Fj-lKD" id="8Ye-zJ-LMy"/>
+                                <action selector="save:" destination="q6y-Fj-lKD" id="vMq-gn-N8H"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -255,7 +255,6 @@
                         <outlet property="durationLabel" destination="xVq-U3-Eq9" id="u3S-xG-zdK"/>
                         <outlet property="feedbackTextView" destination="OWT-cP-IFA" id="h9b-Rl-DTF"/>
                         <outlet property="feedbackToolbar" destination="z05-wM-Lnc" id="A87-mp-JIt"/>
-                        <outlet property="leaveFeedbackBarButtonItem" destination="euf-yC-ljH" id="XhI-gu-bHG"/>
                         <outlet property="starRatingView" destination="hBN-Uh-tVe" id="TQ8-Hc-n1K"/>
                         <outlet property="view" destination="BOK-ma-2Qy" id="Fzk-6f-Qtt"/>
                     </connections>
@@ -270,7 +269,7 @@
                         <barButtonItem title="Leave Feedback" id="euf-yC-ljH">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="leaveFeedbackPressed:" destination="q6y-Fj-lKD" id="8zo-zY-E7T"/>
+                                <action selector="save:" destination="q6y-Fj-lKD" id="FGS-L4-1XE"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="11v-1I-OU2"/>

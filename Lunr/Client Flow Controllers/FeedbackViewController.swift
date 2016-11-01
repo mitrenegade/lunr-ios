@@ -3,8 +3,6 @@ import Parse
 
 class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
-    @IBOutlet weak var closeButton: UIBarButtonItem!
-
     // Call Summary
     var call: Call?
     @IBOutlet weak var costLabel: UILabel!
@@ -12,12 +10,10 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
     // Experience Rating
     @IBOutlet weak var starRatingView: StarRatingView!
-    var experienceRating : Int = 5
 
     // Feedback
     @IBOutlet weak var feedbackTextView: UITextView!
     @IBOutlet var feedbackToolbar: UIToolbar!
-    @IBOutlet weak var leaveFeedbackBarButtonItem: UIBarButtonItem!
 
     // MARK: UIViewController Methods
 
@@ -28,15 +24,11 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
         self.starRatingView.delegate = self
 
-        self.leaveFeedbackBarButtonItem.setTitleTextAttributes(
-            [NSFontAttributeName : UIFont.futuraMediumWithSize(16)], forState: .Normal
-        )
         self.feedbackToolbar.barTintColor = UIColor.lunr_darkBlue()
         self.feedbackTextView.inputAccessoryView = self.feedbackToolbar
         self.feedbackTextView.layer.borderColor = UIColor.lunr_lightBlue().CGColor
         self.feedbackTextView.layer.borderWidth = 2.5
 
-        self.closeButton.tintColor = UIColor.lunr_darkBlue()
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
         self.title = "Call Feedback"
     }
@@ -65,19 +57,32 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     // MARK: Event Methods
 
     @IBAction func close(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        let alert = UIAlertController(title: "Feedback?", message: "You haven't rated your call. Are you sure you want to leave without giving feedback?", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) in
+            // close
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }))
+        alert.addAction(UIAlertAction(title: "No, give feedback", style: .Cancel, handler: { (action) in
+            // nothing
+        }))
+        self.navigationController?.presentViewController(alert, animated: true, completion: nil)
     }
 
     // MARK: StarRatingViewDelegate Methods
 
     func starRatingSelected(rating: Int) {
-        self.experienceRating = rating
-
         //TODO: save the experience rating as a parameter in a request to update feedback
     }
 
     @IBAction func save(sender: UIBarButtonItem) {
-        //TODO: handle leaving feedback
+        if self.starRatingView.currentRating == 0 {
+            // return to star rating
+            self.feedbackTextView.resignFirstResponder()
+        }
+        else {
+            // create feedback
+            print("Thanks for your feedback! \(self.starRatingView.currentRating) stars: \(feedbackTextView.text)")
+        }
     }
 
     // MARK: UITableViewDelegate Methods
