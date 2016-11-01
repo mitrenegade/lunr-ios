@@ -20,7 +20,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.configureCallUI()
+        self.configureUI()
 
         self.starRatingView.delegate = self
 
@@ -42,12 +42,12 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.navigationController?.navigationBar.addShadow()
     }
     
-    func configureCallUI() {
+    func configureUI() {
         guard let call = call else { return }
         
         self.durationLabel.text = "Time: \(call.totalDurationString)"
         if let user = PFUser.currentUser() as? User where user.isProvider {
-            self.costLabel.text = "Cost: \(call.totalCostString)"
+            self.costLabel.text = "Est. Payment: \(call.totalCostString)"
         }
         else {
             self.costLabel.text = "Est. Cost: \(call.totalCostString)"
@@ -61,6 +61,11 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     
     @IBAction func close(sender: AnyObject) {
         guard self.call != nil else {
+            self.dismiss()
+            return
+        }
+        
+        if let user = PFUser.currentUser() as? User where user.isProvider {
             self.dismiss()
             return
         }
@@ -86,10 +91,18 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
             self.dismiss()
             return
         }
-        
+
+        if let user = PFUser.currentUser() as? User where user.isProvider {
+            self.dismiss()
+            return
+        }
+
         if self.starRatingView.currentRating == 0 {
             // return to star rating
             self.feedbackTextView.resignFirstResponder()
+            self.simpleAlert("Please include rating", defaultMessage: "Reviews must include a star rating.", error: nil, completion: { 
+                // nothing
+            })
         }
         else {
             // create feedback
@@ -119,5 +132,13 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         if let headerLabel = headerView.textLabel?.text {
             headerView.textLabel?.text = headerLabel.capitalizedString
         }
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // do not show feedback for providers
+        if let user = PFUser.currentUser() as? User where user.isProvider {
+            return 1
+        }
+        return 3
     }
 }

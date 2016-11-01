@@ -19,8 +19,6 @@ class ReviewService: NSObject {
                 completion?(review: nil, error: error)
             }
             else {
-                call.review = review
-                call.saveInBackground()
                 completion?(review: review, error: nil)
             }
         }

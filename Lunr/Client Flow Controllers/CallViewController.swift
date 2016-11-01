@@ -118,6 +118,7 @@ class CallViewController: UIViewController {
             CallService.sharedInstance.updateCall(call, completion: { (result, error) in
                 if error != nil {
                     // TODO: store total cost into another object
+                    print("Call save error: \(error)")
                     self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
                         self.performSegueWithIdentifier("GoToFeedback", sender: call)
                     }

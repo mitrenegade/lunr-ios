@@ -12,6 +12,7 @@ import Parse
 class Review: PFObject {
     @NSManaged var text : String
     @NSManaged var rating : Double
+    @NSManaged var callId: String?
     
     @NSManaged var provider: User?
     @NSManaged var client: User?
@@ -26,7 +27,7 @@ class Review: PFObject {
         self.rating = rating
         self.text = text
         
-        self.call = call
+        self.callId = call.objectId!
         self.provider = call.provider
         self.client = call.client
     }

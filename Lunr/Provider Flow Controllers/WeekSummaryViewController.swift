@@ -47,10 +47,10 @@ class WeekSummaryViewController: UIViewController {
         var totalTime: NSTimeInterval = 0
         var totalEarnings: Double = 0
         for call: Call in calls {
-            let duration = call.duration as! Double
+            let duration = call.duration as? Double ?? 0
             totalTime += duration
             
-            let amount = call.totalCost as! Double
+            let amount = call.totalCost as? Double ?? 0
             totalEarnings += amount
         }
         
