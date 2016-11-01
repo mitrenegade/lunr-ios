@@ -47,10 +47,12 @@ class ClientCallHistoryCell: UITableViewCell {
         self.separatorView.backgroundColor = UIColor.lunr_separatorGray()
 
         if let pointer = call.review {
+            print("pointer exists")
             self.ratingView.hidden = true
             self.rateLabel.hidden = true
             pointer.fetchInBackgroundWithBlock({ (result, error) in
                 if let review = result as? Review {
+                    print("review exists")
                     self.ratingView.hidden = false
                     self.ratingView.currentRating = Int(floor(review.rating ?? 0))
                 }

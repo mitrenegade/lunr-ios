@@ -127,8 +127,8 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
                     }
                     else {
                         print("review posted")
-                        self.dismiss()
                         self.notify(NotificationType.FeedbackUpdated)
+                        self.dismiss()
                     }
                 })
             }

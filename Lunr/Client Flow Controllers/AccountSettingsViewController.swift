@@ -48,6 +48,8 @@ class AccountSettingsViewController: UIViewController {
 
     func refresh() {
         CallService.sharedInstance.queryCallsForUser(self.user) { [weak self] (results, error) in
+            print("refreshing account settings")
+            print("results: \(results)")
             self?.callHistory = results
             self?.tableView.reloadData()
         }
