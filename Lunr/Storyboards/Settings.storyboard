@@ -374,7 +374,13 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="ffq-Gv-oZn"/>
+                    <navigationItem key="navigationItem" id="ffq-Gv-oZn">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="FvU-SU-f7e">
+                            <connections>
+                                <action selector="dismiss" destination="Hb5-uu-anr" id="DnW-Hy-uSc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="ars-5n-QWe" id="VgR-CD-Ptr"/>
                     </connections>

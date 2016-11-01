@@ -26,8 +26,6 @@ class AccountSettingsViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = .whiteColor()
         self.navigationController?.navigationBar.tintColor = .lunr_darkBlue()
         self.navigationController?.navigationBar.addShadow()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .Plain, target: self, action: #selector(dismiss))
         
         self.user = PFUser.currentUser() as? User
         
@@ -42,7 +40,7 @@ class AccountSettingsViewController: UIViewController {
         self.listenFor(NotificationType.FeedbackUpdated, action: #selector(refresh), object: nil)
     }
 
-    func dismiss() {
+    @IBAction func dismiss() {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
 

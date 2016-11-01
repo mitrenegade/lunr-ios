@@ -79,6 +79,11 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
             return
         }
         
+        if let feedback = self.existingFeedback {
+            self.dismiss()
+            return
+        }
+        
         let alert = UIAlertController(title: "Feedback?", message: "You haven't rated your call. Are you sure you want to leave without giving feedback?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) in
             self.dismiss()
