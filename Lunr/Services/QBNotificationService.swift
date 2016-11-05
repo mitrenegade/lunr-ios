@@ -129,7 +129,7 @@ class QBNotificationService: NotificationServiceDelegate {
     }
     
     func notificationServiceDidSucceedFetchingDialog(chatDialog: QBChatDialog!) {
-        NSNotificationCenter.defaultCenter().postNotificationName("dialog:fetched", object: nil, userInfo: ["dialog": chatDialog, "pfUserId": incomingPFUserId ?? ""])
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.DialogFetched.rawValue, object: nil, userInfo: ["dialog": chatDialog, "pfUserId": incomingPFUserId ?? ""])
     }
     
     func notificationServiceDidFailFetchingDialog() {

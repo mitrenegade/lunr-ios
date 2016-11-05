@@ -120,19 +120,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         PushService().registerQBPushSubscription(deviceToken) { (success) in
             print("push subscription success: \(success)")
-            self.notify(.PushRegistered)
+            self.notify(NotificationType.Push.Registered.rawValue, object: nil, userInfo: nil)
         }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         NSLog("Push failed to register with error: %@", error)
-        self.notify(.PushRegistered)
+        self.notify(NotificationType.Push.Registered.rawValue, object: nil, userInfo: nil)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         NSLog("my push is: %@", userInfo)
         if application.applicationState == UIApplicationState.Inactive {
             print("Inactive")
+            self.notify(NotificationType.Push.ReceivedInBackground.rawValue, object: nil, userInfo: nil)
         }
         
         QBNotificationService.sharedInstance.handlePushNotification(userInfo)

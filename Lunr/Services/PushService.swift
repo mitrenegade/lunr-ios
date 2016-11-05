@@ -48,14 +48,14 @@ class PushService: NSObject {
             self.enablePushCompletionHandler = completion
             PushService.registerForAPNRemoteNotification()
             
-            self.listenFor(.PushRegistered, action: #selector(enableAPNPushNotificationsCompleted), object: nil)
+            self.listenFor(NotificationType.Push.Registered.rawValue, action: #selector(enableAPNPushNotificationsCompleted), object: nil)
 //        }
     }
     
     @objc private func enableAPNPushNotificationsCompleted() {
         self.enablePushCompletionHandler?(success: PushService.hasPushEnabled())
         self.enablePushCompletionHandler = nil
-        self.stopListeningFor(.PushRegistered)
+        self.stopListeningFor(NotificationType.Push.Registered.rawValue)
     }
 
     func channelStringForPFUser(user: PFUser?) -> String? {
