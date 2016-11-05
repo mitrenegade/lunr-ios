@@ -18,6 +18,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
 
     var dialog: QBChatDialog?
     var incomingPFUserId: String?
+    var shouldOpenDialogAutomatically = false
     
     var calls: [Call]?
     
@@ -47,7 +48,18 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         
         self.refreshCallHistory()
         
-        self.listenFor("dialog:fetched", action: #selector(handleIncomingChatRequest(_:)), object: nil)
+        self.listenFor(.DialogFetched, action: #selector(handleIncomingChatRequest(_:)), object: nil)
+        self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
+    }
+    
+    deinit {
+        self.stopListeningFor(NotificationType.Push.ReceivedInBackground.rawValue)
+        self.stopListeningFor(.DialogFetched)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.shouldOpenDialogAutomatically = false
     }
     
     @IBAction func toggleOnDuty(sender: AnyObject) {
@@ -64,6 +76,9 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                                 self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error, completion: nil)
                             }
                         })
+                    }
+                    else {
+                        PushService().unregisterQBPushSubscription()
                     }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
@@ -97,11 +112,20 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 self?.incomingPFUserId = incomingPFUserId
                 self?.dialog = dialog
                 self?.providerStatusView.status = .NewRequest(user)
+                if self?.shouldOpenDialogAutomatically ?? false {
+                    self?.didClickReply()
+                }
             }
             else {
                 print("Could not load incoming user! Ignore it (?)")
             }
+            self?.shouldOpenDialogAutomatically = false
         }
+    }
+    
+    func handleBackgroundPush(notification: NSNotification) {
+        // this gets called when the app comes from background by clicking on a push
+        self.shouldOpenDialogAutomatically = true
     }
     
     func didClickReply() {

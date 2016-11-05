@@ -21,9 +21,9 @@ class ClientChatViewController: ChatViewController {
         guard let currentUser = PFUser.currentUser() as? User else { return }
 
         let message = "You have a new client request"
-        let userInfo = [QBMPushMessageSoundKey: "default", QBMPushMessageAlertKey: message, "dialogId": dialogId, "pfUserId": currentUser.objectId ?? "", "chatStatus": "invited"]
+        let userInfo = ["dialogId": dialogId, "pfUserId": currentUser.objectId ?? "", "chatStatus": "invited"]
 
-        PushService().sendNotificationToQBUser(user, userInfo: userInfo) { (success, error) in
+        PushService().sendNotificationToQBUser(user, message: message, userInfo: userInfo) { (success, error) in
             if success {
                 if TEST {
                     self.simpleAlert("Push sent!", message: "You have successfully notified \(user.fullName ?? "someone") to chat")

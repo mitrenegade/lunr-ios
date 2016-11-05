@@ -48,14 +48,14 @@ class PushService: NSObject {
             self.enablePushCompletionHandler = completion
             PushService.registerForAPNRemoteNotification()
             
-            self.listenFor(.PushRegistered, action: #selector(enableAPNPushNotificationsCompleted), object: nil)
+            self.listenFor(NotificationType.Push.Registered.rawValue, action: #selector(enableAPNPushNotificationsCompleted), object: nil)
 //        }
     }
     
     @objc private func enableAPNPushNotificationsCompleted() {
         self.enablePushCompletionHandler?(success: PushService.hasPushEnabled())
         self.enablePushCompletionHandler = nil
-        self.stopListeningFor(.PushRegistered)
+        self.stopListeningFor(NotificationType.Push.Registered.rawValue)
     }
 
     func channelStringForPFUser(user: PFUser?) -> String? {
@@ -91,30 +91,29 @@ class PushService: NSObject {
         }
     }
     
-    func sendNotificationToPFUser(user: PFUser, completion: ((success:Bool, error:QBError?) -> Void)) {
-        guard let channel = self.channelStringForPFUser(user) else { return }
-        print("Channel: \(channel)")
-        
-        QBRequest.sendPushWithText("Test", toUsersWithAnyOfTheseTags: channel, successBlock: { (response, events) in
-            print("Successful push \(events)")
-            completion(success: true, error: nil)
-            }) { (error) in
-                print("Push failed with error \(error)")
-                completion(success: false, error: error)
-        }
-    }
-    
-    func sendNotificationToQBUser(user: QBUUser, userInfo: [String: String], completion: ((success:Bool, error:QBError?) -> Void)) {
+    func sendNotificationToQBUser(user: QBUUser, message: String, let userInfo: [String: String], completion: ((success:Bool, error:QBError?) -> Void)) {
         guard let channel = self.channelStringForQBUser(user) else { completion(success: false, error: nil); return }
         print("Channel: \(channel)")
 
         let push = QBMPushMessage(payload: userInfo)
+        push.alertBody = message
+        push.soundFile = "default"
         QBRequest.sendPush(push, toUsersWithAnyOfTheseTags: channel, successBlock: { (response, events) in
             print("Successful push \(events)")
             completion(success: true, error: nil)
         }) { (error) in
             print("Push failed with error \(error)")
             completion(success: false, error: error)
+        }
+    }
+    
+    func unregisterQBPushSubscription() {
+        guard let deviceUdid = UIDevice.currentDevice().identifierForVendor?.UUIDString else { return }
+        
+        QBRequest.unregisterSubscriptionForUniqueDeviceIdentifier(deviceUdid, successBlock: { (response) in
+            print("Unregistered")
+            }) { (error) in
+                print("error unregistering for push")
         }
     }
 }
