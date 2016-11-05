@@ -91,24 +91,13 @@ class PushService: NSObject {
         }
     }
     
-    func sendNotificationToPFUser(user: PFUser, completion: ((success:Bool, error:QBError?) -> Void)) {
-        guard let channel = self.channelStringForPFUser(user) else { return }
-        print("Channel: \(channel)")
-        
-        QBRequest.sendPushWithText("Test", toUsersWithAnyOfTheseTags: channel, successBlock: { (response, events) in
-            print("Successful push \(events)")
-            completion(success: true, error: nil)
-            }) { (error) in
-                print("Push failed with error \(error)")
-                completion(success: false, error: error)
-        }
-    }
-    
-    func sendNotificationToQBUser(user: QBUUser, userInfo: [String: String], completion: ((success:Bool, error:QBError?) -> Void)) {
+    func sendNotificationToQBUser(user: QBUUser, message: String, let userInfo: [String: String], completion: ((success:Bool, error:QBError?) -> Void)) {
         guard let channel = self.channelStringForQBUser(user) else { completion(success: false, error: nil); return }
         print("Channel: \(channel)")
 
         let push = QBMPushMessage(payload: userInfo)
+        push.alertBody = message
+        push.soundFile = "default"
         QBRequest.sendPush(push, toUsersWithAnyOfTheseTags: channel, successBlock: { (response, events) in
             print("Successful push \(events)")
             completion(success: true, error: nil)
@@ -117,4 +106,13 @@ class PushService: NSObject {
             completion(success: false, error: error)
         }
     }
+    
+    /* TODO: unregister
+    NSString *deviceUdid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    [QBRequest unregisterSubscriptionForUniqueDeviceIdentifier:deviceUdid successBlock:^(QBResponse *response) {
+    // Unsubscribed successfully
+    } errorBlock:^(QBError *error) {
+    // Handle error
+    }];
+ */
 }

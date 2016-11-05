@@ -119,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Push
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         PushService().registerQBPushSubscription(deviceToken) { (success) in
+            print("push subscription success: \(success)")
             self.notify(.PushRegistered)
         }
     }
