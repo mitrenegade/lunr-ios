@@ -107,12 +107,13 @@ class PushService: NSObject {
         }
     }
     
-    /* TODO: unregister
-    NSString *deviceUdid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    [QBRequest unregisterSubscriptionForUniqueDeviceIdentifier:deviceUdid successBlock:^(QBResponse *response) {
-    // Unsubscribed successfully
-    } errorBlock:^(QBError *error) {
-    // Handle error
-    }];
- */
+    func unregisterQBPushSubscription() {
+        guard let deviceUdid = UIDevice.currentDevice().identifierForVendor?.UUIDString else { return }
+        
+        QBRequest.unregisterSubscriptionForUniqueDeviceIdentifier(deviceUdid, successBlock: { (response) in
+            print("Unregistered")
+            }) { (error) in
+                print("error unregistering for push")
+        }
+    }
 }

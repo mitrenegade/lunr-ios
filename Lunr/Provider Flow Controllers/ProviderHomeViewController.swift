@@ -77,6 +77,9 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                             }
                         })
                     }
+                    else {
+                        PushService().unregisterQBPushSubscription()
+                    }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
                 }
