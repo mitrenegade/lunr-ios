@@ -81,8 +81,10 @@ extension User {
     var isProvider: Bool {
         return self.userType == .Plumber || self.userType == .Electrician || self.userType == .Handyman
     }
-    
-    // MARK: Favorites
+}
+
+// MARK: Favorites
+extension User {
     // Client only
     func toggleFavorite(provider: User, completion: ((success: Bool)->Void)?) {
         guard let objectId = provider.objectId else { completion?(success: false); return }
@@ -105,6 +107,16 @@ extension User {
     }
 }
 
+// payment
+extension User {
+    func hasCreditCard() -> Bool {
+        if let payment = self.objectForKey("payment") as? String {
+            return payment.isEmpty
+        }
+        return false
+    }
+
+}
 extension String {
     func isValidEmail() -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
@@ -114,3 +126,4 @@ extension String {
         return emailTest.evaluateWithObject(self)
     }
 }
+

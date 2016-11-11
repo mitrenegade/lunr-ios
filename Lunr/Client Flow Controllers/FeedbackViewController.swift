@@ -1,3 +1,11 @@
+//
+//  FeedbackViewController
+//  Lunr
+//
+//  Created by Bobby Ren
+//  Copyright © 2016 RenderApps. All rights reserved.
+//
+
 import UIKit
 import Parse
 

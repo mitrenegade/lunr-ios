@@ -1,4 +1,13 @@
+//
+//  ProviderDetailViewController
+//  Lunr
+//
+//  Created by Bobby Ren
+//  Copyright © 2016 RenderApps. All rights reserved.
+//
+
 import UIKit
+import Parse
 
 class ProviderDetailViewController : UIViewController {
 
@@ -73,6 +82,11 @@ class ProviderDetailViewController : UIViewController {
 
     @IBAction func callButtonTapped(sender: AnyObject) {
         guard let provider = self.provider else { return }
+        
+        guard let currentUser = PFUser.currentUser() as? User where currentUser.hasCreditCard() else {
+            self.simpleAlert("No credit card available", message: "You must add a payment method before contacting a provider")
+            return
+        }
         
         QBUserService.sharedInstance.refreshUserSession { (success) in
             if success {

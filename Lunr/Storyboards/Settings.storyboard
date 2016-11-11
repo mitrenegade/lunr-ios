@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VT5-xy-vo5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VT5-xy-vo5">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -161,7 +161,6 @@
         <!--Account Settings View Controller-->
         <scene sceneID="UAu-Ez-D5k">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ukv-cw-gA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="AccountSettingsViewController" automaticallyAdjustsScrollViewInsets="NO" id="Hb5-uu-anr" customClass="AccountSettingsViewController" customModule="Lunr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9jX-hc-xpy"/>
@@ -385,6 +384,7 @@
                         <outlet property="tableView" destination="ars-5n-QWe" id="VgR-CD-Ptr"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ukv-cw-gA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2662" y="337"/>
         </scene>

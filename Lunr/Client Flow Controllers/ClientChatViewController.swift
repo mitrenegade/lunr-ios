@@ -15,6 +15,11 @@ class ClientChatViewController: ChatViewController {
     var lastNotificationTimestamp: NSDate? = NSDate()
     private let kMinNotificationInterval: NSTimeInterval = 10 // production: 1 minute?
     
+    // this isn't being used right now but could be used for drop down alerts
+    @IBOutlet weak var viewAlert: UIView!
+    @IBOutlet weak var constraintAlertTop: NSLayoutConstraint!
+    @IBOutlet weak var labelAlert: UILabel!
+    
     func notifyForChat(user: QBUUser) {
         //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
         guard let dialogId = self.dialog.ID else { return }
@@ -40,7 +45,7 @@ class ClientChatViewController: ChatViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
             if let recipient = result {
                 self.notifyForChat(recipient)
@@ -87,4 +92,7 @@ class ClientChatViewController: ChatViewController {
             break
         }
     }
+    
+    // MARK: - Chat info
+    
 }
