@@ -24,11 +24,35 @@
                                     <constraint firstAttribute="height" constant="100" id="pMV-iU-Gdf"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service on Demand" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3W-2r-BAL">
+                                <rect key="frame" x="50" y="497" width="530" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="fRg-Xu-I8R"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lunr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhV-k4-WZ6">
+                                <rect key="frame" x="50" y="420" width="530" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="kGo-gj-aGD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="55"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.21176470588235294" green="0.23921568627450979" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="e3W-2r-BAL" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="50" id="7oD-dN-OAK"/>
                             <constraint firstAttribute="trailing" secondItem="yVU-NG-JXZ" secondAttribute="trailing" constant="70" id="C32-bJ-OSN"/>
+                            <constraint firstItem="dhV-k4-WZ6" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="50" id="DdH-95-0Kx"/>
+                            <constraint firstAttribute="trailing" secondItem="e3W-2r-BAL" secondAttribute="trailing" constant="20" id="Zky-jR-mLo"/>
+                            <constraint firstItem="e3W-2r-BAL" firstAttribute="top" secondItem="dhV-k4-WZ6" secondAttribute="bottom" constant="8" id="jMt-sX-gav"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="e3W-2r-BAL" secondAttribute="bottom" constant="82" id="lxd-0z-wBZ"/>
                             <constraint firstItem="yVU-NG-JXZ" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="50" id="s2W-gi-z19"/>
+                            <constraint firstAttribute="trailing" secondItem="dhV-k4-WZ6" secondAttribute="trailing" constant="20" id="xuS-yE-ibr"/>
                         </constraints>
                     </view>
                 </viewController>
