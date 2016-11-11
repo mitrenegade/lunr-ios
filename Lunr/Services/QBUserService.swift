@@ -78,18 +78,29 @@ class QBUserService {
         guard !isRefreshingSession else { return }
         isRefreshingSession = true
         
-        guard let qbUser = QBSession.currentSession().currentUser else {
-            print("No qbUser, handle this error!")
+        guard let pfUser = PFUser.currentUser(), let userId = pfUser.objectId else {
+            self.isRefreshingSession = false
             completion?(success: false)
             return
         }
         
-        guard let pfUser = PFUser.currentUser() else {
-            completion?(success: false)
+        guard let qbUser = QBSession.currentSession().currentUser else {
+            self.loginQBUser(userId, completion: { (success, error) in
+                if (success) {
+                    self.isRefreshingSession = false
+                    self.refreshUserSession(completion)
+                }
+                else {
+                    print("No qbUser, handle this error!")
+                    self.isRefreshingSession = false
+                    completion?(success: false)
+                }
+            })
             return
         }
         
         if QBChat.instance().isConnected {
+            self.isRefreshingSession = false
             completion?(success: true)
             return
         }
