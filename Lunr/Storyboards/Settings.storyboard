@@ -379,6 +379,11 @@
                                 <action selector="dismiss" destination="Hb5-uu-anr" id="DnW-Hy-uSc"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="AK9-Fd-SEc">
+                            <connections>
+                                <action selector="logout" destination="Hb5-uu-anr" id="2Ho-Ca-aU1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="ars-5n-QWe" id="VgR-CD-Ptr"/>

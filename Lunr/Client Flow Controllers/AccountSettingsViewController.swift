@@ -71,6 +71,10 @@ class AccountSettingsViewController: UIViewController {
         let navigationController = UINavigationController(rootViewController: addCardViewController)
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
+    
+    @IBAction func logout() {
+        UserService.logout()
+    }
 }
 
 extension AccountSettingsViewController: UITableViewDataSource {
