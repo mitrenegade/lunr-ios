@@ -17,14 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="lunar" translatesAutoresizingMaskIntoConstraints="NO" id="MHo-PO-s3K">
-                                <rect key="frame" x="208" y="200" width="184" height="200"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="lunr-color1024" translatesAutoresizingMaskIntoConstraints="NO" id="4Or-lI-uBc">
+                                <rect key="frame" x="430" y="70" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="6Ku-qK-xkq"/>
+                                    <constraint firstAttribute="width" constant="100" id="9Cw-mh-Jh3"/>
+                                </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.21176470588235294" green="0.23921568627450979" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="MHo-PO-s3K" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XbE-O4-wBY"/>
-                            <constraint firstItem="MHo-PO-s3K" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="l5d-gu-MDc"/>
+                            <constraint firstItem="4Or-lI-uBc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="4gV-J3-Cyy"/>
+                            <constraint firstAttribute="trailing" secondItem="4Or-lI-uBc" secondAttribute="trailing" constant="70" id="CzZ-ld-4Vv"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -34,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lunar" width="184" height="200"/>
+        <image name="lunr-color1024" width="341" height="341"/>
     </resources>
 </document>
