@@ -6,6 +6,7 @@ import Quickblox
 import Fabric
 import Crashlytics
 import Stripe
+import QMChatViewController
 
 let LOCAL_TEST = false
 let TEST = false
@@ -58,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         STPPaymentConfiguration.sharedConfiguration().publishableKey = STRIPE_KEY_DEV
         STPPaymentConfiguration.sharedConfiguration().smsAutofillDisabled = true
+        
         return true
     }
 

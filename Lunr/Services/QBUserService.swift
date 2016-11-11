@@ -15,6 +15,7 @@ class QBUserService {
     static let sharedInstance: QBUserService = QBUserService()
     
     var isProcessingLogOut: Bool = false
+    var isRefreshingSession: Bool = false
     
     // MARK: Create User
     func createQBUser(parseUserId: String, completion: ((user: QBUUser?)->Void)) {
@@ -70,7 +71,43 @@ class QBUserService {
         }
     }
     
-    
+    // MARK: Refresh user session
+    func refreshUserSession(completion: ((success: Bool) -> Void)?) {
+        // if not connected to QBChat. For example at startup
+        // TODO: make this part of the Session service
+        guard !isRefreshingSession else { return }
+        isRefreshingSession = true
+        
+        guard let qbUser = QBSession.currentSession().currentUser else {
+            print("No qbUser, handle this error!")
+            completion?(success: false)
+            return
+        }
+        
+        guard let pfUser = PFUser.currentUser() else {
+            completion?(success: false)
+            return
+        }
+        
+        if QBChat.instance().isConnected {
+            completion?(success: true)
+            return
+        }
+        
+        qbUser.password = pfUser.objectId!
+        QBChat.instance().connectWithUser(qbUser) { (error) in
+            self.isRefreshingSession = false
+            if error != nil {
+                print("error: \(error)")
+                completion?(success: false)
+            }
+            else {
+                print("login to chat succeeded")
+                completion?(success: true)
+            }
+        }
+    }
+
     func logoutQBUser() {
         if QBChat.instance().isConnected {
             QBChat.instance().disconnectWithCompletionBlock({ (error) in

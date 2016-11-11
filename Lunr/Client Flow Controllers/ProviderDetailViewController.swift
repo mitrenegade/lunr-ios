@@ -57,22 +57,32 @@ class ProviderDetailViewController : UIViewController {
     }
 
     func setupCallButton() {
-        // TODO: Localize
-        // TODO: Change to attributed title when the font is added
-        self.callButton.setTitle("Call Now", forState: .Normal)
         self.callButton.setTitleColor(.whiteColor(), forState: .Normal)
-        // TODO: Move to theme file or UIAppearance Proxy
         self.callButton.backgroundColor = UIColor(red: 46/255, green: 56/255, blue: 91/255, alpha: 1.0)
+        if let provider = self.provider where provider.available {
+            self.callButton.setTitle("Send a message", forState: .Normal)
+        }
+        else {
+            self.callButton.setTitle("Currently unavailable", forState: .Normal)
+            self.callButton.userInteractionEnabled = false
+            self.callButton.alpha = 0.5
+        }
     }
 
     // MARK: Event Methods
 
     @IBAction func callButtonTapped(sender: AnyObject) {
         guard let provider = self.provider else { return }
-        print("Let's call \(self.provider?.displayString) on channel \(provider.objectId!)")
-        self.chatWithProvider(provider)
-        // TEST
-        //self.testGoToFeedback()
+        
+        QBUserService.sharedInstance.refreshUserSession { (success) in
+            if success {
+                print("Let's message \(self.provider?.displayString) on channel \(provider.objectId!)")
+                self.chatWithProvider(provider)
+            }
+            else {
+                self.simpleAlert("Could not start chat", defaultMessage: "Please log out and log in again", error: nil, completion: nil)
+            }
+        }
     }
 
     func backWasPressed() {

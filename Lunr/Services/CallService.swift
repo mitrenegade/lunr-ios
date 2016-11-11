@@ -37,20 +37,23 @@ class CallService: NSObject {
     }
     
     func queryCallsForUser(user: User?, startDate: NSDate? = nil, endDate: NSDate? = nil, completion: ((results: [Call]?, error: NSError?)->Void)) {
+        /*
         guard let user = user else {
             completion(results: nil, error: nil)
             return
         }
-        
+        */
         Call.registerSubclass()
 
         let query: PFQuery = Call.query()! //(className: "Call")
+        /*
         if user.isProvider {
             query.whereKey("provider", equalTo: user)
         }
         else {
             query.whereKey("client", equalTo: user)
         }
+ */
         query.orderByDescending("createdAt")
         if let start = startDate {
             query.whereKey("createdAt", greaterThanOrEqualTo: start)
