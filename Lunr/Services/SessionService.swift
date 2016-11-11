@@ -31,7 +31,6 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     }
     var session: QBRTCSession?
     var incomingSession: QBRTCSession?
-    var isRefreshingSession: Bool = false
 
     var currentDialogID = ""
     var remoteVideoTrack: QBRTCVideoTrack?
@@ -48,37 +47,6 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         }
     }
     
-    // MARK: Refresh user session
-    func refreshChatSession(completion: ((success: Bool) -> Void)?) {
-        // if not connected to QBChat. For example at startup
-        // TODO: make this part of the Session service
-        guard !isRefreshingSession else { return }
-        isRefreshingSession = true
-        
-        guard let qbUser = QBSession.currentSession().currentUser else {
-            print("No qbUser, handle this error!")
-            completion?(success: false)
-            return
-        }
-        
-        guard let pfUser = PFUser.currentUser() else {
-            completion?(success: false)
-            return
-        }
-        
-        qbUser.password = pfUser.objectId!
-        QBChat.instance().connectWithUser(qbUser) { (error) in
-            self.isRefreshingSession = false
-            if error != nil {
-                print("error: \(error)")
-                completion?(success: false)
-            }
-            else {
-                print("login to chat succeeded")
-                completion?(success: true)
-            }
-        }
-    }
 
     // MARK: QMChatServiceDelegate
     

@@ -39,22 +39,6 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     
     var unreadMessages: [QBChatMessage]?
     
-    private func loginCurrentQBUser() {
-        guard let currentUser = PFUser.currentUser() else {
-            dismissWithError(nil)
-            return
-        }
-        
-        if !QBChat.instance().isConnected {
-            QBUserService.sharedInstance.loginQBUser(currentUser.objectId!) { [weak self] (success, error) in
-                guard success && error == nil else {
-                    self?.dismissWithError(error)
-                    return
-                }
-            }
-        }
-    }
-    
     private func configureSender() {
         if let qbCurrentUser = QBSession.currentSession().currentUser {
             senderID = qbCurrentUser.ID
@@ -65,8 +49,14 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureSender()
-        loginCurrentQBUser()
+        QBUserService.sharedInstance.refreshUserSession { (success) in
+            if success {
+                self.continueLoad()
+            }
+            else {
+                self.dismissWithError(nil)
+            }
+        }
         
         // top layout inset for collectionView
         topContentAdditionalInset = (navigationController?.navigationBar.frame.size.height ?? 0) + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -79,11 +69,14 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         
         attachmentCellsMap = NSMapTable(keyOptions: NSPointerFunctionsOptions.StrongMemory, valueOptions: NSPointerFunctionsOptions.WeakMemory)
         
+        enableTextCheckingTypes = NSTextCheckingAllTypes
+    }
+    
+    func continueLoad() {
+        configureSender()
+        
         SessionService.sharedInstance.chatService.addDelegate(self)
         SessionService.sharedInstance.chatService.chatAttachmentService.delegate = self
-        
-        enableTextCheckingTypes = NSTextCheckingAllTypes
-        
         SessionService.sharedInstance.currentDialogID = dialog.ID!
         updateTitle()
         if (storedMessages()?.count > 0 && chatSectionManager.totalMessagesCount == 0) {
@@ -131,7 +124,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     
     private func dismissWithError(error: NSError?) {
         dismissViewControllerAnimated(true) { [weak presentingViewController] _ in
-            presentingViewController?.simpleAlert("Error", defaultMessage: "There was an error connecting your chat", error: error)
+            presentingViewController?.simpleAlert("Error", defaultMessage: "There was an error connecting to chat. Please log in again.", error: error)
         }
     }
     

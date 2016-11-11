@@ -12,6 +12,11 @@ class SplashViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        // make sure user exists
+        QBUserService.sharedInstance.refreshUserSession { (success) in
+            print("success: \(success)")
+        }
+        
         goHome()
     }
 
