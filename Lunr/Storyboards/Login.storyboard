@@ -22,13 +22,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ynp-eN-J36">
                                 <rect key="frame" x="60" y="56" width="480" height="200"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LUNR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-l5-yzd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lunr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-l5-yzd">
                                         <rect key="frame" x="0.0" y="0.0" width="480" height="200"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="50"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="70"/>
                                         <color key="textColor" red="0.1803921568627451" green="0.2196078431372549" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="lunar" translatesAutoresizingMaskIntoConstraints="NO" id="pCn-3d-sWB">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="lunr-outline" translatesAutoresizingMaskIntoConstraints="NO" id="pCn-3d-sWB">
                                         <rect key="frame" x="288" y="0.0" width="184" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="pCn-3d-sWB" secondAttribute="height" multiplier="23:25" id="CNx-vG-Eb4"/>
@@ -161,7 +161,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11f-6p-mFg">
                                 <rect key="frame" x="180" y="72" width="240" height="68"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="lunar" translatesAutoresizingMaskIntoConstraints="NO" id="BMr-EK-3fu">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="lunr-outline" translatesAutoresizingMaskIntoConstraints="NO" id="BMr-EK-3fu">
                                         <rect key="frame" x="90" y="4" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="BMr-EK-3fu" secondAttribute="height" multiplier="1:1" id="p2t-DM-F0N"/>
@@ -235,7 +235,7 @@
     </scenes>
     <resources>
         <image name="facebook_login_button" width="440" height="80"/>
-        <image name="lunar" width="184" height="200"/>
+        <image name="lunr-outline" width="341" height="341"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="awN-0c-Ug6"/>
