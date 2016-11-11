@@ -19,7 +19,7 @@ class UserService: NSObject {
     }
     
     let pageSize = 10
-    func queryProvidersAtPage(page: Int = 0, filterOption: SortCategory = .Alphabetical, searchTerms: [String] = [], ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+    func queryProvidersAtPage(page: Int = 0, filterOption: SortCategory = .Alphabetical, searchTerms: [String] = [], var ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
         let query = PFUser.query()
         query?.whereKeyExists("type")
         query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
@@ -36,6 +36,7 @@ class UserService: NSObject {
             break
         case .Rating:
             filterKey = "rating"
+            ascending = !ascending // feedback should be descending
         default:
             break
         }
