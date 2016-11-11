@@ -11,7 +11,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var inputEmail: UITextField!
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var inputConfirmation: UITextField!
-    @IBOutlet weak var buttonSignup: UIButton!
+    @IBOutlet weak var buttonSignup: LunrActivityButton!
     
     var isSignup: Bool = false
     
@@ -71,6 +71,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        self.buttonSignup.busy = true
         let user: PFUser = PFUser()
         user.username = email
         user.email = email
@@ -79,6 +80,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             if (error != nil) {
                 print("Error: \(error)")
                 self?.simpleAlert("Could not sign up", defaultMessage: nil, error: error, completion: nil)
+                self?.buttonSignup.busy = false
             }
             else {
                 print("results: \(user)")
@@ -104,23 +106,28 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         print("Login attempt \(self.count)")
         self.count=self.count+1
 
+        self.buttonSignup.busy = true
         PFUser.logInWithUsernameInBackground(email, password: password) {[weak self]  (user, error) in
             guard error == nil else {
                 print("Error: \(error)")
                 self?.simpleAlert("Could not log in", defaultMessage: nil, error: error, completion: nil)
+                self?.buttonSignup.busy = false
                 return
             }
             guard let user = user, userId = user.objectId else {
                 self?.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil, completion: nil)
+                self?.buttonSignup.busy = false
                 return
             }
             print("PFUser loaded: \(user)")
             
             QBUserService.sharedInstance.loginQBUser(userId, completion: { [weak self] (success, error) in
                 if success {
+                    self?.buttonSignup.busy = false
                     self?.notify(.LoginSuccess)
                 }
                 else {
+                    self?.buttonSignup.busy = false
                     self?.simpleAlert("Could not log in", defaultMessage: "There was a problem connecting to chat.",  error: error, completion: nil)
                 }
             })

@@ -99,6 +99,7 @@ extension ProviderDetailViewController {
                 guard success else {
                     print("Could not start chat")
                     self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
+                    
                     return
                 }
                 
