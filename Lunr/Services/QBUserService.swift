@@ -108,9 +108,17 @@ class QBUserService {
         qbUser.password = pfUser.objectId!
         QBChat.instance().connectWithUser(qbUser) { (error) in
             self.isRefreshingSession = false
-            if error != nil {
+            if let error = error {
                 print("error: \(error)")
-                completion?(success: false)
+                if error.code == 401 {
+                    // invalid user (quickblox user got deleted or does not exist)
+                    self.loginQBUser(userId, completion: { (success, error) in
+                        completion?(success: success)
+                    })
+                }
+                else {
+                    completion?(success: false)
+                }
             }
             else {
                 print("login to chat succeeded")
