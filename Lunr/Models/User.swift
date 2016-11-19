@@ -111,7 +111,7 @@ extension User {
 extension User {
     func hasCreditCard() -> Bool {
         if let payment = self.objectForKey("payment") as? String {
-            return payment.isEmpty
+            return !payment.isEmpty
         }
         return false
     }

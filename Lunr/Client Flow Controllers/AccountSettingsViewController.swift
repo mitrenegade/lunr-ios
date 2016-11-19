@@ -213,7 +213,10 @@ extension AccountSettingsViewController: STPAddCardViewControllerDelegate {
                 })
             }
             else {
-                self.dismissViewControllerAnimated(true, completion: nil)
+                user.fetchInBackgroundWithBlock({ (object, error) in
+                    self.tableView.reloadData()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
             }
             completion(error)
         }
