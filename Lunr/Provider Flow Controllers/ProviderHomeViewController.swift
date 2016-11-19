@@ -50,6 +50,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         
         self.listenFor(.DialogFetched, action: #selector(handleIncomingChatRequest(_:)), object: nil)
         self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
+        self.listenFor(.DialogCancelled, action: #selector(cancelChatRequest(_:)), object: nil)
     }
     
     deinit {
@@ -107,6 +108,10 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             return
         }
         
+        guard let user = PFUser.currentUser() as? User where user.available else {
+            return
+        }
+        
         QBUserService.getQBUUserForPFUserId(incomingPFUserId) { [weak self] (result) in
             if let user = result {
                 self?.incomingPFUserId = incomingPFUserId
@@ -121,6 +126,13 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             }
             self?.shouldOpenDialogAutomatically = false
         }
+    }
+    
+    func cancelChatRequest(notification: NSNotification) {
+        self.incomingPFUserId = nil
+        self.dialog = nil
+        self.updateUI()
+        self.shouldOpenDialogAutomatically = false
     }
     
     func handleBackgroundPush(notification: NSNotification) {
