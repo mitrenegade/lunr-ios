@@ -20,20 +20,26 @@ class ClientChatViewController: ChatViewController {
     @IBOutlet weak var constraintAlertTop: NSLayoutConstraint!
     @IBOutlet weak var labelAlert: UILabel!
     
-    func notifyForChat(user: QBUUser) {
+    func notifyForChat(user: QBUUser, isCancelling: Bool = false) {
         //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
         guard let dialogId = self.dialog.ID else { return }
         guard let currentUser = PFUser.currentUser() as? User else { return }
-
-        let message = "You have a new client request"
-        let userInfo = ["dialogId": dialogId, "pfUserId": currentUser.objectId ?? "", "chatStatus": "invited"]
+        let name = currentUser.displayString ?? "A client"
+        
+        var message = "\(name) wants to send you a message"
+        var userInfo = ["dialogId": dialogId, "pfUserId": currentUser.objectId ?? "", "chatStatus": "invited"]
+        
+        if isCancelling {
+            message = "\(name) has ended the chat"
+            userInfo["chatStatus"] = "cancelled"
+        }
 
         PushService().sendNotificationToQBUser(user, message: message, userInfo: userInfo) { (success, error) in
+            if isCancelling {
+                return
+            }
+            
             if success {
-                if TEST {
-                    self.simpleAlert("Push sent!", message: "You have successfully notified \(user.fullName ?? "someone") to chat")
-                }
-                
                 // start listening for incoming session
                 self.listenForSession()
             }
@@ -68,15 +74,6 @@ class ClientChatViewController: ChatViewController {
         }
     }
     
-    func cancelChat() {
-        let title = "Video chat was declined"
-        let message = "\(self.recipient!.fullName!) has cancelled the video chat."
-        self.simpleAlert(title, message: message) {
-            self.dismiss(nil)
-            QBNotificationService.sharedInstance.clearDialog()
-        }
-    }
-    
     // MARK: - Session
     func listenForSession() {
         self.listenFor(NotificationType.VideoSession.CallStateChanged.rawValue, action: #selector(handleSessionState(_:)), object: nil)
@@ -92,7 +89,13 @@ class ClientChatViewController: ChatViewController {
             break
         }
     }
-    
-    // MARK: - Chat info
-    
+
+    @IBAction override func dismiss(sender: AnyObject?) {
+        QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
+            if let recipient = result {
+                self.notifyForChat(recipient, isCancelling: true)
+            }
+        })
+        super.dismiss(sender)
+    }
 }

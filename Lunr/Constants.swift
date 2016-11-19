@@ -27,6 +27,7 @@ enum NotificationType: String {
     case LogoutSuccess
     case LoginSuccess
     case DialogFetched
+    case DialogCancelled
     enum VideoSession: String {
         case CallStateChanged
         case VideoReady // own video has been initialized
