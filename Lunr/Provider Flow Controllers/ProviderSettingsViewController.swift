@@ -36,6 +36,7 @@ class ProviderSettingsViewController: UIViewController {
         let currentUser = PFUser.currentUser() as? User
         currentUser?.setValue(false, forKey: "available")
         currentUser?.saveInBackgroundWithBlock({ (success, error) in
+            PushService().unregisterQBPushSubscription()
             UserService.logout()
         })
     }
