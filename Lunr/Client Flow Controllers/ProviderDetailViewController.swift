@@ -108,7 +108,14 @@ extension ProviderDetailViewController {
     func chatWithProvider(provider: User) {
         self.callButton.busy = true
         QBUserService.getQBUUserFor(provider) { [weak self] user in
-            guard let user = user else { self?.callButton.busy = false; return }
+            guard let user = user else {
+                // this can happen if the PFUser has not actually been set up on QuickBlox, or was deleted from quickBlox.
+                let name = provider.displayString ?? "This provider"
+                self?.simpleAlert("Could not start chat", defaultMessage: "\(name) cannot receive chat messages.", error: nil, completion: nil)
+
+                self?.callButton.busy = false
+                return
+            }
             SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
                 guard success else {
                     print("Could not start chat")
