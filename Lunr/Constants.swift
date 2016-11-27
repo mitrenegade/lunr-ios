@@ -44,7 +44,7 @@ enum NotificationType: String {
     case FeedbackUpdated
 }
 
-let SESSION_TIMEOUT_INTERVAL: NSTimeInterval = 30
+let SESSION_TIMEOUT_INTERVAL: TimeInterval = 30
 enum CallState: String {
     //    case NoSession // session token to QuickBlox does not exist or expired
     case Disconnected // no chatroom/webrtc joined
@@ -54,11 +54,11 @@ enum CallState: String {
 }
 
 enum SortCategory : Int {
-    case None = -1 // startup
-    case Alphabetical = 0
-    case Rating = 1
-    case Price = 2
-    case Favorites = 3
+    case none = -1 // startup
+    case alphabetical = 0
+    case rating = 1
+    case price = 2
+    case favorites = 3
 }
 
 struct Platform {

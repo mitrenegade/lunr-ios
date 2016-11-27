@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         let configuration = ParseClientConfiguration {
             $0.applicationId = PARSE_APP_ID
@@ -37,11 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             $0.server = LOCAL_TEST ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
         }
 
-        Parse.initializeWithConfiguration(configuration)
+        Parse.initialize(with: configuration)
 
         // Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
+        PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions);
 
         // QuickBlox
         QBSettings.setApplicationID(QB_APP_ID)
@@ -57,41 +57,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self])
 
-        STPPaymentConfiguration.sharedConfiguration().publishableKey = STRIPE_KEY_DEV
-        STPPaymentConfiguration.sharedConfiguration().smsAutofillDisabled = true
+        STPPaymentConfiguration.shared().publishableKey = STRIPE_KEY_DEV
+        STPPaymentConfiguration.shared().smsAutofillDisabled = true
         
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     // MARK: Appearance
-    private func setGlobalAppearanceAttributes() {
+    fileprivate func setGlobalAppearanceAttributes() {
         // UINavBar
         let navBarAppearance = UINavigationBar.appearance()
         navBarAppearance.tintColor = UIColor(red:0.200, green:0.200, blue:0.200, alpha:1)
@@ -108,32 +108,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // UITabBarItem
         let tabBarItemAppearance = UITabBarItem.appearance()
         
-        var normalTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributesForState(.Normal) ?? [String:AnyObject]()
+        var normalTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributes(for: UIControlState()) ?? [String:AnyObject]()
         normalTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor(red:0.961, green:0.965, blue:0.969, alpha:1)
         normalTabBarItemTextAttr[NSFontAttributeName] = UIFont.futuraMediumWithSize(12)
-        tabBarItemAppearance.setTitleTextAttributes(normalTabBarItemTextAttr, forState: .Normal)
+        tabBarItemAppearance.setTitleTextAttributes(normalTabBarItemTextAttr, for: UIControlState())
         
-        var selectedTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributesForState(.Selected) ?? [String:AnyObject]()
+        var selectedTabBarItemTextAttr = tabBarItemAppearance.titleTextAttributes(for: .selected) ?? [String:AnyObject]()
         selectedTabBarItemTextAttr[NSForegroundColorAttributeName] = UIColor(red:0.780, green:0.827, blue:0.933, alpha:1)
-        tabBarItemAppearance.setTitleTextAttributes(selectedTabBarItemTextAttr, forState: .Selected)
+        tabBarItemAppearance.setTitleTextAttributes(selectedTabBarItemTextAttr, for: .selected)
     }
     
     // MARK: Push
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         PushService().registerQBPushSubscription(deviceToken) { (success) in
             print("push subscription success: \(success)")
             self.notify(NotificationType.Push.Registered.rawValue, object: nil, userInfo: nil)
         }
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        NSLog("Push failed to register with error: %@", error)
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Push failed to register with error \(error)")
         self.notify(NotificationType.Push.Registered.rawValue, object: nil, userInfo: nil)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        NSLog("my push is: %@", userInfo)
-        if application.applicationState == UIApplicationState.Inactive {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        print("my push is: \(userInfo)")
+        if application.applicationState == UIApplicationState.inactive {
             print("Inactive")
             self.notify(NotificationType.Push.ReceivedInBackground.rawValue, object: nil, userInfo: nil)
         }

@@ -2,7 +2,7 @@ import UIKit
 
 extension UIViewController {
     
-    func simpleAlert(title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)? = nil) {
+    func simpleAlert(_ title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)? = nil) {
         if let msg = error?.userInfo["error"] as? String {
             self.simpleAlert(title, message: msg, completion: completion)
             return
@@ -10,58 +10,54 @@ extension UIViewController {
         self.simpleAlert(title, message: defaultMessage, completion: completion)
     }
     
-    func simpleAlert(title: String, message: String?, completion: (() -> Void)? = nil) {
+    func simpleAlert(_ title: String, message: String?, completion: (() -> Void)? = nil) {
         let alert: UIAlertController = UIAlertController.simpleAlert(title, message: message, completion: completion)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
 extension NSObject {
     func appDelegate() -> AppDelegate {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate
     }
     
     // MARK: - Notifications
-    func listenFor(notification: NotificationType, action: Selector, object: AnyObject?) {
+    func listenFor(_ notification: NotificationType, action: Selector, object: AnyObject?) {
         listenFor(notification.rawValue, action: action, object: object)
     }
     
-    func listenFor(notificationName: String, action: Selector, object: AnyObject?) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: action, name: notificationName, object: object)
+    func listenFor(_ notificationName: String, action: Selector, object: AnyObject?) {
+        NotificationCenter.default.addObserver(self, selector: action, name: NSNotification.Name(rawValue: notificationName), object: object)
     }
     
-    func stopListeningFor(notification: NotificationType) {
+    func stopListeningFor(_ notification: NotificationType) {
         stopListeningFor(notification.rawValue)
     }
     
-    func stopListeningFor(notificationName: String) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationName, object: nil)
+    func stopListeningFor(_ notificationName: String) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: notificationName), object: nil)
     }
     
-    func notify(notification: NotificationType, object: AnyObject? = nil, userInfo: [NSObject: AnyObject]? = nil) {
+    func notify(_ notification: NotificationType, object: AnyObject? = nil, userInfo: [AnyHashable: Any]? = nil) {
         notify(notification.rawValue, object: object, userInfo: userInfo)
     }
     
-    func notify(notificationName: String, object: AnyObject?, userInfo: [NSObject: AnyObject]?) {
-        NSNotificationCenter.defaultCenter().postNotificationName(notificationName, object: object, userInfo: userInfo)
+    func notify(_ notificationName: String, object: AnyObject?, userInfo: [AnyHashable: Any]?) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationName), object: object, userInfo: userInfo)
     }
     
-    func wait(delay:Double, then:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), then)
+    func wait(_ delay:Double, then:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: then)
     }
 }
 
 extension UIAlertController {
-    class func simpleAlert(title: String, message: String?, completion: (() -> Void)?) -> UIAlertController {
-        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.view.tintColor = UIColor.blackColor()
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+    class func simpleAlert(_ title: String, message: String?, completion: (() -> Void)?) -> UIAlertController {
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.view.tintColor = UIColor.black
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             print("cancel")
             if completion != nil {
                 completion!()

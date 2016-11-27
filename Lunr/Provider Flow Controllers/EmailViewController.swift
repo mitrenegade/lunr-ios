@@ -20,16 +20,16 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let button: UIButton = UIButton(type: .Custom)
-        button.frame = CGRectMake(0, 0, 80, 30)
-        button.setTitle("Cancel", forState: .Normal)
-        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        button.addTarget(self, action: #selector(didClickCancel), forControlEvents: .TouchUpInside)
+        let button: UIButton = UIButton(type: .custom)
+        button.frame = CGRect(x: 0, y: 0, width: 80, height: 30)
+        button.setTitle("Cancel", for: UIControlState())
+        button.setTitleColor(UIColor.black, for: UIControlState())
+        button.addTarget(self, action: #selector(didClickCancel), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         
         if !isSignup {
-            self.buttonSignup.setTitle("Login with Email", forState: .Normal)
-            self.inputConfirmation.hidden = true
+            self.buttonSignup.setTitle("Login with Email", for: UIControlState())
+            self.inputConfirmation.isHidden = true
         }
         
         if TEST {
@@ -39,10 +39,10 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     func didClickCancel() {
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func didClickButton(button: UIButton) {
+    @IBAction func didClickButton(_ button: UIButton) {
         if isSignup {
             self.createEmailUser()
         }
@@ -76,8 +76,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         user.username = email
         user.email = email
         user.password = password
-        user.signUpInBackgroundWithBlock {[weak self]  (success, error) in
-            if (error != nil) {
+        user.signUpInBackground {[weak self]  (success, error) in
+            if let error = error as? NSError {
                 print("Error: \(error)")
                 self?.simpleAlert("Could not sign up", defaultMessage: nil, error: error, completion: nil)
                 self?.buttonSignup.busy = false
@@ -107,14 +107,14 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         self.count=self.count+1
 
         self.buttonSignup.busy = true
-        PFUser.logInWithUsernameInBackground(email, password: password) {[weak self]  (user, error) in
+        PFUser.logInWithUsername(inBackground: email, password: password) {[weak self]  (user, error) in
             guard error == nil else {
                 print("Error: \(error)")
-                self?.simpleAlert("Could not log in", defaultMessage: nil, error: error, completion: nil)
+                self?.simpleAlert("Could not log in", defaultMessage: nil, error: error as NSError?, completion: nil)
                 self?.buttonSignup.busy = false
                 return
             }
-            guard let user = user, userId = user.objectId else {
+            guard let user = user, let userId = user.objectId else {
                 self?.simpleAlert("Could not log in", defaultMessage: "Invalid user id", error: nil, completion: nil)
                 self?.buttonSignup.busy = false
                 return
@@ -135,16 +135,16 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Utils
-    private func isValidEmail(testStr:String) -> Bool {
+    fileprivate func isValidEmail(_ testStr:String) -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(testStr)
+        return emailTest.evaluate(with: testStr)
     }
 
     // MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }

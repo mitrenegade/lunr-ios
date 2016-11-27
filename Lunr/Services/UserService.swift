@@ -19,7 +19,8 @@ class UserService: NSObject {
     }
     
     let pageSize = 10
-    func queryProvidersAtPage(page: Int = 0, filterOption: SortCategory = .Alphabetical, searchTerms: [String] = [], var ascending: Bool = true, availableOnly: Bool = false, completionHandler: ((providers:[PFUser]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+    func queryProvidersAtPage(_ page: Int = 0, filterOption: SortCategory = .alphabetical, searchTerms: [String] = [], ascending: Bool = true, availableOnly: Bool = false, completionHandler: @escaping ((_ providers:[PFUser]?) -> Void), errorHandler: @escaping ((_ error: NSError?)->Void)) {
+        var ascending = ascending
         let query = PFUser.query()
         query?.whereKeyExists("type")
         query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
@@ -31,10 +32,10 @@ class UserService: NSObject {
         
         var filterKey = "lastName"
         switch filterOption {
-        case .Price:
+        case .price:
             filterKey = "ratePerMin"
             break
-        case .Rating:
+        case .rating:
             filterKey = "rating"
             ascending = !ascending // feedback should be descending
         default:
@@ -48,8 +49,8 @@ class UserService: NSObject {
         }
         
         // favorites
-        if filterOption == .Favorites {
-            if let user = PFUser.currentUser() as? User {
+        if filterOption == .favorites {
+            if let user = PFUser.current() as? User {
                 query?.whereKey("objectId", containedIn: user.favorites)
             }
         }
@@ -59,8 +60,8 @@ class UserService: NSObject {
             print("Search terms: \(searchTerms)")
             // HACK: make capitalization insensitive by searching for both lowercased versions and first letter capitalization. The correct way to do this is to create an all lowercase canonical search field for each user
 
-            let lowerCase = searchTerms.map{$0.lowercaseString}
-            let capitalized = searchTerms.map{$0.capitalizedString}
+            let lowerCase = searchTerms.map{$0.lowercased()}
+            let capitalized = searchTerms.map{$0.capitalized}
             
             let lastNameQuery = PFUser.query()!.whereKey("lastName", containedIn: lowerCase)
             let firstNameQuery = PFUser.query()!.whereKey("firstName", containedIn: lowerCase)
@@ -69,39 +70,39 @@ class UserService: NSObject {
             let firstNameQueryCap = PFUser.query()!.whereKey("firstName", containedIn: capitalized)
             let skillsQueryCap = PFUser.query()!.whereKey("skills", containedIn: capitalized)
             
-            let orQuery = PFQuery.orQueryWithSubqueries([lastNameQuery, firstNameQuery, skillsQuery,lastNameQueryCap, firstNameQueryCap, skillsQueryCap])
+            let orQuery = PFQuery.orQuery(withSubqueries: [lastNameQuery, firstNameQuery, skillsQuery,lastNameQueryCap, firstNameQueryCap, skillsQueryCap])
             
-            query?.whereKey("objectId", matchesKey:"objectId", inQuery: orQuery)
+            query?.whereKey("objectId", matchesKey:"objectId", in: orQuery)
         }
         
-        query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            if let error = error {
+        query?.findObjectsInBackground { (results, error) -> Void in
+            if let error = error as? NSError {
                 if error.code == 209 {
                     UserService.logout()
                 }
                 else {
-                    errorHandler(error: error)
+                    errorHandler(error as NSError?)
                 }
                 return
             }
             
             let users = results as? [PFUser]
-            completionHandler(providers: users)
+            completionHandler(users)
         }
     }
     
-    func queryReviewsForProvider(provider: User, completionHandler: ((reviews:[Review]?) -> Void), errorHandler: ((error: NSError?)->Void)) {
+    func queryReviewsForProvider(_ provider: User, completionHandler: @escaping ((_ reviews:[Review]?) -> Void), errorHandler: @escaping ((_ error: NSError?)->Void)) {
         Review.registerSubclass()
         let query = Review.query()
         query?.whereKey("provider", equalTo: provider)
-        query?.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+        query?.findObjectsInBackground { (results, error) -> Void in
             if let error = error {
-                errorHandler(error: error)
+                errorHandler(error as NSError?)
                 return
             }
             
             let reviews = results as? [Review]
-            completionHandler(reviews: reviews)
+            completionHandler(reviews)
         }
     }
     

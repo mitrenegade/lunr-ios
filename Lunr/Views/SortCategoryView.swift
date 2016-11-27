@@ -1,7 +1,7 @@
 import UIKit
 
 protocol SortCategoryProtocol {
-    func sortCategoryWasSelected(sortCategory : SortCategory)
+    func sortCategoryWasSelected(_ sortCategory : SortCategory)
 }
 
 class SortCategoryView: NibLoadableView {
@@ -26,34 +26,34 @@ class SortCategoryView: NibLoadableView {
 
     // MARK: Event Methods
 
-    @IBAction func sortButtonWasPressed(sender: UIButton) {
+    @IBAction func sortButtonWasPressed(_ sender: UIButton) {
         let category = SortCategory(rawValue: sender.tag)!
         self.highlightButtonForCategory(category)
         self.delegate!.sortCategoryWasSelected(category)
     }
     
     // MARK: selectors
-    func toggleButton(button: UIButton, selected: Bool) {
+    func toggleButton(_ button: UIButton, selected: Bool) {
         let category = SortCategory(rawValue: button.tag)!
         let image: UIImage
         switch category {
-        case .Rating:
-            image = UIImage(named: "star")!.imageWithRenderingMode(.AlwaysTemplate)
-        case .Price:
-            image = UIImage(named: "dollarsign")!.imageWithRenderingMode(.AlwaysTemplate)
-        case .Favorites:
-            image = UIImage(named: "heart")!.imageWithRenderingMode(.AlwaysTemplate)
+        case .rating:
+            image = UIImage(named: "star")!.withRenderingMode(.alwaysTemplate)
+        case .price:
+            image = UIImage(named: "dollarsign")!.withRenderingMode(.alwaysTemplate)
+        case .favorites:
+            image = UIImage(named: "heart")!.withRenderingMode(.alwaysTemplate)
         default:
-            image = UIImage(named: "atoz")!.imageWithRenderingMode(.AlwaysTemplate)
+            image = UIImage(named: "atoz")!.withRenderingMode(.alwaysTemplate)
         }
         
-        button.setImage(image, forState: .Normal)
+        button.setImage(image, for: UIControlState())
         button.tintColor = selected ? UIColor.lunr_darkBlue() : UIColor.lunr_grayText()
     }
     
-    func highlightButtonForCategory(category: SortCategory) {
+    func highlightButtonForCategory(_ category: SortCategory) {
         for button in [sortAlphabeticallyButton, sortByFavoritesButton, sortByPriceButton, sortByRatingButton] {
-            self.toggleButton(button, selected: button.tag == category.rawValue)
+            self.toggleButton(button!, selected: button?.tag == category.rawValue)
         }
     }
 }

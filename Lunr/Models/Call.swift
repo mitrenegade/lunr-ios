@@ -13,7 +13,7 @@ class Call: PFObject {
     // PFSubclassing and NSManaged is required so that PFObject.init() can be used, and PFObject's getters and setters correctly set key-value pairs that save to Parse
     @NSManaged var duration: NSNumber?
     @NSManaged var totalCost: NSNumber?
-    @NSManaged var date: NSDate?
+    @NSManaged var date: Date?
     @NSManaged var rate: NSNumber?
     
     @NSManaged var client: User?
@@ -46,20 +46,20 @@ extension Call {
     }
     
     var totalCostString: String {
-        let currencyFormatter = NSNumberFormatter()
+        let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
-        currencyFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        currencyFormatter.numberStyle = NumberFormatter.Style.currency
         // localize to your grouping and decimal separator
-        currencyFormatter.locale = NSLocale.currentLocale()
+        currencyFormatter.locale = Locale.current
         
         if totalCost == nil || totalCost == 0 {
             // calculate totalCost for display only
             let rate = self.rate as? Double ?? 0
             let time = self.duration as? Double ?? 0
-            self.totalCost = time / 60.0 * rate // time is in seconds; rate is in minutes
+            self.totalCost = time / 60.0 * rate as NSNumber? // time is in seconds; rate is in minutes
 
         }
         
-        return currencyFormatter.stringFromNumber(self.totalCost as? Double ?? 0.0)!
+        return currencyFormatter.string(from: self.totalCost as? Double as NSNumber? ?? 0.0)!
     }
 }

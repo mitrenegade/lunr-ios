@@ -10,7 +10,7 @@ class SplashViewController: UIViewController {
         listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // make sure user exists
         QBUserService.sharedInstance.refreshUserSession { (success) in
@@ -24,17 +24,17 @@ class SplashViewController: UIViewController {
         guard let homeViewController = homeViewController() else { return }
         if let presented = presentedViewController {
             guard homeViewController != presented else { return }
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         } else {
-            presentViewController(homeViewController, animated: true, completion: nil)
+            present(homeViewController, animated: true, completion: nil)
         }
     }
     
-    private func homeViewController() -> UIViewController? {
-        switch PFUser.currentUser() {
-        case .None:
+    fileprivate func homeViewController() -> UIViewController? {
+        switch PFUser.current() {
+        case .none:
             return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
-        case .Some(let user as User):
+        case .some(let user as User):
             user.fetchInBackground()
             if user.isProvider {
                 return UIStoryboard(name: "ProviderFlow", bundle: nil).instantiateInitialViewController()

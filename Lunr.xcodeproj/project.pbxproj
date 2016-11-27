@@ -415,6 +415,7 @@
 					8E6418C91D55585A00CC4928 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = H799H8B8DD;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -722,6 +723,7 @@
 				PROVISIONING_PROFILE = "8f9ee2f3-2d48-444f-9ccd-689d94e8ca56";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lunr/Lunr-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -739,6 +741,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "22d8cba2-4027-4485-a5fa-1383dbc44884";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lunr/Lunr-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

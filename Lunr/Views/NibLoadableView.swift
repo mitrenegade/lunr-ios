@@ -20,9 +20,9 @@ class NibLoadableView: UIView, LoadableInit {
     }
     
     func commonInit() {
-        NSBundle.mainBundle().loadNibNamed(self.nibName, owner: self, options: nil)
+        Bundle.main.loadNibNamed(self.nibName, owner: self, options: nil)
         contentView.frame = self.bounds
-        contentView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         self.addSubview(contentView)
     }
     

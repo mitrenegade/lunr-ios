@@ -7,16 +7,16 @@ class ProviderTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.selectionStyle = .None
-        self.backgroundColor = UIColor.clearColor()
+        self.selectionStyle = .none
+        self.backgroundColor = UIColor.clear
         self.clipsToBounds = false
 
         self.contentView.addShadow()
-        self.contentView.backgroundColor = UIColor.clearColor()
+        self.contentView.backgroundColor = UIColor.clear
         self.contentView.clipsToBounds = false
     }
 
-    func configureForProvider(provider: User) {
+    func configureForProvider(_ provider: User) {
         self.providerInfoView.configureForProvider(provider)
     }
 }

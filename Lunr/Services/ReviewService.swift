@@ -12,14 +12,14 @@ import Parse
 class ReviewService: NSObject {
     static let sharedInstance: ReviewService = ReviewService()
 
-    func postReview(call: Call, rating: Double, feedback: String, completion: ((review: Review?, error: NSError?)->Void)?) {
+    func postReview(_ call: Call, rating: Double, feedback: String, completion: ((_ review: Review?, _ error: NSError?)->Void)?) {
         let review = Review(call: call, rating: rating, text: feedback)
-        review.saveInBackgroundWithBlock { (success, error) in
+        review.saveInBackground { (success, error) in
             if let error = error {
-                completion?(review: nil, error: error)
+                completion?(nil, error as NSError?)
             }
             else {
-                completion?(review: review, error: nil)
+                completion?(review, nil)
             }
         }
     }

@@ -23,7 +23,7 @@ class ProviderDetailViewController : UIViewController {
         setupCallButton()
         setUpNavigationBar()
 
-        if let user = provider where user.reviews == nil {
+        if let user = provider, user.reviews == nil {
             // only load reviews if none exist
 
             UserService.sharedInstance.queryReviewsForProvider(user, completionHandler: {[weak self]  (reviews) in
@@ -36,54 +36,54 @@ class ProviderDetailViewController : UIViewController {
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         self.navigationController?.navigationBar.tintColor = UIColor.lunr_darkBlue()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.backgroundColor = UIColor.lunr_iceBlue()
     }
 
-    func configureForProvider(provider: User) {
+    func configureForProvider(_ provider: User) {
         self.provider = provider
         self.title = provider.displayString
     }
 
     func setUpTableView() {
-        self.tableView.registerNib(UINib(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DetailTableViewCell")
-        self.tableView.registerNib(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "ReviewTableViewCell")
+        self.tableView.register(UINib(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DetailTableViewCell")
+        self.tableView.register(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "ReviewTableViewCell")
 
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.separatorStyle = .SingleLine
+        self.tableView.separatorStyle = .singleLine
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
     }
 
     func setUpNavigationBar() {
-        let backButton = UIBarButtonItem(image: UIImage.init(named: "back-arrow"), style: .Plain, target: self, action: #selector(backWasPressed))
+        let backButton = UIBarButtonItem(image: UIImage.init(named: "back-arrow"), style: .plain, target: self, action: #selector(backWasPressed))
         self.navigationItem.leftBarButtonItem = backButton;
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont.futuraMediumWithSize(19)]
     }
 
     func setupCallButton() {
-        self.callButton.setTitleColor(.whiteColor(), forState: .Normal)
+        self.callButton.setTitleColor(.white, for: UIControlState())
         self.callButton.backgroundColor = UIColor(red: 46/255, green: 56/255, blue: 91/255, alpha: 1.0)
-        if let provider = self.provider where provider.available {
-            self.callButton.setTitle("Send a message", forState: .Normal)
+        if let provider = self.provider, provider.available {
+            self.callButton.setTitle("Send a message", for: UIControlState())
         }
         else {
-            self.callButton.setTitle("Currently unavailable", forState: .Normal)
-            self.callButton.userInteractionEnabled = false
+            self.callButton.setTitle("Currently unavailable", for: UIControlState())
+            self.callButton.isUserInteractionEnabled = false
             self.callButton.alpha = 0.5
         }
     }
 
     // MARK: Event Methods
 
-    @IBAction func callButtonTapped(sender: AnyObject) {
+    @IBAction func callButtonTapped(_ sender: AnyObject) {
         guard let provider = self.provider else { return }
         
-        guard let currentUser = PFUser.currentUser() as? User where currentUser.hasCreditCard() else {
+        guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
             self.simpleAlert("No credit card available", message: "You must add a payment method before contacting a provider")
             return
         }
@@ -100,12 +100,12 @@ class ProviderDetailViewController : UIViewController {
     }
 
     func backWasPressed() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
 
 extension ProviderDetailViewController {
-    func chatWithProvider(provider: User) {
+    func chatWithProvider(_ provider: User) {
         self.callButton.busy = true
         QBUserService.getQBUUserFor(provider) { [weak self] user in
             guard let user = user else {
@@ -124,13 +124,13 @@ extension ProviderDetailViewController {
                     return
                 }
                 
-                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ClientChatNavigationController") as? UINavigationController,
+                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                     chatVC.dialog = dialog
                     chatVC.providerId = self?.provider?.objectId
-                    self?.presentViewController(chatNavigationVC, animated: true, completion: {
+                    self?.present(chatNavigationVC, animated: true, completion: {
                         self?.callButton.busy = false
-                        QBNotificationService.sharedInstance.currentDialogID = dialog?.ID!
+                        QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
                     })
                 }
             })
@@ -145,7 +145,7 @@ extension ProviderDetailViewController {
         }
         
         CallService.sharedInstance.postNewCall(pfUserId, duration: 0, totalCost: 0) { [weak self] (call, error) in
-            let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("FeedbackViewController") as? FeedbackViewController
+            let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "FeedbackViewController") as? FeedbackViewController
             controller?.call = call
             self?.navigationController?.pushViewController(controller!, animated: true)
         }
@@ -153,7 +153,7 @@ extension ProviderDetailViewController {
 }
 
 extension ProviderDetailViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let provider = self.provider else { return 0 }
         if section == 0 {
             return 1
@@ -162,30 +162,30 @@ extension ProviderDetailViewController: UITableViewDataSource, UITableViewDelega
         return reviews.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell: DetailTableViewCell = tableView.dequeueReusableCellWithIdentifier("DetailTableViewCell", forIndexPath: indexPath) as! DetailTableViewCell
+            let cell: DetailTableViewCell = tableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as! DetailTableViewCell
             cell.configureForProvider(self.provider!)
             return cell
         }
-        let cell: ReviewTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReviewTableViewCell", forIndexPath: indexPath) as! ReviewTableViewCell
+        let cell: ReviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ReviewTableViewCell", for: indexPath) as! ReviewTableViewCell
         if let reviews = self.provider?.reviews {
             cell.configureForReview(reviews[indexPath.row])
         }
         return cell
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
 
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let headerView = view as! UITableViewHeaderFooterView
         headerView.backgroundView?.backgroundColor = UIColor.lunr_iceBlue()
         headerView.textLabel?.font = UIFont.futuraMediumWithSize(16)
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? nil : "Reviews:"
     }
 }

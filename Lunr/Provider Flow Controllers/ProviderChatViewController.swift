@@ -42,8 +42,8 @@ class ProviderChatViewController: ChatViewController {
         })
     }
 
-    @IBAction override func dismiss(sender: AnyObject?) {
-        dismissViewControllerAnimated(true) { 
+    @IBAction override func dismiss(_ sender: AnyObject?) {
+        self.dismiss(animated: true) { 
             // send push notification to cancel
             guard let recipient = self.recipient else { return }
             QBNotificationService.sharedInstance.clearDialog()
@@ -51,13 +51,13 @@ class ProviderChatViewController: ChatViewController {
         }
     }
 
-    @IBAction func startCall(sender: AnyObject) {
+    @IBAction func startCall(_ sender: AnyObject) {
         print("Starting call service")
         self.openVideo()
     }
     
     func openVideo() {
-        if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
+        if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
 
             self.callViewController = controller
@@ -70,15 +70,15 @@ class ProviderChatViewController: ChatViewController {
         // initiates call to recipient after video stream is ready
         guard let recipient = self.recipient else { return }
         guard let userId = incomingPFUserId else { return }
-        SessionService.sharedInstance.startCall(recipient.ID, pfUserId: userId)
+        SessionService.sharedInstance.startCall(recipient.id, pfUserId: userId)
         // start listening for incoming session
         self.listenForAcceptSession()
     }
     
     // MARK: Push notifications
-    func notifyForVideo(user: QBUUser, didInitiateVideo: Bool) {
+    func notifyForVideo(_ user: QBUUser, didInitiateVideo: Bool) {
         // actually notifyForRejectVideo - do not create a call state but send a push
-        guard let currentUser = PFUser.currentUser() as? User else { return }
+        guard let currentUser = PFUser.current() as? User else { return }
         
         let name = currentUser.displayString
         
@@ -105,7 +105,7 @@ class ProviderChatViewController: ChatViewController {
         self.listenFor(NotificationType.VideoSession.CallStateChanged.rawValue, action: #selector(handleSessionState(_:)), object: nil)
     }
 
-    func handleSessionState(notification: NSNotification) {
+    func handleSessionState(_ notification: Notification) {
         let userInfo = notification.userInfo
         let oldValue = userInfo?["oldValue"] as? String
         switch SessionService.sharedInstance.state {
@@ -118,7 +118,7 @@ class ProviderChatViewController: ChatViewController {
         }
     }
     
-    func cleanupLastSession(wasConnected: Bool) {
+    func cleanupLastSession(_ wasConnected: Bool) {
         // ends listeners and pops controller. video should automatically stop
         self.callViewController?.endCall(wasConnected)
         self.callViewController = nil

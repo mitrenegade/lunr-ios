@@ -44,7 +44,7 @@ class User: PFUser {
         
         self.firstName = firstName
         self.lastName = lastName
-        self.type = type.rawValue.lowercaseString
+        self.type = type.rawValue.lowercased()
         self.rating = rating
         self.ratePerMin = ratePerMin
         self.skills = skills
@@ -58,7 +58,7 @@ class User: PFUser {
 extension User {
     var displayString: String {
         get {
-            if let first = self.firstName, last = self.lastName {
+            if let first = self.firstName, let last = self.lastName {
                 return "\(first) \(last)"
             }
             return self.firstName ?? self.lastName ?? self.email ?? (self.isProvider ? "a provider" : "a client")
@@ -69,7 +69,7 @@ extension User {
         get {
             let types: [UserType] = [.Plumber, .Electrician, .Handyman, .Client]
             for type in types {
-                if type.rawValue.lowercaseString == self.type?.lowercaseString {
+                if type.rawValue.lowercased() == self.type?.lowercased() {
                     return type
                 }
             }
@@ -86,22 +86,22 @@ extension User {
 // MARK: Favorites
 extension User {
     // Client only
-    func toggleFavorite(provider: User, completion: ((success: Bool)->Void)?) {
-        guard let objectId = provider.objectId else { completion?(success: false); return }
+    func toggleFavorite(_ provider: User, completion: ((_ success: Bool)->Void)?) {
+        guard let objectId = provider.objectId else { completion?(false); return }
         if !self.favorites.contains(objectId) {
             self.favorites.append(objectId)
         }
         else {
-            self.favorites.removeAtIndex(self.favorites.indexOf(objectId)!)
+            self.favorites.remove(at: self.favorites.index(of: objectId)!)
         }
         
-        self.saveInBackgroundWithBlock { (success, error) in
-            completion?(success: success)
+        self.saveInBackground { (success, error) in
+            completion?(success)
         }
     }
     
     // Provider only
-    func isFavoriteOf(client: User) -> Bool {
+    func isFavoriteOf(_ client: User) -> Bool {
         guard let objectId = self.objectId else { return false }
         return client.favorites.contains(objectId)
     }
@@ -110,7 +110,7 @@ extension User {
 // payment
 extension User {
     func hasCreditCard() -> Bool {
-        if let payment = self.objectForKey("payment") as? String {
+        if let payment = self.object(forKey: "payment") as? String {
             return !payment.isEmpty
         }
         return false
@@ -123,7 +123,7 @@ extension String {
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(self)
+        return emailTest.evaluate(with: self)
     }
 }
 

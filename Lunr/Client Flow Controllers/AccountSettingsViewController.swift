@@ -22,26 +22,26 @@ class AccountSettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = false
-        self.navigationController?.navigationBar.backgroundColor = .whiteColor()
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.tintColor = .lunr_darkBlue()
         self.navigationController?.navigationBar.addShadow()
         
-        self.user = PFUser.currentUser() as? User
+        self.user = PFUser.current() as? User
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 140
 
-        self.tableView.separatorStyle = .None
+        self.tableView.separatorStyle = .none
 
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.shared.statusBarStyle = .lightContent
 
         self.refresh()
         self.listenFor(NotificationType.FeedbackUpdated, action: #selector(refresh), object: nil)
     }
 
     @IBAction func dismiss() {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
     func refresh() {
@@ -58,7 +58,7 @@ class AccountSettingsViewController: UIViewController {
     }
     
     func showAccountInfo() {
-        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("EditAccountSettingsViewController") as! EditAccountSettingsViewController
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "EditAccountSettingsViewController") as! EditAccountSettingsViewController
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
@@ -69,7 +69,7 @@ class AccountSettingsViewController: UIViewController {
         addCardViewController.delegate = self
         // STPAddCardViewController must be shown inside a UINavigationController.
         let navigationController = UINavigationController(rootViewController: addCardViewController)
-        self.presentViewController(navigationController, animated: true, completion: nil)
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     @IBAction func logout() {
@@ -78,34 +78,34 @@ class AccountSettingsViewController: UIViewController {
 }
 
 extension AccountSettingsViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let row = indexPath.row
         switch section {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("AccountInfoCell", forIndexPath: indexPath) as! AccountInfoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountInfoCell", for: indexPath) as! AccountInfoCell
             cell.detailLabel.text = AccountInfoSectionTitles[row]
             switch row {
                 case 0:
                 cell.textField.text = user?.email
-                cell.textField.secureTextEntry = false
+                cell.textField.isSecureTextEntry = false
                 cell.textField.placeholder = "add your email"
             case 1:
                 cell.textField.text = user?.displayString
-                cell.textField.secureTextEntry = false
+                cell.textField.isSecureTextEntry = false
                 cell.textField.placeholder = "add your name"
             default:
                 return UITableViewCell()
             }
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("AccountInfoCell", forIndexPath: indexPath) as! AccountInfoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountInfoCell", for: indexPath) as! AccountInfoCell
             cell.detailLabel.text = PaymentInfoSectionTitles[row]
             cell.textField.text = StripeService().paymentStringForUser(self.user)
             return cell
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! ClientCallHistoryCell
-            guard let calls = self.callHistory where row < calls.count else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CallHistoryCell", for: indexPath) as! ClientCallHistoryCell
+            guard let calls = self.callHistory, row < calls.count else {
                 return cell
             }
             let call = calls[row]
@@ -116,7 +116,7 @@ extension AccountSettingsViewController: UITableViewDataSource {
         }
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0 : return AccountInfoSectionTitles.count
         case 1 : return PaymentInfoSectionTitles.count
@@ -125,32 +125,32 @@ extension AccountSettingsViewController: UITableViewDataSource {
         }
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return NumberOfSectionsInTableView
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return SectionTitles[section]
     }
 }
 
 extension AccountSettingsViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Placeholder
         print("did select")
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        guard let calls = self.callHistory where indexPath.row < calls.count else {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let calls = self.callHistory, indexPath.row < calls.count else {
             return
         }
         
         let call = calls[indexPath.row]
-        let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("FeedbackViewController") as? FeedbackViewController
+        let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "FeedbackViewController") as? FeedbackViewController
         controller?.call = call
         controller?.existingFeedback = call.review
         self.navigationController?.pushViewController(controller!, animated: true)        
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section = indexPath.section
         if section == 2 {
             return 100
@@ -158,39 +158,39 @@ extension AccountSettingsViewController: UITableViewDelegate {
         return 35
     }
 
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
 
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 50))
-        let label = UILabel(frame: CGRectMake(16, 20, tableView.bounds.size.width, 20))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 50))
+        let label = UILabel(frame: CGRect(x: 16, y: 20, width: tableView.bounds.size.width, height: 20))
         let attributes = [NSFontAttributeName : UIFont(name: "Futura-Medium", size: 16)!]
         let attributedText = NSAttributedString(string: SectionTitles[section], attributes: attributes)
         label.attributedText = attributedText
-        headerView.backgroundColor = .whiteColor()
+        headerView.backgroundColor = .white
         headerView.addSubview(label)
         return headerView
     }
 
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard section != 2 else {
-            return UIView(frame: CGRectZero)
+            return UIView(frame: CGRect.zero)
         }
-        let footerView = UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 80))
-        let button = UIButton(frame: CGRectMake(16, 0, tableView.bounds.size.width, 30))
-        button.setTitleColor(.lunr_darkBlue(), forState: .Normal)
-        button.contentHorizontalAlignment = .Left
-        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue, NSFontAttributeName : UIFont(name: "Futura-Medium", size: 13)!]
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 80))
+        let button = UIButton(frame: CGRect(x: 16, y: 0, width: tableView.bounds.size.width, height: 30))
+        button.setTitleColor(.lunr_darkBlue(), for: UIControlState())
+        button.contentHorizontalAlignment = .left
+        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue, NSFontAttributeName : UIFont(name: "Futura-Medium", size: 13)!] as [String : Any]
 
         if section == 0 {
             let underlineAttributedString = NSAttributedString(string: "Edit Account Information", attributes: underlineAttribute)
-            button.setAttributedTitle(underlineAttributedString, forState: .Normal)
-            button.addTarget(self, action: #selector(showAccountInfo), forControlEvents: .TouchUpInside)
+            button.setAttributedTitle(underlineAttributedString, for: UIControlState())
+            button.addTarget(self, action: #selector(showAccountInfo), for: .touchUpInside)
         } else if section == 1 {
             let underlineAttributedString = NSAttributedString(string: "Edit Payment Information", attributes: underlineAttribute)
-            button.setAttributedTitle(underlineAttributedString, forState: .Normal)
-            button.addTarget(self, action: #selector(showPaymentInfo), forControlEvents: .TouchUpInside)
+            button.setAttributedTitle(underlineAttributedString, for: UIControlState())
+            button.addTarget(self, action: #selector(showPaymentInfo), for: .touchUpInside)
         }
         footerView.addSubview(button)
         return footerView
@@ -198,13 +198,13 @@ extension AccountSettingsViewController: UITableViewDelegate {
 }
 
 extension AccountSettingsViewController: STPAddCardViewControllerDelegate {
-    func addCardViewControllerDidCancel(addCardViewController: STPAddCardViewController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func addCardViewControllerDidCancel(_ addCardViewController: STPAddCardViewController) {
+        self.dismiss(animated: true, completion: nil)
     }
 
-    func addCardViewController(addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: STPErrorBlock) {
+    func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
 
-        guard let user = PFUser.currentUser() as? User else { return }
+        guard let user = PFUser.current() as? User else { return }
         StripeService().postNewPayment(user, token: token) { (result, error) in
             print("\(result) \(error)")
             if let error = error {
@@ -213,9 +213,9 @@ extension AccountSettingsViewController: STPAddCardViewControllerDelegate {
                 })
             }
             else {
-                user.fetchInBackgroundWithBlock({ (object, error) in
+                user.fetchInBackground(block: { (object, error) in
                     self.tableView.reloadData()
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 })
             }
             completion(error)

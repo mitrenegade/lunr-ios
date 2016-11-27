@@ -11,16 +11,16 @@ import Parse
 import Quickblox
 import QMServices
 
-public typealias EnablePushCompletionHandler = (success: Bool) -> Void
+public typealias EnablePushCompletionHandler = (_ success: Bool) -> Void
 
 class PushService: NSObject {
     var enablePushCompletionHandler: EnablePushCompletionHandler?
     
     // APN
     class func registerForAPNRemoteNotification() {
-        let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-        UIApplication.sharedApplication().registerForRemoteNotifications()
+        let settings = UIUserNotificationSettings(types: [UIUserNotificationType.alert, UIUserNotificationType.badge, UIUserNotificationType.sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     class func hasPushEnabled() -> Bool {
@@ -28,11 +28,11 @@ class PushService: NSObject {
             return true
         }
         
-        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
             return false
         }
-        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
-        if (settings?.types.contains(.Alert) == true){
+        let settings = UIApplication.shared.currentUserNotificationSettings
+        if (settings?.types.contains(.alert) == true){
             return true
         }
         else {
@@ -40,7 +40,7 @@ class PushService: NSObject {
         }
     }
 
-    func enablePushNotifications(completion: ((success:Bool) -> Void)) {
+    func enablePushNotifications(_ completion: @escaping ((_ success:Bool) -> Void)) {
 //        if PushService.hasPushEnabled() {
 //            completion(success: true)
 //        }
@@ -52,13 +52,13 @@ class PushService: NSObject {
 //        }
     }
     
-    @objc private func enableAPNPushNotificationsCompleted() {
-        self.enablePushCompletionHandler?(success: PushService.hasPushEnabled())
+    @objc fileprivate func enableAPNPushNotificationsCompleted() {
+        self.enablePushCompletionHandler?(PushService.hasPushEnabled())
         self.enablePushCompletionHandler = nil
         self.stopListeningFor(NotificationType.Push.Registered.rawValue)
     }
 
-    func channelStringForPFUser(user: PFUser?) -> String? {
+    func channelStringForPFUser(_ user: PFUser?) -> String? {
         // retrieves common channel name based on PFUser id
         guard let user = user else { return nil }
         guard let userId = user.objectId else { return nil }
@@ -67,14 +67,14 @@ class PushService: NSObject {
         return channel
     }
     
-    func channelStringForQBUser(user: QBUUser?) -> String? {
+    func channelStringForQBUser(_ user: QBUUser?) -> String? {
         guard let channel = user?.tags[0] as? String else { return nil }
         return channel
     }
     
     // Quickblox push
-    func registerQBPushSubscription(deviceToken: NSData, completion: ((success: Bool)->Void)?) {
-        let deviceIdentifier: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
+    func registerQBPushSubscription(_ deviceToken: Data, completion: ((_ success: Bool)->Void)?) {
+        let deviceIdentifier: String = UIDevice.current.identifierForVendor!.uuidString
 
         let subscription: QBMSubscription! = QBMSubscription()
         subscription.notificationChannel = QBMNotificationChannel.APNS
@@ -83,16 +83,16 @@ class PushService: NSObject {
         QBRequest.createSubscription(subscription, successBlock: { (response: QBResponse!, objects: [QBMSubscription]?) -> Void in
             // success
             print("Subscription created: \(objects)")
-            completion?(success: true)
+            completion?(true)
         }) { (response: QBResponse!) -> Void in
             // error
             print("Error response: \(response)")
-            completion?(success: false)
+            completion?(false)
         }
     }
     
-    func sendNotificationToQBUser(user: QBUUser, message: String, let userInfo: [String: String], completion: ((success:Bool, error:QBError?) -> Void)) {
-        guard let channel = self.channelStringForQBUser(user) else { completion(success: false, error: nil); return }
+    func sendNotificationToQBUser(_ user: QBUUser, message: String, userInfo: [String: String], completion: @escaping ((_ success:Bool, _ error:QBError?) -> Void)) {
+        guard let channel = self.channelStringForQBUser(user) else { completion(false, nil); return }
         print("Channel: \(channel)")
 
         let push = QBMPushMessage(payload: userInfo)
@@ -100,17 +100,17 @@ class PushService: NSObject {
         push.soundFile = "default"
         QBRequest.sendPush(push, toUsersWithAnyOfTheseTags: channel, successBlock: { (response, events) in
             print("Successful push \(events)")
-            completion(success: true, error: nil)
+            completion(true, nil)
         }) { (error) in
             print("Push failed with error \(error)")
-            completion(success: false, error: error)
+            completion(false, error)
         }
     }
     
     func unregisterQBPushSubscription() {
-        guard let deviceUdid = UIDevice.currentDevice().identifierForVendor?.UUIDString else { return }
+        guard let deviceUdid = UIDevice.current.identifierForVendor?.uuidString else { return }
         
-        QBRequest.unregisterSubscriptionForUniqueDeviceIdentifier(deviceUdid, successBlock: { (response) in
+        QBRequest.unregisterSubscription(forUniqueDeviceIdentifier: deviceUdid, successBlock: { (response) in
             print("Unregistered")
             }) { (error) in
                 print("error unregistering for push")

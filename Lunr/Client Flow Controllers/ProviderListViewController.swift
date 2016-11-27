@@ -9,45 +9,46 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var providers: [User]?
-    var currentSortCategory: SortCategory = .None
+    var currentSortCategory: SortCategory = .none
     var searchTerms: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUpTableView()
-        self.searchBar.setImage(UIImage(imageLiteral: "search"), forSearchBarIcon: .Search, state: .Normal)
+        let image = UIImage(imageLiteralResourceName: "search")
+        self.searchBar.setImage(image, for: .search, state: UIControlState())
         self.sortCategoryView.delegate = self
         self.activityIndicator.tintColor = UIColor.lunr_darkBlue()
         
         // load cached sort category if user previously selected one
-        if let cachedSortCategory = NSUserDefaults.standardUserDefaults().valueForKey(UserDefaultsKeys.SortCategory.rawValue) as? SortCategory.RawValue {
+        if let cachedSortCategory = UserDefaults.standard.value(forKey: UserDefaultsKeys.SortCategory.rawValue) as? SortCategory.RawValue {
             let category = SortCategory(rawValue: cachedSortCategory)!
             self.sortCategoryView.highlightButtonForCategory(category) // update the view
             self.sortCategoryWasSelected(category) // make the query
         }
         else {
-            let category = SortCategory.Alphabetical
+            let category = SortCategory.alphabetical
             self.sortCategoryView.highlightButtonForCategory(category) // update the view
             self.sortCategoryWasSelected(category) // make the query
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.backgroundColor = UIColor.lunr_darkBlue()
     }
 
     func setUpTableView() {
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.separatorStyle = .None
+        self.tableView.separatorStyle = .none
         self.tableView.showsVerticalScrollIndicator = false
     }
     
-    func refreshProviders(page: Int) {
+    func refreshProviders(_ page: Int) {
         self.activityIndicator.startAnimating()
         UserService.sharedInstance.queryProvidersAtPage(page, filterOption: currentSortCategory, searchTerms: searchTerms, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
             self?.activityIndicator.stopAnimating()
@@ -62,19 +63,19 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
 
     // MARK: Event Methods
 
-    @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func settingsButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: show the settings
         self.searchBar.resignFirstResponder()
 
         print("showSettings")
-        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewControllerWithIdentifier("AccountSettingsViewController") as! AccountSettingsViewController
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AccountSettingsViewController") as! AccountSettingsViewController
         let nav = UINavigationController(rootViewController: controller)
-        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+        self.navigationController?.present(nav, animated: true, completion: nil)
     }
 
     // MARK: SortCategoryProtocol Methods
 
-    func sortCategoryWasSelected(sortCategory: SortCategory) {
+    func sortCategoryWasSelected(_ sortCategory: SortCategory) {
         // make request for providers in the order specified by the sort category.
         self.searchBar.resignFirstResponder()
 
@@ -83,29 +84,29 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.currentSortCategory = sortCategory
         self.refreshProviders(0)
         
-        NSUserDefaults.standardUserDefaults().setValue(sortCategory.rawValue, forKey: UserDefaultsKeys.SortCategory.rawValue)
+        UserDefaults.standard.setValue(sortCategory.rawValue, forKey: UserDefaultsKeys.SortCategory.rawValue)
     }
 
     // MARK: UITableViewDelegate Methods
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         self.searchBar.resignFirstResponder()
 
         guard let providers = self.providers else { return }
 
-        self.performSegueWithIdentifier("GoToProviderDetail", sender: providers[indexPath.row])
+        self.performSegue(withIdentifier: "GoToProviderDetail", sender: providers[indexPath.row])
     }
 
     // MARK: UITableViewDataSource Methods
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let providers = self.providers else { return 0 }
         return providers.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ProviderTableViewCell") as! ProviderTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ProviderTableViewCell") as! ProviderTableViewCell
         if let providers = self.providers {
             cell.configureForProvider(providers[indexPath.row])
         }
@@ -113,22 +114,22 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     }
     
     // MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToProviderDetail" {
-            if let providerDetails = segue.destinationViewController as? ProviderDetailViewController, let user = sender as? User {
+            if let providerDetails = segue.destination as? ProviderDetailViewController, let user = sender as? User {
                 providerDetails.configureForProvider(user)
             }
         }
     }
     
     // MARK: Search bar
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
         self.view.endEditing(true)
         guard let text = searchBar.text else { return }
         print("Searching for \(text)")
         
-        searchTerms = text.characters.split(" ").map(String.init)
+        searchTerms = text.characters.split(separator: " ").map(String.init)
         self.refreshProviders(0)
     }
 }
