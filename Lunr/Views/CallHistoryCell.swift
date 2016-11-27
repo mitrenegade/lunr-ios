@@ -18,49 +18,49 @@ class ClientCallHistoryCell: UITableViewCell {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var ratingView: StarRatingView!
 
-    var dateFormatter: NSDateFormatter {
-        let df = NSDateFormatter()
+    var dateFormatter: DateFormatter {
+        let df = DateFormatter()
         df.dateFormat = "MM/dd"
         return df
     }
     
-    func configure(call: Call) {
+    func configure(_ call: Call) {
         if let date = call.date {
-            self.dateLabel.text = dateFormatter.stringFromDate(date)
+            self.dateLabel.text = dateFormatter.string(from: date as Date)
         }
         
         if self.nameLabel.text == nil {
             self.nameLabel.text = "..."
         }
-        if let user = PFUser.currentUser() as? User where !user.isProvider, let provider = call.provider {
-            provider.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+        if let user = PFUser.current() as? User, !user.isProvider, let provider = call.provider {
+            provider.fetchIfNeededInBackground(block: { (result, error) in
                 self.nameLabel.text = provider.displayString
             })
         }
-        else if let user = PFUser.currentUser() as? User where user.isProvider, let client = call.client {
-            client.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+        else if let user = PFUser.current() as? User, user.isProvider, let client = call.client {
+            client.fetchIfNeededInBackground(block: { (result, error) in
                 self.nameLabel.text = client.displayString
             })
         }
         self.priceLabel.text = String(call.totalCostString)
-        self.cardLabel.text = StripeService().paymentStringForUser(PFUser.currentUser() as? User)
+        self.cardLabel.text = StripeService().paymentStringForUser(PFUser.current() as? User)
         self.separatorView.backgroundColor = UIColor.lunr_separatorGray()
 
         if let pointer = call.review {
             print("pointer exists")
-            self.ratingView.hidden = true
-            self.rateLabel.hidden = true
-            pointer.fetchInBackgroundWithBlock({ (result, error) in
+            self.ratingView.isHidden = true
+            self.rateLabel.isHidden = true
+            pointer.fetchInBackground(block: { (result, error) in
                 if let review = result as? Review {
                     print("review exists")
-                    self.ratingView.hidden = false
+                    self.ratingView.isHidden = false
                     self.ratingView.currentRating = Int(floor(review.rating ?? 0))
                 }
             })
         }
         else {
-            self.ratingView.hidden = true
-            self.rateLabel.hidden = false
+            self.ratingView.isHidden = true
+            self.rateLabel.isHidden = false
         }
     }
 }
@@ -74,24 +74,24 @@ class ProviderCallHistoryCell: UITableViewCell {
     @IBOutlet weak var ratingView: StarRatingView!
     @IBOutlet weak var separatorView: UIView!
     
-    var dateFormatter: NSDateFormatter {
-        let dateFormatter = NSDateFormatter()
+    var dateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E, d MMM yyyy"
         return dateFormatter
     }
     
-    func configure(call: Call) {
+    func configure(_ call: Call) {
         if let date = call.date {
-            self.dateLabel.text = dateFormatter.stringFromDate(date)
+            self.dateLabel.text = dateFormatter.string(from: date as Date)
         }
         
-        if let user = PFUser.currentUser() as? User where user.isProvider, let client = call.client {
-            client.fetchIfNeededInBackgroundWithBlock({ (result, error) in
+        if let user = PFUser.current() as? User, user.isProvider, let client = call.client {
+            client.fetchIfNeededInBackground(block: { (result, error) in
                 self.nameLabel.text = "Call with \(client.displayString)"
             })
         }
         
-        let totalTime = call.duration as? NSTimeInterval ?? 0
+        let totalTime = call.duration as? TimeInterval ?? 0
         let h = floor(totalTime/3600)
         let m = floor((totalTime - h * 3600)/60)
         let s = floor(totalTime - h*3600 - m*60)
@@ -105,27 +105,27 @@ class ProviderCallHistoryCell: UITableViewCell {
         let attributedTime = "Duration: \(timeString)".attributedString("\(timeString)")
         timeLabel.attributedText = attributedTime
 
-        let currencyFormatter = NSNumberFormatter()
+        let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
-        currencyFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        currencyFormatter.numberStyle = NumberFormatter.Style.currency
         // localize to your grouping and decimal separator
-        currencyFormatter.locale = NSLocale.currentLocale()
+        currencyFormatter.locale = Locale.current
         let totalEarnings = call.totalCost as? Double ?? 0
-        let earningsString = currencyFormatter.stringFromNumber(totalEarnings)
+        let earningsString = currencyFormatter.string(from: NSNumber(totalEarnings))
         priceLabel.text = earningsString
 
         //self.separatorView.backgroundColor = UIColor.lunr_separatorGray()
         if let pointer = call.review {
-            self.ratingView.hidden = true
-            pointer.fetchInBackgroundWithBlock({ (result, error) in
+            self.ratingView.isHidden = true
+            pointer.fetchInBackground(block: { (result, error) in
                 if let review = result as? Review {
-                    self.ratingView.hidden = false
+                    self.ratingView.isHidden = false
                     self.ratingView.currentRating = Int(floor(review.rating ?? 0))
                 }
             })
         }
         else {
-            self.ratingView.hidden = true
+            self.ratingView.isHidden = true
         }
     }
 }

@@ -24,11 +24,11 @@ class EditAccountSettingsViewController: UIViewController {
         super.viewDidLoad()
 
         self.title = "Account Settings"
-        self.view.backgroundColor = .whiteColor()
-        self.navigationController?.navigationBar.backgroundColor = .whiteColor()
+        self.view.backgroundColor = .white
+        self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.tintColor = .lunr_darkBlue()
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .Plain, target: self, action: #selector(dismiss))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismiss))
 
         configureTextFields()
         
@@ -41,11 +41,11 @@ class EditAccountSettingsViewController: UIViewController {
                 continue
             }
             if let textField = view as? UITextField {
-                textField.layer.borderColor = UIColor.lunr_lightBlue().CGColor
+                textField.layer.borderColor = UIColor.lunr_lightBlue().cgColor
                 textField.layer.borderWidth = 2.0
                 textField.layer.cornerRadius = 8.0
                 let spacerView = UIView(frame:CGRect(x:0, y:0, width:10, height:10))
-                textField.leftViewMode = .Always
+                textField.leftViewMode = .always
                 textField.leftView = spacerView
             }
         }
@@ -53,7 +53,7 @@ class EditAccountSettingsViewController: UIViewController {
     }
     
     func refreshTextFields() {
-        guard let user = PFUser.currentUser() as? User else { return }
+        guard let user = PFUser.current() as? User else { return }
         if let email = user.email {
             self.emailTextField.text = email
         }
@@ -66,67 +66,67 @@ class EditAccountSettingsViewController: UIViewController {
     }
 
     func dismiss() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func toggleActivity(show: Bool = false) {
+    func toggleActivity(_ show: Bool = false) {
         if show {
-            self.viewOverlay.hidden = false
+            self.viewOverlay.isHidden = false
             self.activityIndicator.startAnimating()
         }
         else {
-            self.viewOverlay.hidden = true
+            self.viewOverlay.isHidden = true
             self.activityIndicator.stopAnimating()
         }
     }
 }
 
 extension EditAccountSettingsViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         self.currentInput = textField
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         print("new value: \(textField.text)")
-        guard let user = PFUser.currentUser() as? User else { return }
+        guard let user = PFUser.current() as? User else { return }
         
         if currentInput == self.emailTextField {
-            guard let email = self.emailTextField.text where email.isValidEmail() else {
+            guard let email = self.emailTextField.text, email.isValidEmail() else {
                 self.emailTextField.text = nil
                 return
             }
             user.email = self.emailTextField.text
             self.toggleActivity(true)
-            user.saveInBackgroundWithBlock({ (success, error) in
+            user.saveInBackground(block: { (success, error) in
                 self.refreshTextFields()
                 self.toggleActivity(false)
             })
         }
         else if currentInput == self.firstNameTextField {
-            guard let name = self.firstNameTextField.text where !name.isEmpty else {
+            guard let name = self.firstNameTextField.text, !name.isEmpty else {
                 self.firstNameTextField.text = nil
                 return
             }
             user.firstName = self.firstNameTextField.text
             self.toggleActivity(true)
-            user.saveInBackgroundWithBlock({ (success, error) in
+            user.saveInBackground(block: { (success, error) in
                 self.refreshTextFields()
                 self.toggleActivity(false)
             })
         }
         else if currentInput == self.lastNameTextField {
-            guard let name = self.lastNameTextField.text where !name.isEmpty else {
+            guard let name = self.lastNameTextField.text, !name.isEmpty else {
                 self.lastNameTextField.text = nil
                 return
             }
             user.lastName = self.lastNameTextField.text
             self.toggleActivity(true)
-            user.saveInBackgroundWithBlock({ (success, error) in
+            user.saveInBackground(block: { (success, error) in
                 self.refreshTextFields()
                 self.toggleActivity(false)
             })

@@ -28,15 +28,15 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         self.ratingLabel.layer.cornerRadius = 8
         self.ratingLabel.clipsToBounds = true
 
-        self.skillCollectionView.backgroundColor = UIColor.clearColor()
-        self.skillCollectionView.registerClass(ProviderSkillTagCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "ProviderSkillTagCollectionViewCell")
+        self.skillCollectionView.backgroundColor = UIColor.clear
+        self.skillCollectionView.register(ProviderSkillTagCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "ProviderSkillTagCollectionViewCell")
 
         if let flowLayout = self.skillCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSizeMake(50, 25)
+            flowLayout.estimatedItemSize = CGSize(width: 50, height: 25)
         }
     }
 
-    func configureForProvider(provider: User) {
+    func configureForProvider(_ provider: User) {
         self.provider = provider
         self.nameLabel.text = provider.displayString
         self.ratingLabel.text = "\(provider.rating)"
@@ -49,7 +49,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         self.skillCollectionView.reloadData()
     }
 
-    func configureAvailability(isAvailable: Bool) {
+    func configureAvailability(_ isAvailable: Bool) {
         if isAvailable {
             self.availableLabel.text = "Currently Available"
             self.availableImageView.image = UIImage(imageLiteral: "available")
@@ -60,25 +60,25 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
     }
 
     func configureFavoriteIcon() {
-        guard let user = PFUser.currentUser() as? User else { return }
+        guard let user = PFUser.current() as? User else { return }
         guard let provider = self.provider else { return }
         if provider.isFavoriteOf(user) {
             // TODO: use different image instead of template?
-            self.favoriteButton.setImage(UIImage(named: "heart")!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-            self.favoriteButton.tintColor = UIColor.redColor()
+            self.favoriteButton.setImage(UIImage(named: "heart")!.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            self.favoriteButton.tintColor = UIColor.red
         }
         else {
             // TODO: use different image instead of template?
-            self.favoriteButton.setImage(UIImage(named: "heart")!.imageWithRenderingMode(.AlwaysOriginal), forState: .Normal)
+            self.favoriteButton.setImage(UIImage(named: "heart")!.withRenderingMode(.alwaysOriginal), for: UIControlState())
         }
     }
     
     // MARK: Event Methods
 
-    @IBAction func favoriteButtonWasPressed(sender: UIButton) {
+    @IBAction func favoriteButtonWasPressed(_ sender: UIButton) {
         
         // make request to favorite this provider
-        guard let user = PFUser.currentUser() as? User else { return }
+        guard let user = PFUser.current() as? User else { return }
         guard let provider = self.provider else { return }
         
         user.toggleFavorite(provider) { (success) in
@@ -89,8 +89,8 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
 
     // MARK: UICollectionViewDataSource Methods
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProviderSkillTagCollectionViewCell", forIndexPath: indexPath) as! ProviderSkillTagCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProviderSkillTagCollectionViewCell", for: indexPath) as! ProviderSkillTagCollectionViewCell
         if let skills = self.skills {
             cell.configureForSkill(skills[indexPath.row])
         }
@@ -98,7 +98,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
 
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let skills = self.skills {
             return skills.count
         }

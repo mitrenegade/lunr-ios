@@ -24,7 +24,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             }
             _instance = SessionService()
             QBRTCClient.initializeRTC()
-            QBRTCClient.instance().addDelegate(_instance)
+            QBRTCClient.instance().add(_instance)
             QBRTCConfig.setAnswerTimeInterval(SESSION_TIMEOUT_INTERVAL)
             return _instance!
         }
@@ -36,13 +36,13 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     var remoteVideoTrack: QBRTCVideoTrack?
     
     // MARK: Chat session
-    func startChatWithUser(user: QBUUser, completion: ((success: Bool, dialog: QBChatDialog?) -> Void)) {
-        self.chatService.createPrivateChatDialogWithOpponent(user) { (response, dialog) in
+    func startChatWithUser(_ user: QBUUser, completion: @escaping ((_ success: Bool, _ dialog: QBChatDialog?) -> Void)) {
+        self.chatService.createPrivateChatDialog(withOpponent: user) { (response, dialog) in
             if let dialog = dialog {
-                completion(success: true, dialog: dialog)
+                completion(true, dialog)
             }
             else {
-                completion(success: false, dialog: nil)
+                completion(false, nil)
             }
         }
     }
@@ -50,7 +50,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
 
     // MARK: QMChatServiceDelegate
     
-    override func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
+    override func chatService(_ chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         super.chatService(chatService, didAddMessageToMemoryStorage: message, forDialogID: dialogID)
         
         if authService.isAuthorized {
@@ -58,7 +58,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         }
     }
     
-    func handleNewMessage(message: QBChatMessage, dialogID: String) {
+    func handleNewMessage(_ message: QBChatMessage, dialogID: String) {
 //        guard currentDialogID != dialogID else { return }
 //        guard message.senderID != currentUser()?.ID else { return }
 //        guard let dialog = chatService.dialogsMemoryStorage.chatDialogWithID(dialogID) else { return }
@@ -94,14 +94,14 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     // MARK: - QBRTCClientDelegate
     var state: CallState = .Disconnected {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.CallStateChanged.rawValue, object: nil, userInfo: ["state":state.rawValue, "oldValue": oldValue.rawValue])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationType.VideoSession.CallStateChanged.rawValue), object: nil, userInfo: ["state":state.rawValue, "oldValue": oldValue.rawValue])
         }
     }
     
     // MARK: Session lifecycle
     
     // user action (provider)
-    func startCall(userID: UInt, pfUserId: String) {
+    func startCall(_ userID: UInt, pfUserId: String) {
         // create call object
         CallService.sharedInstance.postNewCall(pfUserId, duration: 0, totalCost: 0) { (call, error) in
             if error != nil || call == nil {
@@ -115,7 +115,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             
             // create and start session
             // must be called after video track has been started!
-            let newSession: QBRTCSession = QBRTCClient.instance().createNewSessionWithOpponents([userID], withConferenceType: QBRTCConferenceType.Video)
+            let newSession: QBRTCSession = QBRTCClient.instance().createNewSession(withOpponents: [userID], with: QBRTCConferenceType.video)
             self.session = newSession
             var userInfo: [String: AnyObject]? = nil // send any info through
             if let call = call, let objectId = call.objectId {
@@ -129,7 +129,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     }
 
     // delegate (client)
-    func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
+    func didReceiveNewSession(_ session: QBRTCSession!, userInfo: [AnyHashable: Any]!) {
         self.incomingSession = session
         if (self.session != nil) {
             // automatically reject call if a session exists
@@ -139,7 +139,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         let userId = self.incomingSession!.initiatorID as UInt
         QBUserService.qbUUserWithId(userId) { (result) in
             if let user = result {
-                print("Incoming call from a known user with id \(user.ID)")
+                print("Incoming call from a known user with id \(user.id)")
                 if let pfObjectId = userInfo["callId"] as? String {
                     CallService.sharedInstance.currentCallId = pfObjectId
                 }
@@ -155,35 +155,35 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     }
     
     // user action (client)
-    func acceptCall(userInfo: [String: AnyObject]?) {
+    func acceptCall(_ userInfo: [String: AnyObject]?) {
         // happens automatically when client receives an incoming call and goes to video view
         self.session?.acceptCall(userInfo)
     }
     
-    func rejectCall(userInfo: [String: AnyObject]?) {
+    func rejectCall(_ userInfo: [String: AnyObject]?) {
         // might happen if client is already in a call and goes to video view...shouldn't happen
         self.session?.rejectCall(userInfo)
     }
     
     // delegate (provider)
-    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+    func session(_ session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [AnyHashable: Any]!) {
         print("call accepted")
         self.state = .Connected
     }
     
-    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+    func session(_ session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [AnyHashable: Any]!) {
         print("call rejected")
         self.state = .Disconnected
     }
     
     // delegate (both - video received)
-    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.StreamInitialized.rawValue, object: nil, userInfo: ["stream": mediaStream] )
+    func session(_ session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationType.VideoSession.StreamInitialized.rawValue), object: nil, userInfo: ["stream": mediaStream] )
     }
     
-    func session(session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
+    func session(_ session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
         self.remoteVideoTrack = videoTrack // store it
-        NSNotificationCenter.defaultCenter().postNotificationName(NotificationType.VideoSession.VideoReceived.rawValue, object: nil, userInfo: ["track": videoTrack])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationType.VideoSession.VideoReceived.rawValue), object: nil, userInfo: ["track": videoTrack])
     }
     
     func endCall() {
@@ -193,14 +193,14 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     }
 
     // MARK: All connections
-    func session(session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+    func session(_ session: QBRTCSession!, hungUpByUser userID: NSNumber!, userInfo: [AnyHashable: Any]!) {
         print("session hung up")
         self.session = nil
         self.state = .Disconnected
         self.notify(NotificationType.VideoSession.HungUp.rawValue, object: nil, userInfo: nil)
     }
     
-    func sessionDidClose(session: QBRTCSession!) {
+    func sessionDidClose(_ session: QBRTCSession!) {
         print("Session closed")
         // notified when all remotes are inactive
         self.session = nil

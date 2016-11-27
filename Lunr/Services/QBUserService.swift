@@ -10,6 +10,19 @@
 import UIKit
 import Parse
 import Quickblox
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class QBUserService {
     static let sharedInstance: QBUserService = QBUserService()
@@ -18,37 +31,37 @@ class QBUserService {
     var isRefreshingSession: Bool = false
     
     // MARK: Create User
-    func createQBUser(parseUserId: String, completion: ((user: QBUUser?)->Void)) {
+    func createQBUser(_ parseUserId: String, completion: @escaping ((_ user: QBUUser?)->Void)) {
         let user = QBUUser()
         user.login = parseUserId
         user.password = parseUserId
-        if let pfUser = PFUser.currentUser() as? User {
+        if let pfUser = PFUser.current() as? User {
             user.fullName = pfUser.displayString
             if let channel = PushService().channelStringForPFUser(pfUser) {
-                user.tags.addObject(channel)
+                user.tags.add(channel)
             }
         }
         QBRequest.signUp(user, successBlock: { (response, user) in
             print("results: \(user)")
-            completion(user: user)
+            completion(user)
         }) { (errorResponse) in
             print("Error: \(errorResponse)")
-            completion(user: nil)
+            completion(nil)
         }
     }
     
     // Mark: Login user
-    func loginQBUser(parseUserId: String, completion: ((success: Bool, error: NSError?)->Void)?) {
-        QBRequest.logInWithUserLogin(parseUserId, password: parseUserId, successBlock: { (response, user) in
+    func loginQBUser(_ parseUserId: String, completion: ((_ success: Bool, _ error: NSError?)->Void)?) {
+        QBRequest.logIn(withUserLogin: parseUserId, password: parseUserId, successBlock: { (response, user) in
             print("results: \(user)")
             user?.password = parseUserId // must set it again to connect to QBChat
-            QBChat.instance().connectWithUser(user!) { (error) in
+            QBChat.instance().connect(with: user!) { (error) in
                 if error != nil {
                     print("error: \(error)")
-                    completion?(success: false, error: error)
+                    completion?(false, error as NSError?)
                 }
                 else {
-                    completion?(success: true, error: nil)
+                    completion?(true, nil)
                 }
             }
         }) { (errorResponse) in
@@ -61,30 +74,30 @@ class QBUserService {
                         self.loginQBUser(parseUserId, completion: completion)
                     }
                     else {
-                        completion?(success: false, error: nil)
+                        completion?(false, nil)
                     }
                 })
             }
             else {
-                completion?(success: false, error: nil)
+                completion?(false, nil)
             }
         }
     }
     
     // MARK: Refresh user session
-    func refreshUserSession(completion: ((success: Bool) -> Void)?) {
+    func refreshUserSession(_ completion: ((_ success: Bool) -> Void)?) {
         // if not connected to QBChat. For example at startup
         // TODO: make this part of the Session service
         guard !isRefreshingSession else { return }
         isRefreshingSession = true
         
-        guard let pfUser = PFUser.currentUser(), let userId = pfUser.objectId else {
+        guard let pfUser = PFUser.current(), let userId = pfUser.objectId else {
             self.isRefreshingSession = false
-            completion?(success: false)
+            completion?(false)
             return
         }
         
-        guard let qbUser = QBSession.currentSession().currentUser else {
+        guard let qbUser = QBSession.current().currentUser else {
             self.loginQBUser(userId, completion: { (success, error) in
                 if (success) {
                     self.isRefreshingSession = false
@@ -93,7 +106,7 @@ class QBUserService {
                 else {
                     print("No qbUser, handle this error!")
                     self.isRefreshingSession = false
-                    completion?(success: false)
+                    completion?(false)
                 }
             })
             return
@@ -101,89 +114,89 @@ class QBUserService {
         
         if QBChat.instance().isConnected {
             self.isRefreshingSession = false
-            completion?(success: true)
+            completion?(true)
             return
         }
         
         qbUser.password = pfUser.objectId!
-        QBChat.instance().connectWithUser(qbUser) { (error) in
+        QBChat.instance().connect(with: qbUser) { (error) in
             self.isRefreshingSession = false
             if let error = error {
                 print("error: \(error)")
                 if error.code == 401 {
                     // invalid user (quickblox user got deleted or does not exist)
                     self.loginQBUser(userId, completion: { (success, error) in
-                        completion?(success: success)
+                        completion?(success)
                     })
                 }
                 else {
-                    completion?(success: false)
+                    completion?(false)
                 }
             }
             else {
                 print("login to chat succeeded")
-                completion?(success: true)
+                completion?(true)
             }
         }
     }
 
     func logoutQBUser() {
         if QBChat.instance().isConnected {
-            QBChat.instance().disconnectWithCompletionBlock({ (error) in
+            QBChat.instance().disconnect(completionBlock: { (error) in
                 print("error: \(error)")
             })
         }
     }
     
     // load a QBUUser from cache by QBUserId
-    class func qbUUserWithId(userId: UInt, loadFromWeb: Bool = false, completion: ((result: QBUUser?) -> Void)){
+    class func qbUUserWithId(_ userId: UInt, loadFromWeb: Bool = false, completion: @escaping ((_ result: QBUUser?) -> Void)){
         if let user = self.cachedUserWithId(userId) {
-            completion(result: user)
+            completion(user)
             return
         }
         if loadFromWeb {
-            QBRequest.userWithID(userId, successBlock: { (response, user) in
-                completion(result: user)
+            QBRequest.user(withID: userId, successBlock: { (response, user) in
+                completion(user)
             }) { (response) in
-                completion(result: nil)
+                completion(nil)
             }
         }
         else {
-            completion(result: nil)
+            completion(nil)
         }
     }
     
-    class func cachedUserWithId(userId: UInt) -> QBUUser? {
-        return SessionService.sharedInstance.usersService.usersMemoryStorage.userWithID(userId)
+    class func cachedUserWithId(_ userId: UInt) -> QBUUser? {
+        return SessionService.sharedInstance.usersService.usersMemoryStorage.user(withID: userId)
     }
 
     // load a QBUUser from web based on a PFUser
-    class func getQBUUserFor(user: PFUser, completion: ((result: QBUUser?)->Void)) {
+    class func getQBUUserFor(_ user: PFUser, completion: @escaping ((_ result: QBUUser?)->Void)) {
         guard let objectId = user.objectId else {
-            completion(result: nil)
+            completion(nil)
             return
         }
         self.getQBUUserForPFUserId(objectId, completion: completion)
     }
     
-    class func getQBUUserForPFUserId(userId: String, completion: ((result: QBUUser?) -> Void)) {
+    class func getQBUUserForPFUserId(_ userId: String, completion: @escaping ((_ result: QBUUser?) -> Void)) {
         // TODO: can optimize to prevent extra web calls by storing qbUserId in PFUser object
-        QBRequest.userWithLogin(userId, successBlock: { (response, user) in
+        QBRequest.user(withLogin: userId, successBlock: { (response, user) in
             if let user = user {
-                SessionService.sharedInstance.usersService.usersMemoryStorage.addUser(user)
+                SessionService.sharedInstance.usersService.usersMemoryStorage.add(user)
             }
-            completion(result: user)
+            completion(user)
         }) { (response) in
-            completion(result: nil)
+            completion(nil)
         }
     }
     
     // Loads all users from quickblox (paged)
-    private class func loadUsersWithCompletion(completion: ((results: [QBUUser]?)->Void)) {
+    fileprivate class func loadUsersWithCompletion(_ completion: @escaping ((_ results: [QBUUser]?)->Void)) {
         let responsePage: QBGeneralResponsePage = QBGeneralResponsePage(currentPage: 0, perPage: 100)
-        QBRequest.usersForPage(responsePage, successBlock: { (response, responsePage, users) in
+        QBRequest.users(for: responsePage, successBlock: { (response, responsePage, users) in
             print("users received: \(users)")
-            completion(results: users)
+            completion(users)
             
         }) { (response) in
             print("error with users response: \(response.error)")
@@ -191,13 +204,13 @@ class QBUserService {
     }
         
     func color(forUser user:QBUUser) -> UIColor {
-        let defaultColor = UIColor.blackColor()
+        let defaultColor = UIColor.black
         let users = SessionService.sharedInstance.usersService.usersMemoryStorage.unsortedUsers()
-        guard let givenUser = SessionService.sharedInstance.usersService.usersMemoryStorage.userWithID(user.ID) else {
+        guard let givenUser = SessionService.sharedInstance.usersService.usersMemoryStorage.user(withID: user.id) else {
             return defaultColor
         }
         
-        let indexOfGivenUser = users.indexOf(givenUser)
+        let indexOfGivenUser = users.index(of: givenUser)
         
         if indexOfGivenUser < UIColor.qbChatColors.count {
             return UIColor.qbChatColors[indexOfGivenUser!]

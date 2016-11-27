@@ -15,7 +15,7 @@ class ReviewTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
-    func configureForReview(review: Review) {
+    func configureForReview(_ review: Review) {
         self.textView.text = review.text
         self.textView.font = UIFont.futuraMediumWithSize(14)
 

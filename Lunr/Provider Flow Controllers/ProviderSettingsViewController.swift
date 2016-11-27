@@ -22,20 +22,20 @@ class ProviderSettingsViewController: UIViewController {
         logoutButton.backgroundColor = UIColor.lunr_darkBlue()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let currentUser = PFUser.currentUser() as? User
+        let currentUser = PFUser.current() as? User
         emailLabel.text = currentUser?.email
         nameLabel.text = currentUser?.displayString
     }
 
-    @IBAction func editAccountInfo(sender: AnyObject) {
+    @IBAction func editAccountInfo(_ sender: AnyObject) {
     }
     
-    @IBAction func didClickLogout(sender: AnyObject) {
-        let currentUser = PFUser.currentUser() as? User
+    @IBAction func didClickLogout(_ sender: AnyObject) {
+        let currentUser = PFUser.current() as? User
         currentUser?.setValue(false, forKey: "available")
-        currentUser?.saveInBackgroundWithBlock({ (success, error) in
+        currentUser?.saveInBackground(block: { (success, error) in
             PushService().unregisterQBPushSubscription()
             UserService.logout()
         })

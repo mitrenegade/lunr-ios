@@ -15,28 +15,28 @@ class CallService: NSObject {
     var currentCallId: String? = nil // pfObjectId for a Call
     var currentCall: Call? = nil
 
-    func postNewCall(clientId: String, duration: NSTimeInterval, totalCost: Double, completion: ((call: Call?, error: NSError?)->Void)?) {
+    func postNewCall(_ clientId: String, duration: TimeInterval, totalCost: Double, completion: ((_ call: Call?, _ error: NSError?)->Void)?) {
         Call.registerSubclass()
 
         var rate: Double = 0
-        if let user = PFUser.currentUser() as? User where user.isProvider {
+        if let user = PFUser.current() as? User, user.isProvider {
             rate = user.ratePerMin
             // TODO: discount?
         }
         
-        let params = ["date": NSDate(), "duration": duration, "totalCost": totalCost, "clientId": clientId, "rate": rate]
-        PFCloud.callFunctionInBackground("postNewCall", withParameters: params) { (results, error) in
+        let params = ["date": Date(), "duration": duration, "totalCost": totalCost, "clientId": clientId, "rate": rate] as [String : Any]
+        PFCloud.callFunction(inBackground: "postNewCall", withParameters: params) { (results, error) in
             print("Results \(results) error \(error)")
             if let error = error {
-                completion?(call: nil, error: error)
+                completion?(nil, error as NSError?)
             }
             else if let call = results as? Call {
-                completion?(call: call, error: nil)
+                completion?(call, nil)
             }
         }
     }
     
-    func queryCallsForUser(user: User?, startDate: NSDate? = nil, endDate: NSDate? = nil, completion: ((results: [Call]?, error: NSError?)->Void)) {
+    func queryCallsForUser(_ user: User?, startDate: Date? = nil, endDate: Date? = nil, completion: @escaping ((_ results: [Call]?, _ error: NSError?)->Void)) {
         /*
         guard let user = user else {
             completion(results: nil, error: nil)
@@ -54,48 +54,48 @@ class CallService: NSObject {
             query.whereKey("client", equalTo: user)
         }
  */
-        query.orderByDescending("createdAt")
+        query.order(byDescending: "createdAt")
         if let start = startDate {
             query.whereKey("createdAt", greaterThanOrEqualTo: start)
         }
         if let end = endDate {
             query.whereKey("createdAt", lessThanOrEqualTo: end)
         }
-        query.findObjectsInBackgroundWithBlock { (results, error) in
+        query.findObjectsInBackground { (results, error) in
             let calls = results as? [Call]
-            completion(results: calls, error: error)
+            completion(calls, error as NSError?)
         }
     }
     
-    func queryCallWithId(callId: String?, completion: ((result: Call?, error: NSError?)->Void)) {
+    func queryCallWithId(_ callId: String?, completion: @escaping ((_ result: Call?, _ error: NSError?)->Void)) {
         guard let callId = callId else {
-            completion(result: nil, error: nil)
+            completion(nil, nil)
             return
         }
  
         Call.registerSubclass()
         
         let query: PFQuery = Call.query()! //(className: "Call")
-        query.getObjectInBackgroundWithId(callId) { (result, error) in
+        query.getObjectInBackground(withId: callId) { (result, error) in
             let call = result as? Call
-            completion(result: call, error: error)
+            completion(call, error as NSError?)
         }
     }
     
-    func updateCall(call: Call, shouldSave: Bool = true, completion: ((result: Call?, error: NSError?)->Void)) {
-        guard let start = call.date else { completion(result: call, error: nil); return }
-        let duration = NSDate().timeIntervalSinceDate(start)
-        call.duration = duration
+    func updateCall(_ call: Call, shouldSave: Bool = true, completion: @escaping ((_ result: Call?, _ error: NSError?)->Void)) {
+        guard let start = call.date else { completion(call, nil); return }
+        let duration = Date().timeIntervalSince(start as Date)
+        call.duration = duration as NSNumber?
         // save the duration based on provider
         if shouldSave {
-            let params: [NSObject: AnyObject] = ["callId": call.objectId!, "duration": duration]
-            PFCloud.callFunctionInBackground("completeCall", withParameters: params) { (result, error) in
-                completion(result: call, error: error)
+            let params: [AnyHashable: Any] = ["callId": call.objectId!, "duration": duration]
+            PFCloud.callFunction(inBackground: "completeCall", withParameters: params) { (result, error) in
+                completion(call, error)
             }
         }
         else {
             // only client
-            completion(result: call, error: nil)
+            completion(call, nil)
         }
     }
 

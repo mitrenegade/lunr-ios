@@ -17,12 +17,12 @@ class ProviderStatusView: UIStackView {
     weak var delegate: ProviderStatusViewDelegate?
     
     enum ProviderStatus {
-        case Offline
-        case Online
-        case NewRequest(QBUUser) // user, dialogId
+        case offline
+        case online
+        case newRequest(QBUUser) // user, dialogId
     }
     
-    var status: ProviderStatus = .Offline {
+    var status: ProviderStatus = .offline {
         didSet {
             refresh()
         }
@@ -38,15 +38,15 @@ class ProviderStatusView: UIStackView {
         setup()
     }
     
-    private func setup() {
-        axis = .Vertical
-        alignment = .Center
-        distribution = .FillProportionally
+    fileprivate func setup() {
+        axis = .vertical
+        alignment = .center
+        distribution = .fillProportionally
         spacing = 20
     }
     
-    private func refresh() {
-        UIView.animateWithDuration(0.2, animations: { [weak self] _ in
+    fileprivate func refresh() {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] _ in
             self?.arrangedSubviews.forEach { sv in
                 sv.alpha = 0
             }
@@ -54,18 +54,18 @@ class ProviderStatusView: UIStackView {
                 self?.removeAllArrangedSubviews()
                 guard let strongSelf = self else { return }
                 switch strongSelf.status {
-                case .Offline:
+                case .offline:
                     strongSelf.addArrangedSubview(strongSelf.label("You are currently offline."))
                     strongSelf.addArrangedSubview(strongSelf.icon("offline"))
-                case .Online:
+                case .online:
                     strongSelf.addArrangedSubview(strongSelf.label("Currently waiting for requests..."))
                     strongSelf.addArrangedSubview(strongSelf.icon("hourglass"))
-                case .NewRequest(let user):
+                case .newRequest(let user):
                     strongSelf.addArrangedSubview(strongSelf.label("New call request"))
                     strongSelf.addArrangedSubview(strongSelf.label("\(user.fullName!) has sent you a message."))
                     strongSelf.addArrangedSubview(strongSelf.button(user))
                 }
-                UIView.animateWithDuration(0.2, animations: { _ in
+                UIView.animate(withDuration: 0.2, animations: { _ in
                     self?.arrangedSubviews.forEach { sv in
                         sv.alpha = 1
                     }
@@ -73,38 +73,38 @@ class ProviderStatusView: UIStackView {
         })
     }
     
-    private func label(text: String) -> UILabel {
+    fileprivate func label(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text
         label.font = UIFont.futuraMediumWithSize(12)
         label.textColor = UIColor(red:0.647, green:0.647, blue:0.647, alpha:1)
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.alpha = 0
         
         return label
     }
     
-    private func icon(imageName: String) -> UIImageView {
+    fileprivate func icon(_ imageName: String) -> UIImageView {
         let view = UIImageView()
         view.image = UIImage(named: imageName)
-        view.contentMode = .ScaleAspectFit
+        view.contentMode = .scaleAspectFit
         view.alpha = 0
         
         return view
     }
     
-    private func button(user: QBUUser) -> UIButton {
+    fileprivate func button(_ user: QBUUser) -> UIButton {
         let button = LunrRoundActivityButton()
-        button.setTitle("Reply", forState: .Normal)
+        button.setTitle("Reply", for: UIControlState())
         button.backgroundColor = UIColor.lunr_darkBlue()
-        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        button.setTitleColor(UIColor.white, for: UIControlState())
         button.alpha = 0
-        button.addTarget(self, action: #selector(didClickReply), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(didClickReply), for: .touchUpInside)
         
         return button
     }
     
-    @objc private func didClickReply() {
+    @objc fileprivate func didClickReply() {
         self.delegate?.didClickReply()
     }
 }

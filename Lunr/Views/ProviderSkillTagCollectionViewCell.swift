@@ -22,16 +22,16 @@ class ProviderSkillTagCollectionViewCell: UICollectionViewCell, LoadableInit {
     }
 
     func commonInit() {
-        NSBundle.mainBundle().loadNibNamed(self.nibName, owner: self, options: nil)
+        Bundle.main.loadNibNamed(self.nibName, owner: self, options: nil)
 
         self.userContentView.frame = self.bounds
-        self.userContentView.autoresizingMask = [.FlexibleWidth]
+        self.userContentView.autoresizingMask = [.flexibleWidth]
         self.userContentView.layer.cornerRadius = 5
 
         self.contentView.addSubview(userContentView)
     }
 
-    func configureForSkill(skill: String) {
+    func configureForSkill(_ skill: String) {
         self.skillLabel.text = skill
     }
 }

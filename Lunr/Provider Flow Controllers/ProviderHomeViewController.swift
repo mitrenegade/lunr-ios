@@ -22,9 +22,9 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     var calls: [Call]?
     
-    private var callsThisWeek: [Call]?
-    private var callsLastWeek: [Call]?
-    private var callsPast: [Call]?
+    fileprivate var callsThisWeek: [Call]?
+    fileprivate var callsLastWeek: [Call]?
+    fileprivate var callsPast: [Call]?
     
     weak var weekSummaryController: WeekSummaryViewController?
     
@@ -40,7 +40,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         
         updateUI()
         
-        if let user = PFUser.currentUser() as? User where user.available {
+        if let user = PFUser.current() as? User, user.available {
             PushService().enablePushNotifications({ (success) in
                 print("User is available and push is enabled")
             })
@@ -58,16 +58,16 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.stopListeningFor(.DialogFetched)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.shouldOpenDialogAutomatically = false
     }
     
-    @IBAction func toggleOnDuty(sender: AnyObject) {
-        if let user = PFUser.currentUser() as? User {
+    @IBAction func toggleOnDuty(_ sender: AnyObject) {
+        if let user = PFUser.current() as? User {
             onDutyToggleButton.busy = true
             user.available = !user.available
-            user.saveInBackgroundWithBlock { [weak self] (success, error) in
+            user.saveInBackground { [weak self] (success, error) in
                 self?.onDutyToggleButton.busy = false
                 if success {
                     self?.updateUI()
@@ -88,12 +88,12 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         }
     }
     
-    private func updateUI() {
+    fileprivate func updateUI() {
         // does not handle .NewRequest because updateUI is for online/offline and waiting
-        if let user = PFUser.currentUser() as? User {
+        if let user = PFUser.current() as? User {
             let onDutyTitle = user.available ? "Go Offline" : "Go Online"
-            onDutyToggleButton.setTitle(onDutyTitle, forState: .Normal)
-            providerStatusView.status = user.available ? .Online : .Offline
+            onDutyToggleButton.setTitle(onDutyTitle, for: UIControlState())
+            providerStatusView.status = user.available ? .online : .offline
         }
         
         // clear locally stored dialog and userIds that were saved from previous notifications
@@ -101,14 +101,14 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.incomingPFUserId = nil
     }
     
-    func handleIncomingChatRequest(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, dialog = userInfo["dialog"] as? QBChatDialog, incomingPFUserId = userInfo["pfUserId"] as? String else { return }
+    func handleIncomingChatRequest(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let dialog = userInfo["dialog"] as? QBChatDialog, let incomingPFUserId = userInfo["pfUserId"] as? String else { return }
         guard QBNotificationService.sharedInstance.currentDialogID == nil else {
-            print("Trying to open dialog \(dialog.ID!) but dialog \(QBNotificationService.sharedInstance.currentDialogID!) already open")
+            print("Trying to open dialog \(dialog.id!) but dialog \(QBNotificationService.sharedInstance.currentDialogID!) already open")
             return
         }
         
-        guard let user = PFUser.currentUser() as? User where user.available else {
+        guard let user = PFUser.current() as? User, user.available else {
             return
         }
         
@@ -116,7 +116,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             if let user = result {
                 self?.incomingPFUserId = incomingPFUserId
                 self?.dialog = dialog
-                self?.providerStatusView.status = .NewRequest(user)
+                self?.providerStatusView.status = .newRequest(user)
                 if self?.shouldOpenDialogAutomatically ?? false {
                     self?.didClickReply()
                 }
@@ -128,26 +128,26 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         }
     }
     
-    func cancelChatRequest(notification: NSNotification) {
+    func cancelChatRequest(_ notification: Notification) {
         self.incomingPFUserId = nil
         self.dialog = nil
         self.updateUI()
         self.shouldOpenDialogAutomatically = false
     }
     
-    func handleBackgroundPush(notification: NSNotification) {
+    func handleBackgroundPush(_ notification: Notification) {
         // this gets called when the app comes from background by clicking on a push
         self.shouldOpenDialogAutomatically = true
     }
     
     func didClickReply() {
-        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ProviderChatNavigationController") as? UINavigationController, let chatVC = chatNavigationVC.viewControllers[0] as? ProviderChatViewController {
-            guard let dialog = self.dialog, userId = self.incomingPFUserId else { return }
+        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ProviderChatNavigationController") as? UINavigationController, let chatVC = chatNavigationVC.viewControllers[0] as? ProviderChatViewController {
+            guard let dialog = self.dialog, let userId = self.incomingPFUserId else { return }
             chatVC.dialog = dialog
             chatVC.incomingPFUserId = userId
-            QBNotificationService.sharedInstance.currentDialogID = dialog.ID
+            QBNotificationService.sharedInstance.currentDialogID = dialog.id
             
-            self.presentViewController(chatNavigationVC, animated: true, completion: { 
+            self.present(chatNavigationVC, animated: true, completion: { 
                 // reset to original state
                 self.updateUI()
             })
@@ -160,9 +160,9 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     */
     
     func refreshCallHistory() {
-        guard let user = PFUser.currentUser() as? User where user.isProvider else { return }
+        guard let user = PFUser.current() as? User, user.isProvider else { return }
         //let startDate = NSDate().startOfWeek
-        let endDate = NSDate()
+        let endDate = Date()
         CallService.sharedInstance.queryCallsForUser(user, startDate:nil, endDate: endDate) { (results, error) in
             if let error = error {
                 print("Error \(error)")
@@ -171,20 +171,20 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 self.calls = results
 
                 // this week
-                var startDate = NSDate().startOfWeek
+                var startDate = Date().startOfWeek
                 self.callsThisWeek = results?.filter({ (call) -> Bool in
-                    return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
+                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
                 })
                 self.weekSummaryController?.calls = self.callsThisWeek
                 // last week
-                startDate = startDate.dateByAddingTimeInterval(-7*24*3600)
+                startDate = startDate.addingTimeInterval(-7*24*3600)
                 self.callsLastWeek = results?.filter({ (call) -> Bool in
-                    return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
+                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
                 })
                 // this week
-                startDate = startDate.dateByAddingTimeInterval(-7*24*3600)
+                startDate = startDate.addingTimeInterval(-7*24*3600)
                 self.callsPast = results?.filter({ (call) -> Bool in
-                    return call.createdAt?.compare(startDate) == NSComparisonResult.OrderedDescending
+                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
                 })
                 
                 self.tableView.reloadData()
@@ -192,9 +192,9 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedWeekSummary" {
-            if let controller: WeekSummaryViewController = segue.destinationViewController as? WeekSummaryViewController {
+            if let controller: WeekSummaryViewController = segue.destination as? WeekSummaryViewController {
                 controller.calls = self.calls
                 self.weekSummaryController = controller
             }
@@ -203,16 +203,16 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
 }
 
 extension ProviderHomeViewController: UITableViewDataSource {
-    var dateFormatter: NSDateFormatter {
-        let df = NSDateFormatter()
+    var dateFormatter: DateFormatter {
+        let df = DateFormatter()
         df.dateFormat = "MM/dd"
         return df
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        let cell = tableView.dequeueReusableCellWithIdentifier("CallHistoryCell", forIndexPath: indexPath) as! ProviderCallHistoryCell
-        guard let calls = self.calls where row < calls.count else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CallHistoryCell", for: indexPath) as! ProviderCallHistoryCell
+        guard let calls = self.calls, row < calls.count else {
             return cell
         }
         let call = calls[row]
@@ -220,7 +220,7 @@ extension ProviderHomeViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return callsThisWeek?.count ?? 0
@@ -231,11 +231,11 @@ extension ProviderHomeViewController: UITableViewDataSource {
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
             if self.callsThisWeek?.count == 0 {
@@ -253,10 +253,10 @@ extension ProviderHomeViewController: UITableViewDataSource {
         return 30
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 30))
-        view.backgroundColor = UIColor.whiteColor()
-        let label: UILabel = UILabel(frame: CGRectMake(16, 4, 200, 21))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
+        view.backgroundColor = UIColor.white
+        let label: UILabel = UILabel(frame: CGRect(x: 16, y: 4, width: 200, height: 21))
         label.font = UIFont(name: "Futura-Medium", size: 16)
         switch section {
         case 0:
@@ -281,21 +281,21 @@ extension ProviderHomeViewController: UITableViewDataSource {
 }
 
 extension ProviderHomeViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-extension NSDate {
+extension Date {
     struct Calendar {
-        static let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        static let gregorian = Foundation.Calendar(identifier: Calendar.Identifier.gregorian)!
     }
-    var startOfWeek: NSDate {
-        let sunday = Calendar.gregorian.dateFromComponents(Calendar.gregorian.components([.YearForWeekOfYear, .WeekOfYear ], fromDate: self))!
-        return sunday.dateByAddingTimeInterval(3600*24)
+    var startOfWeek: Date {
+        let sunday = Calendar.gregorian.date(from: (Calendar.gregorian as NSCalendar).components([.yearForWeekOfYear, .weekOfYear ], from: self))!
+        return sunday.addingTimeInterval(3600*24)
     }
 }

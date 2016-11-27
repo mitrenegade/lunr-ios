@@ -25,10 +25,10 @@ class WeekSummaryViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E, d MMM yyyy"
-        let start = NSDate().startOfWeek
-        labelDate.text = "Week of \(dateFormatter.stringFromDate(start))"
+        let start = Date().startOfWeek
+        labelDate.text = "Week of \(dateFormatter.string(from: start))"
         
         self.refresh()
     }
@@ -44,7 +44,7 @@ class WeekSummaryViewController: UIViewController {
         }
         print("calls: \(self.calls?.count)")
         
-        var totalTime: NSTimeInterval = 0
+        var totalTime: TimeInterval = 0
         var totalEarnings: Double = 0
         for call: Call in calls {
             let duration = call.duration as? Double ?? 0
@@ -70,12 +70,12 @@ class WeekSummaryViewController: UIViewController {
         let attributedTime = "\(timeString) time online".attributedString("\(timeString)")
         labelTime.attributedText = attributedTime
         
-        let currencyFormatter = NSNumberFormatter()
+        let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
-        currencyFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        currencyFormatter.numberStyle = NumberFormatter.Style.currency
         // localize to your grouping and decimal separator
-        currencyFormatter.locale = NSLocale.currentLocale()
-        let earningsString = currencyFormatter.stringFromNumber(totalEarnings)
+        currencyFormatter.locale = Locale.current
+        let earningsString = currencyFormatter.string(from: NSNumber(totalEarnings))
         labelEarnings.text = earningsString
     }
 
@@ -93,13 +93,13 @@ class WeekSummaryViewController: UIViewController {
 }
 
 extension String {
-    func attributedString(substring: String) -> NSAttributedString? {
+    func attributedString(_ substring: String) -> NSAttributedString? {
         var attributes = Dictionary<String, AnyObject>()
         attributes[NSForegroundColorAttributeName] = UIColor.lunr_grayText()
         attributes[NSFontAttributeName] = UIFont(name: "Futura-Medium", size: 12)
         
         let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: self, attributes: attributes) as NSMutableAttributedString
-        let range = (self as NSString).rangeOfString(substring)
+        let range = (self as NSString).range(of: substring)
         
         var otherAttrs = Dictionary<String, AnyObject>()
         otherAttrs[NSForegroundColorAttributeName] = UIColor.lunr_darkGrayText()

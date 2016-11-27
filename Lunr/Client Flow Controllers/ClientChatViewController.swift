@@ -12,18 +12,18 @@ import Parse
 
 class ClientChatViewController: ChatViewController {
     var providerId: String?
-    var lastNotificationTimestamp: NSDate? = NSDate()
-    private let kMinNotificationInterval: NSTimeInterval = 10 // production: 1 minute?
+    var lastNotificationTimestamp: Date? = Date()
+    fileprivate let kMinNotificationInterval: TimeInterval = 10 // production: 1 minute?
     
     // this isn't being used right now but could be used for drop down alerts
     @IBOutlet weak var viewAlert: UIView!
     @IBOutlet weak var constraintAlertTop: NSLayoutConstraint!
     @IBOutlet weak var labelAlert: UILabel!
     
-    func notifyForChat(user: QBUUser, isCancelling: Bool = false) {
+    func notifyForChat(_ user: QBUUser, isCancelling: Bool = false) {
         //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
-        guard let dialogId = self.dialog.ID else { return }
-        guard let currentUser = PFUser.currentUser() as? User else { return }
+        guard let dialogId = self.dialog.id else { return }
+        guard let currentUser = PFUser.current() as? User else { return }
         let name = currentUser.displayString ?? "A client"
         
         var message = "\(name) wants to send you a message"
@@ -69,7 +69,7 @@ class ClientChatViewController: ChatViewController {
         self.simpleAlert(title, message: message) {
         }
         */
-        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewControllerWithIdentifier("CallViewController") as? CallViewController {
+        if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
         }
     }
@@ -79,7 +79,7 @@ class ClientChatViewController: ChatViewController {
         self.listenFor(NotificationType.VideoSession.CallStateChanged.rawValue, action: #selector(handleSessionState(_:)), object: nil)
     }
     
-    func handleSessionState(notification: NSNotification) {
+    func handleSessionState(_ notification: Notification) {
         let userInfo = notification.userInfo
         switch SessionService.sharedInstance.state {
         case .Connected:
@@ -90,7 +90,7 @@ class ClientChatViewController: ChatViewController {
         }
     }
 
-    @IBAction override func dismiss(sender: AnyObject?) {
+    @IBAction override func dismiss(_ sender: AnyObject?) {
         QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
             if let recipient = result {
                 self.notifyForChat(recipient, isCancelling: true)

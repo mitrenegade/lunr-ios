@@ -1,7 +1,7 @@
 import UIKit
 
 protocol StarRatingViewDelegate {
-    func starRatingSelected(rating: Int);
+    func starRatingSelected(_ rating: Int);
 }
 
 class StarRatingView: NibLoadableView {
@@ -33,12 +33,12 @@ class StarRatingView: NibLoadableView {
         self.configureRatingImagesForRating(0)
     }
 
-    @IBAction func starRatingButtonPressed(sender: UIButton) {
+    @IBAction func starRatingButtonPressed(_ sender: UIButton) {
         self.currentRating = sender.tag
         self.delegate?.starRatingSelected(sender.tag)
     }
 
-    private func configureRatingImagesForRating(rating: Int) {
+    fileprivate func configureRatingImagesForRating(_ rating: Int) {
         var image : UIImage?
 
         for button : UIButton in self.starRatingButtons {
@@ -48,7 +48,7 @@ class StarRatingView: NibLoadableView {
                 image = UIImage(named: "gray_star")!
             }
 
-            button.setImage(image, forState: .Normal)
+            button.setImage(image, for: UIControlState())
         }
     }
 }

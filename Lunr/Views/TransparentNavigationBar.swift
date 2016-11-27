@@ -11,8 +11,8 @@ import UIKit
 class TransparentNavigationBar: UINavigationBar {
     override func awakeFromNib() {
         super.awakeFromNib()
-        setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        translucent = true
-        backgroundColor = UIColor.clearColor()
+        setBackgroundImage(UIImage(), for: .default)
+        isTranslucent = true
+        backgroundColor = UIColor.clear
     }
 }

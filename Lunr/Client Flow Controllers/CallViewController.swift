@@ -19,7 +19,7 @@ class CallViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        user = PFUser.currentUser() as? User
+        user = PFUser.current() as? User
         
         // load video view
         self.loadVideoViews()
@@ -30,10 +30,10 @@ class CallViewController: UIViewController {
         self.listenFor(NotificationType.VideoSession.HungUp.rawValue, action: #selector(endCall), object: nil)
         self.listenFor(NotificationType.VideoSession.CallCreationFailed.rawValue, action: #selector(callCreationFailed(_:)), object: nil)
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(leftBarButtonAction))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(leftBarButtonAction))
         
-        if let user = user where user.isProvider {
-            self.buttonCall.hidden = true
+        if let user = user, user.isProvider {
+            self.buttonCall.isHidden = true
         }
     }
 
@@ -42,11 +42,11 @@ class CallViewController: UIViewController {
         // initialize own video view
         let width: UInt = UInt(self.localVideoView.frame.size.width)
         let height: UInt = UInt(self.localVideoView.frame.size.height)
-        let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .Format420f)
-        self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .Front)
+        let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .format420f)
+        self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .front)
         self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
         self.videoCapture!.startSession()
-        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, atIndex: 0)
+        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, at: 0)
         
         // tells provider that video stream is ready and should attach it
         self.notify(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
@@ -58,7 +58,7 @@ class CallViewController: UIViewController {
     }
 
     // MARK: - own video
-    func attachVideoToStream(notification: NSNotification) {
+    func attachVideoToStream(_ notification: Notification) {
         guard let userInfo = notification.userInfo else {
             print ("cannot load video")
             return
@@ -70,7 +70,7 @@ class CallViewController: UIViewController {
     }
     
     // MARK: - incoming video
-    func receiveVideoFromStream(notification: NSNotification) {
+    func receiveVideoFromStream(_ notification: Notification) {
         guard let userInfo = notification.userInfo else {
             print ("cannot load video")
             return
@@ -82,7 +82,7 @@ class CallViewController: UIViewController {
     }
     
     // MARK: Session
-    func endCall(wasConnected: Bool) {
+    func endCall(_ wasConnected: Bool) {
         self.stopListeningFor(NotificationType.VideoSession.StreamInitialized.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.VideoReceived.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.HungUp.rawValue)
@@ -93,10 +93,10 @@ class CallViewController: UIViewController {
         self.videoCapture?.stopSession()
         
         // TODO: manage call summary in client/provider classes
-        if let user = user where user.isProvider {
+        if let user = user, user.isProvider {
             guard wasConnected else {
                 self.simpleAlert("Call was disconnected", message: "No one else joined the call.", completion: {
-                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    self.navigationController?.dismiss(animated: true, completion: nil)
                 })
                 return
             }
@@ -112,38 +112,38 @@ class CallViewController: UIViewController {
         }
     }
     
-    func goToFeedback(call: Call?) {
+    func goToFeedback(_ call: Call?) {
         guard let call = call else { return } // TODO: handle error
-        if let user = PFUser.currentUser() as? User where user.isProvider {
+        if let user = PFUser.current() as? User, user.isProvider {
             CallService.sharedInstance.updateCall(call, completion: { (result, error) in
                 if error != nil {
                     // TODO: store total cost into another object
                     print("Call save error: \(error)")
                     self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
-                        self.performSegueWithIdentifier("GoToFeedback", sender: call)
+                        self.performSegue(withIdentifier: "GoToFeedback", sender: call)
                     }
                 }
                 else {
-                    self.performSegueWithIdentifier("GoToFeedback", sender: result)
+                    self.performSegue(withIdentifier: "GoToFeedback", sender: result)
                 }
             })
         }
         else {
             // temporarily update call
             CallService.sharedInstance.updateCall(call, shouldSave: false, completion: { (result, error) in
-                self.performSegueWithIdentifier("GoToFeedback", sender: call)
+                self.performSegue(withIdentifier: "GoToFeedback", sender: call)
             })
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let controller = segue.destinationViewController as? FeedbackViewController, let call = sender as? Call {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? FeedbackViewController, let call = sender as? Call {
             controller.call = call
         }
     }
     
     // Main action button
-    @IBAction func didClickButton(button: UIButton) {
+    @IBAction func didClickButton(_ button: UIButton) {
         // for now, create a call object and end the call and go to review
         self.endCall(SessionService.sharedInstance.state == .Connected)
     }
@@ -154,11 +154,11 @@ class CallViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
 
     // Call creation failed (Provider)
-    func callCreationFailed(notification: NSNotification) {
+    func callCreationFailed(_ notification: Notification) {
         let userInfo = notification.userInfo
         let error = userInfo?["error"] as? NSError
         self.simpleAlert("Could not initiate call", defaultMessage: "There was an error creating starting a new call", error: error, completion: {

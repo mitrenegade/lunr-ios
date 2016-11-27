@@ -37,17 +37,17 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
         self.feedbackToolbar.barTintColor = UIColor.lunr_darkBlue()
         self.feedbackTextView.inputAccessoryView = self.feedbackToolbar
-        self.feedbackTextView.layer.borderColor = UIColor.lunr_lightBlue().CGColor
+        self.feedbackTextView.layer.borderColor = UIColor.lunr_lightBlue().cgColor
         self.feedbackTextView.layer.borderWidth = 2.5
 
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
         self.title = "Call Feedback"
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.backgroundColor = UIColor.lunr_iceBlue()
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont.futuraMediumWithSize(17)]
         self.navigationController?.navigationBar.addShadow()
@@ -57,7 +57,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         guard let call = call else { return }
         
         self.durationLabel.text = "Time: \(call.totalDurationString)"
-        if let user = PFUser.currentUser() as? User where user.isProvider {
+        if let user = PFUser.current() as? User, user.isProvider {
             self.costLabel.text = "Est. Payment: \(call.totalCostString)"
         }
         else {
@@ -65,7 +65,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         }
         
         if let feedback = self.existingFeedback {
-            self.starRatingView.userInteractionEnabled = false
+            self.starRatingView.isUserInteractionEnabled = false
             self.starRatingView.currentRating = Int(feedback.rating)
             self.feedbackTextView.text = feedback.text
         }
@@ -73,16 +73,16 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     
     // MARK: Event Methods
     func dismiss() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @IBAction func close(sender: AnyObject) {
+    @IBAction func close(_ sender: AnyObject) {
         guard self.call != nil else {
             self.dismiss()
             return
         }
         
-        if let user = PFUser.currentUser() as? User where user.isProvider {
+        if let user = PFUser.current() as? User, user.isProvider {
             self.dismiss()
             return
         }
@@ -92,29 +92,29 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
             return
         }
         
-        let alert = UIAlertController(title: "Feedback?", message: "You haven't rated your call. Are you sure you want to leave without giving feedback?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) in
+        let alert = UIAlertController(title: "Feedback?", message: "You haven't rated your call. Are you sure you want to leave without giving feedback?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             self.dismiss()
         }))
-        alert.addAction(UIAlertAction(title: "No, give feedback", style: .Cancel, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "No, give feedback", style: .cancel, handler: { (action) in
             // nothing
         }))
-        self.navigationController?.presentViewController(alert, animated: true, completion: nil)
+        self.navigationController?.present(alert, animated: true, completion: nil)
     }
 
     // MARK: StarRatingViewDelegate Methods
 
-    func starRatingSelected(rating: Int) {
+    func starRatingSelected(_ rating: Int) {
         //TODO: save the experience rating as a parameter in a request to update feedback
     }
 
-    @IBAction func save(sender: UIBarButtonItem) {
+    @IBAction func save(_ sender: UIBarButtonItem) {
         guard let call = self.call else {
             self.dismiss()
             return
         }
 
-        if let user = PFUser.currentUser() as? User where user.isProvider {
+        if let user = PFUser.current() as? User, user.isProvider {
             self.dismiss()
             return
         }
@@ -131,7 +131,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
             print("Thanks for your feedback! \(self.starRatingView.currentRating) stars: \(feedbackTextView.text)")
             if let feedback = self.existingFeedback {
                 feedback.text = self.feedbackTextView.text
-                feedback.saveInBackgroundWithBlock({ (success, error) in
+                feedback.saveInBackground(block: { (success, error) in
                     if let error = error {
                         print("error")
                         self.simpleAlert("Error updating feedback", defaultMessage: "Your feedback was not updated. Please try again.", error: error, completion: {
@@ -165,19 +165,19 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
     // MARK: UITableViewDelegate Methods
 
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let headerView = view as! UITableViewHeaderFooterView
         headerView.backgroundView?.backgroundColor = UIColor.lunr_iceBlue()
         headerView.textLabel?.font = UIFont.futuraMediumWithSize(16)
-        headerView.textLabel?.textColor = UIColor.blackColor()
+        headerView.textLabel?.textColor = UIColor.black
         if let headerLabel = headerView.textLabel?.text {
-            headerView.textLabel?.text = headerLabel.capitalizedString
+            headerView.textLabel?.text = headerLabel.capitalized
         }
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // do not show feedback for providers
-        if let user = PFUser.currentUser() as? User where user.isProvider {
+        if let user = PFUser.current() as? User, user.isProvider {
             return 1
         }
         return 3

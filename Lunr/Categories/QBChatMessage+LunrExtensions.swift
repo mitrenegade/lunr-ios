@@ -16,13 +16,13 @@ extension QBChatMessage {
         if isNotificatonMessage() {
             return QMChatNotificationCell.self
         } else if (senderID != opponentID) {
-            if (isMediaMessage() && attachmentStatus != QMMessageAttachmentStatus.Error) {
+            if (isMediaMessage() && attachmentStatus != QMMessageAttachmentStatus.error) {
                 return QMChatAttachmentIncomingCell.self
             } else {
                 return QMChatIncomingCell.self
             }
         } else {
-            if (isMediaMessage() && attachmentStatus != QMMessageAttachmentStatus.Error) {
+            if (isMediaMessage() && attachmentStatus != QMMessageAttachmentStatus.error) {
                 return QMChatAttachmentOutgoingCell.self
             } else {
                 return QMChatOutgoingCell.self
@@ -33,9 +33,9 @@ extension QBChatMessage {
     func attributedString(withOpponentID opponentID: UInt) -> NSAttributedString? {
         guard let text = text else { return nil }
         
-        var textColor = senderID == opponentID ? UIColor.whiteColor() : UIColor.blackColor()
+        var textColor = senderID == opponentID ? UIColor.white : UIColor.black
         if isNotificatonMessage() {
-            textColor = UIColor.blackColor()
+            textColor = UIColor.black
         }
         
         var attributes = Dictionary<String, AnyObject>()
@@ -46,10 +46,10 @@ extension QBChatMessage {
     }
     
     func topLabelAttributedString(withOpponentID opponentID: UInt, forDialog dialog: QBChatDialog) -> NSAttributedString? {
-        guard senderID != opponentID && dialog.type != QBChatDialogType.Private else { return nil }
+        guard senderID != opponentID && dialog.type != QBChatDialogType.private else { return nil }
         
         let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        paragraphStyle.lineBreakMode = NSLineBreakMode.byTruncatingTail
         var attributes = Dictionary<String, AnyObject>()
         attributes[NSForegroundColorAttributeName] = UIColor(red: 11.0/255.0, green: 96.0/255.0, blue: 255.0/255.0, alpha: 1.0)
         attributes[NSFontAttributeName] = UIFont(name: "Helvetica", size: 17)
@@ -67,19 +67,19 @@ extension QBChatMessage {
     }
     
     func bottomLabelAttributedString(withOpponentID opponentID: UInt, forDialog dialog: QBChatDialog) -> NSAttributedString? {
-        let textColor = senderID == opponentID ? UIColor.whiteColor() : UIColor.blackColor()
+        let textColor = senderID == opponentID ? UIColor.white : UIColor.black
         
         let paragrpahStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragrpahStyle.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        paragrpahStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
         
         var attributes = Dictionary<String, AnyObject>()
         attributes[NSForegroundColorAttributeName] = textColor
         attributes[NSFontAttributeName] = UIFont(name: "Helvetica", size: 13)
         attributes[NSParagraphStyleAttributeName] = paragrpahStyle
         
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        var text = dateSent != nil ? formatter.stringFromDate(dateSent!) : ""
+        var text = dateSent != nil ? formatter.string(from: dateSent!) : ""
         
         if senderID == opponentID {
             text = text + "\n" + statusString(opponentID)
@@ -101,14 +101,14 @@ extension QBChatMessage {
      
      - returns: status string
      */
-    private func statusString(opponentID: UInt) -> String {
+    fileprivate func statusString(_ opponentID: UInt) -> String {
         var statusString = ""
-        let currentUserID = NSNumber(unsignedInteger: opponentID)
+        let currentUserID = NSNumber(value: opponentID as UInt)
         var readLogins: [String] = []
         
         if readIDs != nil {
             let messageReadIDs = readIDs!.filter { (element : NSNumber) -> Bool in
-                return !element.isEqualToNumber(currentUserID)
+                return !element.isEqual(to: currentUserID)
             }
             
             if !messageReadIDs.isEmpty {
@@ -126,7 +126,7 @@ extension QBChatMessage {
                 }
                 
                 statusString += isMediaMessage() ? "Status" : "Read";
-                statusString += ": " + readLogins.joinWithSeparator(", ")
+                statusString += ": " + readLogins.joined(separator: ", ")
             }
         }
         
@@ -134,7 +134,7 @@ extension QBChatMessage {
             var deliveredLogins: [String] = []
             
             let messageDeliveredIDs = deliveredIDs!.filter { (element : NSNumber) -> Bool in
-                return !element.isEqualToNumber(currentUserID)
+                return !element.isEqual(to: currentUserID)
             }
             
             if !messageDeliveredIDs.isEmpty {
@@ -160,7 +160,7 @@ extension QBChatMessage {
                 }
                 
                 if deliveredLogins.count > 0 {
-                    statusString += "Status" + ": " + deliveredLogins.joinWithSeparator(", ")
+                    statusString += "Status" + ": " + deliveredLogins.joined(separator: ", ")
                 }
             }
         }

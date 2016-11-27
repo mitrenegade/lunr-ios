@@ -16,18 +16,18 @@ class LunrRoundActivityButton: LunrActivityButton {
     }
     
     override func setup() {
-        widthAnchor.constraintEqualToConstant(150).active = true
-        heightAnchor.constraintEqualToConstant(40).active = true
+        widthAnchor.constraint(equalToConstant: 150).isActive = true
+        heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        titleEdgeInsets = UIEdgeInsetsZero
-        contentEdgeInsets = UIEdgeInsetsZero
+        titleEdgeInsets = UIEdgeInsets.zero
+        contentEdgeInsets = UIEdgeInsets.zero
         titleLabel?.font = UIFont.futuraMediumWithSize(16)
-        setTitle("", forState: .Disabled)
+        setTitle("", for: .disabled)
         
         activity.hidesWhenStopped = true
         activity.translatesAutoresizingMaskIntoConstraints = false
         addSubview(activity)
-        activity.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
-        activity.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
+        activity.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        activity.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 }
