@@ -28,7 +28,7 @@ class EditAccountSettingsViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.tintColor = .lunr_darkBlue()
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(EditAccountSettingsViewController.dismissAccouintSettings))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(EditAccountSettingsViewController.dismissAccountSettings))
 
         configureTextFields()
         
@@ -65,7 +65,7 @@ class EditAccountSettingsViewController: UIViewController {
         }
     }
 
-    func dismissAccouintSettings() {
+    func dismissAccountSettings() {
         self.navigationController?.popViewController(animated: true)
     }
     
