@@ -44,7 +44,7 @@ extension UIImage {
         }
         
         let context = CGContext(
-            data: UnsafeMutablePointer(nil),
+            data: nil,
             width: Int(size.width),
             height: Int(size.height),
             bitsPerComponent: self.cgImage!.bitsPerComponent,
@@ -53,18 +53,18 @@ extension UIImage {
             bitmapInfo: self.cgImage!.bitmapInfo.rawValue
         )
         
-        context.concatenate(transform)
+        context?.concatenate(transform)
         switch imageOrientation {
         case .left, .leftMirrored, .right, .rightMirrored:
-            context.draw(self.cgImage, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+            context?.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
             break
         default:
-            context.draw(self.cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            context?.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
             break
         }
         
-        let cgImage = context.makeImage()!
+        let cgImage = context?.makeImage()!
         
-        return UIImage(cgImage: cgImage)
+        return UIImage(cgImage: cgImage!)
     }
 }

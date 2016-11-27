@@ -74,7 +74,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                     if user.available {
                         PushService().enablePushNotifications({ (success) in
                             if !success {
-                                self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error, completion: nil)
+                                self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error as NSError?, completion: nil)
                             }
                         })
                     }
@@ -82,7 +82,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                         PushService().unregisterQBPushSubscription()
                     }
                 } else if let error = error {
-                    self?.simpleAlert("There was an error", defaultMessage: nil, error: error, completion: nil)
+                    self?.simpleAlert("There was an error", defaultMessage: nil, error: error as NSError?, completion: nil)
                 }
             }
         }
@@ -292,7 +292,8 @@ extension ProviderHomeViewController: UITableViewDelegate {
 
 extension Date {
     struct Calendar {
-        static let gregorian = Foundation.Calendar(identifier: Calendar.Identifier.gregorian)!
+        static let gregorian = NSCalendar.current
+//        static let gregorian = Foundation.Calendar(identifier: Calendar.Identifier.gregorian)!
     }
     var startOfWeek: Date {
         let sunday = Calendar.gregorian.date(from: (Calendar.gregorian as NSCalendar).components([.yearForWeekOfYear, .weekOfYear ], from: self))!

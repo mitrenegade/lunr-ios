@@ -121,7 +121,7 @@ class QBUserService {
         qbUser.password = pfUser.objectId!
         QBChat.instance().connect(with: qbUser) { (error) in
             self.isRefreshingSession = false
-            if let error = error {
+            if let error = error as? NSError {
                 print("error: \(error)")
                 if error.code == 401 {
                     // invalid user (quickblox user got deleted or does not exist)

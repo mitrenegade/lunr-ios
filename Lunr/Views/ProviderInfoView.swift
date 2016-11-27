@@ -52,10 +52,10 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
     func configureAvailability(_ isAvailable: Bool) {
         if isAvailable {
             self.availableLabel.text = "Currently Available"
-            self.availableImageView.image = UIImage(imageLiteral: "available")
+            self.availableImageView.image = UIImage(imageLiteralResourceName: "available")
         } else {
             self.availableLabel.text = "Unavailable"
-            self.availableImageView.image = UIImage(imageLiteral: "unavailable")
+            self.availableImageView.image = UIImage(imageLiteralResourceName: "unavailable")
         }
     }
 

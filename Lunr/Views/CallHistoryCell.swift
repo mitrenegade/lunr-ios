@@ -111,7 +111,7 @@ class ProviderCallHistoryCell: UITableViewCell {
         // localize to your grouping and decimal separator
         currencyFormatter.locale = Locale.current
         let totalEarnings = call.totalCost as? Double ?? 0
-        let earningsString = currencyFormatter.string(from: NSNumber(totalEarnings))
+        let earningsString = currencyFormatter.string(from: NSNumber(value: totalEarnings))
         priceLabel.text = earningsString
 
         //self.separatorView.backgroundColor = UIColor.lunr_separatorGray()

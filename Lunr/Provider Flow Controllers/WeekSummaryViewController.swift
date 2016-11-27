@@ -75,7 +75,7 @@ class WeekSummaryViewController: UIViewController {
         currencyFormatter.numberStyle = NumberFormatter.Style.currency
         // localize to your grouping and decimal separator
         currencyFormatter.locale = Locale.current
-        let earningsString = currencyFormatter.string(from: NSNumber(totalEarnings))
+        let earningsString = currencyFormatter.string(from: NSNumber(value: totalEarnings))
         labelEarnings.text = earningsString
     }
 

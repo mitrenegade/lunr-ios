@@ -77,7 +77,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         user.email = email
         user.password = password
         user.signUpInBackground {[weak self]  (success, error) in
-            if (error != nil) {
+            if let error = error as? NSError {
                 print("Error: \(error)")
                 self?.simpleAlert("Could not sign up", defaultMessage: nil, error: error, completion: nil)
                 self?.buttonSignup.busy = false
@@ -110,7 +110,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         PFUser.logInWithUsername(inBackground: email, password: password) {[weak self]  (user, error) in
             guard error == nil else {
                 print("Error: \(error)")
-                self?.simpleAlert("Could not log in", defaultMessage: nil, error: error, completion: nil)
+                self?.simpleAlert("Could not log in", defaultMessage: nil, error: error as NSError?, completion: nil)
                 self?.buttonSignup.busy = false
                 return
             }

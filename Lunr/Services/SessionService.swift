@@ -121,7 +121,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             if let call = call, let objectId = call.objectId {
                 CallService.sharedInstance.currentCall = call
                 CallService.sharedInstance.currentCallId = objectId // stores callId on the provider side
-                userInfo = ["callId": objectId]
+                userInfo = ["callId": objectId as AnyObject]
             }
             self.session!.startCall(userInfo)
             self.state = .Waiting

@@ -134,7 +134,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
                 feedback.saveInBackground(block: { (success, error) in
                     if let error = error {
                         print("error")
-                        self.simpleAlert("Error updating feedback", defaultMessage: "Your feedback was not updated. Please try again.", error: error, completion: {
+                        self.simpleAlert("Error updating feedback", defaultMessage: "Your feedback was not updated. Please try again.", error: error as NSError?, completion: {
                             self.dismiss()
                         })
                     }

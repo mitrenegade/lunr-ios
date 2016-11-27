@@ -599,7 +599,7 @@ extension ChatViewController {
     }
     
     // Allows to copy text from QMChatIncomingCell and QMChatOutgoingCell
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: AnyObject!) -> Bool {
+    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any!) -> Bool {
         guard let item = chatSectionManager.message(for: indexPath) else { return false }
         
         let viewClass: AnyClass = self.viewClass(forItem: item) as AnyClass

@@ -89,9 +89,9 @@ class CallService: NSObject {
         // save the duration based on provider
         if shouldSave {
             let params: [AnyHashable: Any] = ["callId": call.objectId!, "duration": duration]
-            PFCloud.callFunction(inBackground: "completeCall", withParameters: params) { (result, error) in
-                completion(call, error)
-            }
+            PFCloud.callFunction(inBackground: "completeCall", withParameters: params, block: { (result, error) in
+                completion(call, error as? NSError)
+            })
         }
         else {
             // only client

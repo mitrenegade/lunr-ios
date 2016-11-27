@@ -16,7 +16,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         super.viewDidLoad()
 
         setUpTableView()
-        self.searchBar.setImage(UIImage(imageLiteral: "search"), for: .search, state: UIControlState())
+        let image = UIImage(imageLiteralResourceName: "search")
+        self.searchBar.setImage(image, for: .search, state: UIControlState())
         self.sortCategoryView.delegate = self
         self.activityIndicator.tintColor = UIColor.lunr_darkBlue()
         

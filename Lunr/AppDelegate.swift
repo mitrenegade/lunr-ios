@@ -127,12 +127,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        NSLog("Push failed to register with error: %@", error)
+        print("Push failed to register with error \(error)")
         self.notify(NotificationType.Push.Registered.rawValue, object: nil, userInfo: nil)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        NSLog("my push is: %@", userInfo)
+        print("my push is: \(userInfo)")
         if application.applicationState == UIApplicationState.inactive {
             print("Inactive")
             self.notify(NotificationType.Push.ReceivedInBackground.rawValue, object: nil, userInfo: nil)
