@@ -52,7 +52,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     func createEmailUser() {
-        let email = self.inputEmail.text!
+        let email = self.inputEmail.text!.lowercased()
         let password = self.inputPassword.text!
         let confirmation = self.inputConfirmation.text!
         
@@ -90,7 +90,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
         
     func loginUser() {
-        let email = self.inputEmail.text!
+        let email = self.inputEmail.text!.lowercased()
         let password = self.inputPassword.text!
         
         if !self.isValidEmail(email) {
