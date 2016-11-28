@@ -51,6 +51,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.listenFor(.DialogFetched, action: #selector(handleIncomingChatRequest(_:)), object: nil)
         self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
         self.listenFor(.DialogCancelled, action: #selector(cancelChatRequest(_:)), object: nil)
+        self.listenFor(.FeedbackUpdated, action: #selector(refreshCallHistory), object: nil)
     }
     
     deinit {
@@ -64,7 +65,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     }
     
     @IBAction func toggleOnDuty(_ sender: AnyObject) {
-        if let user = PFUser.current() as? User {
+        if let user = PFUser.current() as? User, user.isProvider {
             onDutyToggleButton.busy = true
             user.available = !user.available
             user.saveInBackground { [weak self] (success, error) in
@@ -86,6 +87,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 }
             }
         }
+        
+        self.refreshCallHistory()
     }
     
     fileprivate func updateUI() {
@@ -291,12 +294,13 @@ extension ProviderHomeViewController: UITableViewDelegate {
 }
 
 extension Date {
-    struct Calendar {
-        static let gregorian = NSCalendar.current
-//        static let gregorian = Foundation.Calendar(identifier: Calendar.Identifier.gregorian)!
+    struct Gregorian {
+        static let calendar = Calendar(identifier: .gregorian)
     }
     var startOfWeek: Date {
-        let sunday = Calendar.gregorian.date(from: (Calendar.gregorian as NSCalendar).components([.yearForWeekOfYear, .weekOfYear ], from: self))!
-        return sunday.addingTimeInterval(3600*24)
+        guard let date = Gregorian.calendar.date(from: Gregorian.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else {
+            return NSDate() as! Date
+        }
+        return date
     }
 }

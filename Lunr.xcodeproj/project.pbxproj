@@ -150,7 +150,7 @@
 		8EE9D4581D793EB500DB8C49 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		8EE9D45A1D793EEC00DB8C49 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E3AC8E500CB0F49EA332D9F1 /* Pods-Lunr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunr/Pods-Lunr.release.xcconfig"; sourceTree = "<group>"; };
-		E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedbackViewController.swift; path = "../Client Flow Controllers/FeedbackViewController.swift"; sourceTree = "<group>"; };
 		E56164431D5678B700926692 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderTableViewCell.swift; sourceTree = "<group>"; };
 		E56164451D56818500926692 /* ProviderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderInfoView.swift; sourceTree = "<group>"; };
 		E56164471D5689A900926692 /* ProviderInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProviderInfoView.xib; path = Xibs/ProviderInfoView.xib; sourceTree = "<group>"; };
@@ -289,7 +289,6 @@
 				44BA7F361D7383A5006B347D /* EditAccountSettingsViewController.swift */,
 				E561644B1D57A2D300926692 /* ProviderListViewController.swift */,
 				44BA7F3C1D73C9CF006B347D /* ProviderDetailViewController.swift */,
-				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 				8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */,
 			);
 			path = "Client Flow Controllers";
@@ -311,10 +310,11 @@
 			children = (
 				8E6418EC1D56921F00CC4928 /* SplashViewController.swift */,
 				8E6418E21D56791700CC4928 /* FacebookViewController.swift */,
+				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 				84E2D2CE1D902083003F4A86 /* ChatViewController.swift */,
 				8E9BB7621D5ECA18001FD26B /* CallViewController.swift */,
+				E506157F1D7CB4AA001AC445 /* FeedbackViewController.swift */,
 				8430DAEF1DAC13F50018D642 /* LunarTabBarViewController.swift */,
-				8E6418E41D567FDE00CC4928 /* EmailViewController.swift */,
 			);
 			name = "Main Controllers";
 			path = Controllers;
