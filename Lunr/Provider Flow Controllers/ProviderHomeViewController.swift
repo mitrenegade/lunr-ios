@@ -164,7 +164,6 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     func refreshCallHistory() {
         guard let user = PFUser.current() as? User, user.isProvider else { return }
-        //let startDate = NSDate().startOfWeek
         let endDate = Date()
         CallService.sharedInstance.queryCallsForUser(user, startDate:nil, endDate: endDate) { (results, error) in
             if let error = error {
@@ -174,20 +173,23 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 self.calls = results
 
                 // this week
-                var startDate = Date().startOfWeek
+                let now = Date()
+                var startDate = now.mondaysDate
                 self.callsThisWeek = results?.filter({ (call) -> Bool in
                     return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
                 })
                 self.weekSummaryController?.calls = self.callsThisWeek
                 // last week
+                var endDate = startDate
                 startDate = startDate.addingTimeInterval(-7*24*3600)
                 self.callsLastWeek = results?.filter({ (call) -> Bool in
-                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
+                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending && call.createdAt?.compare(endDate) == ComparisonResult.orderedAscending
                 })
                 // this week
+                endDate = startDate
                 startDate = startDate.addingTimeInterval(-7*24*3600)
                 self.callsPast = results?.filter({ (call) -> Bool in
-                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
+                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending && call.createdAt?.compare(endDate) == ComparisonResult.orderedAscending
                 })
                 
                 self.tableView.reloadData()
@@ -303,4 +305,9 @@ extension Date {
         }
         return date
     }
+    
+    var mondaysDate: Date {
+        return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
+    }
+
 }
