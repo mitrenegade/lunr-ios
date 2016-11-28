@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import Stripe
 
 class ProviderDetailViewController : UIViewController {
 
@@ -91,8 +92,16 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(_ sender: AnyObject) {
         guard let provider = self.provider else { return }
         
-        guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
-            self.simpleAlert("No credit card available", message: "You must add a payment method before contacting a provider")
+       // guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
+        if true {
+            let title = "No credit card available"
+            let message = "You must add a payment method before contacting a provider"
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Add Credit Card", style: .default, handler: { (action) in
+                self.showAccountSettings()
+            }))
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -110,6 +119,14 @@ class ProviderDetailViewController : UIViewController {
     func backWasPressed() {
         self.navigationController?.popToRootViewController(animated: true)
     }
+
+    func showAccountSettings() {
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AccountSettingsViewController") as! AccountSettingsViewController
+        let nav = UINavigationController(rootViewController: controller)
+        self.navigationController?.present(nav, animated: true, completion: nil)
+    }
+    
+    
 }
 
 extension ProviderDetailViewController {
