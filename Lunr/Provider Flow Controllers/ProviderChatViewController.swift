@@ -36,7 +36,7 @@ class ProviderChatViewController: ChatViewController {
         // load user
         guard let pfUserId = incomingPFUserId else { return }
         QBUserService.getQBUUserForPFUserId(pfUserId, completion: { (result) in
-            if let _ = result {
+            if let qbClient = result {
                 self.updateTitle()
             }
         })
@@ -58,6 +58,7 @@ class ProviderChatViewController: ChatViewController {
     
     func openVideo() {
         if let controller: CallViewController = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "CallViewController") as? CallViewController {
+            controller.recipient = self.recipient
             self.navigationController?.pushViewController(controller, animated: true)
 
             self.callViewController = controller

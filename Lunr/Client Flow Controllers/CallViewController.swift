@@ -16,6 +16,7 @@ class CallViewController: UIViewController {
     @IBOutlet weak var buttonFlip: UIButton!
     
     var user: User?
+    var recipient: QBUUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,10 @@ class CallViewController: UIViewController {
         let flip = UIImage(named: "camera-flip")?.withRenderingMode(.alwaysTemplate)
         self.buttonFlip.setImage(flip, for: .normal)
         self.buttonFlip.tintColor = UIColor.lunr_beige()
+        
+        if let name = recipient?.fullName {
+            self.title = "Waiting for \(name)"
+        }
     }
 
     // MARK: - Video
@@ -88,6 +93,7 @@ class CallViewController: UIViewController {
         guard let videoTrack: QBRTCVideoTrack = userInfo["track"] as? QBRTCVideoTrack else { return }
         
         self.remoteVideoView.setVideoTrack(videoTrack)
+        self.title = "Connected"
     }
     
     // MARK: Session
