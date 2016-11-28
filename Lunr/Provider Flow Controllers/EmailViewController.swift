@@ -13,6 +13,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var inputConfirmation: UITextField!
     @IBOutlet weak var buttonSignup: LunrActivityButton!
     
+    @IBOutlet weak var constraintButton: NSLayoutConstraint!
+    
     var isSignup: Bool = false
     
     var count = 0;
@@ -36,8 +38,16 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             self.inputEmail.text = "bobbyren@gmail.com"
             self.inputPassword.text = "test"
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func didClickCancel() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
@@ -148,4 +158,18 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
         return true
     }
+
+    // MARK: - keyboard notifications
+    func keyboardWillShow(_ n: Notification) {
+        let size = (n.userInfo![UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
+        self.constraintButton.constant = size.height + 20
+        
+        self.view.layoutIfNeeded()
+    }
+    
+    func keyboardWillHide(_ n: Notification) {
+        self.constraintButton.constant = 20
+        self.view.layoutIfNeeded()
+    }
+
 }

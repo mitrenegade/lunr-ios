@@ -227,6 +227,7 @@
                     <navigationItem key="navigationItem" id="vtg-a8-0Ej"/>
                     <connections>
                         <outlet property="buttonSignup" destination="s21-Gh-PbQ" id="iqT-ja-DiO"/>
+                        <outlet property="constraintButton" destination="oWE-fb-hTJ" id="67q-hX-qWN"/>
                         <outlet property="inputConfirmation" destination="1kW-6G-bvW" id="SWP-s1-WbP"/>
                         <outlet property="inputEmail" destination="Z3c-b1-tlW" id="oM6-P5-b18"/>
                         <outlet property="inputPassword" destination="2DO-N1-hbc" id="ghF-ok-Z0C"/>
