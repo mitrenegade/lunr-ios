@@ -132,9 +132,11 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         tableView.deselectRow(at: indexPath, animated: true)
         self.searchBar.resignFirstResponder()
 
-        guard let providers = self.providers else { return }
-
-        self.performSegue(withIdentifier: "GoToProviderDetail", sender: providers[indexPath.row])
+        guard let providers = self.providers, let provider = providers[indexPath.row] as? User else { return }
+        
+        provider.fetchIfNeededInBackground(block: { [weak self] (object, error) in
+            self?.performSegue(withIdentifier: "GoToProviderDetail", sender: provider)
+        })
     }
 
     // MARK: UITableViewDataSource Methods
@@ -156,7 +158,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToProviderDetail" {
             if let providerDetails = segue.destination as? ProviderDetailViewController, let user = sender as? User {
-                providerDetails.configureForProvider(user)
+                providerDetails.provider = user
             }
         }
     }

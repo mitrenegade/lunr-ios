@@ -19,21 +19,19 @@ class ProviderDetailViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setUpTableView()
         setupCallButton()
         setUpNavigationBar()
 
         if let user = provider {
             // fetch in case object has not downloaded; prevents crash
-            user.fetchIfNeededInBackground(block: { [weak self] (object, error) in
-                self?.setUpTableView()
-                if user.reviews == nil {
-                    // only load reviews if none exist
-                    self?.refreshFeedback()
-                }
-            })
-            
-            self.listenFor(.FeedbackUpdated, action: #selector(refreshFeedback), object: nil)
+            self.title = user.displayString
+            if user.reviews == nil {
+                // only load reviews if none exist
+                self.refreshFeedback()
+            }
         }
+        self.listenFor(.FeedbackUpdated, action: #selector(refreshFeedback), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,11 +46,6 @@ class ProviderDetailViewController : UIViewController {
         self.stopListeningFor(.FeedbackUpdated)
     }
     
-    func configureForProvider(_ provider: User) {
-        self.provider = provider
-        self.title = provider.displayString
-    }
-
     func setUpTableView() {
         self.tableView.register(UINib(nibName: "DetailTableViewCell", bundle: nil), forCellReuseIdentifier: "DetailTableViewCell")
         self.tableView.register(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "ReviewTableViewCell")
