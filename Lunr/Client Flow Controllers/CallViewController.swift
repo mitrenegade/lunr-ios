@@ -13,6 +13,7 @@ class CallViewController: UIViewController {
         
     // call controls
     @IBOutlet weak var buttonCall: UIButton!
+    @IBOutlet weak var buttonFlip: UIButton!
     
     var user: User?
     
@@ -35,6 +36,14 @@ class CallViewController: UIViewController {
         if let user = user, user.isProvider {
             self.buttonCall.isHidden = true
         }
+        else {
+            let hangup = UIImage(named: "hang-up")?.withRenderingMode(.alwaysTemplate)
+            self.buttonCall.setImage(hangup, for: .normal)
+            self.buttonCall.tintColor = UIColor.lunr_beige()
+        }
+        let flip = UIImage(named: "camera-flip")?.withRenderingMode(.alwaysTemplate)
+        self.buttonFlip.setImage(flip, for: .normal)
+        self.buttonFlip.tintColor = UIColor.lunr_beige()
     }
 
     // MARK: - Video
@@ -144,8 +153,18 @@ class CallViewController: UIViewController {
     
     // Main action button
     @IBAction func didClickButton(_ button: UIButton) {
-        // for now, create a call object and end the call and go to review
-        self.endCall(SessionService.sharedInstance.state == .Connected)
+        if button == self.buttonCall {
+            // for now, create a call object and end the call and go to review
+            self.endCall(SessionService.sharedInstance.state == .Connected)
+        }
+        else if button == self.buttonFlip {
+            if self.videoCapture?.currentPosition() == .front {
+                self.videoCapture?.selectCameraPosition(.back)
+            }
+            else {
+                self.videoCapture?.selectCameraPosition(.front)
+            }
+        }
     }
 
     // Back button action on navigation item
