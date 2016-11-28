@@ -138,6 +138,7 @@
 		8E9BB75A1D5EC41C001FD26B /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		8E9BB75C1D5EC423001FD26B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		8E9BB7621D5ECA18001FD26B /* CallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallViewController.swift; path = "../Client Flow Controllers/CallViewController.swift"; sourceTree = "<group>"; };
+		8EA455381DEBC64100D4515B /* Lunr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lunr.entitlements; sourceTree = "<group>"; };
 		8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
 		8EC14D611D7DC2F600432E8A /* ReviewService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientChatViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +248,7 @@
 		8E6418CC1D55585A00CC4928 /* Lunr */ = {
 			isa = PBXGroup;
 			children = (
+				8EA455381DEBC64100D4515B /* Lunr.entitlements */,
 				84258F0C1D90D30800A61969 /* Lunr-Bridging-Header.h */,
 				847133271D7649BC00DD2045 /* Services */,
 				E561646C1D6A458C00926692 /* Models */,
@@ -714,6 +716,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Lunr/Lunr.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bobby Ren (UQA7D88UV9)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Lunr/Info.plist;
@@ -733,6 +736,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Lunr/Lunr.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bobby Ren (H799H8B8DD)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Lunr/Info.plist;
