@@ -19,28 +19,23 @@ class ProviderDetailViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUpTableView()
         setupCallButton()
         setUpNavigationBar()
 
         if let user = provider {
             // fetch in case object has not downloaded; prevents crash
-            user.fetchIfNeededInBackground(block: { (object, error) in
+            user.fetchIfNeededInBackground(block: { [weak self] (object, error) in
+                self?.setUpTableView()
                 if user.reviews == nil {
                     // only load reviews if none exist
-                    
-                    UserService.sharedInstance.queryReviewsForProvider(user, completionHandler: {[weak self]  (reviews) in
-                        user.reviews = reviews
-                        self?.tableView.reloadData()
-                        
-                        }, errorHandler: {[weak self]  (error) in
-                            self?.simpleAlert("Could not load reviews", defaultMessage: "There was an error loading reviews for this provider", error: error, completion: nil)
-                    })
+                    self?.refreshFeedback()
                 }
             })
+            
+            self.listenFor(.FeedbackUpdated, action: #selector(refreshFeedback), object: nil)
         }
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -49,6 +44,10 @@ class ProviderDetailViewController : UIViewController {
         self.navigationController?.navigationBar.backgroundColor = UIColor.lunr_iceBlue()
     }
 
+    deinit {
+        self.stopListeningFor(.FeedbackUpdated)
+    }
+    
     func configureForProvider(_ provider: User) {
         self.provider = provider
         self.title = provider.displayString
@@ -81,6 +80,17 @@ class ProviderDetailViewController : UIViewController {
             self.callButton.isUserInteractionEnabled = false
             self.callButton.alpha = 0.5
         }
+    }
+    
+    func refreshFeedback() {
+        guard let user = provider else { return }
+        UserService.sharedInstance.queryReviewsForProvider(user, completionHandler: {[weak self]  (reviews) in
+            user.reviews = reviews
+            self?.tableView.reloadData()
+            
+            }, errorHandler: {[weak self]  (error) in
+                self?.simpleAlert("Could not load reviews", defaultMessage: "There was an error loading reviews for this provider", error: error, completion: nil)
+        })
     }
 
     // MARK: Event Methods
