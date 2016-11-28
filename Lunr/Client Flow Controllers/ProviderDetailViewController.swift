@@ -92,8 +92,7 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(_ sender: AnyObject) {
         guard let provider = self.provider else { return }
         
-       // guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
-        if true {
+        guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
             let title = "No credit card available"
             let message = "You must add a payment method before contacting a provider"
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
