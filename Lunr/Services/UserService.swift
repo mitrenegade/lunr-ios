@@ -29,6 +29,7 @@ class UserService: NSObject {
         if availableOnly {
             query?.whereKey("available", equalTo: true)
         }
+        query?.addDescendingOrder("available") // always show available at top
         
         var filterKey = "lastName"
         switch filterOption {
@@ -94,6 +95,7 @@ class UserService: NSObject {
     func queryReviewsForProvider(_ provider: User, completionHandler: @escaping ((_ reviews:[Review]?) -> Void), errorHandler: @escaping ((_ error: NSError?)->Void)) {
         let query = Review.query()
         query?.whereKey("provider", equalTo: provider)
+        query?.order(byDescending: "createdAt")
         query?.findObjectsInBackground { (results, error) -> Void in
             if let error = error {
                 errorHandler(error as NSError?)
