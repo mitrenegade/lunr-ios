@@ -81,6 +81,7 @@ class ClientChatViewController: ChatViewController {
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
             SessionService.sharedInstance.session?.rejectCall(nil)
+            self.dismiss(nil)
         }
 
         let openAction = UIAlertAction(title: "Accept", style: .destructive) { action in
@@ -109,7 +110,6 @@ class ClientChatViewController: ChatViewController {
         switch SessionService.sharedInstance.state {
         case .Connected:
             self.promptForVideo()
-            //self.openVideo()
         default:
             break
         }

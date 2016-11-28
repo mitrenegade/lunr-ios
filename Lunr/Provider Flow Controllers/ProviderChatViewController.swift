@@ -113,6 +113,9 @@ class ProviderChatViewController: ChatViewController {
             print("yay")
         case .Disconnected:
             self.cleanupLastSession(oldValue == CallState.Connected.rawValue)
+        case .Rejected:
+            print("rejected - do not charge")
+            self.cleanupLastSession(false)
         default:
             break
         }

@@ -173,7 +173,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     
     func session(_ session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [AnyHashable: Any]!) {
         print("call rejected")
-        self.state = .Disconnected
+        self.state = .Rejected
     }
     
     // delegate (both - video received)
