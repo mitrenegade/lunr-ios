@@ -264,11 +264,6 @@
                                 <action selector="close:" destination="q6y-Fj-lKD" id="YCY-sq-lW0"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Fxq-b9-DRd">
-                            <connections>
-                                <action selector="save:" destination="q6y-Fj-lKD" id="vMq-gn-N8H"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="costLabel" destination="Ujd-NK-K41" id="Xcz-zl-Tqa"/>

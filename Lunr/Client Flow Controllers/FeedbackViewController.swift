@@ -26,8 +26,6 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     // Existing feedback
     weak var existingFeedback: Review?
 
-    @IBOutlet weak var buttonSave: UIBarButtonItem?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
