@@ -99,7 +99,7 @@ class ProviderDetailViewController : UIViewController {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Add Credit Card", style: .default, handler: { (action) in
-                self.showAccountInfo()
+                self.showAccountSettings()
             }))
             self.present(alert, animated: true, completion: nil)
             return
@@ -119,21 +119,14 @@ class ProviderDetailViewController : UIViewController {
     func backWasPressed() {
         self.navigationController?.popToRootViewController(animated: true)
     }
-    /*
-    func showPaymentInfo() {
-        // Placeholder
-        
-        let addCardViewController = STPAddCardViewController()
-        addCardViewController.delegate = self
-        // STPAddCardViewController must be shown inside a UINavigationController.
-        let navigationController = UINavigationController(rootViewController: addCardViewController)
-        self.present(navigationController, animated: true, completion: nil)
+
+    func showAccountSettings() {
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AccountSettingsViewController") as! AccountSettingsViewController
+        let nav = UINavigationController(rootViewController: controller)
+        self.navigationController?.present(nav, animated: true, completion: nil)
     }
-    */
-    func showAccountInfo() {
-        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "EditAccountSettingsViewController") as! EditAccountSettingsViewController
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
+    
+    
 }
 
 extension ProviderDetailViewController {
