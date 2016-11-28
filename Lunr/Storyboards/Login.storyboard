@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="l52-pt-Tkl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="l52-pt-Tkl">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Facebook View Controller-->
@@ -16,53 +20,53 @@
                         <viewControllerLayoutGuide type="bottom" id="KWU-iA-mSJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xDe-H0-TOO">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ynp-eN-J36">
-                                <rect key="frame" x="60" y="56" width="480" height="200"/>
+                                <rect key="frame" x="38" y="56" width="300" height="223"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lunr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-l5-yzd">
-                                        <rect key="frame" x="0.0" y="0.0" width="480" height="200"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="223"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="70"/>
-                                        <color key="textColor" red="0.1803921568627451" green="0.2196078431372549" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.1803921568627451" green="0.2196078431372549" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="lunr-outline" translatesAutoresizingMaskIntoConstraints="NO" id="pCn-3d-sWB">
-                                        <rect key="frame" x="288" y="0.0" width="184" height="200"/>
+                                        <rect key="frame" x="215" y="74.5" width="77" height="74"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="pCn-3d-sWB" secondAttribute="height" multiplier="23:25" id="CNx-vG-Eb4"/>
+                                            <constraint firstAttribute="width" secondItem="pCn-3d-sWB" secondAttribute="height" multiplier="23:25" constant="8.6400000000000006" id="CNx-vG-Eb4"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="pCn-3d-sWB" firstAttribute="height" secondItem="z7s-l5-yzd" secondAttribute="height" multiplier="1:3" id="53U-1S-7Yc"/>
                                     <constraint firstItem="z7s-l5-yzd" firstAttribute="centerX" secondItem="ynp-eN-J36" secondAttribute="centerX" id="5m4-LN-Dm6"/>
                                     <constraint firstAttribute="trailing" secondItem="pCn-3d-sWB" secondAttribute="trailing" constant="8" id="7Me-0S-b1M"/>
                                     <constraint firstItem="z7s-l5-yzd" firstAttribute="centerY" secondItem="ynp-eN-J36" secondAttribute="centerY" id="HPV-F8-z7z"/>
                                     <constraint firstItem="z7s-l5-yzd" firstAttribute="height" secondItem="ynp-eN-J36" secondAttribute="height" id="IEL-kC-IBI"/>
-                                    <constraint firstItem="pCn-3d-sWB" firstAttribute="top" secondItem="ynp-eN-J36" secondAttribute="top" id="Tab-Co-jm5"/>
                                     <constraint firstItem="z7s-l5-yzd" firstAttribute="width" secondItem="ynp-eN-J36" secondAttribute="width" id="to4-B7-ZS5"/>
-                                    <constraint firstAttribute="bottom" secondItem="pCn-3d-sWB" secondAttribute="bottom" id="yXm-33-krs"/>
+                                    <constraint firstItem="pCn-3d-sWB" firstAttribute="centerY" secondItem="ynp-eN-J36" secondAttribute="centerY" id="yyE-dD-9Ky"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fs-Yi-QkA">
-                                <rect key="frame" x="190" y="552" width="220" height="40"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="78" y="619" width="220" height="40"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="8rn-fe-kd0"/>
                                     <constraint firstAttribute="height" constant="40" id="tQC-OZ-0Md"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
-                                <state key="normal" title="Already have an account? Sign in.">
-                                    <color key="titleColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Don't have an account? Sign up.">
+                                    <color key="titleColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="tDb-Sg-3nr" kind="presentation" identifier="GoToLogin" id="PVO-1d-N3a"/>
+                                    <segue destination="tDb-Sg-3nr" kind="presentation" identifier="GoToSignUp" id="PVO-1d-N3a"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ByR-sJ-sb0" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
-                                <rect key="frame" x="190" y="456" width="220" height="40"/>
+                                <rect key="frame" x="78" y="523" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="Gum-fY-ZSI"/>
                                     <constraint firstAttribute="height" constant="40" id="Oe1-GA-UvL"/>
@@ -73,20 +77,20 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwI-sg-OdA">
-                                <rect key="frame" x="190" y="504" width="220" height="40"/>
-                                <color key="backgroundColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="78" y="571" width="220" height="40"/>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="7aW-yL-AqY"/>
                                     <constraint firstAttribute="height" constant="40" id="YLE-HT-xxq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="Sign up with email"/>
+                                <state key="normal" title="Log in with email"/>
                                 <connections>
-                                    <segue destination="tDb-Sg-3nr" kind="presentation" identifier="GoToSignup" id="awN-0c-Ug6"/>
+                                    <segue destination="tDb-Sg-3nr" kind="presentation" identifier="GoToLogin" id="awN-0c-Ug6"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ByR-sJ-sb0" firstAttribute="centerX" secondItem="xDe-H0-TOO" secondAttribute="centerX" id="7Ey-61-YBm"/>
                             <constraint firstItem="ynp-eN-J36" firstAttribute="height" secondItem="xDe-H0-TOO" secondAttribute="height" multiplier="1:3" id="Lsy-nN-6Qr"/>
@@ -106,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c0R-fY-QHA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="387" y="-195"/>
+            <point key="canvasLocation" x="386.39999999999998" y="-195.6521739130435"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZY2-Zh-jH8">
@@ -122,7 +126,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJz-mw-8gr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1037" y="-195"/>
+            <point key="canvasLocation" x="1231" y="-196"/>
         </scene>
         <!--Email View Controller-->
         <scene sceneID="TbN-I5-wlQ">
@@ -133,11 +137,11 @@
                         <viewControllerLayoutGuide type="bottom" id="VQP-QJ-0jv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ozK-T0-IhF">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z3c-b1-tlW">
-                                <rect key="frame" x="20" y="148" width="560" height="30"/>
+                                <rect key="frame" x="20" y="161.5" width="335" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="vlV-J2-fX5"/>
                                 </constraints>
@@ -148,7 +152,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2DO-N1-hbc">
-                                <rect key="frame" x="20" y="186" width="560" height="30"/>
+                                <rect key="frame" x="20" y="199.5" width="335" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="yKf-kt-uFe"/>
                                 </constraints>
@@ -159,16 +163,16 @@
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11f-6p-mFg">
-                                <rect key="frame" x="180" y="72" width="240" height="68"/>
+                                <rect key="frame" x="180" y="72" width="15" height="81.5"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="lunr-outline" translatesAutoresizingMaskIntoConstraints="NO" id="BMr-EK-3fu">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" image="lunr-outline" translatesAutoresizingMaskIntoConstraints="NO" id="BMr-EK-3fu">
                                         <rect key="frame" x="90" y="4" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="BMr-EK-3fu" secondAttribute="height" multiplier="1:1" id="p2t-DM-F0N"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="BMr-EK-3fu" firstAttribute="centerY" secondItem="11f-6p-mFg" secondAttribute="centerY" id="5hZ-no-r57"/>
                                     <constraint firstItem="BMr-EK-3fu" firstAttribute="centerX" secondItem="11f-6p-mFg" secondAttribute="centerX" id="fXk-CO-H7z"/>
@@ -177,7 +181,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password Confirmation" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1kW-6G-bvW">
-                                <rect key="frame" x="20" y="224" width="560" height="30"/>
+                                <rect key="frame" x="20" y="237.5" width="335" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="txb-1F-Jxt"/>
                                 </constraints>
@@ -188,20 +192,20 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s21-Gh-PbQ" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
-                                <rect key="frame" x="190" y="540" width="220" height="40"/>
-                                <color key="backgroundColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="77.5" y="607" width="220" height="40"/>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Dhc-3p-kOh"/>
                                     <constraint firstAttribute="width" constant="220" id="ewA-2a-dkZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="Signup with Email"/>
+                                <state key="normal" title="Sign up with email"/>
                                 <connections>
                                     <action selector="didClickButton:" destination="JWp-Xw-qqB" eventType="touchUpInside" id="PMQ-Re-JHe"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="11f-6p-mFg" firstAttribute="leading" secondItem="ozK-T0-IhF" secondAttribute="leading" constant="180" id="59B-hk-sIK"/>
                             <constraint firstItem="Z3c-b1-tlW" firstAttribute="leading" secondItem="ozK-T0-IhF" secondAttribute="leading" constant="20" id="7W8-Ey-tBK"/>
@@ -230,7 +234,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eif-Dy-bKe" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1686" y="-195"/>
+            <point key="canvasLocation" x="2004" y="-196"/>
         </scene>
     </scenes>
     <resources>
@@ -238,6 +242,6 @@
         <image name="lunr-outline" width="341" height="341"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="awN-0c-Ug6"/>
+        <segue reference="PVO-1d-N3a"/>
     </inferredMetricsTieBreakers>
 </document>

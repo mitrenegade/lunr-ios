@@ -28,7 +28,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         
         if !isSignup {
-            self.buttonSignup.setTitle("Login with Email", for: UIControlState())
+            self.buttonSignup.setTitle("Log in with email", for: UIControlState())
             self.inputConfirmation.isHidden = true
         }
         
