@@ -1,4 +1,6 @@
 import UIKit
+import Parse
+import ParseLiveQuery
 
 class ProviderListViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, SortCategoryProtocol {
 
@@ -12,6 +14,10 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     var currentSortCategory: SortCategory = .none
     var searchTerms: [String] = []
     
+    // live query for Parse objects
+    let liveQueryClient = ParseLiveQuery.Client()
+    var subscription: Subscription<User>?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +38,9 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             self.sortCategoryView.highlightButtonForCategory(category) // update the view
             self.sortCategoryWasSelected(category) // make the query
         }
+        
+        // listen for changes
+        self.subscribeToUpdates()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +68,36 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
             print("Error loading providers: \(error)")
             self?.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error, completion: nil)
         }
+    }
+
+    func subscribeToUpdates() {
+        if LOCAL_TEST {
+            return
+        }
+        
+        guard let user = PFUser.current(), let userId = user.objectId else { return }
+        guard let query: PFQuery<User> = PFUser.query() as? PFQuery<User> else { return }
+        query.whereKey("type", containedIn:[UserType.Plumber.rawValue.lowercased(), UserType.Electrician.rawValue.lowercased(), UserType.Handyman.rawValue.lowercased()])
+        
+        self.subscription = liveQueryClient.subscribe(query)
+            .handle(Event.updated, { (_, object) in
+                if let providers = self.providers {
+                    var changed = false
+                    for user in providers {
+                        if user.objectId == object.objectId, let index = providers.index(of: user) {
+                            self.providers!.remove(at: index)
+                            self.providers!.insert(object, at: index)
+                            changed = true
+                        }
+                    }
+                    if changed {
+                        DispatchQueue.main.async(execute: {
+                            print("received update for provider: \(object.objectId!)")
+                            self.tableView.reloadData()
+                        })
+                    }
+                }
+            })
     }
 
     // MARK: Event Methods

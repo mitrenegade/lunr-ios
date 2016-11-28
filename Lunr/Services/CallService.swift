@@ -16,7 +16,6 @@ class CallService: NSObject {
     var currentCall: Call? = nil
 
     func postNewCall(_ clientId: String, duration: TimeInterval, totalCost: Double, completion: ((_ call: Call?, _ error: NSError?)->Void)?) {
-        Call.registerSubclass()
 
         var rate: Double = 0
         if let user = PFUser.current() as? User, user.isProvider {
@@ -43,7 +42,6 @@ class CallService: NSObject {
             return
         }
         */
-        Call.registerSubclass()
 
         let query: PFQuery = Call.query()! //(className: "Call")
         /*
@@ -73,7 +71,6 @@ class CallService: NSObject {
             return
         }
  
-        Call.registerSubclass()
         
         let query: PFQuery = Call.query()! //(className: "Call")
         query.getObjectInBackground(withId: callId) { (result, error) in

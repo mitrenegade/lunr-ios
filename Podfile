@@ -15,6 +15,7 @@ target 'Lunr' do
   pod 'QMChatViewController'
   pod 'QMServices'
   pod 'Stripe'
+  pod 'ParseLiveQuery'
 end
 
 post_install do |installer|

@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         Parse.initialize(with: configuration)
+        Review.registerSubclass()
+        Call.registerSubclass()
+        User.registerSubclass()
+        PaymentMethod.registerSubclass()
 
         // Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
