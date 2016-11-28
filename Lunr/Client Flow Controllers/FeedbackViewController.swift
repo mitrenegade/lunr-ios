@@ -42,6 +42,9 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
 
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
         self.title = "Call Feedback"
+        if let user = PFUser.current() as? User, user.isProvider {
+            self.title = "Call Summary"
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
