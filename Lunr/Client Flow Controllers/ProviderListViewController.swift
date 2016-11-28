@@ -76,23 +76,27 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         }
         
         guard let user = PFUser.current(), let userId = user.objectId else { return }
-        guard let query: PFQuery<User> = User.query() as? PFQuery<User> else { return }
-        query.whereKey("type", containedIn:[UserType.Plumber.rawValue, UserType.Electrician.rawValue, UserType.Handyman.rawValue])
+        guard let query: PFQuery<User> = PFUser.query() as? PFQuery<User> else { return }
+        query.whereKey("type", containedIn:[UserType.Plumber.rawValue.lowercased(), UserType.Electrician.rawValue.lowercased(), UserType.Handyman.rawValue.lowercased()])
         
         self.subscription = liveQueryClient.subscribe(query)
             .handle(Event.updated, { (_, object) in
                 if let providers = self.providers {
+                    var changed = false
                     for user in providers {
-                        if user.objectId == object.objectId {
-                            self.providers!.remove(at: providers.index(of: user)!)
+                        if user.objectId == object.objectId, let index = providers.index(of: user) {
+                            self.providers!.remove(at: index)
+                            self.providers!.insert(object, at: index)
+                            changed = true
                         }
                     }
-                    self.providers!.append(object)
+                    if changed {
+                        DispatchQueue.main.async(execute: {
+                            print("received update for provider: \(object.objectId!)")
+                            self.tableView.reloadData()
+                        })
+                    }
                 }
-                DispatchQueue.main.async(execute: {
-                    print("received update for provider: \(object.objectId!)")
-                    self.tableView.reloadData()
-                })
             })
     }
 

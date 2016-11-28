@@ -92,7 +92,6 @@ class UserService: NSObject {
     }
     
     func queryReviewsForProvider(_ provider: User, completionHandler: @escaping ((_ reviews:[Review]?) -> Void), errorHandler: @escaping ((_ error: NSError?)->Void)) {
-        Review.registerSubclass()
         let query = Review.query()
         query?.whereKey("provider", equalTo: provider)
         query?.findObjectsInBackground { (results, error) -> Void in
