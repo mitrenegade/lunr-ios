@@ -11,7 +11,7 @@ import UIKit
 import Parse
 
 class ClientChatViewController: ChatViewController {
-    var providerId: String?
+    var provider: User?
     var lastNotificationTimestamp: Date? = Date()
     fileprivate let kMinNotificationInterval: TimeInterval = 10 // production: 1 minute?
     
@@ -63,15 +63,26 @@ class ClientChatViewController: ChatViewController {
     }
     
     func promptForVideo() {
-        let title = "Video chat was accepted"
-        let message = "\(self.recipient!.fullName!) has initiated a video chat. Click Accept to join."
+        let title = "\(self.recipient!.fullName!) has initiated a video chat."
+        var message = "Click Accept to join."
+        if let provider = self.provider {
+            let currencyFormatter = NumberFormatter()
+            currencyFormatter.usesGroupingSeparator = true
+            currencyFormatter.numberStyle = NumberFormatter.Style.currency
+            currencyFormatter.locale = Locale.current
+            let rateString = currencyFormatter.string(from: NSNumber(value: provider.ratePerMin))!
+            message = "This call will cost \(rateString) per minute. \(message)"
+        }
         let alertController = UIAlertController(
             title: title,
             message: message,
             preferredStyle: .alert
         )
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            SessionService.sharedInstance.session?.rejectCall(nil)
+        }
+
         let openAction = UIAlertAction(title: "Accept", style: .destructive) { action in
             self.openVideo()
         }

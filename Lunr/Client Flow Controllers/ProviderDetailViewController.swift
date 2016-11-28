@@ -160,7 +160,7 @@ extension ProviderDetailViewController {
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                     chatVC.dialog = dialog
-                    chatVC.providerId = self?.provider?.objectId
+                    chatVC.provider = self?.provider
                     self?.present(chatNavigationVC, animated: true, completion: {
                         QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
                     })
