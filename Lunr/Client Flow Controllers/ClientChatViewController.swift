@@ -62,9 +62,29 @@ class ClientChatViewController: ChatViewController {
 //        self.listenFor("video:cancelled", action: #selector(cancelChat), object: nil)
     }
     
+    func promptForVideo() {
+        let title = "Video chat was accepted"
+        let message = "\(self.recipient!.fullName!) has initiated a video chat. Click Accept to join."
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let openAction = UIAlertAction(title: "Accept", style: .destructive) { action in
+            self.openVideo()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(openAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     func openVideo() {
         if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
+            SessionService.sharedInstance.session?.acceptCall(nil)
         }
     }
     
@@ -77,8 +97,8 @@ class ClientChatViewController: ChatViewController {
         let userInfo = notification.userInfo
         switch SessionService.sharedInstance.state {
         case .Connected:
-            self.openVideo()
-            SessionService.sharedInstance.session?.acceptCall(nil)
+            self.promptForVideo()
+            //self.openVideo()
         default:
             break
         }
