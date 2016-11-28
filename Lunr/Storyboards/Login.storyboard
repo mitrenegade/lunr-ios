@@ -62,7 +62,7 @@
                                     <color key="titleColor" red="0.18039215689999999" green="0.27450980390000002" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="tDb-Sg-3nr" kind="presentation" identifier="GoToSignUp" id="PVO-1d-N3a"/>
+                                    <segue destination="tDb-Sg-3nr" kind="presentation" identifier="GoToSignup" id="PVO-1d-N3a"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ByR-sJ-sb0" customClass="LunrActivityButton" customModule="Lunr" customModuleProvider="target">
