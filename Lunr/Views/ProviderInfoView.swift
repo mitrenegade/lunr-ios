@@ -30,6 +30,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
 
         self.skillCollectionView.backgroundColor = UIColor.clear
         self.skillCollectionView.register(ProviderSkillTagCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "ProviderSkillTagCollectionViewCell")
+        self.skillCollectionView.isUserInteractionEnabled = false
 
         if let flowLayout = self.skillCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = CGSize(width: 50, height: 25)
