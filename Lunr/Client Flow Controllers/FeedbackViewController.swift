@@ -41,7 +41,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.feedbackTextView.layer.borderWidth = 2.5
 
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
-        self.title = "Call Feedback"
+        self.title = "Feedback"
         if let user = PFUser.current() as? User, user.isProvider {
             self.title = "Call Summary"
         }
