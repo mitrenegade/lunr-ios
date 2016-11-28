@@ -51,6 +51,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.listenFor(.DialogFetched, action: #selector(handleIncomingChatRequest(_:)), object: nil)
         self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
         self.listenFor(.DialogCancelled, action: #selector(cancelChatRequest(_:)), object: nil)
+        self.listenFor(.FeedbackUpdated, action: #selector(refreshCallHistory), object: nil)
     }
     
     deinit {
@@ -64,7 +65,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     }
     
     @IBAction func toggleOnDuty(_ sender: AnyObject) {
-        if let user = PFUser.current() as? User {
+        if let user = PFUser.current() as? User, user.isProvider {
             onDutyToggleButton.busy = true
             user.available = !user.available
             user.saveInBackground { [weak self] (success, error) in
@@ -86,6 +87,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 }
             }
         }
+        
+        self.refreshCallHistory()
     }
     
     fileprivate func updateUI() {
@@ -161,7 +164,6 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     func refreshCallHistory() {
         guard let user = PFUser.current() as? User, user.isProvider else { return }
-        //let startDate = NSDate().startOfWeek
         let endDate = Date()
         CallService.sharedInstance.queryCallsForUser(user, startDate:nil, endDate: endDate) { (results, error) in
             if let error = error {
@@ -171,20 +173,23 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 self.calls = results
 
                 // this week
-                var startDate = Date().startOfWeek
+                let now = Date()
+                var startDate = now.mondaysDate
                 self.callsThisWeek = results?.filter({ (call) -> Bool in
                     return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
                 })
                 self.weekSummaryController?.calls = self.callsThisWeek
                 // last week
+                var endDate = startDate
                 startDate = startDate.addingTimeInterval(-7*24*3600)
                 self.callsLastWeek = results?.filter({ (call) -> Bool in
-                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
+                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending && call.createdAt?.compare(endDate) == ComparisonResult.orderedAscending
                 })
                 // this week
+                endDate = startDate
                 startDate = startDate.addingTimeInterval(-7*24*3600)
                 self.callsPast = results?.filter({ (call) -> Bool in
-                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending
+                    return call.createdAt?.compare(startDate) == ComparisonResult.orderedDescending && call.createdAt?.compare(endDate) == ComparisonResult.orderedAscending
                 })
                 
                 self.tableView.reloadData()
@@ -291,12 +296,18 @@ extension ProviderHomeViewController: UITableViewDelegate {
 }
 
 extension Date {
-    struct Calendar {
-        static let gregorian = NSCalendar.current
-//        static let gregorian = Foundation.Calendar(identifier: Calendar.Identifier.gregorian)!
+    struct Gregorian {
+        static let calendar = Calendar(identifier: .gregorian)
     }
     var startOfWeek: Date {
-        let sunday = Calendar.gregorian.date(from: (Calendar.gregorian as NSCalendar).components([.yearForWeekOfYear, .weekOfYear ], from: self))!
-        return sunday.addingTimeInterval(3600*24)
+        guard let date = Gregorian.calendar.date(from: Gregorian.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else {
+            return NSDate() as! Date
+        }
+        return date
     }
+    
+    var mondaysDate: Date {
+        return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
+    }
+
 }

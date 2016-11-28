@@ -26,8 +26,6 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     // Existing feedback
     weak var existingFeedback: Review?
 
-    @IBOutlet weak var buttonSave: UIBarButtonItem?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +39,10 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         self.feedbackTextView.layer.borderWidth = 2.5
 
         self.tableView.backgroundColor = UIColor.lunr_iceBlue()
-        self.title = "Call Feedback"
+        self.title = "Feedback"
+        if let user = PFUser.current() as? User, user.isProvider {
+            self.title = "Call Summary"
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +74,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
     
     // MARK: Event Methods
     func dismiss() {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func close(_ sender: AnyObject) {
@@ -83,6 +84,7 @@ class FeedbackViewController: UITableViewController, StarRatingViewDelegate {
         }
         
         if let user = PFUser.current() as? User, user.isProvider {
+            self.notify(NotificationType.FeedbackUpdated)
             self.dismiss()
             return
         }

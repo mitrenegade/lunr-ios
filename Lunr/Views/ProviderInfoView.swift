@@ -30,6 +30,7 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
 
         self.skillCollectionView.backgroundColor = UIColor.clear
         self.skillCollectionView.register(ProviderSkillTagCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "ProviderSkillTagCollectionViewCell")
+        self.skillCollectionView.isUserInteractionEnabled = false
 
         if let flowLayout = self.skillCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = CGSize(width: 50, height: 25)
@@ -53,9 +54,11 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         if isAvailable {
             self.availableLabel.text = "Currently Available"
             self.availableImageView.image = UIImage(imageLiteralResourceName: "available")
+            self.nameLabel.alpha = 1
         } else {
             self.availableLabel.text = "Unavailable"
             self.availableImageView.image = UIImage(imageLiteralResourceName: "unavailable")
+            self.nameLabel.alpha = 0.5
         }
     }
 

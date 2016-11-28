@@ -13,6 +13,8 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var inputConfirmation: UITextField!
     @IBOutlet weak var buttonSignup: LunrActivityButton!
     
+    @IBOutlet weak var constraintButton: NSLayoutConstraint!
+    
     var isSignup: Bool = false
     
     var count = 0;
@@ -28,7 +30,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         
         if !isSignup {
-            self.buttonSignup.setTitle("Login with Email", for: UIControlState())
+            self.buttonSignup.setTitle("Log in with email", for: UIControlState())
             self.inputConfirmation.isHidden = true
         }
         
@@ -36,8 +38,16 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             self.inputEmail.text = "bobbyren@gmail.com"
             self.inputPassword.text = "test"
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func didClickCancel() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
@@ -52,7 +62,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     func createEmailUser() {
-        let email = self.inputEmail.text!
+        let email = self.inputEmail.text!.lowercased()
         let password = self.inputPassword.text!
         let confirmation = self.inputConfirmation.text!
         
@@ -90,7 +100,7 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
         
     func loginUser() {
-        let email = self.inputEmail.text!
+        let email = self.inputEmail.text!.lowercased()
         let password = self.inputPassword.text!
         
         if !self.isValidEmail(email) {
@@ -148,4 +158,18 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
         return true
     }
+
+    // MARK: - keyboard notifications
+    func keyboardWillShow(_ n: Notification) {
+        let size = (n.userInfo![UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
+        self.constraintButton.constant = size.height + 20
+        
+        self.view.layoutIfNeeded()
+    }
+    
+    func keyboardWillHide(_ n: Notification) {
+        self.constraintButton.constant = 20
+        self.view.layoutIfNeeded()
+    }
+
 }

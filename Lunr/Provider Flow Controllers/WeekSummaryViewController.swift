@@ -27,7 +27,7 @@ class WeekSummaryViewController: UIViewController {
         // Do any additional setup after loading the view.
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E, d MMM yyyy"
-        let start = Date().startOfWeek
+        let start = Date().mondaysDate
         labelDate.text = "Week of \(dateFormatter.string(from: start))"
         
         self.refresh()
