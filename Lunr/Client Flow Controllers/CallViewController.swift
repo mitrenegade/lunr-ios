@@ -163,8 +163,21 @@ class CallViewController: UIViewController {
     // Main action button
     @IBAction func didClickButton(_ button: UIButton) {
         if button == self.buttonCall {
-            // for now, create a call object and end the call and go to review
-            self.endCall(SessionService.sharedInstance.state == .Connected)
+            let alertController = UIAlertController(
+                title: "End the call?",
+                message: "Do you want to end the video session?",
+                preferredStyle: .alert
+            )
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let openAction = UIAlertAction(title: "Hang Up", style: .destructive) { action in
+                // for now, create a call object and end the call and go to review
+                self.endCall(SessionService.sharedInstance.state == .Connected)
+            }
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(openAction)
+            present(alertController, animated: true, completion: nil)
         }
         else if button == self.buttonFlip {
             if self.videoCapture?.currentPosition() == .front {
