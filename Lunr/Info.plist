@@ -74,6 +74,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Lunr needs camera access to enable video chat</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Lunr needs microphone access to enable video chat</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Lunr allows you to load images into a chat message</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
