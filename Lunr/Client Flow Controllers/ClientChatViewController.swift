@@ -11,7 +11,7 @@ import UIKit
 import Parse
 
 class ClientChatViewController: ChatViewController {
-    var providerId: String?
+    var provider: User?
     var lastNotificationTimestamp: Date? = Date()
     fileprivate let kMinNotificationInterval: TimeInterval = 10 // production: 1 minute?
     
@@ -62,9 +62,41 @@ class ClientChatViewController: ChatViewController {
 //        self.listenFor("video:cancelled", action: #selector(cancelChat), object: nil)
     }
     
+    func promptForVideo() {
+        let title = "\(self.recipient!.fullName!) has initiated a video chat."
+        var message = "Click Accept to join."
+        if let provider = self.provider {
+            let currencyFormatter = NumberFormatter()
+            currencyFormatter.usesGroupingSeparator = true
+            currencyFormatter.numberStyle = NumberFormatter.Style.currency
+            currencyFormatter.locale = Locale.current
+            let rateString = currencyFormatter.string(from: NSNumber(value: provider.ratePerMin))!
+            message = "This call will cost \(rateString) per minute. \(message)"
+        }
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            SessionService.sharedInstance.session?.rejectCall(nil)
+            self.dismiss(nil)
+        }
+
+        let openAction = UIAlertAction(title: "Accept", style: .destructive) { action in
+            self.openVideo()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(openAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     func openVideo() {
         if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
+            SessionService.sharedInstance.session?.acceptCall(nil)
         }
     }
     
@@ -77,8 +109,7 @@ class ClientChatViewController: ChatViewController {
         let userInfo = notification.userInfo
         switch SessionService.sharedInstance.state {
         case .Connected:
-            self.openVideo()
-            SessionService.sharedInstance.session?.acceptCall(nil)
+            self.promptForVideo()
         default:
             break
         }

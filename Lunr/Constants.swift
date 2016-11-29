@@ -51,6 +51,7 @@ enum CallState: String {
     //    case Joining // currently joining the chatroom
     case Waiting // in the chat but no one else is; sending call signal
     case Connected // both people are in
+    case Rejected // only sent to provider if call was rejected
 }
 
 enum SortCategory : Int {

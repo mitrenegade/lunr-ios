@@ -88,7 +88,7 @@ class QBUserService {
     func refreshUserSession(_ completion: ((_ success: Bool) -> Void)?) {
         // if not connected to QBChat. For example at startup
         // TODO: make this part of the Session service
-        guard !isRefreshingSession else { return }
+        guard !isRefreshingSession else { completion?(false); return }
         isRefreshingSession = true
         
         guard let pfUser = PFUser.current(), let userId = pfUser.objectId else {

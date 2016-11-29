@@ -92,8 +92,7 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(_ sender: AnyObject) {
         guard let provider = self.provider else { return }
         
-       // guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
-        if true {
+        guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
             let title = "No credit card available"
             let message = "You must add a payment method before contacting a provider"
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -104,14 +103,22 @@ class ProviderDetailViewController : UIViewController {
             self.present(alert, animated: true, completion: nil)
             return
         }
+        let connected = QBChat.instance().isConnected
+        print("connected: \(connected)")
         
+        self.callButton.busy = true
         QBUserService.sharedInstance.refreshUserSession { (success) in
             if success {
                 print("Let's message \(self.provider?.displayString) on channel \(provider.objectId!)")
                 self.chatWithProvider(provider)
             }
             else {
-                self.simpleAlert("Could not start chat", defaultMessage: "Please log out and log in again", error: nil, completion: nil)
+                self.callButton.busy = false
+                var message = "Please log out and log in again"
+                if QBUserService.sharedInstance.isRefreshingSession {
+                    message = "Chat service seems to be temporarily available."
+                }
+                self.simpleAlert("Could not start chat", defaultMessage: message, error: nil, completion: nil)
             }
         }
     }
@@ -142,6 +149,7 @@ extension ProviderDetailViewController {
                 return
             }
             SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+                self?.callButton.busy = false
                 guard success else {
                     print("Could not start chat")
                     self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
@@ -152,9 +160,8 @@ extension ProviderDetailViewController {
                 if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
                     let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                     chatVC.dialog = dialog
-                    chatVC.providerId = self?.provider?.objectId
+                    chatVC.provider = self?.provider
                     self?.present(chatNavigationVC, animated: true, completion: {
-                        self?.callButton.busy = false
                         QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
                     })
                 }
