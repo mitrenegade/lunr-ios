@@ -49,6 +49,9 @@ class CallViewController: UIViewController {
         if let name = recipient?.fullName {
             self.title = "Waiting for \(name)"
         }
+        
+        QBRTCSoundRouter.instance().initialize()
+        QBRTCSoundRouter.instance().setCurrentSoundRoute(.speaker)
     }
 
     // MARK: - Video
