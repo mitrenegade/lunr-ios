@@ -138,6 +138,7 @@ class ClientChatViewController: ChatViewController {
         
         if let conversation = self.conversation {
             conversation.expiration = NSDate().addingTimeInterval(30)
+            conversation.lastMessage = message.text
             conversation.saveInBackground()
         }
     }

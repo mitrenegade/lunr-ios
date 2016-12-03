@@ -28,6 +28,9 @@ class IncomingCallsViewController: UITableViewController {
 
         self.refreshCalls()
         self.subscribeToUpdates()
+        
+        self.tableView.estimatedRowHeight = 68
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     func shouldShow() -> Bool {
@@ -107,14 +110,18 @@ class IncomingCallsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "IncomingCallCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "IncomingCallCell", for: indexPath) as? IncomingCallCell
 
         // Configure the cell...
         if let conversation = self.conversations?[indexPath.row] {
-            cell.textLabel?.text = conversation.objectId
+            cell?.configure(conversation: conversation)
         }
         
-        return cell
+        return cell!
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Incoming calls"
     }
 
     /*

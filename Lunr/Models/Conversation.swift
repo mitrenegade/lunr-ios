@@ -22,6 +22,9 @@ class Conversation: PFObject {
     @NSManaged var providerId: String?
     @NSManaged var status: String?
     
+    @NSManaged var clientName: String?
+    @NSManaged var lastMessage: String?
+    
     @NSManaged var expiration: NSDate?
 }
 
@@ -49,11 +52,6 @@ extension Conversation {
             return "Today"
         }
         return dateFormatter.string(from: date)
-    }
-    
-    var lastMessage: String {
-        // todo
-        return "Hello"
     }
     
 }
