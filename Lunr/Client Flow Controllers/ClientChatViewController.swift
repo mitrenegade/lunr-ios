@@ -46,7 +46,9 @@ class ClientChatViewController: ChatViewController {
                 self.listenForSession()
             }
             else {
-                self.simpleAlert("Provider is not available", defaultMessage: nil, error: nil)
+                self.listenForSession()
+                // for now, don't worry if push fails
+//                self.simpleAlert("Provider is not available", defaultMessage: nil, error: nil)
             }
         }
     }
