@@ -31,6 +31,10 @@ class IncomingCallsViewController: UITableViewController {
     }
     
     func shouldShow() -> Bool {
+        guard let user = PFUser.current() as? User, user.available else {
+            return false
+        }
+        
         if let conversations = self.conversations {
             return conversations.count > 0
         }

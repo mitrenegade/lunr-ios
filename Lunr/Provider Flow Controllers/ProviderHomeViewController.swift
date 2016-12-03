@@ -79,14 +79,20 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 if success {
                     self?.updateUI()
                     if user.available {
+                        /*
                         PushService().enablePushNotifications({ (success) in
                             if !success {
                                 self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error as NSError?, completion: nil)
                             }
                         })
+                        */
+                        self?.incomingController?.refreshCalls()
                     }
                     else {
+                        self?.incomingContainer.isHidden = true
+                        /*
                         PushService().unregisterQBPushSubscription()
+                        */
                     }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error as NSError?, completion: nil)
