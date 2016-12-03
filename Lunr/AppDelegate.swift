@@ -8,7 +8,7 @@ import Crashlytics
 import Stripe
 import QMChatViewController
 
-let LOCAL_TEST = false
+let LOCAL_TEST = true
 let TEST = false
 
 let PARSE_APP_ID: String = "KAu5pzPvmjrFNdIeaB5zYb2la2Fs2zRi2JyuQZnA"
