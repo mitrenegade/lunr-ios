@@ -173,7 +173,6 @@ extension ProviderDetailViewController {
                             QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
                             
                             conversation?.dialogId = dialog?.id
-                            conversation?.status = ConversationStatus.current.rawValue
                             conversation?.saveInBackground()
                         })
                         

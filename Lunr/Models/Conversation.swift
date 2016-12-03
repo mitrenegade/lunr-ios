@@ -21,6 +21,8 @@ class Conversation: PFObject {
     @NSManaged var clientId: String?
     @NSManaged var providerId: String?
     @NSManaged var status: String?
+    
+    @NSManaged var expiration: NSDate?
 }
 
 extension Conversation: PFSubclassing {

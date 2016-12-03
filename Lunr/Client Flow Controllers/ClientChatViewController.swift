@@ -131,4 +131,14 @@ class ClientChatViewController: ChatViewController {
         
         super.dismiss(sender)
     }
+    
+    // MARK: - Conversation
+    override func sendMessage(_ message: QBChatMessage) {
+        super.sendMessage(message)
+        
+        if let conversation = self.conversation {
+            conversation.expiration = NSDate().addingTimeInterval(30)
+            conversation.saveInBackground()
+        }
+    }
 }

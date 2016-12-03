@@ -41,7 +41,9 @@ class IncomingCallsViewController: UITableViewController {
         guard let user = PFUser.current(), let userId = user.objectId else { return }
         guard let query: PFQuery<Conversation> = Conversation.query() as? PFQuery<Conversation> else { return }
         query.whereKey("providerId", equalTo: userId)
-        query.whereKey("status", equalTo:ConversationStatus.new.rawValue)
+        query.whereKey("status", containedIn: [ConversationStatus.new.rawValue, ConversationStatus.current.rawValue])
+        query.whereKey("expiration", greaterThan: NSDate().addingTimeInterval(-30))
+        query.addDescendingOrder("expiration")
         query.findObjectsInBackground { (results, error) in
             self.conversations = results
             self.tableView.reloadData()
