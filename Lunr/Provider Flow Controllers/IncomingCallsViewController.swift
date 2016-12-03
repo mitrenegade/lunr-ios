@@ -12,6 +12,7 @@ import ParseLiveQuery
 
 protocol IncomingCallsDelegate: class {
     func incomingCallsChanged()
+    func clickedIncomingCall(conversation: Conversation)
 }
 
 class IncomingCallsViewController: UITableViewController {
@@ -124,6 +125,13 @@ class IncomingCallsViewController: UITableViewController {
         return "Incoming calls"
     }
 
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        if let conversation = self.conversations?[indexPath.row] {
+            self.delegate?.clickedIncomingCall(conversation: conversation)
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

@@ -1,4 +1,4 @@
-    //
+//
 //  ProviderHomeViewController.swift
 //  Lunr
 //
@@ -15,7 +15,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     @IBOutlet weak var providerStatusView: ProviderStatusView!
     @IBOutlet weak var onDutyToggleButton: LunrRoundActivityButton!
     let chatSegue = "chatWithClient"
-
+    
     var dialog: QBChatDialog?
     var incomingPFUserId: String?
     var shouldOpenDialogAutomatically = false
@@ -80,19 +80,19 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                     self?.updateUI()
                     if user.available {
                         /*
-                        PushService().enablePushNotifications({ (success) in
-                            if !success {
-                                self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error as NSError?, completion: nil)
-                            }
-                        })
-                        */
+                         PushService().enablePushNotifications({ (success) in
+                         if !success {
+                         self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error as NSError?, completion: nil)
+                         }
+                         })
+                         */
                         self?.incomingController?.refreshCalls()
                     }
                     else {
                         self?.incomingContainer.isHidden = true
                         /*
-                        PushService().unregisterQBPushSubscription()
-                        */
+                         PushService().unregisterQBPushSubscription()
+                         */
                     }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error as NSError?, completion: nil)
@@ -224,100 +224,119 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         }
     }
 }
+
+extension ProviderHomeViewController: UITableViewDataSource {
+    var dateFormatter: DateFormatter {
+        let df = DateFormatter()
+        df.dateFormat = "MM/dd"
+        return df
+    }
     
-    extension ProviderHomeViewController: UITableViewDataSource {
-        var dateFormatter: DateFormatter {
-            let df = DateFormatter()
-            df.dateFormat = "MM/dd"
-            return df
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let row = indexPath.row
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CallHistoryCell", for: indexPath) as! ProviderCallHistoryCell
-            guard let calls = self.calls, row < calls.count else {
-                return cell
-            }
-            let call = calls[row]
-            cell.configure(call)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let row = indexPath.row
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CallHistoryCell", for: indexPath) as! ProviderCallHistoryCell
+        guard let calls = self.calls, row < calls.count else {
             return cell
         }
-        
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            switch section {
-            case 0:
-                return callsThisWeek?.count ?? 0
-            case 1:
-                return callsLastWeek?.count ?? 0
-            default:
-                return callsPast?.count ?? 0
-            }
-        }
-        
-        func numberOfSections(in tableView: UITableView) -> Int {
-            return 3
-        }
-        
-        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            switch section {
-            case 0:
-                if self.callsThisWeek?.count == 0 {
-                    return 0
-                }
-            case 1:
-                if self.callsLastWeek?.count == 0 {
-                    return 0
-                }
-            default:
-                if self.callsPast?.count == 0 {
-                    return 0
-                }
-            }
-            return 30
-        }
-        
-        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
-            view.backgroundColor = UIColor.white
-            let label: UILabel = UILabel(frame: CGRect(x: 16, y: 4, width: 200, height: 21))
-            label.font = UIFont(name: "Futura-Medium", size: 16)
-            switch section {
-            case 0:
-                label.text = "This week"
-                if self.callsThisWeek?.count == 0 {
-                    return nil
-                }
-            case 1:
-                label.text = "Last week"
-                if self.callsLastWeek?.count == 0 {
-                    return nil
-                }
-            default:
-                label.text = "Past calls"
-                if self.callsPast?.count == 0 {
-                    return nil
-                }
-            }
-            view.addSubview(label)
-            return view
+        let call = calls[row]
+        cell.configure(call)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return callsThisWeek?.count ?? 0
+        case 1:
+            return callsLastWeek?.count ?? 0
+        default:
+            return callsPast?.count ?? 0
         }
     }
     
-    extension ProviderHomeViewController: UITableViewDelegate {
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 80
-        }
-        
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
     }
     
-    extension ProviderHomeViewController: IncomingCallsDelegate {
-        func incomingCallsChanged() {
-            self.incomingContainer.isHidden = !self.incomingController!.shouldShow()
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            if self.callsThisWeek?.count == 0 {
+                return 0
+            }
+        case 1:
+            if self.callsLastWeek?.count == 0 {
+                return 0
+            }
+        default:
+            if self.callsPast?.count == 0 {
+                return 0
+            }
         }
+        return 30
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
+        view.backgroundColor = UIColor.white
+        let label: UILabel = UILabel(frame: CGRect(x: 16, y: 4, width: 200, height: 21))
+        label.font = UIFont(name: "Futura-Medium", size: 16)
+        switch section {
+        case 0:
+            label.text = "This week"
+            if self.callsThisWeek?.count == 0 {
+                return nil
+            }
+        case 1:
+            label.text = "Last week"
+            if self.callsLastWeek?.count == 0 {
+                return nil
+            }
+        default:
+            label.text = "Past calls"
+            if self.callsPast?.count == 0 {
+                return nil
+            }
+        }
+        view.addSubview(label)
+        return view
+    }
+}
+
+extension ProviderHomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension ProviderHomeViewController: IncomingCallsDelegate {
+    func incomingCallsChanged() {
+        self.incomingContainer.isHidden = !self.incomingController!.shouldShow()
+    }
+    
+    func clickedIncomingCall(conversation: Conversation) {
+        guard let incomingPFUserId = conversation.clientName, let dialogId = conversation.dialogId else { return }
+
+        QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
+        
+        // calling dispatch async for push notification handling to have priority in main queue
+        DispatchQueue.main.async(execute: {
+            SessionService.sharedInstance.chatService.fetchDialog(withID: dialogId) { [weak self] chatDialog in
+                self?.incomingPFUserId = incomingPFUserId
+                self?.dialog = chatDialog
+                self?.didClickReply()
+                
+                conversation.status = ConversationStatus.current.rawValue
+                conversation.saveInBackground()
+            }
+        });
+
+    }
+}
 
 extension Date {
     struct Gregorian {
@@ -333,5 +352,5 @@ extension Date {
     var mondaysDate: Date {
         return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
     }
-
+    
 }
