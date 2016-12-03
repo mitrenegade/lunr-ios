@@ -8,12 +8,16 @@ import Quickblox
 
 class EmailViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var inputFirstName: UITextField!
+    @IBOutlet weak var inputLastName: UITextField!
     @IBOutlet weak var inputEmail: UITextField!
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var inputConfirmation: UITextField!
     @IBOutlet weak var buttonSignup: LunrActivityButton!
     
     @IBOutlet weak var constraintButton: NSLayoutConstraint!
+    @IBOutlet weak var constraintFirstName: NSLayoutConstraint!
+    @IBOutlet weak var constraintLastName: NSLayoutConstraint!
     
     var isSignup: Bool = false
     
@@ -31,7 +35,11 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         
         if !isSignup {
             self.buttonSignup.setTitle("Log in with email", for: UIControlState())
+            self.inputFirstName.isHidden = true
+            self.inputLastName.isHidden = true
             self.inputConfirmation.isHidden = true
+            self.constraintFirstName.constant = 0
+            self.constraintLastName.constant = 0
         }
         
         if TEST {
@@ -62,9 +70,17 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     func createEmailUser() {
+        let firstName = self.inputFirstName.text!
+        let lastName = self.inputLastName.text!
         let email = self.inputEmail.text!.lowercased()
         let password = self.inputPassword.text!
         let confirmation = self.inputConfirmation.text!
+        
+        if firstName.isEmpty {
+            print("must have name")
+            self.simpleAlert("More info needed", defaultMessage: "Please enter your first name", error: nil, completion: nil)
+            return
+        }
         
         if !self.isValidEmail(email) {
             print("Invalid email")
@@ -86,6 +102,10 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
         user.username = email
         user.email = email
         user.password = password
+        user["firstName"] = firstName
+        if !lastName.isEmpty {
+            user["lastName"] = lastName
+        }
         user.signUpInBackground {[weak self]  (success, error) in
             if let error = error as? NSError {
                 print("Error: \(error)")
