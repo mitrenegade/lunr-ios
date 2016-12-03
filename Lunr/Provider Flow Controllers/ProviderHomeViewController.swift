@@ -31,6 +31,10 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     // MARK: Call History TableView
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: Incoming calls
+    @IBOutlet weak var incomingContainer: UIView!
+    var incomingController: IncomingCallsViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,6 +56,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
         self.listenFor(.DialogCancelled, action: #selector(cancelChatRequest(_:)), object: nil)
         self.listenFor(.FeedbackUpdated, action: #selector(refreshCallHistory), object: nil)
+        
+        incomingContainer.isHidden = true
     }
     
     deinit {
@@ -150,17 +156,17 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             chatVC.incomingPFUserId = userId
             QBNotificationService.sharedInstance.currentDialogID = dialog.id
             
-            self.present(chatNavigationVC, animated: true, completion: { 
+            self.present(chatNavigationVC, animated: true, completion: {
                 // reset to original state
                 self.updateUI()
             })
         }
-
+        
     }
     
     /* TODO:
      - dismiss a call request. (other than go offline)
-    */
+     */
     
     func refreshCallHistory() {
         guard let user = PFUser.current() as? User, user.isProvider else { return }
@@ -171,7 +177,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             }
             else {
                 self.calls = results
-
+                
                 // this week
                 let now = Date()
                 var startDate = now.mondaysDate
@@ -204,96 +210,108 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 self.weekSummaryController = controller
             }
         }
+        else if segue.identifier == "EmbedIncomingCalls" {
+            if let controller: IncomingCallsViewController = segue.destination as? IncomingCallsViewController {
+                controller.delegate = self
+                self.incomingController = controller
+            }
+        }
     }
 }
-
-extension ProviderHomeViewController: UITableViewDataSource {
-    var dateFormatter: DateFormatter {
-        let df = DateFormatter()
-        df.dateFormat = "MM/dd"
-        return df
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = indexPath.row
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CallHistoryCell", for: indexPath) as! ProviderCallHistoryCell
-        guard let calls = self.calls, row < calls.count else {
+    
+    extension ProviderHomeViewController: UITableViewDataSource {
+        var dateFormatter: DateFormatter {
+            let df = DateFormatter()
+            df.dateFormat = "MM/dd"
+            return df
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let row = indexPath.row
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CallHistoryCell", for: indexPath) as! ProviderCallHistoryCell
+            guard let calls = self.calls, row < calls.count else {
+                return cell
+            }
+            let call = calls[row]
+            cell.configure(call)
             return cell
         }
-        let call = calls[row]
-        cell.configure(call)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return callsThisWeek?.count ?? 0
-        case 1:
-            return callsLastWeek?.count ?? 0
-        default:
-            return callsPast?.count ?? 0
+        
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            switch section {
+            case 0:
+                return callsThisWeek?.count ?? 0
+            case 1:
+                return callsLastWeek?.count ?? 0
+            default:
+                return callsPast?.count ?? 0
+            }
+        }
+        
+        func numberOfSections(in tableView: UITableView) -> Int {
+            return 3
+        }
+        
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            switch section {
+            case 0:
+                if self.callsThisWeek?.count == 0 {
+                    return 0
+                }
+            case 1:
+                if self.callsLastWeek?.count == 0 {
+                    return 0
+                }
+            default:
+                if self.callsPast?.count == 0 {
+                    return 0
+                }
+            }
+            return 30
+        }
+        
+        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
+            view.backgroundColor = UIColor.white
+            let label: UILabel = UILabel(frame: CGRect(x: 16, y: 4, width: 200, height: 21))
+            label.font = UIFont(name: "Futura-Medium", size: 16)
+            switch section {
+            case 0:
+                label.text = "This week"
+                if self.callsThisWeek?.count == 0 {
+                    return nil
+                }
+            case 1:
+                label.text = "Last week"
+                if self.callsLastWeek?.count == 0 {
+                    return nil
+                }
+            default:
+                label.text = "Past calls"
+                if self.callsPast?.count == 0 {
+                    return nil
+                }
+            }
+            view.addSubview(label)
+            return view
         }
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            if self.callsThisWeek?.count == 0 {
-                return 0
-            }
-        case 1:
-            if self.callsLastWeek?.count == 0 {
-                return 0
-            }
-        default:
-            if self.callsPast?.count == 0 {
-                return 0
-            }
+    extension ProviderHomeViewController: UITableViewDelegate {
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 80
         }
-        return 30
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
-        view.backgroundColor = UIColor.white
-        let label: UILabel = UILabel(frame: CGRect(x: 16, y: 4, width: 200, height: 21))
-        label.font = UIFont(name: "Futura-Medium", size: 16)
-        switch section {
-        case 0:
-            label.text = "This week"
-            if self.callsThisWeek?.count == 0 {
-                return nil
-            }
-        case 1:
-            label.text = "Last week"
-            if self.callsLastWeek?.count == 0 {
-                return nil
-            }
-        default:
-            label.text = "Past calls"
-            if self.callsPast?.count == 0 {
-                return nil
-            }
+        
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
         }
-        view.addSubview(label)
-        return view
-    }
-}
-
-extension ProviderHomeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    extension ProviderHomeViewController: IncomingCallsDelegate {
+        func incomingCallsChanged() {
+            self.incomingContainer.isHidden = !self.incomingController!.shouldShow()
+        }
     }
-}
 
 extension Date {
     struct Gregorian {
