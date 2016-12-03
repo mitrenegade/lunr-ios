@@ -9,11 +9,18 @@
 import UIKit
 import Parse
 
+enum ConversationStatus: String {
+    case new
+    case current
+    case done
+}
+
 class Conversation: PFObject {
     @NSManaged var dialogId: String?
     
     @NSManaged var clientId: String?
     @NSManaged var providerId: String?
+    @NSManaged var status: String?
 }
 
 extension Conversation: PFSubclassing {

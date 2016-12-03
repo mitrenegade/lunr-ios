@@ -167,12 +167,16 @@ extension ProviderDetailViewController {
                         let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
                         chatVC.dialog = dialog
                         chatVC.provider = self?.provider
+                        chatVC.conversation = conversation
+                        
                         self?.present(chatNavigationVC, animated: true, completion: {
                             QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
+                            
+                            conversation?.dialogId = dialog?.id
+                            conversation?.status = ConversationStatus.current.rawValue
+                            conversation?.saveInBackground()
                         })
                         
-                        conversation?.dialogId = dialog?.id
-                        conversation?.saveInBackground()
                     }
                 })
             }

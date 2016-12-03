@@ -15,6 +15,8 @@ class ClientChatViewController: ChatViewController {
     var lastNotificationTimestamp: Date? = Date()
     fileprivate let kMinNotificationInterval: TimeInterval = 10 // production: 1 minute?
     
+    var conversation: Conversation?
+    
     // this isn't being used right now but could be used for drop down alerts
     @IBOutlet weak var viewAlert: UIView!
     @IBOutlet weak var constraintAlertTop: NSLayoutConstraint!
@@ -124,6 +126,9 @@ class ClientChatViewController: ChatViewController {
             }
         })
  */
+        conversation?.status = ConversationStatus.done.rawValue
+        conversation?.saveInBackground()
+        
         super.dismiss(sender)
     }
 }
