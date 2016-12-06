@@ -157,7 +157,10 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     func didClickReply() {
         if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ProviderChatNavigationController") as? UINavigationController, let chatVC = chatNavigationVC.viewControllers[0] as? ProviderChatViewController {
-            guard let dialog = self.dialog, let userId = self.incomingPFUserId else { return }
+            guard let dialog = self.dialog, let userId = self.incomingPFUserId else {
+                self.simpleAlert("Still loading dialog", message: "Please wait a few seconds and try again")
+                return
+            }
             chatVC.dialog = dialog
             chatVC.incomingPFUserId = userId
             QBNotificationService.sharedInstance.currentDialogID = dialog.id
@@ -319,7 +322,7 @@ extension ProviderHomeViewController: IncomingCallsDelegate {
     }
     
     func clickedIncomingCall(conversation: Conversation) {
-        guard let incomingPFUserId = conversation.clientName, let dialogId = conversation.dialogId else { return }
+        guard let incomingPFUserId = conversation.clientId, let dialogId = conversation.dialogId else { return }
 
         QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
         

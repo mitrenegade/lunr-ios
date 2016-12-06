@@ -190,9 +190,6 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
                 title = recipient.fullName
                 self.recipient = recipient
             }
-            else {
-                self.title = "New Chat"
-            }
         }
     }
     
