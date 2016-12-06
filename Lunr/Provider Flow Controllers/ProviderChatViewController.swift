@@ -15,6 +15,8 @@ class ProviderChatViewController: ChatViewController {
     var callViewController: CallViewController?
     var currentCall: Call? // saved here because we don't send the call parameters until a new controller is started and need to store this info
     
+    @IBOutlet weak var rightBarButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -28,6 +30,8 @@ class ProviderChatViewController: ChatViewController {
         super.updateTitle()
         
         if self.recipient == nil {
+            self.rightBarButton.customView?.alpha = 0.5
+            self.rightBarButton.isEnabled = false
             self.loadUser()
         }
     }
@@ -37,7 +41,14 @@ class ProviderChatViewController: ChatViewController {
         guard let pfUserId = incomingPFUserId else { return }
         QBUserService.getQBUUserForPFUserId(pfUserId, completion: { (result) in
             if let qbClient = result {
+                self.rightBarButton.customView?.alpha = 1
+                self.rightBarButton.isEnabled = true
                 self.updateTitle()
+            }
+            else {
+                self.simpleAlert("Could not load user", message: "The user of the incoming chat could not be loaded", completion: { 
+                    self.dismiss(nil)
+                })
             }
         })
     }

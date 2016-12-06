@@ -94,6 +94,9 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // disable attachments
+        self.inputToolbar.contentView.leftBarButtonItem = nil;
 
         loginCurrentQBUser { (success) in
             if (success) {
@@ -189,9 +192,6 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
             if let recipient = QBUserService.cachedUserWithId(UInt(dialog.recipientID)) {
                 title = recipient.fullName
                 self.recipient = recipient
-            }
-            else {
-                self.title = "New Chat"
             }
         }
     }
@@ -746,9 +746,10 @@ extension ChatViewController: QMChatAttachmentServiceDelegate {
         guard message.dialogID == dialog.id else { return }
         var cell = attachmentCellsMap.object(forKey: message.id as AnyObject?)
         if cell == nil && progress < 1.0 {
-            let indexPath = chatDataSource.indexPath(for: message)
-            cell = collectionView.cellForItem(at: indexPath!) as? QMChatAttachmentCell
-            attachmentCellsMap.setObject(cell, forKey: message.id as AnyObject?)
+            if let indexPath = chatDataSource.indexPath(for: message) {
+                cell = collectionView.cellForItem(at: indexPath) as? QMChatAttachmentCell
+                attachmentCellsMap.setObject(cell, forKey: message.id as AnyObject?)
+            }
         }
         
         cell?.updateLoadingProgress(progress)

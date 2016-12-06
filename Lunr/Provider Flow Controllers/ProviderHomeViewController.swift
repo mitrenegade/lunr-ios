@@ -1,4 +1,4 @@
-    //
+//
 //  ProviderHomeViewController.swift
 //  Lunr
 //
@@ -15,7 +15,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     @IBOutlet weak var providerStatusView: ProviderStatusView!
     @IBOutlet weak var onDutyToggleButton: LunrRoundActivityButton!
     let chatSegue = "chatWithClient"
-
+    
     var dialog: QBChatDialog?
     var incomingPFUserId: String?
     var shouldOpenDialogAutomatically = false
@@ -30,6 +30,10 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     // MARK: Call History TableView
     @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: Incoming calls
+    @IBOutlet weak var incomingContainer: UIView!
+    var incomingController: IncomingCallsViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
         self.listenFor(.DialogCancelled, action: #selector(cancelChatRequest(_:)), object: nil)
         self.listenFor(.FeedbackUpdated, action: #selector(refreshCallHistory), object: nil)
+        
+        incomingContainer.isHidden = true
     }
     
     deinit {
@@ -73,14 +79,20 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 if success {
                     self?.updateUI()
                     if user.available {
-                        PushService().enablePushNotifications({ (success) in
-                            if !success {
-                                self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error as NSError?, completion: nil)
-                            }
-                        })
+                        /*
+                         PushService().enablePushNotifications({ (success) in
+                         if !success {
+                         self?.simpleAlert("There was an error enabling push", defaultMessage: nil, error: error as NSError?, completion: nil)
+                         }
+                         })
+                         */
+                        self?.incomingController?.refreshCalls()
                     }
                     else {
-                        PushService().unregisterQBPushSubscription()
+                        self?.incomingContainer.isHidden = true
+                        /*
+                         PushService().unregisterQBPushSubscription()
+                         */
                     }
                 } else if let error = error {
                     self?.simpleAlert("There was an error", defaultMessage: nil, error: error as NSError?, completion: nil)
@@ -145,22 +157,25 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
     
     func didClickReply() {
         if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ProviderChatNavigationController") as? UINavigationController, let chatVC = chatNavigationVC.viewControllers[0] as? ProviderChatViewController {
-            guard let dialog = self.dialog, let userId = self.incomingPFUserId else { return }
+            guard let dialog = self.dialog, let userId = self.incomingPFUserId else {
+                self.simpleAlert("Still loading dialog", message: "Please wait a few seconds and try again")
+                return
+            }
             chatVC.dialog = dialog
             chatVC.incomingPFUserId = userId
             QBNotificationService.sharedInstance.currentDialogID = dialog.id
             
-            self.present(chatNavigationVC, animated: true, completion: { 
+            self.present(chatNavigationVC, animated: true, completion: {
                 // reset to original state
                 self.updateUI()
             })
         }
-
+        
     }
     
     /* TODO:
      - dismiss a call request. (other than go offline)
-    */
+     */
     
     func refreshCallHistory() {
         guard let user = PFUser.current() as? User, user.isProvider else { return }
@@ -171,7 +186,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             }
             else {
                 self.calls = results
-
+                
                 // this week
                 let now = Date()
                 var startDate = now.mondaysDate
@@ -204,6 +219,12 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
                 self.weekSummaryController = controller
             }
         }
+        else if segue.identifier == "EmbedIncomingCalls" {
+            if let controller: IncomingCallsViewController = segue.destination as? IncomingCallsViewController {
+                controller.delegate = self
+                self.incomingController = controller
+            }
+        }
     }
 }
 
@@ -213,7 +234,7 @@ extension ProviderHomeViewController: UITableViewDataSource {
         df.dateFormat = "MM/dd"
         return df
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         let cell = tableView.dequeueReusableCell(withIdentifier: "CallHistoryCell", for: indexPath) as! ProviderCallHistoryCell
@@ -295,6 +316,31 @@ extension ProviderHomeViewController: UITableViewDelegate {
     }
 }
 
+extension ProviderHomeViewController: IncomingCallsDelegate {
+    func incomingCallsChanged() {
+        self.incomingContainer.isHidden = !self.incomingController!.shouldShow()
+    }
+    
+    func clickedIncomingCall(conversation: Conversation) {
+        guard let incomingPFUserId = conversation.clientId, let dialogId = conversation.dialogId else { return }
+
+        QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
+        
+        // calling dispatch async for push notification handling to have priority in main queue
+        DispatchQueue.main.async(execute: {
+            SessionService.sharedInstance.chatService.fetchDialog(withID: dialogId) { [weak self] chatDialog in
+                self?.incomingPFUserId = incomingPFUserId
+                self?.dialog = chatDialog
+                self?.didClickReply()
+                
+                conversation.status = ConversationStatus.current.rawValue
+                conversation.saveInBackground()
+            }
+        });
+
+    }
+}
+
 extension Date {
     struct Gregorian {
         static let calendar = Calendar(identifier: .gregorian)
@@ -309,5 +355,5 @@ extension Date {
     var mondaysDate: Date {
         return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
     }
-
+    
 }

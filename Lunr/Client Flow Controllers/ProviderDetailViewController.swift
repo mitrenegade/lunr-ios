@@ -144,30 +144,44 @@ extension ProviderDetailViewController {
                 // this can happen if the PFUser has not actually been set up on QuickBlox, or was deleted from quickBlox.
                 let name = provider.displayString ?? "This provider"
                 self?.simpleAlert("Could not start chat", defaultMessage: "\(name) cannot receive chat messages.", error: nil, completion: nil)
-
+                
                 self?.callButton.busy = false
                 return
             }
-            SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
-                self?.callButton.busy = false
-                guard success else {
-                    print("Could not start chat")
-                    self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
-                    
-                    return
-                }
+            guard let clientId = PFUser.current()?.objectId else { return }
+            
+            let params = ["providerId": provider.objectId]
+            PFCloud.callFunction(inBackground: "postNewConversation", withParameters: params) { [weak self] (results, error) in
+                let conversation = results as? Conversation
                 
-                if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
-                    let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
-                    chatVC.dialog = dialog
-                    chatVC.provider = self?.provider
-                    self?.present(chatNavigationVC, animated: true, completion: {
-                        QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
-                    })
-                }
-            })
+                SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+                    self?.callButton.busy = false
+                    guard success else {
+                        print("Could not start chat")
+                        self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
+                        
+                        return
+                    }
+                    
+                    if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
+                        let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
+                        chatVC.dialog = dialog
+                        chatVC.provider = self?.provider
+                        chatVC.conversation = conversation
+                        
+                        self?.present(chatNavigationVC, animated: true, completion: {
+                            QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
+                            
+                            conversation?.dialogId = dialog?.id
+                            conversation?.saveInBackground()
+                        })
+                        
+                    }
+                })
+            }
         }
     }
+    
 
     // TEST
     func testGoToFeedback() {

@@ -35,6 +35,7 @@
 		8E470E7B1DC2BCA800CF9638 /* WeekSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */; };
 		8E4DE0B61D62ABAE0013C06C /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */; };
 		8E4DE0B81D62AFA10013C06C /* ClientFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE0B71D62AFA10013C06C /* ClientFlow.storyboard */; };
+		8E4F78601DF3423000BFAEC1 /* IncomingCallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4F785F1DF3423000BFAEC1 /* IncomingCallCell.swift */; };
 		8E6418D31D55585A00CC4928 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		8E6418D51D55585A00CC4928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D41D55585A00CC4928 /* Assets.xcassets */; };
 		8E6418D81D55585A00CC4928 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6418D61D55585A00CC4928 /* LaunchScreen.storyboard */; };
@@ -48,9 +49,11 @@
 		8E6B6FC11D7B038D007C3C86 /* CallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC01D7B038D007C3C86 /* CallService.swift */; };
 		8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC21D7B03D8007C3C86 /* UserService.swift */; };
 		8E7A513D1D9A1C5E00D501ED /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7A513C1D9A1C5E00D501ED /* PushService.swift */; };
+		8E7B00811DF32EC100486ACB /* IncomingCallsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7B00801DF32EC100486ACB /* IncomingCallsViewController.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
 		8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */; };
 		8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC14D611D7DC2F600432E8A /* ReviewService.swift */; };
+		8ED26C731DF321C600166A88 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED26C721DF321C600166A88 /* Conversation.swift */; };
 		8ED6E1721D9FF03E00F5444B /* ClientChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */; };
 		8ED6E1741DA1916D00F5444B /* ProviderChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */; };
 		8ED6E1761DA3368300F5444B /* StripeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED6E1751DA3368300F5444B /* StripeService.swift */; };
@@ -107,6 +110,7 @@
 		8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekSummaryViewController.swift; sourceTree = "<group>"; };
 		8E4DE0B51D62ABAE0013C06C /* NibLoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		8E4DE0B71D62AFA10013C06C /* ClientFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClientFlow.storyboard; sourceTree = "<group>"; };
+		8E4F785F1DF3423000BFAEC1 /* IncomingCallCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCallCell.swift; sourceTree = "<group>"; };
 		8E6418CA1D55585A00CC4928 /* Lunr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6418CD1D55585A00CC4928 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E6418D41D55585A00CC4928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 		8E6B6FC01D7B038D007C3C86 /* CallService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallService.swift; sourceTree = "<group>"; };
 		8E6B6FC21D7B03D8007C3C86 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8E7A513C1D9A1C5E00D501ED /* PushService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
+		8E7B00801DF32EC100486ACB /* IncomingCallsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCallsViewController.swift; sourceTree = "<group>"; };
 		8E9BB7401D5EC3C0001FD26B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E9BB7421D5EC3CA001FD26B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		8E9BB7441D5EC3D3001FD26B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -141,6 +146,7 @@
 		8EA455381DEBC64100D4515B /* Lunr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lunr.entitlements; sourceTree = "<group>"; };
 		8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBUserService.swift; sourceTree = "<group>"; };
 		8EC14D611D7DC2F600432E8A /* ReviewService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
+		8ED26C721DF321C600166A88 /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		8ED6E1711D9FF03E00F5444B /* ClientChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientChatViewController.swift; sourceTree = "<group>"; };
 		8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderChatViewController.swift; sourceTree = "<group>"; };
 		8ED6E1751DA3368300F5444B /* StripeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StripeService.swift; sourceTree = "<group>"; };
@@ -301,6 +307,7 @@
 				8ED6E1731DA1916D00F5444B /* ProviderChatViewController.swift */,
 				84D78DFA1DB1814C004822F1 /* ProviderSettingsViewController.swift */,
 				8E470E7A1DC2BCA800CF9638 /* WeekSummaryViewController.swift */,
+				8E7B00801DF32EC100486ACB /* IncomingCallsViewController.swift */,
 			);
 			path = "Provider Flow Controllers";
 			sourceTree = "<group>";
@@ -337,6 +344,7 @@
 				8430DAF31DAC269D0018D642 /* ProviderStatusView.swift */,
 				8E2919351DADC2000095F89A /* LunrRoundActivityButton.swift */,
 				845016921DB3D7BD00BC2477 /* TransparentNavigationBar.swift */,
+				8E4F785F1DF3423000BFAEC1 /* IncomingCallCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -375,6 +383,7 @@
 				8EE9D4561D793EAC00DB8C49 /* PaymentMethod.swift */,
 				8EE9D4581D793EB500DB8C49 /* Review.swift */,
 				8EE9D45A1D793EEC00DB8C49 /* User.swift */,
+				8ED26C721DF321C600166A88 /* Conversation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -561,6 +570,7 @@
 				44BA7F371D7383A5006B347D /* EditAccountSettingsViewController.swift in Sources */,
 				E581DA5C1D8EE68100275DBD /* ProviderListViewController.swift in Sources */,
 				44986F271D6A3AC900C6D0A7 /* AccountSettingsViewController.swift in Sources */,
+				8ED26C731DF321C600166A88 /* Conversation.swift in Sources */,
 				8E6418ED1D56921F00CC4928 /* SplashViewController.swift in Sources */,
 				8E6418F01D56E8FA00CC4928 /* Constants.swift in Sources */,
 				44986F291D6A687200C6D0A7 /* AccountInfoCell.swift in Sources */,
@@ -586,6 +596,7 @@
 				842984A81D7524990063F1B5 /* ProviderHomeViewController.swift in Sources */,
 				8E470E7B1DC2BCA800CF9638 /* WeekSummaryViewController.swift in Sources */,
 				8EE9D45B1D793EEC00DB8C49 /* User.swift in Sources */,
+				8E7B00811DF32EC100486ACB /* IncomingCallsViewController.swift in Sources */,
 				8ED6E1721D9FF03E00F5444B /* ClientChatViewController.swift in Sources */,
 				8ED6E1741DA1916D00F5444B /* ProviderChatViewController.swift in Sources */,
 				84066CCE1D94222000AF27AC /* QBChatMessage+LunrExtensions.swift in Sources */,
@@ -594,6 +605,7 @@
 				E56164631D61260700926692 /* UIView+Utils.swift in Sources */,
 				E56164511D5EA81500926692 /* ProviderSkillTagCollectionViewCell.swift in Sources */,
 				44BA7F411D73C9F5006B347D /* ReviewTableViewCell.swift in Sources */,
+				8E4F78601DF3423000BFAEC1 /* IncomingCallCell.swift in Sources */,
 				84D78DFB1DB1814C004822F1 /* ProviderSettingsViewController.swift in Sources */,
 				E56164541D5F78BB00926692 /* SortCategoryView.swift in Sources */,
 				84E2D2CF1D902083003F4A86 /* ChatViewController.swift in Sources */,
