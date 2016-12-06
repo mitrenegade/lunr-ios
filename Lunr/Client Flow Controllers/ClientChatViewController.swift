@@ -56,14 +56,15 @@ class ClientChatViewController: ChatViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        /*
         QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
             if let recipient = result {
-                self.notifyForChat(recipient)
+//                self.notifyForChat(recipient)
+                
+                // start listening for incoming session
+                self.listenForSession()
             }
         })
-        */
-//        self.listenFor("video:accepted", action: #selector(openVideo), object: nil)
+        self.listenFor("video:accepted", action: #selector(openVideo), object: nil)
 //        self.listenFor("video:cancelled", action: #selector(cancelChat), object: nil)
     }
     
