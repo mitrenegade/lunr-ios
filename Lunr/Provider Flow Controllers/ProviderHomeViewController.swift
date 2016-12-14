@@ -322,7 +322,17 @@ extension ProviderHomeViewController: IncomingCallsDelegate {
     }
     
     func clickedIncomingCall(conversation: Conversation) {
-        guard let incomingPFUserId = conversation.clientId, let dialogId = conversation.dialogId else { return }
+        guard let incomingPFUserId = conversation.clientId, let dialogId = conversation.dialogId else {
+            var params = [String:Any]()
+            if let incomingPFUserId = conversation.clientId {
+                params["incomingPFUserId"] = incomingPFUserId
+            }
+            if let dialogId = conversation.dialogId {
+                params["dialogId"] = dialogId
+            }
+            self.testAlert("Incoming call could not be answered", message: nil, type: .ProviderClickedIncomingCallFailed, error: nil, params: params, completion: nil)
+            return
+        }
 
         QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
         

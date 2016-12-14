@@ -12,10 +12,14 @@ import Parse
 enum TestAlertType: String {
     case GenericTestAlert
     case ConversationSaveFailed
+    case RefreshIncomingCallsFailed
+    case InvalidConversationSelected
+    case NotifyForVideoFailed
+    case ProviderClickedIncomingCallFailed
 }
 
 extension UIViewController {
-    func testAlert(_ title: String, message: String?, type: TestAlertType? = .GenericTestAlert, params: [String: Any]?, completion: (() -> Void)? = nil) {
+    func testAlert(_ title: String, message: String?, type: TestAlertType, error: Error? = nil, params: [String: Any]? = nil, completion: (() -> Void)? = nil) {
         
         let object = PFObject(className: "TestLog")
         object.setValue(PFUser.current()?.objectId, forKey: "userId")
@@ -27,11 +31,14 @@ extension UIViewController {
         {
             object.setValue(build, forKey: "build")
         }
-        object.setValue(TestAlertType.ConversationSaveFailed.rawValue, forKey: "type")
+        object.setValue(type.rawValue, forKey: "type")
         object.setValue(title, forKey: "title")
         object.setValue(message, forKey: "message")
         if let params = params {
             object.setValue(params, forKey:"params")
+        }
+        if let error = error as? NSError {
+            object.setValue(error.localizedDescription, forKey: "error")
         }
         object.saveInBackground()
         
@@ -39,7 +46,7 @@ extension UIViewController {
             return
         }
         
-        self.simpleAlert(title, message: "Error type: \(type!.rawValue) \(message ?? "")", completion: completion)
+        self.simpleAlert(title, message: "Error type: \(type.rawValue) \(message ?? "")", completion: completion)
 
     }
 }

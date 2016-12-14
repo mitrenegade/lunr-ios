@@ -46,13 +46,19 @@ class IncomingCallsViewController: UITableViewController {
     }
     
     func refreshCalls() {
-        guard let user = PFUser.current(), let userId = user.objectId else { return }
+        guard let user = PFUser.current(), let userId = user.objectId else {
+            self.testAlert("Could not refresh incoming calls", message: "Invalid user or userId", type: .RefreshIncomingCallsFailed, error: nil, params: nil, completion: nil)
+            return
+        }
         guard let query: PFQuery<Conversation> = Conversation.query() as? PFQuery<Conversation> else { return }
         query.whereKey("providerId", equalTo: userId)
         query.whereKey("status", containedIn: [ConversationStatus.new.rawValue, ConversationStatus.current.rawValue])
         query.whereKey("expiration", greaterThan: NSDate().addingTimeInterval(-30))
         query.addDescendingOrder("expiration")
         query.findObjectsInBackground { (results, error) in
+            if let error = error {
+                self.testAlert("Could not refresh incoming calls", message: "Query failed to find objects", type: .RefreshIncomingCallsFailed, error: error, params: nil, completion: nil)
+            }
             self.conversations = results
             self.tableView.reloadData()
             self.delegate?.incomingCallsChanged()
@@ -130,6 +136,9 @@ class IncomingCallsViewController: UITableViewController {
         self.tableView.deselectRow(at: indexPath, animated: true)
         if let conversation = self.conversations?[indexPath.row] {
             self.delegate?.clickedIncomingCall(conversation: conversation)
+        }
+        else {
+            self.testAlert("Could not select conversation", message: nil, type: .InvalidConversationSelected, error: nil, params: ["selectedRow": indexPath.row, "conversations": self.conversations?.count ?? 0], completion: nil)
         }
     }
     /*
