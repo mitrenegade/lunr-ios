@@ -156,7 +156,7 @@ extension ProviderDetailViewController {
                 
                 SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
                     self?.callButton.busy = false
-                    guard success else {
+                    guard success, let dialog = dialog else {
                         print("Could not start chat")
                         self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
                         
@@ -170,10 +170,14 @@ extension ProviderDetailViewController {
                         chatVC.conversation = conversation
                         
                         self?.present(chatNavigationVC, animated: true, completion: {
-                            QBNotificationService.sharedInstance.currentDialogID = dialog?.id!
+                            QBNotificationService.sharedInstance.currentDialogID = dialog.id!
                             
-                            conversation?.dialogId = dialog?.id
-                            conversation?.saveInBackground()
+                            conversation?.dialogId = dialog.id
+                            conversation?.saveInBackground(block: { (success, error) in
+                                if let error = error as? NSError {
+                                    chatNavigationVC.testAlert("Conversation could not be updated", message: "This conversation could not be created. Please try again", type:.ConversationSaveFailed, params: ["dialogId": dialog.id!, "conversationId": conversation?.objectId!, "error": error.localizedDescription])
+                                }
+                            })
                         })
                         
                     }
