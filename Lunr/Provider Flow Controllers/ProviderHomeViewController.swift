@@ -329,12 +329,24 @@ extension ProviderHomeViewController: IncomingCallsDelegate {
         // calling dispatch async for push notification handling to have priority in main queue
         DispatchQueue.main.async(execute: {
             SessionService.sharedInstance.chatService.fetchDialog(withID: dialogId) { [weak self] chatDialog in
-                self?.incomingPFUserId = incomingPFUserId
-                self?.dialog = chatDialog
-                self?.didClickReply()
+                if let dialog = chatDialog {
+                    self?.incomingPFUserId = incomingPFUserId
+                    self?.dialog = chatDialog
+                    self?.didClickReply()
                 
-                conversation.status = ConversationStatus.current.rawValue
-                conversation.saveInBackground()
+                    conversation.status = ConversationStatus.current.rawValue
+                    conversation.saveInBackground()
+                }
+                else {
+                    SessionService.sharedInstance.chatService.loadDialog(withID: dialogId, completion: { (chatDialog) in
+                        self?.incomingPFUserId = incomingPFUserId
+                        self?.dialog = chatDialog
+                        self?.didClickReply()
+                        
+                        conversation.status = ConversationStatus.current.rawValue
+                        conversation.saveInBackground()
+                    })
+                }
             }
         });
 
