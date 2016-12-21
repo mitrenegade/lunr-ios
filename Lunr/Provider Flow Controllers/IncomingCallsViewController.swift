@@ -40,7 +40,7 @@ class IncomingCallsViewController: UITableViewController {
         }
         
         if let conversations = self.conversations {
-            return conversations.count > 0
+            return conversations.count > 0 // TODO: if there's one conversation, the prettier providerStatusView should show a "Reply" button
         }
         return false
     }

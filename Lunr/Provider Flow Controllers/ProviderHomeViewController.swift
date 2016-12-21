@@ -56,14 +56,20 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
         self.listenFor(.DialogCancelled, action: #selector(cancelChatRequest(_:)), object: nil)
         self.listenFor(.FeedbackUpdated, action: #selector(refreshCallHistory), object: nil)
+        self.listenFor(.AppReturnedFromBackground, action: #selector(refreshAll), object: nil)
         
         incomingContainer.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
+        self.refreshAll()
+    }
+    
+    func refreshAll() {
         self.refreshCallHistory()
+        self.incomingController?.refreshCalls()
     }
     
     deinit {
