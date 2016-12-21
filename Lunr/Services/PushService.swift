@@ -72,6 +72,47 @@ class PushService: NSObject {
         return channel
     }
     
+    // Parse push
+    func registerParsePushSubscription(_ deviceToken: Data, completion: ((_ success: Bool)->Void)?) {
+        guard let user = PFUser.current() else {
+            completion?(false)
+            return
+        }
+        guard let installation = PFInstallation.current() else { return }
+        installation.setDeviceTokenFrom(deviceToken)
+        let channel: String = self.channelStringForPFUser(user)!
+        installation.addUniqueObject(channel, forKey: "channels") // subscribe to trainers channel
+        
+        installation.saveInBackground(block: { (success, error) in
+            let channels = installation.object(forKey: "channels")
+            print("installation registered for remote notifications: channel \(channels)")
+            completion?(success)
+        })
+        
+    }
+    
+    func sendNotificationToPFUser(_ user: PFUser, message: String, userInfo: [String: String], completion: @escaping ((_ success:Bool, _ error:QBError?) -> Void)) {
+        guard let channel = self.channelStringForPFUser(user) else { completion(false, nil); return }
+        print("Channel: \(channel)")
+
+        // TODO
+    }
+    
+    func unregisterParsePushSubscription() {
+        guard let user = PFUser.current() else {
+            return
+        }
+        guard let installation = PFInstallation.current() else { return }
+        
+        let channel: String = self.channelStringForPFUser(user)!
+        installation.remove(channel, forKey: "channels") // subscribe to trainers channel
+        
+        installation.saveInBackground(block: { (success, error) in
+            let channels = installation.object(forKey: "channels")
+            print("installation registered for remote notifications: channel \(channels)")
+        })
+    }
+    
     // Quickblox push
     func registerQBPushSubscription(_ deviceToken: Data, completion: ((_ success: Bool)->Void)?) {
         let deviceIdentifier: String = UIDevice.current.identifierForVendor!.uuidString
