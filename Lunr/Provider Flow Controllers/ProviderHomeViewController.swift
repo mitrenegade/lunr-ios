@@ -56,8 +56,20 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         self.listenFor(NotificationType.Push.ReceivedInBackground.rawValue, action: #selector(handleBackgroundPush(_:)), object: nil)
         self.listenFor(.DialogCancelled, action: #selector(cancelChatRequest(_:)), object: nil)
         self.listenFor(.FeedbackUpdated, action: #selector(refreshCallHistory), object: nil)
+        self.listenFor(.AppReturnedFromBackground, action: #selector(refreshAll), object: nil)
         
         incomingContainer.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.refreshAll()
+    }
+    
+    func refreshAll() {
+        self.refreshCallHistory()
+        self.incomingController?.refreshCalls()
     }
     
     deinit {
@@ -322,19 +334,41 @@ extension ProviderHomeViewController: IncomingCallsDelegate {
     }
     
     func clickedIncomingCall(conversation: Conversation) {
-        guard let incomingPFUserId = conversation.clientId, let dialogId = conversation.dialogId else { return }
+        guard let incomingPFUserId = conversation.clientId, let dialogId = conversation.dialogId else {
+            var params = [String:Any]()
+            if let incomingPFUserId = conversation.clientId {
+                params["incomingPFUserId"] = incomingPFUserId
+            }
+            if let dialogId = conversation.dialogId {
+                params["dialogId"] = dialogId
+            }
+            self.testAlert("Incoming call could not be answered", message: nil, type: .ProviderClickedIncomingCallFailed, error: nil, params: params, completion: nil)
+            return
+        }
 
         QBNotificationService.sharedInstance.incomingPFUserId = incomingPFUserId
         
         // calling dispatch async for push notification handling to have priority in main queue
         DispatchQueue.main.async(execute: {
             SessionService.sharedInstance.chatService.fetchDialog(withID: dialogId) { [weak self] chatDialog in
-                self?.incomingPFUserId = incomingPFUserId
-                self?.dialog = chatDialog
-                self?.didClickReply()
+                if let dialog = chatDialog {
+                    self?.incomingPFUserId = incomingPFUserId
+                    self?.dialog = chatDialog
+                    self?.didClickReply()
                 
-                conversation.status = ConversationStatus.current.rawValue
-                conversation.saveInBackground()
+                    conversation.status = ConversationStatus.current.rawValue
+                    conversation.saveInBackground()
+                }
+                else {
+                    SessionService.sharedInstance.chatService.loadDialog(withID: dialogId, completion: { (chatDialog) in
+                        self?.incomingPFUserId = incomingPFUserId
+                        self?.dialog = chatDialog
+                        self?.didClickReply()
+                        
+                        conversation.status = ConversationStatus.current.rawValue
+                        conversation.saveInBackground()
+                    })
+                }
             }
         });
 

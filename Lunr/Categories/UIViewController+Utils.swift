@@ -7,6 +7,11 @@ extension UIViewController {
             self.simpleAlert(title, message: msg, completion: completion)
             return
         }
+        else if let msg = error?.userInfo["NSLocalizedDescription"] as? String {
+            self.simpleAlert(title, message: msg, completion: completion)
+            return
+        }
+
         self.simpleAlert(title, message: defaultMessage, completion: completion)
     }
     

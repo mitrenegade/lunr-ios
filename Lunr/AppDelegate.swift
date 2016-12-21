@@ -9,7 +9,7 @@ import Stripe
 import QMChatViewController
 
 let LOCAL_TEST = false
-let TEST = false
+let TEST = true
 
 let PARSE_APP_ID: String = "KAu5pzPvmjrFNdIeaB5zYb2la2Fs2zRi2JyuQZnA"
 let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
@@ -80,6 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
+        
+        self.notify(NotificationType.AppReturnedFromBackground, object: nil, userInfo: nil)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

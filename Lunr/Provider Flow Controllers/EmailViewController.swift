@@ -42,11 +42,6 @@ class EmailViewController: UIViewController, UITextFieldDelegate {
             self.constraintLastName.constant = 0
         }
         
-        if TEST {
-            self.inputEmail.text = "bobbyren@gmail.com"
-            self.inputPassword.text = "test"
-        }
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 

@@ -50,6 +50,7 @@
 		8E6B6FC31D7B03D8007C3C86 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B6FC21D7B03D8007C3C86 /* UserService.swift */; };
 		8E7A513D1D9A1C5E00D501ED /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7A513C1D9A1C5E00D501ED /* PushService.swift */; };
 		8E7B00811DF32EC100486ACB /* IncomingCallsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7B00801DF32EC100486ACB /* IncomingCallsViewController.swift */; };
+		8E8F74CC1E00EB200047DFC0 /* ParseTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8F74CB1E00EB200047DFC0 /* ParseTestService.swift */; };
 		8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9BB7621D5ECA18001FD26B /* CallViewController.swift */; };
 		8EB459A81D7B05BA007D1EC3 /* QBUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB459A71D7B05BA007D1EC3 /* QBUserService.swift */; };
 		8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC14D611D7DC2F600432E8A /* ReviewService.swift */; };
@@ -127,6 +128,7 @@
 		8E6B6FC21D7B03D8007C3C86 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8E7A513C1D9A1C5E00D501ED /* PushService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		8E7B00801DF32EC100486ACB /* IncomingCallsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCallsViewController.swift; sourceTree = "<group>"; };
+		8E8F74CB1E00EB200047DFC0 /* ParseTestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseTestService.swift; sourceTree = "<group>"; };
 		8E9BB7401D5EC3C0001FD26B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E9BB7421D5EC3CA001FD26B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		8E9BB7441D5EC3D3001FD26B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -229,6 +231,7 @@
 				84258F0F1D90F4E400A61969 /* QBNotificationService.swift */,
 				8E7A513C1D9A1C5E00D501ED /* PushService.swift */,
 				8ED6E1751DA3368300F5444B /* StripeService.swift */,
+				8E8F74CB1E00EB200047DFC0 /* ParseTestService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				8EC14D621D7DC2F600432E8A /* ReviewService.swift in Sources */,
 				E581DA5B1D85D35300275DBD /* StarRatingView.swift in Sources */,
 				8E2919361DADC2000095F89A /* LunrRoundActivityButton.swift in Sources */,
+				8E8F74CC1E00EB200047DFC0 /* ParseTestService.swift in Sources */,
 				8EE9D4591D793EB500DB8C49 /* Review.swift in Sources */,
 				44BA7F391D73C822006B347D /* DetailTableViewCell.swift in Sources */,
 				8E9BB7631D5ECA18001FD26B /* CallViewController.swift in Sources */,
