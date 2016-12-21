@@ -16,6 +16,7 @@ enum TestAlertType: String {
     case InvalidConversationSelected
     case NotifyForVideoFailed
     case ProviderClickedIncomingCallFailed
+    case ClientPushNotificationFailed
 }
 
 extension UIViewController {
@@ -46,7 +47,6 @@ extension UIViewController {
             return
         }
         
-        self.simpleAlert(title, message: "Error type: \(type.rawValue) \(message ?? "")", completion: completion)
-
+        self.simpleAlert(title, defaultMessage: "Error type: \(type.rawValue) \(message ?? "")", error: error as NSError?, completion: completion)
     }
 }

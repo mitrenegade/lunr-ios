@@ -163,29 +163,52 @@ extension ProviderDetailViewController {
                         return
                     }
                     
-                    if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
-                        let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
-                        chatVC.dialog = dialog
-                        chatVC.provider = self?.provider
-                        chatVC.conversation = conversation
-                        
-                        self?.present(chatNavigationVC, animated: true, completion: {
-                            QBNotificationService.sharedInstance.currentDialogID = dialog.id!
+                    self?.notifyForChat(user, dialog.id!, completion: { 
+                        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
+                            let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
+                            chatVC.dialog = dialog
+                            chatVC.provider = self?.provider
+                            chatVC.conversation = conversation
                             
-                            conversation?.dialogId = dialog.id
-                            conversation?.saveInBackground(block: { (success, error) in
-                                if let error = error as? NSError {
-                                    chatNavigationVC.testAlert("Conversation could not be updated", message: "This conversation could not be created. Please try again", type:.ConversationSaveFailed, params: ["dialogId": dialog.id!, "conversationId": conversation?.objectId!, "error": error.localizedDescription])
-                                }
+                            self?.present(chatNavigationVC, animated: true, completion: {
+                                QBNotificationService.sharedInstance.currentDialogID = dialog.id!
+                                
+                                conversation?.dialogId = dialog.id
+                                conversation?.saveInBackground(block: { (success, error) in
+                                    if let error = error as? NSError {
+                                        chatNavigationVC.testAlert("Conversation could not be updated", message: "This conversation could not be created. Please try again", type:.ConversationSaveFailed, params: ["dialogId": dialog.id!, "conversationId": conversation?.objectId!, "error": error.localizedDescription])
+                                    }
+                                })
                             })
-                        })
-                        
-                    }
+                        }
+                    })
                 })
             }
         }
     }
     
+    func notifyForChat(_ user: QBUUser, _ dialogId: String, completion: @escaping (()->Void)) {
+        //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
+        guard let currentUser = PFUser.current() as? User else { return }
+        let name = currentUser.displayString 
+        
+        let message = "\(name) wants to send you a message"
+        let userInfo = ["dialogId": dialogId, "pfUserId": currentUser.objectId ?? "", "chatStatus": "invited"]
+        
+        PushService().sendNotificationToQBUser(user, message: message, userInfo: userInfo) { (success, error) in
+            if success {
+                completion()
+                return
+            }
+            else {
+                let qbError = error!
+                // TODO: use qbError.reason when QuickBlox fixes their crash
+                self.testAlert("Push notification failed", message: "Unable to send a push notification. However, the provider can still see this message if they are online.", type: .ClientPushNotificationFailed, error: nil, params: ["dialogId": dialogId, "name": name], completion: {
+                    completion()
+                })
+            }
+        }
+    }
 
     // TEST
     func testGoToFeedback() {
