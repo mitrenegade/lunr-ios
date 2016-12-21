@@ -60,6 +60,12 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         incomingContainer.isHidden = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.refreshCallHistory()
+    }
+    
     deinit {
         self.stopListeningFor(NotificationType.Push.ReceivedInBackground.rawValue)
         self.stopListeningFor(.DialogFetched)
