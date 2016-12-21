@@ -150,40 +150,48 @@ extension ProviderDetailViewController {
             }
             guard let clientId = PFUser.current()?.objectId else { return }
             
-            let params = ["providerId": provider.objectId]
-            PFCloud.callFunction(inBackground: "postNewConversation", withParameters: params) { [weak self] (results, error) in
-                let conversation = results as? Conversation
-                
-                SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
-                    self?.callButton.busy = false
-                    guard success, let dialog = dialog else {
-                        print("Could not start chat")
-                        self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
-                        
-                        return
-                    }
+            // create/load the dialog on QuickBlox
+            SessionService.sharedInstance.startChatWithUser(user, completion: { (success, dialog) in
+                self?.callButton.busy = false
+                guard success, let dialog = dialog else {
+                    print("Could not start chat")
+                    self?.simpleAlert("Could not start chat", defaultMessage: "There was an error starting a chat with this provider", error: nil, completion: nil)
                     
-                    self?.notifyForChat(user, dialog.id!, completion: { 
-                        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
-                            let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
-                            chatVC.dialog = dialog
-                            chatVC.provider = self?.provider
-                            chatVC.conversation = conversation
-                            
-                            self?.present(chatNavigationVC, animated: true, completion: {
-                                QBNotificationService.sharedInstance.currentDialogID = dialog.id!
-                                
-                                conversation?.dialogId = dialog.id
-                                conversation?.saveInBackground(block: { (success, error) in
-                                    if let error = error as? NSError {
-                                        chatNavigationVC.testAlert("Conversation could not be updated", message: "This conversation could not be created. Please try again", type:.ConversationSaveFailed, params: ["dialogId": dialog.id!, "conversationId": conversation?.objectId!, "error": error.localizedDescription])
-                                    }
-                                })
-                            })
-                        }
-                    })
-                })
-            }
+                    return
+                }
+                
+                // create the conversation object on Parse, and notify
+                let params = ["providerId": provider.objectId, "dialogId": dialog.id]
+                PFCloud.callFunction(inBackground: "postNewConversation", withParameters: params) { [weak self] (results, error) in
+                    if let conversation = results as? Conversation {
+                        self?.goToChat(dialog: dialog, conversation: conversation)
+
+                        /*
+                         // PUSH FAILURE
+                        self?.testAlert("Push notification failed", message: "Unable to send a push notification. However, the provider can still see this message if they are online.", type: .ClientPushNotificationFailed, error: nil, params: ["dialogId": dialog.id, "clientId": clientId], completion: {
+                            self?.goToChat(dialog: dialog, conversation: conversation)
+                        })
+                        */
+                    }
+                    else {
+                        // CONVERSATION SAVE FAILURE
+                        self?.testAlert("Could not create conversation", message: "We could not start a chat conversation.", type: .ConversationSaveFailed, error: nil, params: ["dialogId": dialog.id ?? "", "clientId": clientId], completion: nil)
+                    }
+                }
+            })
+        }
+    }
+    
+    func goToChat(dialog: QBChatDialog, conversation: Conversation) {
+        if let chatNavigationVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ClientChatNavigationController") as? UINavigationController,
+            let chatVC = chatNavigationVC.viewControllers[0] as? ClientChatViewController {
+            chatVC.dialog = dialog
+            chatVC.provider = self.provider
+            chatVC.conversation = conversation
+            
+            self.present(chatNavigationVC, animated: true, completion: {
+                QBNotificationService.sharedInstance.currentDialogID = dialog.id!
+            })
         }
     }
     

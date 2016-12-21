@@ -91,13 +91,6 @@ class PushService: NSObject {
         
     }
     
-    func sendNotificationToPFUser(_ user: PFUser, message: String, userInfo: [String: String], completion: @escaping ((_ success:Bool, _ error:QBError?) -> Void)) {
-        guard let channel = self.channelStringForPFUser(user) else { completion(false, nil); return }
-        print("Channel: \(channel)")
-
-        // TODO
-    }
-    
     func unregisterParsePushSubscription() {
         guard let user = PFUser.current() else {
             return

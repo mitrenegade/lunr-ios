@@ -22,44 +22,11 @@ class ClientChatViewController: ChatViewController {
     @IBOutlet weak var constraintAlertTop: NSLayoutConstraint!
     @IBOutlet weak var labelAlert: UILabel!
     
-    func notifyForChat(_ user: QBUUser, isCancelling: Bool = false) {
-        //guard let timestamp = lastNotificationTimestamp where NSDate().timeIntervalSinceDate(timestamp) > kMinNotificationInterval else { return }
-        guard let dialogId = self.dialog.id else { return }
-        guard let currentUser = PFUser.current() as? User else { return }
-        let name = currentUser.displayString ?? "A client"
-        
-        var message = "\(name) wants to send you a message"
-        var userInfo = ["dialogId": dialogId, "pfUserId": currentUser.objectId ?? "", "chatStatus": "invited"]
-        
-        if isCancelling {
-            message = "\(name) has ended the chat"
-            userInfo["chatStatus"] = "cancelled"
-        }
-
-        PushService().sendNotificationToQBUser(user, message: message, userInfo: userInfo) { (success, error) in
-            if isCancelling {
-                return
-            }
-            
-            if success {
-                // start listening for incoming session
-                self.listenForSession()
-            }
-            else {
-                self.listenForSession()
-                // for now, don't worry if push fails
-//                self.simpleAlert("Provider is not available", defaultMessage: nil, error: nil)
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
        
         QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
             if let recipient = result {
-//                self.notifyForChat(recipient)
-                
                 // start listening for incoming session
                 self.listenForSession()
             }
@@ -122,13 +89,6 @@ class ClientChatViewController: ChatViewController {
     }
 
     @IBAction override func dismiss(_ sender: AnyObject?) {
-        /*
-        QBUserService.qbUUserWithId(UInt(self.dialog.recipientID), completion: { (result) in
-            if let recipient = result {
-                self.notifyForChat(recipient, isCancelling: true)
-            }
-        })
- */
         conversation?.status = ConversationStatus.done.rawValue
         conversation?.saveInBackground()
         
