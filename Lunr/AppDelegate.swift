@@ -125,8 +125,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: Push
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        PushService().registerQBPushSubscription(deviceToken) { (success) in
+        PushService().registerParsePushSubscription(deviceToken) { (success) in
             print("push subscription success: \(success)")
             self.notify(NotificationType.Push.Registered.rawValue, object: nil, userInfo: nil)
         }
@@ -145,6 +146,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         QBNotificationService.sharedInstance.handlePushNotification(userInfo)
-    }
+    }    
 }
 

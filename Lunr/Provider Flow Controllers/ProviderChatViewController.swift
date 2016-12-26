@@ -55,10 +55,6 @@ class ProviderChatViewController: ChatViewController {
 
     @IBAction override func dismiss(_ sender: AnyObject?) {
         self.dismiss(animated: true) { 
-            // send push notification to cancel
-            guard let recipient = self.recipient else { return }
-            QBNotificationService.sharedInstance.clearDialog()
-            self.notifyForVideo(recipient, didInitiateVideo: false)
         }
     }
 
@@ -85,26 +81,6 @@ class ProviderChatViewController: ChatViewController {
         SessionService.sharedInstance.startCall(recipient.id, pfUserId: userId)
         // start listening for incoming session
         self.listenForAcceptSession()
-    }
-    
-    // MARK: Push notifications
-    func notifyForVideo(_ user: QBUUser, didInitiateVideo: Bool) {
-        // actually notifyForRejectVideo - do not create a call state but send a push
-        guard let currentUser = PFUser.current() as? User else { return }
-        
-        let name = currentUser.displayString
-        
-        if !didInitiateVideo {
-            let status = "cancelled"
-            let message = "\(name) has \(status) video chat"
-            let userInfo = ["videoChatStatus": status, "dialogId": QBNotificationService.sharedInstance.currentDialogID ?? ""]
-            
-            PushService().sendNotificationToQBUser(user, message: message, userInfo: userInfo) { (success, error) in
-                if !success {
-                    self.testAlert("NotifyForVideo failed", message: "There was a problem sending a notification", type: .NotifyForVideoFailed, error: error as? Error, params: userInfo, completion: nil)
-                }
-            }
-        }
     }
 
     // MARK: Session
