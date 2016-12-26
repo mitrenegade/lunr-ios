@@ -142,7 +142,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             if let user = result {
                 self?.incomingPFUserId = incomingPFUserId
                 self?.dialog = dialog
-                self?.providerStatusView.status = .newRequest(user)
+                //self?.providerStatusView.status = .newRequest(user)
+                self?.incomingController?.refreshCalls()
                 if self?.shouldOpenDialogAutomatically ?? false {
                     self?.didClickReply()
                 }
