@@ -27,7 +27,6 @@ class IncomingCallsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.refreshCalls()
         self.subscribeToUpdates()
         
         self.tableView.estimatedRowHeight = 68

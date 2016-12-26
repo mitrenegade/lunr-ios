@@ -64,7 +64,7 @@ class QBNotificationService: NotificationServiceDelegate {
         
         self.incomingDialogId = dialogID
         
-        // BOBBY TODO after second chat, this returns. needs to clear currentDialogID after conversation ends
+        // BOBBY TODO after second chat, this returns. needs to clear currentDialogID after conversation ends 
         if self.currentDialogID == self.incomingDialogId {
             return
         }

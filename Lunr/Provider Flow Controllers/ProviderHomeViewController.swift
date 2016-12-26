@@ -44,10 +44,13 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         
         updateUI()
         
-        if let user = PFUser.current() as? User, user.available {
-            PushService().enablePushNotifications({ (success) in
-                print("User is available and push is enabled")
-            })
+        if let user = PFUser.current() as? User, user.isProvider && !user.available {
+            let alert = UIAlertController(title: "Go Online?", message: "Do you want to become available to clients now?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Not yet", style: .destructive, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                self.toggleOnDuty(self.onDutyToggleButton)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
         
         self.refreshCallHistory()
@@ -139,7 +142,8 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
             if let user = result {
                 self?.incomingPFUserId = incomingPFUserId
                 self?.dialog = dialog
-                self?.providerStatusView.status = .newRequest(user)
+                //self?.providerStatusView.status = .newRequest(user)
+                self?.incomingController?.refreshCalls()
                 if self?.shouldOpenDialogAutomatically ?? false {
                     self?.didClickReply()
                 }
