@@ -33,6 +33,7 @@ class ProviderDetailViewController : UIViewController {
             }
         }
         self.listenFor(.FeedbackUpdated, action: #selector(refreshFeedback), object: nil)
+        self.listenFor(.ProvidersUpdated, action: #selector(refreshProvider), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +69,8 @@ class ProviderDetailViewController : UIViewController {
         self.callButton.backgroundColor = UIColor(red: 46/255, green: 56/255, blue: 91/255, alpha: 1.0)
         if let provider = self.provider, provider.available {
             self.callButton.setTitle("Send a message", for: UIControlState())
+            self.callButton.isUserInteractionEnabled = true
+            self.callButton.alpha = 1
         }
         else {
             self.callButton.setTitle("Currently unavailable", for: UIControlState())
@@ -87,6 +90,16 @@ class ProviderDetailViewController : UIViewController {
         })
     }
 
+    func refreshProvider(notification: NSNotification) {
+        guard let userInfo = notification.userInfo, let updated = userInfo["provider"] as? User else { return }
+        if provider?.objectId == updated.objectId {
+            // updates if available changes
+            provider?.available = updated.available
+            self.tableView.reloadData()
+            self.setupCallButton()
+        }
+    }
+    
     // MARK: Event Methods
 
     @IBAction func callButtonTapped(_ sender: AnyObject) {
