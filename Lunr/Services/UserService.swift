@@ -8,6 +8,7 @@
 
 import Foundation
 import Parse
+import ParseLiveQuery
 
 class UserService: NSObject {
     static let sharedInstance: UserService = UserService()
@@ -17,6 +18,12 @@ class UserService: NSObject {
         QBUserService.sharedInstance.logoutQBUser()
         sharedInstance.notify(.LogoutSuccess)
     }
+    
+    // live query for Parse objects
+    let liveQueryClient = ParseLiveQuery.Client()
+    var subscription: Subscription<User>?
+    var subscribedToProviderUpdates: Bool = false
+    var providers: [User]?
     
     let pageSize = 10
     func queryProvidersAtPage(_ page: Int = 0, filterOption: SortCategory = .alphabetical, searchTerms: [String] = [], ascending: Bool = true, availableOnly: Bool = false, completionHandler: @escaping ((_ providers:[PFUser]?) -> Void), errorHandler: @escaping ((_ error: NSError?)->Void)) {
@@ -88,6 +95,7 @@ class UserService: NSObject {
             }
             
             let users = results as? [PFUser]
+            self.providers = users as? [User]
             completionHandler(users)
         }
     }
@@ -107,6 +115,42 @@ class UserService: NSObject {
         }
     }
     
+    // MARK: Subscriptions
+    func subscribeToProviderUpdates() {
+        if LOCAL_TEST {
+            return
+        }
+        
+        guard !subscribedToProviderUpdates else { return }
+        
+        guard let user = PFUser.current(), let userId = user.objectId else { return }
+        guard let query: PFQuery<User> = PFUser.query() as? PFQuery<User> else { return }
+        
+        
+        query.whereKey("type", containedIn:[UserType.Plumber.rawValue.lowercased(), UserType.Electrician.rawValue.lowercased(), UserType.Handyman.rawValue.lowercased()])
+        
+        self.subscription = liveQueryClient.subscribe(query)
+            .handle(Event.updated, { (_, object) in
+                if let providers = self.providers {
+                    var changed = false
+                    for user in providers {
+                        if user.objectId == object.objectId, let index = providers.index(of: user) {
+                            self.providers!.remove(at: index)
+                            self.providers!.insert(object, at: index)
+                            changed = true
+                        }
+                    }
+                    if changed {
+                        DispatchQueue.main.async(execute: {
+                            print("received update for provider: \(object.objectId!)")
+                            self.notify(.ProvidersUpdated, object: nil, userInfo: ["provider": object])
+                        })
+                    }
+                }
+            })
+        self.subscribedToProviderUpdates = true
+    }
+        
     // MARK: Test function to generate providers and reviews in Parse. To run this again, existing users must be deleted
     func generateProviders() {
         /*
