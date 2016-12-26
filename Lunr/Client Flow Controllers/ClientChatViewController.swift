@@ -70,6 +70,8 @@ class ClientChatViewController: ChatViewController {
         if let controller = UIStoryboard(name: "CallFlow", bundle: nil).instantiateViewController(withIdentifier: "CallViewController") as? CallViewController {
             self.navigationController?.pushViewController(controller, animated: true)
             SessionService.sharedInstance.session?.acceptCall(nil)
+            
+            self.endConversation()
         }
     }
     
@@ -89,10 +91,13 @@ class ClientChatViewController: ChatViewController {
     }
 
     @IBAction override func dismiss(_ sender: AnyObject?) {
+        self.endConversation()
+        super.dismiss(sender)
+    }
+    
+    func endConversation() {
         conversation?.status = ConversationStatus.done.rawValue
         conversation?.saveInBackground()
-        
-        super.dismiss(sender)
     }
     
     // MARK: - Conversation

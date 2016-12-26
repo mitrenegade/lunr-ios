@@ -120,6 +120,10 @@ class CallViewController: UIViewController {
             }
         }
         
+        if let user = user, !user.isProvider {
+            
+        }
+        
         if let call = CallService.sharedInstance.currentCall {
             self.goToFeedback(call)
         }
@@ -132,7 +136,8 @@ class CallViewController: UIViewController {
     
     func goToFeedback(_ call: Call?) {
         guard let call = call else { return } // TODO: handle error
-        if let user = PFUser.current() as? User, user.isProvider {
+        guard let user = PFUser.current() as? User else { return }
+        if user.isProvider {
             CallService.sharedInstance.updateCall(call, completion: { (result, error) in
                 if error != nil {
                     // TODO: store total cost into another object
