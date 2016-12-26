@@ -1,6 +1,5 @@
 import UIKit
 import Parse
-import ParseLiveQuery
 
 class ProviderListViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, SortCategoryProtocol {
 
@@ -10,14 +9,9 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var sortCategoryView: SortCategoryView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var providers: [User]?
     var currentSortCategory: SortCategory = .none
     var searchTerms: [String] = []
     
-    // live query for Parse objects
-    let liveQueryClient = ParseLiveQuery.Client()
-    var subscription: Subscription<User>?
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,7 +34,8 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         }
         
         // listen for changes
-        self.subscribeToUpdates()
+        self.listenFor(.ProvidersUpdated, action: #selector(reloadTableData), object: nil)
+        UserService.sharedInstance.subscribeToProviderUpdates()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,43 +56,16 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.activityIndicator.startAnimating()
         UserService.sharedInstance.queryProvidersAtPage(page, filterOption: currentSortCategory, searchTerms: searchTerms, ascending: true, availableOnly: false, completionHandler: {[weak self] (providers) in
             self?.activityIndicator.stopAnimating()
-            self?.providers = providers as? [User]
-            self?.tableView.reloadData()
+            self?.reloadTableData()
         }) {[weak self]  (error) in
             self?.activityIndicator.stopAnimating()
             print("Error loading providers: \(error)")
             self?.simpleAlert("Could not load providers", defaultMessage: "There was an error loading available providers.", error: error, completion: nil)
         }
     }
-
-    func subscribeToUpdates() {
-        if LOCAL_TEST {
-            return
-        }
-        
-        guard let user = PFUser.current(), let userId = user.objectId else { return }
-        guard let query: PFQuery<User> = PFUser.query() as? PFQuery<User> else { return }
-        query.whereKey("type", containedIn:[UserType.Plumber.rawValue.lowercased(), UserType.Electrician.rawValue.lowercased(), UserType.Handyman.rawValue.lowercased()])
-        
-        self.subscription = liveQueryClient.subscribe(query)
-            .handle(Event.updated, { (_, object) in
-                if let providers = self.providers {
-                    var changed = false
-                    for user in providers {
-                        if user.objectId == object.objectId, let index = providers.index(of: user) {
-                            self.providers!.remove(at: index)
-                            self.providers!.insert(object, at: index)
-                            changed = true
-                        }
-                    }
-                    if changed {
-                        DispatchQueue.main.async(execute: {
-                            print("received update for provider: \(object.objectId!)")
-                            self.tableView.reloadData()
-                        })
-                    }
-                }
-            })
+    
+    func reloadTableData() {
+        self.tableView.reloadData()
     }
 
     // MARK: Event Methods
@@ -132,7 +100,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         tableView.deselectRow(at: indexPath, animated: true)
         self.searchBar.resignFirstResponder()
 
-        guard let providers = self.providers, let provider = providers[indexPath.row] as? User else { return }
+        guard let providers = UserService.sharedInstance.providers, let provider = providers[indexPath.row] as? User else { return }
         
         provider.fetchIfNeededInBackground(block: { [weak self] (object, error) in
             self?.performSegue(withIdentifier: "GoToProviderDetail", sender: provider)
@@ -142,13 +110,13 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     // MARK: UITableViewDataSource Methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let providers = self.providers else { return 0 }
+        guard let providers = UserService.sharedInstance.providers else { return 0 }
         return providers.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProviderTableViewCell") as! ProviderTableViewCell
-        if let providers = self.providers {
+        if let providers = UserService.sharedInstance.providers {
             cell.configureForProvider(providers[indexPath.row])
         }
         return cell

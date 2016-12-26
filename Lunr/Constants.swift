@@ -43,6 +43,7 @@ enum NotificationType: String {
     }
     case FeedbackUpdated
     case AppReturnedFromBackground
+    case ProvidersUpdated
 }
 
 let SESSION_TIMEOUT_INTERVAL: TimeInterval = 30
