@@ -24,7 +24,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             }
             _instance = SessionService()
             QBRTCClient.initializeRTC()
-            QBRTCClient.instance().add(_instance)
+            QBRTCClient.instance().add(_instance!)
             QBRTCConfig.setAnswerTimeInterval(SESSION_TIMEOUT_INTERVAL)
             return _instance!
         }
@@ -115,7 +115,8 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
             
             // create and start session
             // must be called after video track has been started!
-            let newSession: QBRTCSession = QBRTCClient.instance().createNewSession(withOpponents: [userID], with: QBRTCConferenceType.video)
+            let number: NSNumber = NSNumber(value: userID)
+            let newSession: QBRTCSession = QBRTCClient.instance().createNewSession(withOpponents: [number], with: QBRTCConferenceType.video)
             self.session = newSession
             var userInfo: [String: AnyObject]? = nil // send any info through
             if let call = call, let objectId = call.objectId {
@@ -123,7 +124,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
                 CallService.sharedInstance.currentCallId = objectId // stores callId on the provider side
                 userInfo = ["callId": objectId as AnyObject]
             }
-            self.session!.startCall(userInfo)
+            self.session!.startCall(userInfo as! [String : String]?)
             self.state = .Waiting
         }
     }
@@ -157,12 +158,12 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     // user action (client)
     func acceptCall(_ userInfo: [String: AnyObject]?) {
         // happens automatically when client receives an incoming call and goes to video view
-        self.session?.acceptCall(userInfo)
+        self.session?.acceptCall(userInfo as! [String : String]?)
     }
     
     func rejectCall(_ userInfo: [String: AnyObject]?) {
         // might happen if client is already in a call and goes to video view...shouldn't happen
-        self.session?.rejectCall(userInfo)
+        self.session?.rejectCall(userInfo as! [String : String]?)
     }
     
     // delegate (provider)

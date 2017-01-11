@@ -49,9 +49,10 @@ class CallViewController: UIViewController {
         if let name = recipient?.fullName {
             self.title = "Waiting for \(name)"
         }
-        
-        QBRTCSoundRouter.instance().initialize()
-        QBRTCSoundRouter.instance().setCurrentSoundRoute(.speaker)
+
+        // changes: http://quickblox.com/developers/Sample-webrtc-ios#Audio_Session_.28Previously_Sound_Router.29
+        QBRTCAudioSession.instance().initialize()
+        QBRTCAudioSession.instance().currentAudioDevice = QBRTCAudioDevice.speaker
     }
 
     // MARK: - Video
@@ -107,7 +108,8 @@ class CallViewController: UIViewController {
         self.stopListeningFor(NotificationType.VideoSession.CallCreationFailed.rawValue)
         
         SessionService.sharedInstance.endCall()
-
+        QBRTCAudioSession.instance().deinitialize()
+        
         self.videoCapture?.stopSession()
         
         // TODO: manage call summary in client/provider classes
@@ -142,9 +144,9 @@ class CallViewController: UIViewController {
                 if error != nil {
                     // TODO: store total cost into another object
                     print("Call save error: \(error)")
-                    self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
+                    self.simpleAlert("Could not save call", defaultMessage: "There was an error saving this call.", error: error, completion: { 
                         self.performSegue(withIdentifier: "GoToFeedback", sender: call)
-                    }
+                    })
                 }
                 else {
                     self.performSegue(withIdentifier: "GoToFeedback", sender: result)

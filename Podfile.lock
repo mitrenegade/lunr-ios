@@ -9,11 +9,11 @@ PODS:
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
-  - FBSDKCoreKit (4.17.0):
+  - FBSDKCoreKit (4.18.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.17.0):
+  - FBSDKLoginKit (4.18.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.17.0):
+  - FBSDKShareKit (4.18.0):
     - FBSDKCoreKit
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
@@ -76,12 +76,13 @@ PODS:
     - Bolts (>= 1.5.0)
     - QuickBlox (>= 2.6.5)
   - QuickBlox (2.9)
-  - Quickblox-WebRTC (2.2)
+  - Quickblox-WebRTC (2.3.1):
+    - QuickBlox (>= 2.7)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - SocketRocket (0.5.1)
-  - Stripe (9.2.0)
+  - Stripe (9.3.0)
   - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
@@ -104,19 +105,19 @@ SPEC CHECKSUMS:
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBSDKCoreKit: 30a21d2d7b92984b3d80497113433c00824c35e9
-  FBSDKLoginKit: 42b7129ac0373ca99eaf4cbebf4d07bd42371f59
-  FBSDKShareKit: 9b573d03fbee36cbaf42d5bb1f2bc019e0d72347
+  FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
+  FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
+  FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   ParseLiveQuery: 4c0f3f571ba0f358a4e592cd7d4b55c95ab9655e
   QMChatViewController: 50dc594e5429ba162c89fa1dfe87668eb3827cde
   QMServices: 617057b228eb5e41341e50216fc4af2fce3cfa46
   QuickBlox: 4e071921a5fb4b0ecde1f66c7ce04a70ededc90c
-  Quickblox-WebRTC: 4575357666869f1d517eaef7da3d70da09f66686
+  Quickblox-WebRTC: 1f1ac580fc20a8eb862c1e3547d6ee952b680984
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
-  Stripe: a47770e82db059d0e7e160f9aabc2997055ee911
+  Stripe: 0f41a33a6fa3ac76ee668d7df3e2680c28b8ab1a
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
 PODFILE CHECKSUM: 0b8ce8264dde5f13cd0bcad0885b061abb4982cd
