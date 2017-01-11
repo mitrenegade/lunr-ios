@@ -139,7 +139,7 @@ extension AccountSettingsViewController: UITableViewDelegate {
         // Placeholder
         print("did select")
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let calls = self.callHistory, indexPath.row < calls.count else {
+        guard let calls = self.callHistory, indexPath.section == 2, indexPath.row < calls.count else {
             return
         }
         

@@ -144,9 +144,9 @@ class CallViewController: UIViewController {
                 if error != nil {
                     // TODO: store total cost into another object
                     print("Call save error: \(error)")
-                    self.simpleAlert("Could not save call", message: "There was an error saving this call. Please let us know") {
+                    self.simpleAlert("Could not save call", defaultMessage: "There was an error saving this call.", error: error, completion: { 
                         self.performSegue(withIdentifier: "GoToFeedback", sender: call)
-                    }
+                    })
                 }
                 else {
                     self.performSegue(withIdentifier: "GoToFeedback", sender: result)
