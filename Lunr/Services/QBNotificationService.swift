@@ -66,6 +66,7 @@ class QBNotificationService: NotificationServiceDelegate {
         
         // BOBBY TODO after second chat, this returns. needs to clear currentDialogID after conversation ends 
         if self.currentDialogID == self.incomingDialogId {
+            // BOBBY TODO: comes here when client starts a chat. because client also getting push if the phone was used as the same provider
             return
         }
         

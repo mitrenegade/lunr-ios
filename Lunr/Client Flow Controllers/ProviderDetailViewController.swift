@@ -105,33 +105,43 @@ class ProviderDetailViewController : UIViewController {
     @IBAction func callButtonTapped(_ sender: AnyObject) {
         guard let provider = self.provider else { return }
         
-        guard let currentUser = PFUser.current() as? User, currentUser.hasCreditCard() else {
-            let title = "No credit card available"
-            let message = "You must add a payment method before contacting a provider"
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Add Credit Card", style: .default, handler: { (action) in
-                self.showAccountSettings()
-            }))
-            self.present(alert, animated: true, completion: nil)
+        guard let currentUser = PFUser.current() as? User else {
+            self.simpleAlert("Invalid user", defaultMessage: "Please log out and log back in", error: nil, completion: { 
+                self.navigationController?.popViewController(animated: true)
+            })
             return
         }
-        let connected = QBChat.instance().isConnected
-        print("connected: \(connected)")
         
-        self.callButton.busy = true
-        QBUserService.sharedInstance.refreshUserSession { (success) in
-            if success {
-                print("Let's message \(self.provider?.displayString) on channel \(provider.objectId!)")
-                self.chatWithProvider(provider)
+        currentUser.fetchInBackground { (result, error) in
+            // updates credit card
+            guard currentUser.hasCreditCard() else {
+                let title = "No credit card available"
+                let message = "You must add a payment method before contacting a provider"
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Add Credit Card", style: .default, handler: { (action) in
+                    self.showAccountSettings()
+                }))
+                self.present(alert, animated: true, completion: nil)
+                return
             }
-            else {
-                self.callButton.busy = false
-                var message = "Please log out and log in again"
-                if QBUserService.sharedInstance.isRefreshingSession {
-                    message = "Chat service seems to be temporarily available."
+            let connected = QBChat.instance().isConnected
+            print("connected: \(connected)")
+            
+            self.callButton.busy = true
+            QBUserService.sharedInstance.refreshUserSession { (success) in
+                if success {
+                    print("Let's message \(self.provider?.displayString) on channel \(provider.objectId!)")
+                    self.chatWithProvider(provider)
                 }
-                self.simpleAlert("Could not start chat", defaultMessage: message, error: nil, completion: nil)
+                else {
+                    self.callButton.busy = false
+                    var message = "Please log out and log in again"
+                    if QBUserService.sharedInstance.isRefreshingSession {
+                        message = "Chat service seems to be temporarily available."
+                    }
+                    self.simpleAlert("Could not start chat", defaultMessage: message, error: nil, completion: nil)
+                }
             }
         }
     }
