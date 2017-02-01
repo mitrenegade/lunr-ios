@@ -30,7 +30,7 @@ class UserService: NSObject {
         var ascending = ascending
         let query = PFUser.query()
         query?.whereKeyExists("type")
-        query?.whereKey("type", notEqualTo: UserType.Client.rawValue)
+        query?.whereKey("type", notEqualTo: UserType.Client.rawValue.lowercased())
         query?.limit = pageSize
         query?.skip = page * pageSize
         if availableOnly {
