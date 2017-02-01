@@ -9,11 +9,11 @@ PODS:
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
-  - FBSDKCoreKit (4.18.0):
+  - FBSDKCoreKit (4.19.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.18.0):
+  - FBSDKLoginKit (4.19.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.18.0):
+  - FBSDKShareKit (4.19.0):
     - FBSDKCoreKit
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
@@ -27,45 +27,45 @@ PODS:
     - Bolts-Swift (~> 1.3)
     - Parse (~> 1.14.2)
     - SocketRocket (~> 0.5)
-  - QMChatViewController (0.4.0.1):
-    - QMChatViewController/Categories (= 0.4.0.1)
-    - QMChatViewController/Protocols (= 0.4.0.1)
-    - QMChatViewController/QMChatDataSource (= 0.4.0.1)
-    - QMChatViewController/QMChatLocationSnapshotter (= 0.4.0.1)
-    - QMChatViewController/Sections (= 0.4.0.1)
-    - QMChatViewController/Utils (= 0.4.0.1)
-    - QMChatViewController/Views (= 0.4.0.1)
+  - QMChatViewController (0.4.1):
+    - QMChatViewController/Categories (= 0.4.1)
+    - QMChatViewController/Protocols (= 0.4.1)
+    - QMChatViewController/QMChatDataSource (= 0.4.1)
+    - QMChatViewController/QMChatLocationSnapshotter (= 0.4.1)
+    - QMChatViewController/Sections (= 0.4.1)
+    - QMChatViewController/Utils (= 0.4.1)
+    - QMChatViewController/Views (= 0.4.1)
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Categories (0.4.0.1):
+  - QMChatViewController/Categories (0.4.1):
     - QMChatViewController/QMChatLocationSnapshotter
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Protocols (0.4.0.1):
+  - QMChatViewController/Protocols (0.4.1):
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/QMChatDataSource (0.4.0.1):
+  - QMChatViewController/QMChatDataSource (0.4.1):
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/QMChatLocationSnapshotter (0.4.0.1):
+  - QMChatViewController/QMChatLocationSnapshotter (0.4.1):
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Sections (0.4.0.1):
+  - QMChatViewController/Sections (0.4.1):
     - QMChatViewController/QMChatDataSource
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Utils (0.4.0.1):
+  - QMChatViewController/Utils (0.4.1):
     - QMChatViewController/Categories
     - QuickBlox (>= 2.0)
     - SDWebImage (~> 3.6)
     - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Views (0.4.0.1):
+  - QMChatViewController/Views (0.4.1):
     - QMChatViewController/Categories
     - QMChatViewController/Protocols
     - QMChatViewController/Utils
@@ -75,8 +75,8 @@ PODS:
   - QMServices (0.4.5):
     - Bolts (>= 1.5.0)
     - QuickBlox (>= 2.6.5)
-  - QuickBlox (2.9)
-  - Quickblox-WebRTC (2.3.1):
+  - QuickBlox (2.9.1)
+  - Quickblox-WebRTC (2.4):
     - QuickBlox (>= 2.7)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -105,16 +105,16 @@ SPEC CHECKSUMS:
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
-  FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
-  FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
+  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
+  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
+  FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   ParseLiveQuery: 4c0f3f571ba0f358a4e592cd7d4b55c95ab9655e
-  QMChatViewController: 50dc594e5429ba162c89fa1dfe87668eb3827cde
+  QMChatViewController: 575f0d253d916022b3d35b57b84b38070357c74f
   QMServices: 617057b228eb5e41341e50216fc4af2fce3cfa46
-  QuickBlox: 4e071921a5fb4b0ecde1f66c7ce04a70ededc90c
-  Quickblox-WebRTC: 1f1ac580fc20a8eb862c1e3547d6ee952b680984
+  QuickBlox: 69e1dace6f9fa74e39557b96e0303552654d7707
+  Quickblox-WebRTC: e08793e554d0337df5bc577c9166e0edc58eb02a
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
   Stripe: 0f41a33a6fa3ac76ee668d7df3e2680c28b8ab1a
