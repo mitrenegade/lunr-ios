@@ -68,8 +68,16 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         super.viewDidAppear(animated)
 
         self.refreshAll()
+
+        self.updateActive()
     }
     
+    func updateActive() {
+        if let user = PFUser.current() as? User {
+            user.updateActive()
+            print("updateActive")
+        }
+    }
     func refreshAll() {
         self.refreshCallHistory()
         self.incomingController?.refreshCalls()
@@ -112,6 +120,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         }
         
         self.refreshCallHistory()
+        self.updateActive()
     }
     
     fileprivate func updateUI() {
@@ -125,6 +134,7 @@ class ProviderHomeViewController: UIViewController, ProviderStatusViewDelegate {
         // clear locally stored dialog and userIds that were saved from previous notifications
         self.dialog = nil
         self.incomingPFUserId = nil
+        self.updateActive()
     }
     
     func handleIncomingChatRequest(_ notification: Notification) {
@@ -255,6 +265,9 @@ extension ProviderHomeViewController: UITableViewDataSource {
         }
         let call = calls[row]
         cell.configure(call)
+
+        self.updateActive()
+        
         return cell
     }
     

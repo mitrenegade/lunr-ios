@@ -127,21 +127,37 @@ class ProviderDetailViewController : UIViewController {
             }
             let connected = QBChat.instance().isConnected
             print("connected: \(connected)")
-            
-            self.callButton.busy = true
-            QBUserService.sharedInstance.refreshUserSession { (success) in
-                if success {
-                    print("Let's message \(self.provider?.displayString) on channel \(provider.objectId!)")
-                    self.chatWithProvider(provider)
+
+            if provider.isIdle {
+                let title = "Provider may be idle"
+                let message = "\(provider.displayString) has not been active for more than 30 minutes and may not respond. Continue to chat?"
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Message", style: .default, handler: { (action) in
+                    self.startConnection(provider: provider)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else {
+                self.startConnection(provider: provider)
+            }
+        }
+    }
+    
+    func startConnection(provider: User) {
+        self.callButton.busy = true
+        QBUserService.sharedInstance.refreshUserSession { (success) in
+            if success {
+                print("Let's message \(self.provider?.displayString) on channel \(provider.objectId!)")
+                self.chatWithProvider(provider)
+            }
+            else {
+                self.callButton.busy = false
+                var message = "Please log out and log in again"
+                if QBUserService.sharedInstance.isRefreshingSession {
+                    message = "Chat service seems to be temporarily available."
                 }
-                else {
-                    self.callButton.busy = false
-                    var message = "Please log out and log in again"
-                    if QBUserService.sharedInstance.isRefreshingSession {
-                        message = "Chat service seems to be temporarily available."
-                    }
-                    self.simpleAlert("Could not start chat", defaultMessage: message, error: nil, completion: nil)
-                }
+                self.simpleAlert("Could not start chat", defaultMessage: message, error: nil, completion: nil)
             }
         }
     }

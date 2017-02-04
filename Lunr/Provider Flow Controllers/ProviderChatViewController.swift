@@ -71,6 +71,11 @@ class ProviderChatViewController: ChatViewController {
             self.callViewController = controller
             // don't start call until local video stream is ready
             self.listenFor(NotificationType.VideoSession.VideoReady.rawValue, action: #selector(startSession), object: nil)
+
+            if let user = PFUser.current() as? User {
+                user.updateActive()
+                print("updateActive")
+            }
         }
     }
     

@@ -39,21 +39,26 @@ class ProviderInfoView: NibLoadableView {
         let ratingString = provider.rating == 0 ? "-.-" : String(format: "%.1f", provider.rating)
         self.ratingLabel.text = ratingString
         self.priceRateLabel.text = "$\(provider.ratePerMin)/min"
-        self.configureAvailability(provider.available)
+        self.configureAvailability(provider)
 
         self.configureFavoriteIcon()
         self.tagsView.configureWithTags(tagStrings: provider.skills)
     }
 
-    func configureAvailability(_ isAvailable: Bool) {
-        if isAvailable {
-            self.availableLabel.text = "Currently Available"
-            self.availableImageView.image = UIImage(imageLiteralResourceName: "available")
-            self.nameLabel.alpha = 1
-        } else {
+    func configureAvailability(_ provider: User) {
+        if !provider.available {
             self.availableLabel.text = "Unavailable"
             self.availableImageView.image = UIImage(imageLiteralResourceName: "unavailable")
             self.nameLabel.alpha = 0.5
+        } else if provider.isIdle {
+            self.availableLabel.text = "Idle"
+            self.availableImageView.image = UIImage(imageLiteralResourceName: "unavailable")
+            self.nameLabel.alpha = 0.5
+        }
+        else {
+            self.availableLabel.text = "Currently Available"
+            self.availableImageView.image = UIImage(imageLiteralResourceName: "available")
+            self.nameLabel.alpha = 1
         }
     }
 

@@ -105,6 +105,13 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         }
     }
     
+    func updateActive() {
+        if let user = PFUser.current() as? User {
+            user.updateActive()
+            print("updateActive")
+        }
+    }
+    
     func continueLoad() {
         configureSender()
     
@@ -333,6 +340,7 @@ class ChatViewController: QMChatViewController, UIActionSheetDelegate, UIImagePi
         }
         
         finishSendingMessage(animated: true)
+        self.updateActive()
     }
     
     // MARK: Helper

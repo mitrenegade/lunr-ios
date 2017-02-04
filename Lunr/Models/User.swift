@@ -16,6 +16,8 @@ enum UserType: String {
     case Handyman
 }
 
+private let idleInterval: TimeInterval = 30*60 // 30 minutes to become idle
+
 class User: PFUser {
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
@@ -33,6 +35,7 @@ class User: PFUser {
     @NSManaged var available : Bool
     @NSManaged var skills : [String]?
     @NSManaged var info : String
+    @NSManaged var activeAt: Date?
     
     override init () {
         super.init()
@@ -81,6 +84,14 @@ extension User {
     var isProvider: Bool {
         return self.userType == .Plumber || self.userType == .Electrician || self.userType == .Handyman
     }
+    
+    var isIdle: Bool {
+        guard let date = self.activeAt else {
+            return true
+        }
+        
+        return Date().timeIntervalSince(date) > idleInterval
+    }
 }
 
 // MARK: Favorites
@@ -117,6 +128,15 @@ extension User {
     }
 
 }
+
+// Idle
+extension User {
+    func updateActive() {
+        self.activeAt = Date()
+        self.saveEventually()
+    }
+}
+
 extension String {
     func isValidEmail() -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
