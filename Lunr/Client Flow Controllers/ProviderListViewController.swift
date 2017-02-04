@@ -44,7 +44,15 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.backgroundColor = UIColor.lunr_darkBlue()
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // HACK: uitableviewcells have the wrong providerInfoView size, so have to reload it
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
+        tableView.reloadData()
+    }
     func setUpTableView() {
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -117,6 +125,7 @@ class ProviderListViewController: UIViewController, UISearchBarDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProviderTableViewCell") as! ProviderTableViewCell
         if let providers = UserService.sharedInstance.providers {
+            print("indexPath \(indexPath.row) cell \(cell) frame \(cell.providerInfoView.frame)")
             cell.configureForProvider(providers[indexPath.row])
         }
         return cell

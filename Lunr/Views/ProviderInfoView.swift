@@ -1,7 +1,7 @@
 import UIKit
 import Parse
 
-class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ProviderInfoView: NibLoadableView {
 
     @IBOutlet weak var availableImageView: UIImageView!
     @IBOutlet weak var availableLabel: UILabel!
@@ -9,8 +9,9 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceRateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
-    @IBOutlet weak var skillCollectionView: UICollectionView!
-    var skills: [String]?
+    @IBOutlet weak var tagsView: ResizableTagView!
+    @IBOutlet weak var constraintTagsViewHeight: NSLayoutConstraint!
+    
     var provider: User?
 
     override var nibName: String {
@@ -27,27 +28,20 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
 
         self.ratingLabel.layer.cornerRadius = 8
         self.ratingLabel.clipsToBounds = true
-
-        self.skillCollectionView.backgroundColor = UIColor.clear
-        self.skillCollectionView.register(ProviderSkillTagCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "ProviderSkillTagCollectionViewCell")
-        self.skillCollectionView.isUserInteractionEnabled = false
-
-        if let flowLayout = self.skillCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSize(width: 50, height: 25)
-        }
+        
+        self.tagsView.delegate = self
+        
     }
-
+    
     func configureForProvider(_ provider: User) {
         self.provider = provider
         self.nameLabel.text = provider.displayString
         self.ratingLabel.text = "\(provider.rating)"
         self.priceRateLabel.text = "$\(provider.ratePerMin)/min"
         self.configureAvailability(provider.available)
-        self.skills = provider.skills
-        
+
         self.configureFavoriteIcon()
-        
-        self.skillCollectionView.reloadData()
+        self.tagsView.configureWithTags(tagStrings: provider.skills)
     }
 
     func configureAvailability(_ isAvailable: Bool) {
@@ -90,21 +84,11 @@ class ProviderInfoView: NibLoadableView, UICollectionViewDataSource, UICollectio
         }
     }
 
-    // MARK: UICollectionViewDataSource Methods
+}
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProviderSkillTagCollectionViewCell", for: indexPath) as! ProviderSkillTagCollectionViewCell
-        if let skills = self.skills {
-            cell.configureForSkill(skills[indexPath.row])
-        }
-        return cell
-
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let skills = self.skills {
-            return skills.count
-        }
-        return 0
+extension ProviderInfoView: ResizableTagViewDelegate {
+    func didUpdateHeight(height: CGFloat) {
+        print("new skills height: \(height)")
+        self.constraintTagsViewHeight.constant = height
     }
 }
