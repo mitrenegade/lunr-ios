@@ -36,7 +36,8 @@ class ProviderInfoView: NibLoadableView {
     func configureForProvider(_ provider: User) {
         self.provider = provider
         self.nameLabel.text = provider.displayString
-        self.ratingLabel.text = "\(provider.rating)"
+        let ratingString = provider.rating == 0 ? "-.-" : String(format: "%.1f", provider.rating)
+        self.ratingLabel.text = ratingString
         self.priceRateLabel.text = "$\(provider.ratePerMin)/min"
         self.configureAvailability(provider.available)
 
