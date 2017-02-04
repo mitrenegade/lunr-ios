@@ -10,6 +10,8 @@ class ProviderInfoView: NibLoadableView {
     @IBOutlet weak var priceRateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var tagsView: ResizableTagView!
+    @IBOutlet weak var constraintTagsViewHeight: NSLayoutConstraint!
+    
     var provider: User?
 
     override var nibName: String {
@@ -28,8 +30,9 @@ class ProviderInfoView: NibLoadableView {
         self.ratingLabel.clipsToBounds = true
         
         self.tagsView.delegate = self
+        
     }
-
+    
     func configureForProvider(_ provider: User) {
         self.provider = provider
         self.nameLabel.text = provider.displayString
@@ -86,5 +89,6 @@ class ProviderInfoView: NibLoadableView {
 extension ProviderInfoView: ResizableTagViewDelegate {
     func didUpdateHeight(height: CGFloat) {
         print("new skills height: \(height)")
+        self.constraintTagsViewHeight.constant = height
     }
 }

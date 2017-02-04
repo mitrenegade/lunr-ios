@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="availableImageView" destination="G3E-8G-cEQ" id="jnh-Gd-etp"/>
                 <outlet property="availableLabel" destination="C9A-ff-Qsw" id="VGc-zu-7Od"/>
+                <outlet property="constraintTagsViewHeight" destination="buP-Nm-Ofu" id="7QB-fU-aPa"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="kEP-bD-NCU"/>
                 <outlet property="favoriteButton" destination="BHU-28-uUb" id="QCB-xC-Rx9"/>
                 <outlet property="nameLabel" destination="lJ7-Bk-9TB" id="Qqo-nZ-Py1"/>
@@ -75,7 +76,7 @@
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ojM-cZ-10J" customClass="ResizableTagView" customModule="Lunr" customModuleProvider="target">
                     <rect key="frame" x="65" y="62" width="294" height="32"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="buP-Nm-Ofu"/>
                     </constraints>
