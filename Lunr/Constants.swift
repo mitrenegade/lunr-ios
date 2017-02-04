@@ -8,6 +8,22 @@
 
 import UIKit
 
+let LOCAL_TEST = false
+let TEST = true
+
+let PARSE_APP_ID: String = "KAu5pzPvmjrFNdIeaB5zYb2la2Fs2zRi2JyuQZnA"
+let PARSE_SERVER_URL_LOCAL: String = "http://localhost:1337/parse"
+let PARSE_SERVER_URL = "https://lunr-server.herokuapp.com/parse"
+let PARSE_CLIENT_KEY = "unused"
+
+let QB_APP_ID: UInt = 45456
+let QB_AUTH_KEY = "Ts3YVE7kHKUcYA3"
+let QB_ACCOUNT_KEY = "qezMRGfSugu3WHCiT1wg"
+let QB_AUTH_SECRET = "DptKZexBTDjhNt3"
+
+let STRIPE_KEY_DEV = "pk_test_YYNWvzYJi3bTyOJi2SNK3IkE"
+
+
 enum UserDefaultsKeys: String {
     case SortCategory = "defaults:sortCategory"
 }
