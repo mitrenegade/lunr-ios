@@ -129,6 +129,14 @@ extension User {
 
 }
 
+// Idle
+extension User {
+    func updateActive() {
+        self.activeAt = Date()
+        self.saveEventually()
+    }
+}
+
 extension String {
     func isValidEmail() -> Bool {
         // http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
