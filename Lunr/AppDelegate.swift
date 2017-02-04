@@ -20,7 +20,7 @@ let QB_APP_ID: UInt = 45456
 let QB_AUTH_KEY = "Ts3YVE7kHKUcYA3"
 let QB_ACCOUNT_KEY = "qezMRGfSugu3WHCiT1wg"
 let QB_AUTH_SECRET = "DptKZexBTDjhNt3"
-
+  
 let STRIPE_KEY_DEV = "pk_test_YYNWvzYJi3bTyOJi2SNK3IkE"
 
 @UIApplicationMain
