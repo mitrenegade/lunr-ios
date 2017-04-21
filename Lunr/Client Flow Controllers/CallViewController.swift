@@ -24,6 +24,7 @@ class CallViewController: UIViewController {
         user = PFUser.current() as? User
         
         self.checkAuthorization()
+        //self.setupVideo()
         
         // listen for incoming video stream
         self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
@@ -105,9 +106,11 @@ class CallViewController: UIViewController {
             self.notify(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
             
             // check to see if session has already received a video track
+            /*
             if let videoTrack = SessionService.sharedInstance.remoteVideoTrack {
                 self.remoteVideoView.setVideoTrack(videoTrack)
             }
+ */
         }
     }
 
@@ -223,11 +226,11 @@ class CallViewController: UIViewController {
             present(alertController, animated: true, completion: nil)
         }
         else if button == self.buttonFlip {
-            if self.videoCapture?.currentPosition() == .front {
-                self.videoCapture?.selectCameraPosition(.back)
+            if self.videoCapture?.position == .front {
+                self.videoCapture?.position = .back
             }
             else {
-                self.videoCapture?.selectCameraPosition(.front)
+                self.videoCapture?.position = .front
             }
         }
     }

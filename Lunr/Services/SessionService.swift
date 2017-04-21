@@ -190,6 +190,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     func endCall() {
         self.session?.hangUp(nil)
         self.currentDialogID = ""
+        self.remoteVideoTrack = nil
         QBNotificationService.sharedInstance.clearDialog()
     }
 
@@ -206,6 +207,7 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
         // notified when all remotes are inactive
         self.session = nil
         self.state = .Disconnected
+        self.remoteVideoTrack = nil
     }
     
 }

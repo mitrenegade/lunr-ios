@@ -75,8 +75,8 @@ PODS:
   - QMServices (0.4.5):
     - Bolts (>= 1.5.0)
     - QuickBlox (>= 2.6.5)
-  - QuickBlox (2.9.1)
-  - Quickblox-WebRTC (2.4):
+  - QuickBlox (2.9.2)
+  - Quickblox-WebRTC (2.5):
     - QuickBlox (>= 2.7)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -113,8 +113,8 @@ SPEC CHECKSUMS:
   ParseLiveQuery: 4c0f3f571ba0f358a4e592cd7d4b55c95ab9655e
   QMChatViewController: 575f0d253d916022b3d35b57b84b38070357c74f
   QMServices: 617057b228eb5e41341e50216fc4af2fce3cfa46
-  QuickBlox: 69e1dace6f9fa74e39557b96e0303552654d7707
-  Quickblox-WebRTC: e08793e554d0337df5bc577c9166e0edc58eb02a
+  QuickBlox: 67cafa5d7b237db7344c506ca5dc38365180cacb
+  Quickblox-WebRTC: 79a88793ce090d2516963fe207f4d8eeecdb8b4f
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
   Stripe: 0f41a33a6fa3ac76ee668d7df3e2680c28b8ab1a
