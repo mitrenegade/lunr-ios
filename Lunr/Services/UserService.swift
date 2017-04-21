@@ -131,22 +131,35 @@ class UserService: NSObject {
         
         self.subscription = liveQueryClient.subscribe(query)
             .handle(Event.updated, { (_, object) in
-                if let providers = self.providers {
-                    var changed = false
-                    for user in providers {
-                        if user.objectId == object.objectId, let index = providers.index(of: user) {
-                            self.providers!.remove(at: index)
-                            self.providers!.insert(object, at: index)
-                            changed = true
+                /*
+                    if let providers = self.providers {
+                        var changed = false
+                        for user in providers {
+                            if user.objectId == object.objectId, let index = providers.index(of: user) {
+                                self.providers!.remove(at: index)
+                                self.providers!.insert(object, at: index)
+                                changed = true
+                            }
+                        }
+                        if changed {
+                            DispatchQueue.main.async(execute: {
+                                print("received update for provider: \(object.objectId!)")
+                                self.notify(.ProvidersUpdated, object: nil, userInfo: ["provider": object])
+                            })
                         }
                     }
-                    if changed {
-                        DispatchQueue.main.async(execute: {
-                            print("received update for provider: \(object.objectId!)")
-                            self.notify(.ProvidersUpdated, object: nil, userInfo: ["provider": object])
-                        })
-                    }
-                }
+                */
+                
+                // some sort of crash. this solution sucks.
+                self.queryProvidersAtPage(completionHandler: { (users) in
+                    self.providers = users as? [User]
+                    DispatchQueue.main.async(execute: {
+                        print("received update for provider: \(object.objectId!)")
+                        self.notify(.ProvidersUpdated, object: nil, userInfo: ["provider": object])
+                    })
+                }, errorHandler: { (error) in
+                    print("could not load")
+                })
             })
         self.subscribedToProviderUpdates = true
     }
