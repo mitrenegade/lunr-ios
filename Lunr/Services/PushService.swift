@@ -17,13 +17,13 @@ class PushService: NSObject {
     var enablePushCompletionHandler: EnablePushCompletionHandler?
     
     // APN
-    class func registerForAPNRemoteNotification() {
+    private class func registerForAPNRemoteNotification() {
         let settings = UIUserNotificationSettings(types: [UIUserNotificationType.alert, UIUserNotificationType.badge, UIUserNotificationType.sound], categories: nil)
         UIApplication.shared.registerUserNotificationSettings(settings)
         UIApplication.shared.registerForRemoteNotifications()
     }
     
-    class func hasPushEnabled() -> Bool {
+    private class func hasPushEnabled() -> Bool {
         if Platform.isSimulator {
             return true
         }
