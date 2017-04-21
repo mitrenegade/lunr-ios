@@ -27,7 +27,6 @@ class CallViewController: UIViewController {
         //self.setupVideo()
         
         // listen for incoming video stream
-        self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.VideoReceived.rawValue, action: #selector(receiveVideoFromStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.HungUp.rawValue, action: #selector(endCall), object: nil)
         self.listenFor(NotificationType.VideoSession.CallCreationFailed.rawValue, action: #selector(callCreationFailed(_:)), object: nil)
@@ -99,19 +98,16 @@ class CallViewController: UIViewController {
         let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .format420f)
         self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .front)
         self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
-        self.videoCapture!.startSession { 
-            self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, at: 0)
+        
+        // from version 2.3 you no longer need to wait for 'initializedLocalMediaStream:' delegate to do it
+        SessionService.sharedInstance.session?.localMediaStream.videoTrack.videoCapture = self.videoCapture
+    
+        self.videoCapture!.startSession()
             
-            // tells provider that video stream is ready and should attach it
-            self.notify(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
-            
-            // check to see if session has already received a video track
-            /*
-            if let videoTrack = SessionService.sharedInstance.remoteVideoTrack {
-                self.remoteVideoView.setVideoTrack(videoTrack)
-            }
- */
-        }
+        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, at: 0)
+        
+        // tells provider that video stream is ready and should attach it
+        self.notify(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
     }
 
     // MARK: - own video
@@ -141,7 +137,6 @@ class CallViewController: UIViewController {
     
     // MARK: Session
     func endCall(_ wasConnected: Bool) {
-        self.stopListeningFor(NotificationType.VideoSession.StreamInitialized.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.VideoReceived.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.HungUp.rawValue)
         self.stopListeningFor(NotificationType.VideoSession.CallCreationFailed.rawValue)

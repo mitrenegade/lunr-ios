@@ -178,10 +178,6 @@ class SessionService: QMServicesManager, QBRTCClientDelegate {
     }
     
     // delegate (both - video received)
-    func session(_ session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationType.VideoSession.StreamInitialized.rawValue), object: nil, userInfo: ["stream": mediaStream] )
-    }
-    
     func session(_ session: QBRTCSession!, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack!, fromUser userID: NSNumber!) {
         self.remoteVideoTrack = videoTrack // store it
         NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationType.VideoSession.VideoReceived.rawValue), object: nil, userInfo: ["track": videoTrack])

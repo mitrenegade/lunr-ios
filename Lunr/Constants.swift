@@ -47,7 +47,6 @@ enum NotificationType: String {
     enum VideoSession: String {
         case CallStateChanged
         case VideoReady // own video has been initialized
-        case StreamInitialized // after startCall, successfully connected to stream
         case VideoReceived // recipient video received
         case HungUp // recipient hung up
         
