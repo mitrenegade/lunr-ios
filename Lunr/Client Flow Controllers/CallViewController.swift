@@ -23,9 +23,8 @@ class CallViewController: UIViewController {
         
         user = PFUser.current() as? User
         
-        // load video view
-        self.loadVideoViews()
-
+        self.checkAuthorization()
+        
         // listen for incoming video stream
         self.listenFor(NotificationType.VideoSession.StreamInitialized.rawValue, action: #selector(attachVideoToStream(_:)), object: nil)
         self.listenFor(NotificationType.VideoSession.VideoReceived.rawValue, action: #selector(receiveVideoFromStream(_:)), object: nil)
@@ -49,13 +48,49 @@ class CallViewController: UIViewController {
         if let name = recipient?.fullName {
             self.title = "Waiting for \(name)"
         }
+    }
 
+    // MARK: - Permissions
+    func checkAuthorization() {
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized:
+            // The user has previously granted access to the camera.
+            self.setupVideo()
+            break
+            
+        case .notDetermined:
+            /*
+             The user has not yet been presented with the option to grant
+             video access. We suspend the session queue to delay session
+             setup until the access request has completed.
+             
+             Note that audio access will be implicitly requested when we
+             create an AVCaptureDeviceInput for audio during session setup.
+             */
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { [unowned self] granted in
+                if !granted {
+                    print("error not granted")
+                    return
+                }
+                self.setupVideo()
+            })
+            
+        default:
+            // The user has previously denied access.
+            print("currently not authorized")
+        }
+    }
+    
+    // MARK: - Video
+    func setupVideo() {
+        // load video view
+        self.loadVideoViews()
+        
         // changes: http://quickblox.com/developers/Sample-webrtc-ios#Audio_Session_.28Previously_Sound_Router.29
         QBRTCAudioSession.instance().initialize()
         QBRTCAudioSession.instance().currentAudioDevice = QBRTCAudioDevice.speaker
     }
-
-    // MARK: - Video
+    
     func loadVideoViews() {
         // initialize own video view
         let width: UInt = UInt(self.localVideoView.frame.size.width)
@@ -63,15 +98,16 @@ class CallViewController: UIViewController {
         let videoFormat = QBRTCVideoFormat(width: width, height: height, frameRate: 30, pixelFormat: .format420f)
         self.videoCapture = QBRTCCameraCapture(videoFormat: videoFormat, position: .front)
         self.videoCapture!.previewLayer.frame = self.localVideoView.bounds
-        self.videoCapture!.startSession()
-        self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, at: 0)
-        
-        // tells provider that video stream is ready and should attach it
-        self.notify(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
-
-        // check to see if session has already received a video track
-        if let videoTrack = SessionService.sharedInstance.remoteVideoTrack {
-            self.remoteVideoView.setVideoTrack(videoTrack)
+        self.videoCapture!.startSession { 
+            self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, at: 0)
+            
+            // tells provider that video stream is ready and should attach it
+            self.notify(NotificationType.VideoSession.VideoReady.rawValue, object: nil, userInfo: nil )
+            
+            // check to see if session has already received a video track
+            if let videoTrack = SessionService.sharedInstance.remoteVideoTrack {
+                self.remoteVideoView.setVideoTrack(videoTrack)
+            }
         }
     }
 
